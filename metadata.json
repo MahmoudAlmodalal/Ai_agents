@@ -1,0 +1,6 @@
+{
+  "name": "دليل هندسة الواجهات وتطوير الفرونت إند بالذكاء الاصطناعي",
+  "description": "دليل تعليمي شامل للمحاضرة الخامسة: من متطلبات PRD وتصميم Google Stitch وربط Stitch MCP إلى التخطيط والتنفيذ بـ Next.js و Spec Kit و UI/UX Pro Max.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
