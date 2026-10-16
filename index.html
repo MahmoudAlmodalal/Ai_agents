@@ -263,6 +263,21 @@
       flex-direction: column;
       gap: 0.5rem;
       transition: right 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    aside.sidebar::-webkit-scrollbar {
+      width: 5px;
+    }
+    aside.sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--text-faint);
     }
 
     .sidebar-header {
@@ -317,24 +332,28 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.45rem 0.65rem;
+      padding: 0.48rem 0.65rem;
       border-radius: var(--radius-sm);
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.84rem;
       font-weight: 600;
-      transition: all 0.15s ease;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
       line-height: 1.4;
+      border-right: 3px solid transparent;
+      position: relative;
     }
     .toc-link:hover {
       background-color: var(--bg-card-subtle);
       color: var(--brand-primary);
+      transform: translateX(-2px);
     }
     .toc-link.active {
       background-color: var(--brand-light);
       color: var(--brand-primary);
       font-weight: 700;
-      border-right: 3px solid var(--brand-primary);
+      border-right-color: var(--brand-primary);
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
     }
     .toc-link .badge-num {
       display: inline-block;
@@ -346,6 +365,7 @@
       color: var(--text-muted);
       font-weight: 700;
       flex-shrink: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .toc-link.active .badge-num {
       background-color: var(--brand-primary);
@@ -3825,12 +3845,90 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       sidebarEl?.classList.toggle('open');
     });
 
-    // Close sidebar on link click (mobile)
-    document.querySelectorAll('.toc-link').forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 1100) {
-          sidebarEl?.classList.remove('open');
+    // Table of Contents Smooth Scrolling & Active State Engine
+    let isProgrammaticScroll = false;
+    let programmaticScrollTimer = null;
+
+    function getHeaderOffset() {
+      const header = document.querySelector('header.site-header');
+      return header ? header.offsetHeight : 72;
+    }
+
+    function setActiveTocLink(targetId, shouldScrollSidebar = true) {
+      if (!targetId) return;
+      const links = document.querySelectorAll('#toc-nav-list .toc-link');
+      let activeElement = null;
+
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${targetId}`) {
+          link.classList.add('active');
+          activeElement = link;
+        } else {
+          link.classList.remove('active');
         }
+      });
+
+      // Smoothly ensure active link is visible inside aside.sidebar viewport
+      if (activeElement && sidebarEl && shouldScrollSidebar) {
+        const sidebarRect = sidebarEl.getBoundingClientRect();
+        const linkRect = activeElement.getBoundingClientRect();
+        const isOutsideView = linkRect.top < sidebarRect.top + 25 || linkRect.bottom > sidebarRect.bottom - 25;
+
+        if (isOutsideView) {
+          activeElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+          });
+        }
+      }
+    }
+
+    // Attach smooth scrolling animation to all Table of Contents links
+    document.querySelectorAll('#toc-nav-list .toc-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+
+        const targetId = href.slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+
+        e.preventDefault();
+
+        // Close sidebar on mobile
+        if (window.innerWidth <= 1100 && sidebarEl) {
+          sidebarEl.classList.remove('open');
+        }
+
+        // 1. Immediately activate clicked link for instantaneous feedback
+        setActiveTocLink(targetId, true);
+
+        // 2. Lock scrollspy temporarily during smooth scrolling animation to prevent intermediate flickering
+        isProgrammaticScroll = true;
+        if (programmaticScrollTimer) clearTimeout(programmaticScrollTimer);
+
+        // 3. Smooth scroll with accurate offset calculation
+        const headerOffset = getHeaderOffset();
+        const targetRect = targetElement.getBoundingClientRect();
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const targetScrollTop = currentScrollY + targetRect.top - headerOffset - 16;
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          behavior: 'smooth'
+        });
+
+        // 4. Update browser URL hash without causing an abrupt native jump
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, '', href);
+        }
+
+        // 5. Unlock scrollspy once smooth scroll animation settles
+        programmaticScrollTimer = setTimeout(() => {
+          isProgrammaticScroll = false;
+          updateActiveTocFromScroll();
+        }, 800);
       });
     });
 
@@ -3919,27 +4017,72 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       });
     }
 
-    // Scrollspy for Active TOC Link
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('.topic-section');
-      let currentId = '';
+    // High-Precision Scrollspy for Active TOC Link Synchronization
+    function updateActiveTocFromScroll() {
+      if (isProgrammaticScroll) return;
 
-      sections.forEach(sec => {
-        const secTop = sec.offsetTop - 120;
-        if (window.scrollY >= secTop) {
-          currentId = sec.getAttribute('id') || '';
+      const sections = document.querySelectorAll('.topic-section');
+      if (!sections || sections.length === 0) return;
+
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // 1. Bottom of page edge-case: activate the last section if near the page bottom
+      if (scrollY + windowHeight >= documentHeight - 60) {
+        const lastSection = sections[sections.length - 1];
+        if (lastSection && lastSection.id) {
+          setActiveTocLink(lastSection.id, true);
+          return;
+        }
+      }
+
+      // 2. Top of page edge-case: activate the first section if near top
+      if (scrollY < 180 && sections[0] && sections[0].id) {
+        setActiveTocLink(sections[0].id, false);
+        return;
+      }
+
+      const headerOffset = getHeaderOffset();
+      const triggerPoint = headerOffset + 90;
+
+      let currentSectionId = '';
+      let minDistance = Infinity;
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+
+        // Check if section spans across the triggerPoint
+        if (rect.top <= triggerPoint && rect.bottom > triggerPoint) {
+          currentSectionId = section.id;
+        }
+
+        // Secondary fallback: find the section whose top is closest to triggerPoint
+        const distance = Math.abs(rect.top - triggerPoint);
+        if (rect.top <= triggerPoint + 140 && distance < minDistance) {
+          minDistance = distance;
+          if (!currentSectionId) {
+            currentSectionId = section.id;
+          }
         }
       });
 
-      if (currentId) {
-        document.querySelectorAll('.toc-link').forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${currentId}`) {
-            link.classList.add('active');
-          }
-        });
+      if (currentSectionId) {
+        setActiveTocLink(currentSectionId, false);
       }
-    });
+    }
+
+    // Throttled scroll listener using requestAnimationFrame for smooth 60fps tracking
+    let isScrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!isScrollTicking) {
+        window.requestAnimationFrame(() => {
+          updateActiveTocFromScroll();
+          isScrollTicking = false;
+        });
+        isScrollTicking = true;
+      }
+    }, { passive: true });
 
     // Filter Glossary Table
     const glossarySearchInput = document.getElementById('glossary-search');
@@ -4262,6 +4405,21 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       loadChecklists();
       initTTSSections();
       loadVoices();
+      updateActiveTocFromScroll();
+
+      if (window.location.hash) {
+        const hashId = window.location.hash.slice(1);
+        const target = document.getElementById(hashId);
+        if (target) {
+          setTimeout(() => {
+            const headerOffset = getHeaderOffset();
+            const rect = target.getBoundingClientRect();
+            const top = (window.pageYOffset || document.documentElement.scrollTop) + rect.top - headerOffset - 16;
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+            setActiveTocLink(hashId, true);
+          }, 200);
+        }
+      }
     });
   </script>
 </body>
