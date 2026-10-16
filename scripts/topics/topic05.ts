@@ -97,7 +97,7 @@ erDiagram
         UUID equipment_id FK "NOT NULL"
         string status "Pending, Approved, CheckedOut, Returned..."
         datetime pickup_deadline "Approved + 48h"
-        datetime due_date "Pickup + <=10 days"
+        datetime due_date "Pickup + &le; 10 days"
         string return_condition "Good, Damaged"
     }
 

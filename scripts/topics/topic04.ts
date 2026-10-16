@@ -227,8 +227,8 @@ Student --> UC_Browse
 Student --> UC_Request
 Student --> UC_Track
 
-UC_Request ..> UC_Validate : <<include>>
-UC_Return <.. UC_Penalty : <<extend>> (في حال وجود تلفيات)
+UC_Request ..> UC_Validate : &lt;&lt;include&gt;&gt;
+UC_Return &lt;.. UC_Penalty : &lt;&lt;extend&gt;&gt; (في حال وجود تلفيات)
 
 Admin --> UC_ApproveUser
 Admin --> UC_ReviewLoan
@@ -392,7 +392,7 @@ sequenceDiagram
     Student->>UI: اختيار معدة والضغط على إرسال طلب استعارة
     UI->>API: POST /api/loan-requests (studentId, equipId, duration)
     
-    API->>DB: استعلام: فحص الطلبات النشطة للطالب (COUNT < 2) ورصيد المعدة المتاح
+    API->>DB: استعلام: فحص الطلبات النشطة للطالب (COUNT &lt; 2) ورصيد المعدة المتاح
     DB-->>API: إرجاع الرصيد وعدد الطلبات الحالية
     
     alt الشروط مستوفاة والمعدة متاحة
@@ -459,7 +459,7 @@ Create: docs/diagrams/sequence-diagrams.md and individual files in docs/diagrams
             <h4>دورة حياة طلب الاستعارة في مشروع BorrowHub</h4>
             <div class="mermaid">
 stateDiagram-v2
-    [*] --> PendingReview: الطالب يرسل الطلب\n[النشطة < 2 والمدة &le; 10 أيام]
+    [*] --> PendingReview: الطالب يرسل الطلب\n[النشطة &lt; 2 والمدة &le; 10 أيام]
     
     PendingReview --> Approved: موافقة مسؤول المستودع\n[مهلة الاستلام 48 ساعة]
     PendingReview --> Rejected: رفض المسؤول مع ذكر السبب
