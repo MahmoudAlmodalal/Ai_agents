@@ -159,6 +159,7 @@
     }
 
     /* Fixed Site Header */
+    /* Fixed Site Header */
     header.site-header {
       position: sticky;
       top: 0;
@@ -168,16 +169,20 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
       z-index: 900;
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      gap: 0.75rem;
     }
 
     .header-branding {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
+      min-width: 0;
+      flex: 1;
     }
 
     .academy-badge {
@@ -191,35 +196,45 @@
       font-weight: 700;
       font-size: 0.85rem;
       box-shadow: 0 2px 4px rgba(29, 78, 216, 0.25);
+      flex-shrink: 0;
     }
 
     .header-title-wrap {
       display: flex;
       flex-direction: column;
+      min-width: 0;
     }
     .header-title-wrap h1 {
       font-size: 1.15rem;
       font-weight: 800;
       color: var(--text-main);
       line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .header-title-wrap span {
       font-size: 0.8rem;
       color: var(--text-muted);
       display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .header-controls {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      flex-wrap: nowrap;
     }
 
     .btn-control {
       background-color: var(--bg-card-subtle);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 0.45rem 0.85rem;
+      padding: 0.45rem 0.8rem;
       border-radius: var(--radius-sm);
       font-family: var(--font-sans);
       font-size: 0.85rem;
@@ -227,16 +242,29 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.45rem;
       transition: all 0.2s ease;
+      white-space: nowrap;
+      user-select: none;
     }
     .btn-control:hover {
       background-color: var(--border-color);
       border-color: var(--border-focus);
     }
+    .btn-control:active {
+      transform: scale(0.96);
+    }
 
     .mobile-menu-btn {
       display: none;
+      background: var(--brand-light);
+      border: 1px solid var(--brand-border);
+      color: var(--brand-primary);
+      font-weight: 700;
+      padding: 0.4rem 0.65rem;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
     }
 
     /* Main Container & Layout */
@@ -262,28 +290,19 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      transition: right 0.3s ease;
-      scroll-behavior: smooth;
-    }
-
-    aside.sidebar::-webkit-scrollbar {
-      width: 5px;
-    }
-    aside.sidebar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    aside.sidebar::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 4px;
-    }
-    aside.sidebar::-webkit-scrollbar-thumb:hover {
-      background: var(--text-faint);
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .sidebar-header {
       padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border-color);
       margin-bottom: 0.5rem;
+    }
+    .sidebar-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
     }
     .sidebar-header h3 {
       font-size: 0.95rem;
@@ -293,6 +312,44 @@
     .sidebar-header p {
       font-size: 0.78rem;
       color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+    .sidebar-close-btn {
+      display: none;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .sidebar-close-btn:hover {
+      background: var(--border-color);
+      color: var(--text-main);
+    }
+
+    /* Sidebar Drawer Backdrop Overlay (Mobile) */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 940;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
 
     .toc-search {
@@ -332,28 +389,24 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.48rem 0.65rem;
+      padding: 0.45rem 0.65rem;
       border-radius: var(--radius-sm);
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.84rem;
       font-weight: 600;
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      transition: all 0.15s ease;
       line-height: 1.4;
-      border-right: 3px solid transparent;
-      position: relative;
     }
     .toc-link:hover {
       background-color: var(--bg-card-subtle);
       color: var(--brand-primary);
-      transform: translateX(-2px);
     }
     .toc-link.active {
       background-color: var(--brand-light);
       color: var(--brand-primary);
       font-weight: 700;
-      border-right-color: var(--brand-primary);
-      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08);
+      border-right: 3px solid var(--brand-primary);
     }
     .toc-link .badge-num {
       display: inline-block;
@@ -365,7 +418,6 @@
       color: var(--text-muted);
       font-weight: 700;
       flex-shrink: 0;
-      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .toc-link.active .badge-num {
       background-color: var(--brand-primary);
@@ -482,7 +534,7 @@
     }
     .step-title-wrap {
       flex: 1;
-      min-width: 250px;
+      min-width: 0;
     }
     .step-title {
       font-size: 1.45rem;
@@ -1034,56 +1086,275 @@
 
     /* Responsive adjustments */
     @media (max-width: 1100px) {
+      :root {
+        --header-height: 60px;
+      }
       header.site-header {
-        height: auto;
-        min-height: 60px;
-        padding: 0.5rem 1rem;
+        height: 60px;
+        padding: 0 0.85rem;
+      }
+      .academy-badge {
+        display: none;
       }
       .header-title-wrap span {
         display: none;
       }
       .header-title-wrap h1 {
         font-size: 0.95rem;
+        max-width: 280px;
       }
       .mobile-menu-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .sidebar-close-btn {
         display: inline-flex;
       }
       aside.sidebar {
         position: fixed;
-        right: -340px;
-        top: var(--header-height);
-        height: calc(100vh - var(--header-height));
-        z-index: 950;
-        box-shadow: -5px 0 25px rgba(0,0,0,0.25);
+        right: -100%;
+        top: 0;
+        bottom: 0;
+        height: 100vh;
+        height: 100dvh;
+        width: min(340px, 86vw);
+        z-index: 960;
+        box-shadow: -8px 0 30px rgba(0, 0, 0, 0.4);
+        border-left: 1px solid var(--border-color);
       }
       aside.sidebar.open {
         right: 0;
       }
       main.content-area {
-        padding: 1.5rem 1rem;
+        padding: 1.75rem 1.25rem;
       }
     }
 
     @media (max-width: 768px) {
+      body {
+        font-size: 15px;
+      }
+      header.site-header {
+        height: 56px;
+        padding: 0 0.65rem;
+        gap: 0.4rem;
+      }
+      .header-branding {
+        gap: 0.45rem;
+      }
+      .header-title-wrap h1 {
+        font-size: 0.9rem;
+        max-width: 170px;
+      }
+      .header-controls {
+        gap: 0.3rem;
+        flex-wrap: nowrap;
+      }
+      .header-controls .btn-text {
+        display: none !important;
+      }
+      .btn-control {
+        padding: 0.35rem 0.5rem;
+        min-width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+        border-radius: var(--radius-sm);
+      }
+      .mobile-menu-btn .btn-text {
+        display: inline-block;
+        font-size: 0.8rem;
+      }
+
+      /* Content Area & Sections */
+      main.content-area {
+        padding: 1rem 0.65rem;
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+      }
+      .topic-section {
+        padding: 1.25rem 0.85rem;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        scroll-margin-top: calc(var(--header-height) + 1rem);
+      }
+      h1 {
+        font-size: 1.45rem;
+        line-height: 1.3;
+      }
+      h2 {
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      /* Steps & Badges */
+      .step-header {
+        gap: 0.65rem;
+        margin-bottom: 0.85rem;
+      }
+      .step-number {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        border-radius: 8px;
+      }
+      .step-title {
+        font-size: 1.15rem;
+      }
+      .step-subtitle {
+        font-size: 0.84rem;
+      }
+      .step-badge-group {
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      /* Cards & Containers */
+      .callout {
+        padding: 0.85rem 1rem;
+        margin: 1rem 0;
+        font-size: 0.88rem;
+        line-height: 1.65;
+      }
+      .step-card {
+        padding: 1rem 0.75rem;
+        margin: 1rem 0;
+        border-radius: var(--radius-sm);
+      }
+      .code-container {
+        margin: 1rem 0;
+        border-radius: var(--radius-sm);
+      }
+      .code-header {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.72rem;
+      }
+      pre.code-content {
+        padding: 0.85rem;
+        font-size: 0.78rem;
+        line-height: 1.55;
+      }
+      .table-container {
+        margin: 1rem 0;
+        border-radius: var(--radius-sm);
+        -webkit-overflow-scrolling: touch;
+      }
+      table.data-table th, table.data-table td {
+        padding: 0.55rem 0.7rem;
+        font-size: 0.82rem;
+      }
+      .diagram-box {
+        padding: 1rem 0.5rem;
+        margin: 1rem 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .diagram-box svg {
+        max-width: 100% !important;
+        height: auto !important;
+      }
+      .checklist-card {
+        padding: 1rem 0.85rem;
+      }
+      details.example-accordion {
+        margin: 0.75rem 0;
+      }
+      summary.example-summary {
+        padding: 0.75rem 0.9rem;
+        font-size: 0.88rem;
+      }
+      .example-body {
+        padding: 0.9rem 0.85rem;
+      }
+
+      /* Back to Top */
+      #back-to-top {
+        bottom: 5.5rem;
+        left: 0.85rem;
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+      }
+
+      /* TTS Player on Mobile */
       .tts-player {
-        border-radius: 16px;
+        border-radius: 18px;
         padding: 0.65rem 0.85rem;
-        bottom: 0.75rem;
-        width: 95%;
+        bottom: 0.6rem;
+        width: calc(100% - 1.25rem);
+        max-width: 520px;
+        transform: translateX(-50%) translateY(140%);
+      }
+      .tts-player.active {
+        transform: translateX(-50%) translateY(0);
+      }
+      .tts-drag-header {
+        gap: 0.4rem;
+        justify-content: space-between;
+      }
+      .tts-info {
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 0.5rem;
+      }
+      .tts-badge-free {
+        display: none;
+      }
+      .tts-current-title {
+        font-size: 0.78rem;
+        max-width: 130px;
       }
       .tts-voice-selector {
         display: none;
       }
-      .tts-drag-header {
-        gap: 0.5rem;
+      .tts-controls {
+        gap: 0.25rem;
       }
-      .header-controls {
-        flex-wrap: wrap;
+      .tts-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.82rem;
+      }
+      .tts-btn-primary {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+      }
+      .tts-settings {
         gap: 0.35rem;
       }
-      .btn-control {
-        padding: 0.35rem 0.55rem;
-        font-size: 0.75rem;
+      .tts-speed-selector select {
+        padding: 0.2rem 0.35rem;
+        font-size: 0.72rem;
+      }
+      .tts-autoscroll-label {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header.site-header {
+        padding: 0 0.5rem;
+      }
+      .header-title-wrap h1 {
+        font-size: 0.85rem;
+        max-width: 130px;
+      }
+      .print-btn {
+        display: none !important;
+      }
+      main.content-area {
+        padding: 0.75rem 0.45rem;
+      }
+      .topic-section {
+        padding: 1rem 0.65rem;
+      }
+      .tts-current-title {
+        max-width: 90px;
       }
     }
 
@@ -1129,7 +1400,8 @@
   <header class="site-header">
     <div class="header-branding">
       <button class="btn-control mobile-menu-btn" id="toggle-sidebar" aria-label="فتح القائمة الجانبية">
-        ☰ الفهرس
+        <span>☰</span>
+        <span class="btn-text">الفهرس</span>
       </button>
       <div class="academy-badge">
         <span>⚔️ سلاح العصر</span>
@@ -1143,30 +1415,37 @@
     </div>
 
     <div class="header-controls">
-      <button class="btn-control tts-header-btn" id="tts-toggle-btn" title="القارئ الصوتي الذكي (Web Speech API) - مجاني 100%">
+      <button class="btn-control tts-header-btn" id="tts-toggle-btn" title="القارئ الصوتي الذكي (Web Speech API) - مجاني 100%" aria-label="القارئ الصوتي">
         <span id="tts-icon">🎧</span>
-        <span id="tts-header-text">القارئ الصوتي</span>
+        <span class="btn-text" id="tts-header-text">القارئ الصوتي</span>
       </button>
-      <button class="btn-control" id="theme-toggle" title="تبديل النمط النهاري / الليلي">
+      <button class="btn-control" id="theme-toggle" title="تبديل النمط النهاري / الليلي" aria-label="تبديل الوضع">
         <span id="theme-icon">🌙</span>
-        <span id="theme-text">الوضع الليلي</span>
+        <span class="btn-text" id="theme-text">الوضع الليلي</span>
       </button>
-      <button class="btn-control" id="expand-all-btn" title="فتح أو غلق كافة الأمثلة العملية">
-        📂 توسيع الأمثلة
+      <button class="btn-control" id="expand-all-btn" title="فتح أو غلق كافة الأمثلة العملية" aria-label="توسيع أو طي الأمثلة">
+        <span>📂</span>
+        <span class="btn-text" id="expand-all-text">توسيع الأمثلة</span>
       </button>
-      <button class="btn-control" onclick="window.print()" title="طباعة الدليل أو حفظه بصيغة PDF">
-        🖨️ طباعة
+      <button class="btn-control print-btn" onclick="window.print()" title="طباعة الدليل أو حفظه بصيغة PDF" aria-label="طباعة الدليل">
+        <span>🖨️</span>
+        <span class="btn-text">طباعة</span>
       </button>
     </div>
   </header>
 
   <!-- Main App Layout -->
   <div class="app-layout">
+    <!-- Backdrop Overlay for Mobile Sidebar Drawer -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
 
     <!-- Sticky Sidebar Table of Contents -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" aria-label="فهرس المواضيع">
       <div class="sidebar-header">
-        <h3>📑 خريطة المواضيع الهندسية</h3>
+        <div class="sidebar-header-top">
+          <h3>📑 خريطة المواضيع الهندسية</h3>
+          <button id="close-sidebar-btn" class="sidebar-close-btn" aria-label="إغلاق الفهرس" title="إغلاق الفهرس">✕</button>
+        </div>
         <p>التنقل السريع بين محاور ومنهجية البناء</p>
       </div>
 
@@ -3837,99 +4116,56 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       setTheme(current === 'dark' ? 'light' : 'dark');
     });
 
-    // Mobile Sidebar Toggle
+    // Mobile Sidebar Drawer & Overlay Management
     const sidebarToggleBtn = document.getElementById('toggle-sidebar');
     const sidebarEl = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
 
-    sidebarToggleBtn?.addEventListener('click', () => {
-      sidebarEl?.classList.toggle('open');
+    function openSidebar() {
+      sidebarEl?.classList.add('open');
+      sidebarOverlay?.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebarEl?.classList.remove('open');
+      sidebarOverlay?.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    sidebarToggleBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (sidebarEl?.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     });
 
-    // Table of Contents Smooth Scrolling & Active State Engine
-    let isProgrammaticScroll = false;
-    let programmaticScrollTimer = null;
+    closeSidebarBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeSidebar();
+    });
 
-    function getHeaderOffset() {
-      const header = document.querySelector('header.site-header');
-      return header ? header.offsetHeight : 72;
-    }
+    sidebarOverlay?.addEventListener('click', () => {
+      closeSidebar();
+    });
 
-    function setActiveTocLink(targetId, shouldScrollSidebar = true) {
-      if (!targetId) return;
-      const links = document.querySelectorAll('#toc-nav-list .toc-link');
-      let activeElement = null;
-
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${targetId}`) {
-          link.classList.add('active');
-          activeElement = link;
-        } else {
-          link.classList.remove('active');
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('.toc-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1100) {
+          closeSidebar();
         }
       });
+    });
 
-      // Smoothly ensure active link is visible inside aside.sidebar viewport
-      if (activeElement && sidebarEl && shouldScrollSidebar) {
-        const sidebarRect = sidebarEl.getBoundingClientRect();
-        const linkRect = activeElement.getBoundingClientRect();
-        const isOutsideView = linkRect.top < sidebarRect.top + 25 || linkRect.bottom > sidebarRect.bottom - 25;
-
-        if (isOutsideView) {
-          activeElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest'
-          });
-        }
+    // Close sidebar on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebarEl?.classList.contains('open')) {
+        closeSidebar();
       }
-    }
-
-    // Attach smooth scrolling animation to all Table of Contents links
-    document.querySelectorAll('#toc-nav-list .toc-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
-
-        const targetId = href.slice(1);
-        const targetElement = document.getElementById(targetId);
-        if (!targetElement) return;
-
-        e.preventDefault();
-
-        // Close sidebar on mobile
-        if (window.innerWidth <= 1100 && sidebarEl) {
-          sidebarEl.classList.remove('open');
-        }
-
-        // 1. Immediately activate clicked link for instantaneous feedback
-        setActiveTocLink(targetId, true);
-
-        // 2. Lock scrollspy temporarily during smooth scrolling animation to prevent intermediate flickering
-        isProgrammaticScroll = true;
-        if (programmaticScrollTimer) clearTimeout(programmaticScrollTimer);
-
-        // 3. Smooth scroll with accurate offset calculation
-        const headerOffset = getHeaderOffset();
-        const targetRect = targetElement.getBoundingClientRect();
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const targetScrollTop = currentScrollY + targetRect.top - headerOffset - 16;
-
-        window.scrollTo({
-          top: Math.max(0, targetScrollTop),
-          behavior: 'smooth'
-        });
-
-        // 4. Update browser URL hash without causing an abrupt native jump
-        if (window.history && window.history.pushState) {
-          window.history.pushState(null, '', href);
-        }
-
-        // 5. Unlock scrollspy once smooth scroll animation settles
-        programmaticScrollTimer = setTimeout(() => {
-          isProgrammaticScroll = false;
-          updateActiveTocFromScroll();
-        }, 800);
-      });
     });
 
     // Filter Table of Contents
@@ -3950,7 +4186,10 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       document.querySelectorAll('details.example-accordion').forEach(acc => {
         acc.open = allExpanded;
       });
-      expandAllBtn.textContent = allExpanded ? '📁 طي الأمثلة' : '📂 توسيع الأمثلة';
+      const textSpan = document.getElementById('expand-all-text');
+      if (textSpan) {
+        textSpan.textContent = allExpanded ? 'طي الأمثلة' : 'توسيع الأمثلة';
+      }
     });
 
     // Copy to Clipboard
@@ -4017,72 +4256,27 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       });
     }
 
-    // High-Precision Scrollspy for Active TOC Link Synchronization
-    function updateActiveTocFromScroll() {
-      if (isProgrammaticScroll) return;
-
+    // Scrollspy for Active TOC Link
+    window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('.topic-section');
-      if (!sections || sections.length === 0) return;
+      let currentId = '';
 
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      // 1. Bottom of page edge-case: activate the last section if near the page bottom
-      if (scrollY + windowHeight >= documentHeight - 60) {
-        const lastSection = sections[sections.length - 1];
-        if (lastSection && lastSection.id) {
-          setActiveTocLink(lastSection.id, true);
-          return;
-        }
-      }
-
-      // 2. Top of page edge-case: activate the first section if near top
-      if (scrollY < 180 && sections[0] && sections[0].id) {
-        setActiveTocLink(sections[0].id, false);
-        return;
-      }
-
-      const headerOffset = getHeaderOffset();
-      const triggerPoint = headerOffset + 90;
-
-      let currentSectionId = '';
-      let minDistance = Infinity;
-
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-
-        // Check if section spans across the triggerPoint
-        if (rect.top <= triggerPoint && rect.bottom > triggerPoint) {
-          currentSectionId = section.id;
-        }
-
-        // Secondary fallback: find the section whose top is closest to triggerPoint
-        const distance = Math.abs(rect.top - triggerPoint);
-        if (rect.top <= triggerPoint + 140 && distance < minDistance) {
-          minDistance = distance;
-          if (!currentSectionId) {
-            currentSectionId = section.id;
-          }
+      sections.forEach(sec => {
+        const secTop = sec.offsetTop - 120;
+        if (window.scrollY >= secTop) {
+          currentId = sec.getAttribute('id') || '';
         }
       });
 
-      if (currentSectionId) {
-        setActiveTocLink(currentSectionId, false);
-      }
-    }
-
-    // Throttled scroll listener using requestAnimationFrame for smooth 60fps tracking
-    let isScrollTicking = false;
-    window.addEventListener('scroll', () => {
-      if (!isScrollTicking) {
-        window.requestAnimationFrame(() => {
-          updateActiveTocFromScroll();
-          isScrollTicking = false;
+      if (currentId) {
+        document.querySelectorAll('.toc-link').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${currentId}`) {
+            link.classList.add('active');
+          }
         });
-        isScrollTicking = true;
       }
-    }, { passive: true });
+    });
 
     // Filter Glossary Table
     const glossarySearchInput = document.getElementById('glossary-search');
@@ -4405,21 +4599,6 @@ Identify critical issues and fix confirmed problems within scope. Do not invent 
       loadChecklists();
       initTTSSections();
       loadVoices();
-      updateActiveTocFromScroll();
-
-      if (window.location.hash) {
-        const hashId = window.location.hash.slice(1);
-        const target = document.getElementById(hashId);
-        if (target) {
-          setTimeout(() => {
-            const headerOffset = getHeaderOffset();
-            const rect = target.getBoundingClientRect();
-            const top = (window.pageYOffset || document.documentElement.scrollTop) + rect.top - headerOffset - 16;
-            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-            setActiveTocLink(hashId, true);
-          }, 200);
-        }
-      }
     });
   </script>
 </body>
