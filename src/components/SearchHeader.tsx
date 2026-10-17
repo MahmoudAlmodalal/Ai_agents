@@ -52,8 +52,8 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
   }, [onSearchChange]);
 
   return (
-    <header className="sticky top-0 z-40 bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors shadow-2xs">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+    <header className="site-header sticky top-0 z-40 bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors shadow-2xs">
+      <div className="header-inner max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Main Header Bar: Exactly 52px on mobile, 60px on desktop */}
         <div className="h-[52px] sm:h-[60px] flex items-center justify-between gap-3">
           {/* Brand Wordmark (Right in RTL) */}
@@ -100,7 +100,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
           </div>
 
           {/* Action Utility Controls (Left in RTL) */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="header-actions flex items-center gap-1.5 shrink-0">
             {/* Mobile Search Toggle Button */}
             <button
               onClick={onToggleMobileSearch}
@@ -187,7 +187,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
 
         {/* Collapsible Mobile Search Bar (Only shown on mobile when toggled or search has text) */}
         {isMobileSearchOpen && (
-          <div className="md:hidden pb-2.5 pt-1 border-t border-[var(--border-color)]/60 animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="mobile-search md:hidden pb-2.5 pt-1 border-t border-[var(--border-color)]/60 animate-in fade-in slide-in-from-top-2 duration-150">
             <div className="relative flex items-center">
               <span className="absolute right-3 text-slate-400 pointer-events-none text-xs" aria-hidden="true">
                 🔍

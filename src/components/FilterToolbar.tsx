@@ -54,10 +54,10 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
     showFavoritesOnly;
 
   return (
-    <div className="bg-[var(--bg-surface)] border-b border-[var(--border-color)] py-2.5 px-3 sm:px-6 lg:px-8 transition-colors no-print">
+    <div className="filter-toolbar bg-[var(--bg-surface)] border-b border-[var(--border-color)] py-2.5 px-3 sm:px-6 lg:px-8 transition-colors no-print">
       <div className="max-w-7xl mx-auto space-y-2">
         {/* Row 1: Categories & Favorites Swipeable Chips */}
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 -mx-1 px-1">
+        <div className="category-row flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 -mx-1 px-1">
           {/* Favorites Dedicated Chip */}
           <button
             onClick={onToggleFavoritesOnly}
@@ -109,7 +109,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
         </div>
 
         {/* Row 2: Content Types & Results Status */}
-        <div className="flex items-center justify-between gap-2 pt-1 border-t border-[var(--border-color)]/60 text-xs">
+        <div className="type-row flex items-center justify-between gap-2 pt-1 border-t border-[var(--border-color)]/60 text-xs">
           <div className="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5 -mx-1 px-1">
             {CONTENT_TYPES.map((type) => {
               const active = selectedContentType === type.id;

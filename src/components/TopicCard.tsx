@@ -54,7 +54,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   onToggleBookmark,
 }) => {
   return (
-    <article className="group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-all duration-200 ease-out shadow-xs hover:shadow-lg hover:scale-[1.015] hover:-translate-y-0.5 relative will-change-transform">
+    <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-all duration-200 ease-out shadow-xs hover:shadow-lg hover:scale-[1.015] hover:-translate-y-0.5 relative will-change-transform">
       {/* Top Header Row */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-2.5">
@@ -79,7 +79,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           </div>
 
           {/* Quick Actions: Bookmark Heart & Listen Button */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="topic-card-actions flex items-center gap-1.5 shrink-0">
             {/* Bookmark Heart Button */}
             <button
               onClick={() => onToggleBookmark(topic.id)}

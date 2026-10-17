@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./responsive.css";
 
 /* CSS Custom Properties & Design Tokens for Next.js App Router */
 :root {
