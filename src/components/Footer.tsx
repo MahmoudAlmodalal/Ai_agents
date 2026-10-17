@@ -138,6 +138,14 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
+                  href="/cheatsheet"
+                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <span className="text-slate-600">›</span> Cheatsheet البرومبتات
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/diagrams"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
