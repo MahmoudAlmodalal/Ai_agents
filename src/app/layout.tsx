@@ -1,20 +1,11 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Cairo } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/src/components/Navbar';
 import { Footer } from '@/src/components/Footer';
 import { ToastProvider } from '@/src/components/Toast';
 
-// 1. Next.js Optimized Google Font Configuration
-const cairo = Cairo({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-  variable: '--font-cairo',
-});
-
-// 2. Responsive Viewport Configuration (Next.js 15 Standard)
+// Responsive Viewport Configuration (Next.js 15 Standard)
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -74,7 +65,7 @@ export interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} scroll-smooth`}>
+    <html lang="ar" dir="rtl" className="scroll-smooth">
       <head>
         <meta charSet="utf-8" />
       </head>
