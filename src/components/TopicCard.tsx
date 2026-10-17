@@ -123,6 +123,17 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               </span>
             </button>
 
+            {/* Quick Diagram Button */}
+            <button
+              onClick={() => onOpenTopic(topic.id)}
+              className="h-8 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all cursor-pointer flex items-center gap-1 no-print"
+              title="عرض المخطط البياني التفاعلي (Mermaid.js)"
+              aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
+            >
+              <span className="text-xs">📊</span>
+              <span className="text-[11px] font-medium hidden xs:inline">مخطط</span>
+            </button>
+
             {/* Quick Print PDF Button */}
             <button
               onClick={() => {
@@ -166,12 +177,13 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             <span>⏱️</span>
             <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
           </span>
-          {topic.diagramCount > 0 && (
-            <span className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400">
-              <span>📊</span>
-              <span>{topic.diagramCount} مخططات</span>
-            </span>
-          )}
+          <span
+            className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400 font-medium"
+            title="مخططات Mermaid تفاعلية متوفرة بـ 3 زوايا هندسية (بنية النظام، مسار العمليات، تسلسل التفاعلات)"
+          >
+            <span>📊</span>
+            <span>مخطط Mermaid</span>
+          </span>
           {topic.promptCount > 0 && (
             <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
               <span>💬</span>

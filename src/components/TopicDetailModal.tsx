@@ -1,6 +1,7 @@
 import React from 'react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
+import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
 
 declare global {
   interface Window {
@@ -35,8 +36,10 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   onToggleBookmark,
 }) => {
   const contentContainerRef = React.useRef<HTMLDivElement>(null);
+  const diagramSectionRef = React.useRef<HTMLDivElement>(null);
   const [copyToast, setCopyToast] = React.useState<string | null>(null);
   const [readingProgress, setReadingProgress] = React.useState<number>(0);
+  const [showDiagram, setShowDiagram] = React.useState<boolean>(true);
 
   // Keep latest callbacks in ref to avoid stale closures during rapid key presses
   const keyActionRef = React.useRef({ onClose, onNavigateTopic, hasNext, hasPrev });
@@ -211,6 +214,34 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
+            {/* Visual Mermaid Diagram Toggle Button */}
+            <button
+              onClick={() => {
+                setShowDiagram((prev) => {
+                  const nextVal = !prev;
+                  if (nextVal && diagramSectionRef.current) {
+                    setTimeout(() => {
+                      diagramSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+                    }, 50);
+                  }
+                  return nextVal;
+                });
+              }}
+              className={`min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
+                showDiagram
+                  ? 'bg-blue-50 dark:bg-blue-950/40 text-[var(--brand-primary)] border-blue-300 dark:border-blue-700 shadow-2xs'
+                  : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]'
+              }`}
+              title="عرض أو إخفاء المخطط البياني التفاعلي (Mermaid)"
+              aria-label="عرض المخطط البياني"
+            >
+              <span className="text-sm">📊</span>
+              <span className="hidden sm:inline">المخطط البياني</span>
+              <span className="hidden md:inline text-[9px] font-mono bg-[var(--brand-primary)] text-white px-1.5 py-0.2 rounded-full">
+                Mermaid
+              </span>
+            </button>
+
             {/* Print as PDF Button */}
             <button
               onClick={() => window.print()}
@@ -323,8 +354,49 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
         {/* Scrollable Content Area */}
         <div
           ref={contentContainerRef}
-          className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area"
+          className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area space-y-6"
         >
+          {/* Interactive Mermaid Diagram Viewer Section */}
+          <section
+            ref={diagramSectionRef}
+            className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-3.5 sm:p-5 shadow-xs transition-all"
+            aria-label="المخطط الهندسي التفاعلي"
+          >
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-lg">📊</span>
+                <h3 className="text-xs sm:text-sm font-black text-[var(--text-main)]">
+                  المخطط الهندسي التفاعلي (Mermaid.js)
+                </h3>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>100% محلي · بدون أي API</span>
+                </span>
+              </div>
+
+              <button
+                onClick={() => setShowDiagram((prev) => !prev)}
+                className="text-xs font-bold text-[var(--brand-primary)] hover:underline flex items-center gap-1 cursor-pointer"
+                title={showDiagram ? 'طي المخطط' : 'إظهار المخطط'}
+              >
+                <span>{showDiagram ? 'طي المخطط' : 'إظهار المخطط'}</span>
+                <span className="text-[10px]">{showDiagram ? '▲' : '▼'}</span>
+              </button>
+            </div>
+
+            {showDiagram ? (
+              <MermaidViewer topic={topic} />
+            ) : (
+              <div
+                onClick={() => setShowDiagram(true)}
+                className="p-3 rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-center text-xs text-[var(--text-muted)] cursor-pointer hover:border-[var(--brand-primary)] hover:text-[var(--text-main)] transition-colors"
+              >
+                المخطط مطوي حالياً. انقر هنا أو على زر «المخطط البياني» بالأعلى لفتحه فورياً.
+              </div>
+            )}
+          </section>
+
+          {/* Rendered HTML Content */}
           <div
             dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
             className="prose dark:prose-invert max-w-none text-right"
