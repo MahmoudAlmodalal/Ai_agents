@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'motion/react';
+import { SkipBack, SkipForward, Play, Pause, Square, X } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 
 interface AudioPlayerBarProps {
@@ -31,8 +33,12 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
   if (!currentTopic && !isPlaying) return null;
 
   return (
-    <aside
-      className="fixed bottom-2.5 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[92%] max-w-2xl bg-[var(--bg-surface)]/95 border border-[var(--border-color)] rounded-2xl shadow-2xl p-2.5 sm:px-4 sm:py-3 backdrop-blur-md flex items-center justify-between gap-2 transition-all animate-in fade-in slide-in-from-bottom-5 duration-300 no-print audio-player-bar"
+    <motion.aside
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed bottom-2.5 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[92%] max-w-2xl bg-[var(--bg-surface)]/95 border border-[var(--border-color)] rounded-2xl shadow-2xl p-2.5 sm:px-4 sm:py-3 backdrop-blur-md flex items-center justify-between gap-2 transition-all no-print audio-player-bar"
       aria-label="مشغل القراءة الصوتية الذكية"
     >
       {/* Left: Indicator & Title */}
@@ -41,17 +47,17 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
         <div className="flex items-end gap-0.5 h-4 sm:h-5 w-5 shrink-0" aria-hidden="true">
           <span
             className={`w-0.5 sm:w-1 rounded-full bg-[var(--brand-primary)] ${
-              isPlaying && !isPaused ? 'animate-bounce h-4 sm:h-5' : 'h-1.5'
+              isPlaying && !isPaused ? 'equalizer-bar-1 h-4 sm:h-5' : 'h-1.5'
             }`}
           />
           <span
             className={`w-0.5 sm:w-1 rounded-full bg-emerald-500 ${
-              isPlaying && !isPaused ? 'animate-bounce delay-75 h-3 sm:h-4' : 'h-1'
+              isPlaying && !isPaused ? 'equalizer-bar-2 h-3 sm:h-4' : 'h-1'
             }`}
           />
           <span
             className={`w-0.5 sm:w-1 rounded-full bg-[var(--brand-primary)] ${
-              isPlaying && !isPaused ? 'animate-bounce delay-150 h-4 sm:h-5' : 'h-2'
+              isPlaying && !isPaused ? 'equalizer-bar-3 h-4 sm:h-5' : 'h-2'
             }`}
           />
         </div>
@@ -73,7 +79,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] text-[var(--text-main)] flex items-center justify-center text-[10px] sm:text-xs transition-colors cursor-pointer"
           title="الموضوع السابق"
         >
-          ⏭️
+          <SkipBack className="w-3.5 h-3.5" />
         </button>
 
         {isPlaying && !isPaused ? (
@@ -82,7 +88,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--brand-primary)] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
             title="إيقاف مؤقت"
           >
-            ⏸️
+            <Pause className="w-3.5 h-3.5 fill-current" />
           </button>
         ) : (
           <button
@@ -90,7 +96,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--brand-primary)] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
             title="تشغيل القراءة"
           >
-            ▶️
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
           </button>
         )}
 
@@ -99,7 +105,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] text-[var(--text-main)] flex items-center justify-center text-[10px] sm:text-xs transition-colors cursor-pointer"
           title="إيقاف كامل"
         >
-          ⏹️
+          <Square className="w-3 h-3 fill-current" />
         </button>
 
         <button
@@ -107,7 +113,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] text-[var(--text-main)] flex items-center justify-center text-[10px] sm:text-xs transition-colors cursor-pointer"
           title="الموضوع التالي"
         >
-          ⏮️
+          <SkipForward className="w-3.5 h-3.5" />
         </button>
       </div>
 
@@ -129,9 +135,9 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
           className="w-7 h-7 rounded-lg text-[var(--text-muted)] hover:text-red-600 flex items-center justify-center transition-colors cursor-pointer text-xs"
           title="إغلاق المشغل"
         >
-          ✕
+          <X className="w-3.5 h-3.5" />
         </button>
       </div>
-    </aside>
+    </motion.aside>
   );
 };

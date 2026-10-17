@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'motion/react';
+import { Clock, BarChart3, MessageSquare, Code2, CheckSquare, Headphones, Volume2, Printer } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, formatReadingTime } from '@/src/utils/searchUtils.ts';
 
@@ -71,7 +73,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
                 <span className="truncate">{topic.categoryName}</span>
                 <span aria-hidden="true" className="opacity-40 shrink-0">·</span>
                 <span className="inline-flex items-center gap-0.5 text-slate-700 dark:text-slate-300 font-medium shrink-0" title={`وقت القراءة التقديري: ${formatReadingTime(topic.readingTimeMinutes)}`}>
-                  <span>⏱️</span>
+                  <Clock className="w-3 h-3" />
                   <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
                 </span>
               </div>
@@ -91,10 +93,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               title={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
               aria-label={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
             >
-              <svg
+              <motion.svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                className={`w-4 h-4 transition-transform active:scale-75 ${
+                animate={isBookmarked ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                className={`w-4 h-4 ${
                   isBookmarked ? 'fill-current text-rose-500' : 'fill-none stroke-current stroke-2'
                 }`}
               >
@@ -103,7 +107,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
                   strokeLinejoin="round"
                   d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                 />
-              </svg>
+              </motion.svg>
             </button>
 
             {/* Quick listen button */}
@@ -117,7 +121,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               title="الاستماع الصوتي لهذا الموضوع"
               aria-label={`الاستماع الصوتي للموضوع ${topic.number}`}
             >
-              <span className="text-xs">{isCurrentlySpeaking ? '🔊' : '🎧'}</span>
+              {isCurrentlySpeaking ? <Volume2 className="w-3.5 h-3.5" /> : <Headphones className="w-3.5 h-3.5" />}
               <span className="text-[11px] font-medium hidden xs:inline">
                 {isCurrentlySpeaking ? 'يقرأ' : 'استماع'}
               </span>
@@ -130,7 +134,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               title="عرض المخطط البياني التفاعلي (Mermaid.js)"
               aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
             >
-              <span className="text-xs">📊</span>
+              <BarChart3 className="w-3.5 h-3.5" />
               <span className="text-[11px] font-medium hidden xs:inline">مخطط</span>
             </button>
 
@@ -144,11 +148,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               title="طباعة أو تصدير كملف PDF"
               aria-label={`طباعة الموضوع ${topic.number} كملف PDF`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                <rect x="6" y="14" width="12" height="8"></rect>
-              </svg>
+              <Printer className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
@@ -174,31 +174,31 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         {/* Content Indicators */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[var(--text-muted)] font-medium">
           <span className="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 font-semibold" title={`وقت القراءة التقديري: ${formatReadingTime(topic.readingTimeMinutes)}`}>
-            <span>⏱️</span>
+            <Clock className="w-3 h-3" />
             <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
           </span>
           <span
             className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400 font-medium"
             title="مخططات Mermaid تفاعلية متوفرة بـ 3 زوايا هندسية (بنية النظام، مسار العمليات، تسلسل التفاعلات)"
           >
-            <span>📊</span>
+            <BarChart3 className="w-3 h-3" />
             <span>مخطط Mermaid</span>
           </span>
           {topic.promptCount > 0 && (
             <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
-              <span>💬</span>
+              <MessageSquare className="w-3 h-3" />
               <span>{topic.promptCount} برومبتات</span>
             </span>
           )}
           {topic.codeSnippetCount > 0 && (
             <span className="inline-flex items-center gap-1 text-indigo-700 dark:text-indigo-400">
-              <span>💻</span>
+              <Code2 className="w-3 h-3" />
               <span>{topic.codeSnippetCount} أكواد</span>
             </span>
           )}
           {topic.checklistCount > 0 && (
             <span className="inline-flex items-center gap-1 text-amber-700 dark:text-amber-400">
-              <span>✅</span>
+              <CheckSquare className="w-3 h-3" />
               <span>{topic.checklistCount} بنود</span>
             </span>
           )}

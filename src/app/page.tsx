@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Search, HeartCrack } from 'lucide-react';
 import { TOPICS } from '@/src/data/topicsData.ts';
 import { TopicCategory, ContentType, TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, stripHtml } from '@/src/utils/searchUtils.ts';
@@ -298,7 +300,7 @@ export default function HomePage() {
       />
 
       {/* 3. Main Topic Explorer */}
-      <main className="page-shell flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6">
+      <main className={`page-shell flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 ${isTTSActive ? 'pb-24' : ''}`}>
         {/* Favorites Active Banner */}
         {showFavoritesOnly && (
           <div className="mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 flex items-center justify-between gap-3 text-xs">
@@ -374,25 +376,43 @@ export default function HomePage() {
         {/* Dynamic Topic Grid */}
         {filteredTopics.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            {filteredTopics.map((topic) => (
-              <TopicCard
-                key={topic.id}
-                topic={topic}
-                searchQuery={searchQuery}
-                onOpenTopic={handleOpenTopic}
-                onListenTopic={(t) => playTTSForTopic(t)}
-                isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
-                isBookmarked={bookmarks.includes(topic.id)}
-                onToggleBookmark={handleToggleBookmark}
-              />
-            ))}
+            <AnimatePresence mode="popLayout">
+              {filteredTopics.map((topic, index) => (
+                <motion.div
+                  key={topic.id}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{
+                    duration: 0.35,
+                    delay: index * 0.04,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  layout
+                >
+                  <TopicCard
+                    topic={topic}
+                    searchQuery={searchQuery}
+                    onOpenTopic={handleOpenTopic}
+                    onListenTopic={(t) => playTTSForTopic(t)}
+                    isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
+                    isBookmarked={bookmarks.includes(topic.id)}
+                    onToggleBookmark={handleToggleBookmark}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         ) : showFavoritesOnly ? (
           /* Empty Favorites State */
           <div className="text-center py-12 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xs">
-            <span className="text-4xl mb-3 block" aria-hidden="true">
-              💔
-            </span>
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              className="mb-3 flex justify-center"
+            >
+              <HeartCrack className="w-10 h-10 text-rose-400" />
+            </motion.div>
             <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] mb-1">
               قائمة المفضلة فارغة حالياً
             </h3>
@@ -409,9 +429,13 @@ export default function HomePage() {
         ) : (
           /* Empty Search State */
           <div className="text-center py-10 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xs">
-            <span className="text-3xl mb-2 block" aria-hidden="true">
-              🔍
-            </span>
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              className="mb-2 flex justify-center"
+            >
+              <Search className="w-10 h-10 text-[var(--text-faint)]" />
+            </motion.div>
             <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] mb-1">
               لم نعثر على نتائج مطابقة
             </h3>
@@ -443,6 +467,7 @@ export default function HomePage() {
       </footer>
 
       {/* 5. Deep Detail Reader Modal */}
+      <AnimatePresence>
       {activeTopic && (
         <TopicDetailModal
           topic={activeTopic}
@@ -456,8 +481,10 @@ export default function HomePage() {
           onToggleBookmark={handleToggleBookmark}
         />
       )}
+      </AnimatePresence>
 
       {/* 6. Floating Audio Narration Bar */}
+      <AnimatePresence>
       {isTTSActive && (
         <AudioPlayerBar
           currentTopic={ttsCurrentTopic}
@@ -489,6 +516,7 @@ export default function HomePage() {
           }}
         />
       )}
+      </AnimatePresence>
     </>
   );
 }

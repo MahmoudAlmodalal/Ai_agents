@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Headphones, Volume2, X, Printer, Heart, BarChart3, CheckCircle } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
@@ -180,12 +182,25 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   }, [topic]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 modal-backdrop-root">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm modal-backdrop-root"
+    >
       {/* Click outside backdrop for desktop */}
       <div className="absolute inset-0 hidden sm:block modal-backdrop-clickable" onClick={onClose} aria-hidden="true" />
 
       {/* Main Modal Container: Fullscreen on mobile, rounded card on tablet/desktop */}
-      <div className="relative w-full h-full sm:h-auto sm:max-h-[92vh] max-w-5xl bg-[var(--bg-surface)] sm:border sm:border-[var(--border-color)] sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-10 transition-colors modal-container-box">
+      <motion.div
+        initial={{ opacity: 0, y: 40, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 20, scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="relative w-full h-full sm:h-auto sm:max-h-[92vh] max-w-5xl bg-[var(--bg-surface)] sm:border sm:border-[var(--border-color)] sm:rounded-2xl flex flex-col overflow-hidden z-10 transition-colors modal-container-box"
+        style={{ boxShadow: 'var(--shadow-modal, 0 25px 50px -12px rgba(0,0,0,0.25))' }}
+      >
         {/* Sticky Modal Header (hidden during print) */}
         <header className="px-3 sm:px-6 py-2.5 sm:py-3.5 bg-[var(--bg-surface)] flex items-center justify-between gap-2.5 shrink-0 no-print">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -235,7 +250,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               title="عرض أو إخفاء المخطط البياني التفاعلي (Mermaid)"
               aria-label="عرض المخطط البياني"
             >
-              <span className="text-sm">📊</span>
+              <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">المخطط البياني</span>
               <span className="hidden md:inline text-[9px] font-mono bg-[var(--brand-primary)] text-white px-1.5 py-0.2 rounded-full">
                 Mermaid
@@ -293,7 +308,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               }`}
               title="الاستماع الصوتي لهذا الموضوع"
             >
-              <span className="text-sm">{isCurrentlySpeaking ? '🔊' : '🎧'}</span>
+              {isCurrentlySpeaking ? <Volume2 className="w-4 h-4" /> : <Headphones className="w-4 h-4" />}
               <span className="hidden sm:inline">
                 {isCurrentlySpeaking ? 'جاري القراءة' : 'استماع'}
               </span>
@@ -306,7 +321,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               title="إغلاق النافذة (Escape)"
               aria-label="إغلاق"
             >
-              <span>✕</span>
+              <X className="w-4 h-4" />
               <kbd className="hidden sm:inline text-[10px] font-mono text-[var(--text-faint)] bg-[var(--border-color)]/60 px-1 py-0.2 rounded">
                 Esc
               </kbd>
@@ -346,7 +361,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           aria-label="نسبة التقدم في القراءة"
         >
           <div
-            className="h-full bg-linear-to-r from-blue-600 via-indigo-500 to-emerald-500 transition-all duration-75 ease-out shadow-xs"
+            className="h-full reading-progress-bar transition-[width] duration-75 ease-out"
             style={{ width: `${readingProgress}%` }}
           />
         </div>
@@ -364,7 +379,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           >
             <div className="flex items-center justify-between gap-2 mb-3">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-lg">📊</span>
+                <BarChart3 className="w-5 h-5 text-[var(--brand-primary)]" />
                 <h3 className="text-xs sm:text-sm font-black text-[var(--text-main)]">
                   المخطط الهندسي التفاعلي (Mermaid.js)
                 </h3>
@@ -445,15 +460,23 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             <span>←</span>
           </button>
         </footer>
-      </div>
+      </motion.div>
 
       {/* Copy Toast Notification */}
-      {copyToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-60 px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <span>✓</span>
-          <span>{copyToast}</span>
-        </div>
-      )}
-    </div>
+      <AnimatePresence>
+        {copyToast && (
+          <motion.div
+            initial={{ y: 50, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 20, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-60 px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2"
+          >
+            <CheckCircle className="w-4 h-4" />
+            <span>{copyToast}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Search, Headphones, Sun, Moon, Printer, Heart } from 'lucide-react';
 
 interface SearchHeaderProps {
   searchQuery: string;
@@ -59,7 +61,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
           {/* Brand Wordmark (Right in RTL) */}
           <div className="flex items-center gap-2 min-w-0 shrink-0">
             <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-linear-to-br from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs select-none">
-              ⚔️
+              AI
             </span>
             <div className="min-w-0">
               <span className="text-sm sm:text-base font-extrabold text-[var(--text-main)] truncate block leading-tight">
@@ -74,9 +76,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
           {/* Center Search on Desktop (Hidden on mobile) */}
           <div className="hidden md:flex flex-1 max-w-md lg:max-w-lg mx-4">
             <div className="relative w-full flex items-center">
-              <span className="absolute right-3 text-slate-400 pointer-events-none text-xs" aria-hidden="true">
-                🔍
-              </span>
+              <Search className="absolute right-3 text-slate-400 pointer-events-none w-3.5 h-3.5" aria-hidden="true" />
               <input
                 type="text"
                 value={searchQuery}
@@ -112,7 +112,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
               title="البحث في المواضيع"
               aria-label="البحث"
             >
-              🔍
+              <Search className="w-4 h-4" />
             </button>
 
             {/* Favorites View Toggle Button */}
@@ -154,7 +154,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
               title="القارئ الصوتي الذكي (Web Speech API)"
               aria-label="القارئ الصوتي"
             >
-              <span className="text-sm">🎧</span>
+              <Headphones className="w-4 h-4" />
               <span className="hidden lg:inline">{isTTSActive ? 'صوت نشط' : 'قراءة صوتية'}</span>
             </button>
 
@@ -174,43 +174,62 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
             </button>
 
             {/* Theme Toggle */}
-            <button
+            <motion.button
               onClick={onToggleTheme}
-              className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center text-sm cursor-pointer"
+              whileTap={{ scale: 0.9 }}
+              className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center text-sm cursor-pointer overflow-hidden"
               title="تبديل النمط النهاري / الليلي"
               aria-label="تبديل النمط"
             >
-              {isDark ? '☀️' : '🌙'}
-            </button>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isDark ? 'sun' : 'moon'}
+                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
           </div>
         </div>
 
         {/* Collapsible Mobile Search Bar (Only shown on mobile when toggled or search has text) */}
+        <AnimatePresence>
         {isMobileSearchOpen && (
-          <div className="mobile-search md:hidden pb-2.5 pt-1 border-t border-[var(--border-color)]/60 animate-in fade-in slide-in-from-top-2 duration-150">
-            <div className="relative flex items-center">
-              <span className="absolute right-3 text-slate-400 pointer-events-none text-xs" aria-hidden="true">
-                🔍
-              </span>
-              <input
-                ref={searchInputRef}
-                type="text"
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="ابحث (Sequence, PRD, N+1, UML, استعارة)..."
-                className="w-full h-10 pr-9 pl-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] font-sans"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => onSearchChange('')}
-                  className="absolute left-2 px-2 py-1 text-[11px] text-[var(--text-muted)] bg-[var(--border-color)] rounded-md font-bold cursor-pointer"
-                >
-                  مسح
-                </button>
-              )}
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mobile-search md:hidden overflow-hidden"
+          >
+            <div className="pb-2.5 pt-1 border-t border-[var(--border-color)]/60">
+              <div className="relative flex items-center">
+                <Search className="absolute right-3 text-slate-400 pointer-events-none w-3.5 h-3.5" aria-hidden="true" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange(e.target.value)}
+                  placeholder="ابحث (Sequence, PRD, N+1, UML, استعارة)..."
+                  className="w-full h-10 pr-9 pl-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] font-sans"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => onSearchChange('')}
+                    className="absolute left-2 px-2 py-1 text-[11px] text-[var(--text-muted)] bg-[var(--border-color)] rounded-md font-bold cursor-pointer"
+                  >
+                    مسح
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </div>
     </header>
   );

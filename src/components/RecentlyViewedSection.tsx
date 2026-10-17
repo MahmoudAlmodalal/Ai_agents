@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'motion/react';
+import { History, Clock } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 
@@ -29,7 +31,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2">
           <span className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-[var(--brand-primary)] flex items-center justify-center text-sm shadow-2xs">
-            🕒
+            <History className="w-4 h-4" />
           </span>
           <div>
             <div className="flex items-center gap-2">
@@ -70,12 +72,15 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
-        {topics.map((topic) => {
+        {topics.map((topic, index) => {
           const isBookmarked = bookmarks.includes(topic.id);
 
           return (
-            <div
+            <motion.div
               key={topic.id}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.06, duration: 0.3 }}
               onClick={() => onOpenTopic(topic.id)}
               className="group flex flex-col justify-between p-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-md hover:-translate-y-0.5 relative"
             >
@@ -130,7 +135,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               {/* Footer info: Reading time & Open prompt */}
               <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] pt-2 border-t border-[var(--border-color)]">
                 <span className="inline-flex items-center gap-1 font-medium">
-                  <span>⏱️</span>
+                  <Clock className="w-3 h-3" />
                   <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
                 </span>
                 <span className="font-semibold text-[var(--brand-primary)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
@@ -138,7 +143,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                   <span>←</span>
                 </span>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
