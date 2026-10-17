@@ -14,34 +14,32 @@
 - النسخة الحالية ناجحة في `npm run lint` و`npm run build` قبل التعديل.
 - نقاط إعادة الاستخدام المهمة: هوية MET الحالية، `Navbar`, `Footer`, CSS tokens، `MermaidViewer`, أدوات التطبيع والبحث، وWeb Speech API.
 
-## خريطة المحتوى المعتمدة
+## خريطة المحتوى المعتمدة داخل تقسيم الموضوعات
 
-| الصفحة/المسار | المحتوى الذي سيُعرض |
+نحافظ على تجربة الموقع الحالية القائمة على 12 موضوعًا وبطاقات ومودال القراءة، ونستبدل المادة العامة داخلها بالنسخة المعتمدة. لا ننشئ نظام صفحات محاضرات منفصلًا إلا إذا كان ذلك ضروريًا لإعادة استخدام رابط أو وظيفة موجودة.
+
+| الموضوع الحالي | إعادة المواءمة المعتمدة |
 |---|---|
-| `/` | Hero، فلسفة الدورة، الرحلة ذات 7 مراحل، المحاضرات، BorrowHub، الجمهور، CTA |
-| `/start` | خطوات البداية، المتطلبات، Agent/Skill/MCP/PRD، مستودع `docs/` |
-| `/lectures` | فهرس المحاضرات وحالات النشر والتقدم |
-| `/lectures/01-product-discovery` | Grill Me، PRD ذي 27 قسمًا، المفاهيم، التطبيق، الأخطاء، التسليم |
-| `/lectures/02-prd-github-user-flow` | مراجعة PRD، PRD vs SRS، Git/GitHub، GitHub Hands-On، User Flow Mermaid |
-| `/lectures/03-diagrams-erd` | Domain/UML/ERD، الفرق بين العدسات، BorrowHub، مراجعة قاعدة البيانات |
-| `/lectures/04-pending` | حالة غير منشورة: بانتظار اعتماد المحتوى، بلا مادة تعليمية مخترعة |
-| `/lectures/05-uiux-stitch-frontend` | UX Discovery، Stitch، Screen Prompts، Prototype، MCP، DESIGN.md، Frontend Plan، Spec Kit، QA |
-| `/prompts` | مكتبة بحث/تصفية لـPROMPT 01–30، كل Prompt مستقل مع الهدف والمدخلات والمخرجات والأداة والتحذيرات والكود ونسخ فعلي |
-| `/diagrams` | مختبر User Flow وDomain وUse Case وActivity وSequence وState وClass وERD وروابط المحررات الرسمية |
-| `/borrowhub` | القصة، الأدوار، قواعد النموذج الأحدث، رحلة الطالب، الملفات المتاحة فقط، مخطط قابل للعرض، تنبيه مراجعة PRD |
-| `/tools` | Antigravity، Grill Me، Git/GitHub، Mermaid، PlantUML، dbdiagram، Stitch، Stitch MCP، DESIGN.md، Next.js، UI/UX Pro Max، Spec Kit |
-| `/templates` | بطاقات القوالب مع حالة «غير متاح/قريبًا» ما لم يوجد الملف فعليًا |
-| `/glossary` | قاموس المصطلحات 30 بندًا مع بحث |
-| `/faq` | الأسئلة والأجوبة المعتمدة |
-| `/about` | تعريف الدورة وفلسفة التدريب وما يبنيه الطالب |
+| 01 | ابدأ هنا: الفكرة، Agent/Skill/MCP، عدم التخمين، مسار الدورة |
+| 02 | Product Discovery وGrill Me واستخراج القرارات |
+| 03 | PRD ذي 27 قسمًا + مراجعة المتطلبات |
+| 04 | Git/GitHub/User Flow وMermaid؛ دون إدخال MVP Tasks |
+| 05 | Database Analysis وERD وقواعد BorrowHub الموثقة |
+| 06 | مختبر المخططات: Domain/Use Case/Activity/Sequence/State/Class/ERD |
+| 07 | المحاضرة الرابعة: حالة بانتظار اعتماد المحتوى، دون اختلاق درس |
+| 08 | UX Discovery وGoogle Stitch وScreen Prompts وPrototype |
+| 09 | Stitch MCP وDESIGN.md واستخراج القيم المؤكدة فقط |
+| 10 | Frontend-only Next.js Plan وSpec Kit وUI/UX Pro Max |
+| 11 | Prompt Library: PROMPT 01–30، بحث وتصفية ونسخ فعلي |
+| 12 | BorrowHub + الأدوات والقوالب والقاموس وFAQ وQA المرجعي |
 
 ## نموذج التنفيذ
 
-- إنشاء طبقة بيانات typed في `src/data/courseContent.ts` تستخرج المحتوى من المرجع وتفصل: lectures, prompts, diagrams, tools, glossary, faq, templates.
+- إنشاء طبقة بيانات typed في `src/data/courseContent.ts` أو تحسين `TOPICS` الحالية، مع فصل metadata عن HTML التفصيلي داخل كل موضوع.
 - استخدام مكونات مشتركة: `SiteShell`, `PageHero`, `StatusBadge`, `SectionCard`, `CopyButton`, `CodeBlock`, `ProgressRail`, `PromptCard`, `ResourceStatus`.
 - جعل الصفحات Server Components قدر الإمكان؛ استخدام Client Components فقط للنسخ والبحث والتصفية وMermaid/Web Speech.
 - الحفاظ على RTL على مستوى الموقع، ووضع `dir="ltr"` صراحة للأكواد ومخططات Mermaid/PlantUML/DBML والروابط التقنية.
-- استبدال موضوعات `TOPICS` العامة من التنقل، مع الإبقاء على المكونات القديمة القابلة لإعادة الاستخدام إلى حين استقرار الصفحات.
+- الإبقاء على `TOPICS` و`TopicCard` و`TopicDetailModal` كهيكل أساسي، وإعادة تسمية/إعادة كتابة الموضوعات تدريجيًا وفق الجدول أعلاه؛ لا نحذف الوظائف الحالية مثل البحث والمفضلة والصوت والطباعة.
 - تحديث `public/manus-routes.json` مع كل route فعلي.
 - عدم إضافة Backend أو مصادقة أو تتبع دائم أو تنزيلات وهمية.
 

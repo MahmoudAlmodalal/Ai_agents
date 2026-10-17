@@ -8,17 +8,18 @@
 - [ ] Create typed course data for lectures, prompts, diagrams, tools, templates, glossary, FAQ, and resource availability without inventing unavailable materials.
 - [ ] Preserve the MET Academy navy/green/light visual identity and remove irrelevant generic AI Agents claims from visible content.
 
-## 2. Core pages
+## 2. Topic-based course content
 
-- [ ] Build `/` with the approved hero, course promise, seven-stage path, lecture summary, BorrowHub callout, audience, and final CTA.
-- [ ] Build `/start` with the first eight learner steps, required setup, and the Agent/Skill/MCP/PRD explanation.
-- [ ] Build `/lectures` with published/pending statuses, course progress framing, and links to each lecture.
-- [ ] Build `/lectures/01-product-discovery` with explanations, concepts, application steps, the complete 27-section PRD list, outputs, and common mistakes.
-- [ ] Build `/lectures/02-prd-github-user-flow` with PRD review, PRD vs SRS, Git/GitHub definitions and hands-on, and Mermaid User Flow; explicitly exclude MVP Development Tasks as a standalone lecture topic.
-- [ ] Build `/lectures/03-diagrams-erd` with all approved diagram lenses, ERD focus, BorrowHub example, database review questions, and outputs.
-- [ ] Build `/lectures/04-pending` as a clearly marked pending lesson with no invented educational content.
-- [ ] Build `/lectures/05-uiux-stitch-frontend` with UX discovery, Stitch, prompts, prototype, Stitch MCP, DESIGN.md, frontend-only Next.js plan, Spec Kit, UI/UX Pro Max, and QA boundaries.
-- [ ] Add previous/next lecture navigation and a collapsible lesson progress rail.
+- [ ] Keep the existing 12-topic cards, search, category filters, favorites, TTS, print, and modal reader as the primary experience.
+- [ ] Re-map topic titles, subtitles, summaries, tags, categories, and counts to the approved course content instead of generic AI Agents material.
+- [ ] Improve Topic 01 with the approved Start Here workflow and the Agent/Skill/MCP/PRD distinction.
+- [ ] Improve Topics 02–03 with the real Grill Me, PRD 27-section structure, review method, outputs, and open-question discipline.
+- [ ] Improve Topic 04 with Git/GitHub and User Flow Mermaid; do not add MVP Development Tasks to this topic.
+- [ ] Improve Topics 05–06 with the approved Database/ERD and eight diagram lenses, keeping code and diagrams LTR.
+- [ ] Mark Topic 07 as the approved lecture-04 pending state without invented lecture content.
+- [ ] Improve Topics 08–10 with UX Discovery, Stitch, screen prompts, prototype, Stitch MCP, DESIGN.md, Frontend-only Next.js planning, Spec Kit, and UI/UX Pro Max.
+- [ ] Use Topic 11 as the searchable PROMPT 01–30 library and Topic 12 as BorrowHub plus reference materials, or expose these as sections within the existing topic reader without breaking routes.
+- [ ] Keep unavailable downloads/resources visibly unavailable and avoid broken links.
 
 ## 3. Prompt Library
 
