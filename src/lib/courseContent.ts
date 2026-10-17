@@ -35,6 +35,86 @@ export interface PromptEntry {
 const SOURCE_PATH = path.join(process.cwd(), 'Weapon_of_the_Era_Website_Content_AR.md');
 const source = fs.readFileSync(SOURCE_PATH, 'utf8');
 
+const SUPPLEMENTARY_CONTENT: Record<string, string> = {
+  'google-ai-studio-stitch-workflow': `
+## لماذا نستخدم Google AI Studio وGoogle Stitch؟
+
+هذا المسار يفصل بين مرحلتين مختلفتين: نستخدم **Google AI Studio** للتجربة مع نماذج Gemini، تحليل المتطلبات، تحسين البرومبتات، ومراجعة الخطط؛ ونستخدم **Google Stitch** لتوليد واستكشاف واجهات Web وMobile من وصف نصي أو مرجع بصري ثم تصدير التصميم أو كود Frontend قابل للمراجعة.
+
+روابط الخدمة الرسمية: [Google AI Studio](https://aistudio.google.com/) و[Google Stitch](https://stitch.withgoogle.com/) و[توثيق Stitch MCP](https://stitch.withgoogle.com/docs/mcp/setup).
+
+## تنبيه مهم حول الـTokens والـquota
+
+لا نعد بأن استخدام Stitch لا يستهلك أي quota أو لا يرتبط بحساب Google. الخدمات قد تكون لها حدود استخدام وشروط مستقلة، بينما Gemini API يقيس عادةً Requests per Minute وTokens per Minute وRequests per Day على مستوى المشروع، وليس على مستوى مفتاح API فقط. راجع صفحة Usage وRate limits في AI Studio قبل تنفيذ جلسات طويلة.
+
+إذا كان المقصود هو عدم استهلاك **باقة Coding Agent أو API key خاصة بمشروعك** عند تصميم الواجهات داخل Stitch، فهذه ليست ضمانة عامة يمكن نشرها كحقيقة. اعتبر Stitch أداة تصميم مستقلة، وتحقق من حسابك وحدوده وسياسة المنتج الحالية. لا تضع API key في الواجهة أو داخل GitHub.
+
+## المسار العملي من أي جهاز إلى Frontend على GitHub
+
+### 1. تجهيز المشروع
+
+أنشئ Repository خاصًا أو عامًا حسب حاجتك، ثم أضف \`README.md\` وملف \`PROJECT_CONTEXT.md\`. احتفظ بمخرجات التحليل داخل \`docs/\`، ولا تبدأ بتوليد كل الشاشات قبل تثبيت نطاق المنتج.
+
+### 2. استخدام Google AI Studio
+
+افتح AI Studio من الهاتف أو اللاب وسجّل الدخول بحساب Google. استخدمه لتحليل \`PROJECT_CONTEXT.md\` و\`PRD.md\`، توليد أسئلة Grill Me، مراجعة المتطلبات، وبناء \`FRONTEND_PLAN.md\`. عند استخدام Gemini API، خزّن المفتاح في متغير بيئة ولا تضعه في الكود أو GitHub. اختبر الإجابة على جزء صغير، وراجعها يدويًا قبل اعتمادها.
+
+### 3. نقل الفكرة إلى Stitch
+
+افتح Stitch، أنشئ مشروعًا جديدًا، ثم أدخل وصفًا واضحًا لدور المستخدم والشاشة والهدف والحالات المطلوبة. يمكن استخدام وصف نصي أو صورة/wireframe كمرجع. ابدأ بشاشة ممثلة واحدة، اعتمد الاتجاه البصري ونظام التصميم، ثم أنشئ كل شاشة بشكل منفصل. راجع Desktop وMobile وRTL وحالات Loading وEmpty وError وSuccess قبل اعتماد التصميم.
+
+### 4. سحب التصميم أو الكود من Stitch
+
+بعد اعتماد الشاشة، استخدم إمكانيات Stitch المتاحة في حسابك لتصدير Frontend code أو نقل التصميم إلى Figma أو استخدام Stitch MCP مع IDE/CLI مدعوم. التصدير ليس تطبيقًا مكتملًا ولا Backend؛ يجب تنظيف الكود ومقارنته مع \`DESIGN.md\` و\`FRONTEND_PLAN.md\` قبل دمجه.
+
+### 5. كتابة خطة Frontend
+
+بعد اعتماد المراجع البصرية، اطلب توليد الملفات التالية: \`docs/FRONTEND_PLAN.md\` و\`docs/FRONTEND_TASKS.md\` و\`docs/ROUTES_MAP.md\` و\`docs/COMPONENT_ARCHITECTURE.md\` و\`docs/FRONTEND_DATA_CONTRACTS.md\`. الخطة تحدد routes وcomponents وmock data وحالات الواجهة، ولا تنشئ Backend أو API حقيقيًا ما لم يكن ذلك مطلوبًا في مرحلة أخرى.
+
+### 6. تقسيم الخطة إلى Phases
+
+قسّم العمل إلى مراحل منطقية خاصة بالمشروع: setup، design tokens، shared components، layout/navigation، الشاشات الأساسية، التفاعلات، mock data، responsive QA، ثم final testing. لا تفرض هذه المراحل على كل مشروع، ولا تجعل كل زر Phase مستقلة. كل Feature يجب أن يحتوي على Tasks صغيرة ذات Acceptance Criteria وVerification method.
+
+### 7. تنفيذ Frontend وربطه بـGitHub
+
+نفّذ Task واحدة فقط في كل دورة، افحص التغيير، ثم نفّذ \`git status\` و\`git add\` و\`git commit\` و\`git push\`. استخدم فرعًا مثل \`feature/dashboard-layout\` بدل التعديل المباشر على \`main\`. ارفع الكود والوثائق، ولا ترفع \`.env\` أو مفاتيح Google أو Tokens.
+
+### 8. العمل من الهاتف واللاب
+
+يمكن من الهاتف فتح AI Studio وStitch وGitHub لمراجعة المحادثات والتصميمات والـCommits وفتح Issues أو Pull Requests، ويمكن تنفيذ تعديلات صغيرة إذا كانت بيئة التحرير تدعم ذلك. أما بناء Frontend طويل، تشغيل \`npm run build\`، مراجعة Responsive layouts، وإصلاح TypeScript فمن الأفضل تنفيذه على لاب أو Cloud IDE. GitHub هو نقطة المزامنة: اعمل Commit من أي جهاز ثم نفّذ \`git pull\` على الجهاز الآخر قبل المتابعة.
+
+## دورة العمل المختصرة
+
+\`AI Studio لتحليل المتطلبات → Stitch للتصميم → DESIGN.md → Frontend Plan → Phases وTasks → تنفيذ واجهة واحدة → QA → Commit وPush إلى GitHub → Pull على اللاب أو الجهاز التالي → متابعة التعديل\`.
+
+## Prompt عملي لمسار كامل
+
+
+
+\`\`\`text
+أنت مهندس Frontend ومخطط منتج. اقرأ PROJECT_CONTEXT.md وPRD.md وأي مراجع Stitch معتمدة.
+لا تنشئ Backend أو API أو migrations.
+أولاً استخرج أهداف المستخدم والشاشات والحالات وقواعد العمل.
+ثانيًا أنشئ FRONTEND_PLAN.md وROUTES_MAP.md وCOMPONENT_ARCHITECTURE.md وFRONTEND_DATA_CONTRACTS.md.
+ثالثًا اقترح Phases مناسبة للمشروع، ولكل Phase Tasks صغيرة مع الملفات والمدخلات والاعتماديات وAcceptance Criteria وطريقة التحقق.
+رابعًا اختر أول Task جاهزة فقط ولا تنفذ غيرها.
+خامسًا بعد التنفيذ شغّل الفحوصات المتاحة، لخّص الملفات المتغيرة، وتوقف.
+استخدم DESIGN.md والقيم المعتمدة من Stitch كمصدر الحقيقة البصري.
+لا تفترض وجود Login أو Dashboard أو Checkout إلا إذا وردت في PRD.
+\`\`\` 
+
+## المراجع الرسمية
+
+- [Google AI Studio](https://aistudio.google.com/)
+- [Gemini API rate limits](https://ai.google.dev/gemini-api/docs/rate-limits)
+- [Gemini API keys and security](https://ai.google.dev/gemini-api/docs/api-key)
+- [Gemini API billing and usage](https://ai.google.dev/gemini-api/docs/billing)
+- [Google Stitch](https://stitch.withgoogle.com/)
+- [Stitch MCP setup](https://stitch.withgoogle.com/docs/mcp/setup)
+- [Google announcement: Stitch](https://developers.googleblog.com/stitch-a-new-way-to-design-uis/)
+`,
+};
+
 export const COURSE_TOPICS: CourseTopic[] = [
   { slug: 'fundamentals-ai-agents', titleAr: 'فهم AI Agents', titleEn: 'Understanding AI Agents', phase: 'الأساسيات', sourceHeading: '## ما الفرق بين AI Agent وSkill وMCP؟', summary: 'افهم الفرق بين Agent وSkill وMCP وPrompt، وكيف تُدار الصلاحيات والسياق والمراجعة البشرية.', outputs: ['PROJECT_CONTEXT.md'] },
   { slug: 'requirements-discovery', titleAr: 'اكتشاف المتطلبات والفكرة', titleEn: 'Project Discovery & Requirements', phase: 'المتطلبات', sourceHeading: '## خطوات التطبيق', summary: 'حوّل فكرة غامضة إلى مشكلة ومستخدمين ونطاق MVP وقواعد عمل قابلة للمراجعة.', outputs: ['docs/PROJECT_CONTEXT.md'] },
@@ -48,6 +128,7 @@ export const COURSE_TOPICS: CourseTopic[] = [
   { slug: 'ui-ux', titleAr: 'أساسيات UI وUX', titleEn: 'UI/UX Fundamentals', phase: 'التجربة', sourceHeading: '## مفاهيم تصميم مهمة', summary: 'تعلم الفرق بين UI وUX، وبناء تجربة قابلة للاستخدام ومتجاوبة وميسرة وملائمة للعربية RTL.', outputs: ['قرارات تجربة المستخدم'] },
   { slug: 'ui-ux-discovery', titleAr: 'اكتشاف الشاشات والتخطيط UX', titleEn: 'UX Discovery & Screen Planning', phase: 'التجربة', sourceHeading: '## 11. UI/UX Discovery & Screen Planning', summary: 'حوّل PRD إلى Sitemap وUX Blueprint وScreen Inventory مع حالات كل شاشة.', outputs: ['docs/UI_UX_REQUIREMENTS.md', 'docs/UX_BLUEPRINT.md', 'docs/SCREEN_INVENTORY.md'] },
   { slug: 'google-stitch', titleAr: 'Google Stitch والتصميم المرئي', titleEn: 'Google Stitch', phase: 'التصميم', sourceHeading: '## 12. Google Stitch', summary: 'صمّم شاشة ممثلة أولًا، ثم نظام تصميم وشاشات منفصلة مع مراجعة واتساق وتدفق تفاعلي.', outputs: ['STITCH_MASTER_PROMPT.md', 'STITCH_SCREEN_PROMPTS.md'] },
+  { slug: 'google-ai-studio-stitch-workflow', titleAr: 'Google AI Studio وStitch من أي جهاز إلى GitHub', titleEn: 'AI Studio → Stitch → Frontend → GitHub', phase: 'التصميم والتنفيذ', sourceHeading: '', summary: 'مسار عملي لاستخدام AI Studio للتحليل، وStitch للتصميم والتصدير، ثم خطة Frontend وتقسيم Phases وتنفيذ الكود ومزامنته عبر GitHub.', outputs: ['DESIGN.md', 'docs/FRONTEND_PLAN.md', 'docs/FRONTEND_TASKS.md', 'GitHub commits'] },
   { slug: 'design-md', titleAr: 'Design System وDESIGN.md', titleEn: 'Design System & DESIGN.md', phase: 'التصميم', sourceHeading: '## 13. Design System & DESIGN.md', summary: 'استخرج القيم المرئية المعتمدة من Stitch إلى عقد تصميم يستخدمه فريق Frontend.', outputs: ['DESIGN.md'] },
   { slug: 'stitch-mcp', titleAr: 'تكامل Stitch MCP', titleEn: 'Stitch MCP Integration', phase: 'التكامل', sourceHeading: '## 14. Stitch MCP Integration', summary: 'اربط Stitch بـCoding Agent بأمان، تحقق من الاتصال، واستخرج مراجع التصميم المعتمدة.', outputs: ['مراجع Stitch موثقة'] },
   { slug: 'frontend-planning', titleAr: 'تخطيط Next.js Frontend', titleEn: 'Next.js Frontend Planning', phase: 'الفرونت إند', sourceHeading: '## 15. Next.js Frontend Planning', summary: 'حوّل التصميم المعتمد إلى خطة Frontend فقط: routes وcomponents وmock data وحالات UI.', outputs: ['docs/FRONTEND_PLAN.md', 'docs/FRONTEND_TASKS.md', 'docs/ROUTES_MAP.md', 'docs/COMPONENT_ARCHITECTURE.md', 'docs/FRONTEND_DATA_CONTRACTS.md'] },
@@ -75,7 +156,7 @@ export function getTopic(slug: string): CourseTopic | undefined {
 }
 
 export function getTopicContent(topic: CourseTopic): string {
-  return sectionFromHeading(topic.sourceHeading);
+  return SUPPLEMENTARY_CONTENT[topic.slug] ?? sectionFromHeading(topic.sourceHeading);
 }
 
 const promptHeadingPattern = /^## PROMPT (\d{2}) — (.+)$/gm;
