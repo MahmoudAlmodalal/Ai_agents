@@ -39,6 +39,7 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'مسار التعلم', href: '/learn/fundamentals-ai-agents', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
   { title: 'المتطلبات', href: '/learn/requirements-discovery', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
   { title: 'AI Studio وStitch', href: '/learn/google-ai-studio-stitch-workflow', icon: Sparkles, badge: 'Design → GitHub', isPrimary: true },
+  { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: '20 محاضرة', isPrimary: true },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: '31 برومبت', isPrimary: true },
   { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: true },
   { title: 'ورشة BorrowHub', href: '/borrowhub', icon: FolderGit2, badge: 'حالة عملية', isPrimary: true },
