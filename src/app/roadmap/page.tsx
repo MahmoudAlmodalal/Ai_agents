@@ -38,7 +38,7 @@ export default function RoadmapPage() {
               <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
                 <div className="flex shrink-0 items-center gap-3 lg:w-64 lg:flex-col lg:items-start">
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-lg font-black text-white">{String(lecture.number).padStart(2, '0')}</span>
-                  <div><p className="text-xs font-bold text-[var(--accent)]">{lecture.axis}</p><h2 className="mt-1 text-xl font-black text-[var(--text-main)]">{lecture.title}</h2></div>
+                  <div><p className="text-xs font-bold text-[var(--accent)]">{lecture.axis}</p><Link href={`/roadmap/${lecture.number}`} className="group/title"><h2 className="mt-1 text-xl font-black text-[var(--text-main)] group-hover/title:text-[var(--primary)]">{lecture.title}</h2><span className="mt-1 block text-xs font-bold text-[var(--primary)]">فتح الدرس ←</span></Link></div>
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="leading-8 text-[var(--text-muted)]"><strong className="text-[var(--text-main)]">المخرج:</strong> {lecture.outcome}</p>
