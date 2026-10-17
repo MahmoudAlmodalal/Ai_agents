@@ -1,49 +1,51 @@
-export interface SiteMetadata {
-  title: string;
-  description: string;
-  keywords: string[];
-  openGraph: {
-    title: string;
-    description: string;
-    type: string;
-    locale: string;
-    siteName: string;
-  };
-  twitter: {
-    card: string;
-    title: string;
-    description: string;
-  };
-}
+import type { Metadata, Viewport } from 'next';
 
-export const metadata: SiteMetadata = {
-  title: 'الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي',
+export const siteViewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#1e3a5f',
+};
+
+export const siteMetadata: Metadata = {
+  title: {
+    default: "سلاح العصر — MET Academy | Don't Just Prompt. Engineer.",
+    template: '%s | سلاح العصر — MET Academy',
+  },
   description:
-    'مرجع هندسي شامل ومفصل مقسم موضوعياً: من استنطاق الفكرة ووثيقة PRD والمخططات الهندسية الثمانية (UML & ERD) إلى هندسة قواعد البيانات وتصميم الواجهات وتطوير الفرونت إند.',
+    'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy. من الفكرة ووثيقة PRD والمخططات الهندسية إلى فرونت إند احترافي قابل للإنتاج. لا تكن ملقناً بل مهندساً.',
   keywords: [
-    'هندسة البرمجيات',
-    'الذكاء الاصطناعي',
-    'Next.js App Router',
+    'سلاح العصر',
+    'MET Academy',
+    'هندسة البرمجيات بالذكاء الاصطناعي',
+    'AI Agents',
+    'Next.js 15 App Router',
+    'BorrowHub',
     'Mermaid Diagrams',
     'UML',
     'ERD',
     'وثيقة PRD',
-    'معمارية الأنظمة',
-    'قواعد البيانات',
-    'مشاريع هندسية',
+    'Google Stitch',
   ],
+  authors: [{ name: 'MET Academy' }],
+  creator: 'MET Academy',
+  publisher: 'MET Academy',
+  metadataBase: new URL('https://met-academy.com'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي',
+    title: "سلاح العصر — MET Academy | Don't Just Prompt. Engineer.",
     description:
-      'مرجع هندسي شامل ومفصل مقسم موضوعياً: من استنطاق الفكرة ووثيقة PRD والمخططات الهندسية الثمانية (UML & ERD) إلى هندسة قواعد البيانات وتصميم الواجهات وتطوير الفرونت إند.',
+      'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy. لا تكن ملقناً بل مهندساً.',
     type: 'website',
     locale: 'ar_SA',
-    siteName: 'دليل الهندسة البرمجية المتكامل',
+    siteName: 'MET Academy — سلاح العصر',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي',
+    title: 'سلاح العصر — MET Academy',
     description:
-      'مرجع هندسي شامل ومفصل مقسم موضوعياً: من استنطاق الفكرة ووثيقة PRD والمخططات الهندسية الثمانية (UML & ERD) إلى هندسة قواعد البيانات وتصميم الواجهات وتطوير الفرونت إند.',
+      'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy.',
   },
 };

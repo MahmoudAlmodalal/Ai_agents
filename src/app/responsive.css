@@ -1,4 +1,9 @@
-/* Responsive UX refinements */
+/* Responsive UX refinements & Zero Horizontal Overflow Enforcers */
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 
 :where(button, a, input, [role='button']):focus-visible {
   outline: 3px solid color-mix(in srgb, var(--brand-primary) 38%, transparent);
@@ -9,6 +14,37 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 1. Mobile (390px) */
+@media (max-width: 390px) {
+  .site-container {
+    padding-inline: 0.75rem;
+  }
+
+  .header-actions > button {
+    padding-inline: 0.45rem;
+  }
+
+  .header-actions > button:nth-child(4) {
+    display: none;
+  }
+
+  .topic-card-actions {
+    max-width: 64%;
+    gap: 0.3rem;
+  }
+
+  .topic-card-actions > button {
+    min-width: 2.35rem;
+    min-height: 2.35rem;
+  }
+
+  pre.code-content {
+    font-size: 0.78rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Mobile & Tablet Compact (<768px) */
 @media (max-width: 767px) {
   .site-header {
     box-shadow: 0 4px 18px rgb(15 23 42 / 0.06);
@@ -119,23 +155,17 @@ button {
   }
 }
 
-@media (max-width: 390px) {
-  .header-actions > button {
-    padding-inline: 0.45rem;
+/* 2. Tablet Portrait (768px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-container {
+    padding-inline: 1.5rem;
+    max-width: 750px;
   }
 
-  .header-actions > button:nth-child(4) {
-    display: none;
-  }
-
-  .topic-card-actions {
-    max-width: 64%;
-    gap: 0.3rem;
-  }
-
-  .topic-card-actions > button {
-    min-width: 2.35rem;
-    min-height: 2.35rem;
+  .filter-toolbar {
+    position: sticky;
+    top: 60px;
+    z-index: 30;
   }
 }
 
@@ -145,6 +175,58 @@ button {
     top: 60px;
     z-index: 30;
   }
+}
+
+/* 3. Tablet Landscape / Laptop (1024px) */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .site-container {
+    padding-inline: 2rem;
+    max-width: 980px;
+  }
+
+  .grid-adaptive {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 4. Standard Desktop (1366px) */
+@media (min-width: 1366px) and (max-width: 1439px) {
+  .site-container {
+    padding-inline: 2.5rem;
+    max-width: 1300px;
+  }
+
+  .grid-adaptive {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 5. Large Pro Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .site-container {
+    padding-inline: 3rem;
+    max-width: 1400px;
+    margin-inline: auto;
+  }
+
+  .grid-adaptive {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Strict Container Scrollers for Code, Tables & Diagrams */
+.table-container,
+.code-container,
+.diagram-box {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.diagram-box svg {
+  max-width: 100%;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

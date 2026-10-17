@@ -19,10 +19,22 @@
   --text-muted: #475569;
   --text-faint: #94a3b8;
 
-  --brand-primary: #1d4ed8;
-  --brand-primary-hover: #1e40af;
-  --brand-light: #eff6ff;
-  --brand-border: #bfdbfe;
+  /* MET Academy Brand Identity Tokens */
+  --primary: #1e3a5f;              /* MET Academy Deep Navy */
+  --primary-hover: #162c46;        /* Darker Navy on hover */
+  --primary-light: #e8edf5;        /* Light Navy surface tint */
+  --primary-border: #cbd5e1;
+
+  --accent: #10b981;               /* MET Academy Emerald Green */
+  --accent-hover: #059669;         /* Darker emerald on hover */
+  --accent-light: #ecfdf5;         /* Mint emerald surface tint */
+  --accent-border: #a7f3d0;
+
+  /* Backward compatibility alias */
+  --brand-primary: var(--primary);
+  --brand-primary-hover: var(--primary-hover);
+  --brand-light: var(--primary-light);
+  --brand-border: var(--primary-border);
 
   /* Callout Tokens */
   --callout-tip-bg: #f0fdf4;
@@ -60,8 +72,8 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   /* Enhanced Gradient & Glass Tokens */
-  --gradient-brand: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #06b6d4 100%);
-  --gradient-card-hover: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(6,182,212,0.05) 100%);
+  --gradient-brand: linear-gradient(135deg, #1e3a5f 0%, #254d7e 50%, #10b981 100%);
+  --gradient-card-hover: linear-gradient(135deg, rgba(30,58,95,0.06) 0%, rgba(16,185,129,0.04) 100%);
   --shadow-card: 0 1px 3px rgba(15,23,42,0.04), 0 1px 2px rgba(15,23,42,0.06);
   --shadow-card-hover: 0 10px 25px -5px rgba(59,130,246,0.12), 0 4px 10px -4px rgba(15,23,42,0.08);
   --shadow-modal: 0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05);
@@ -82,10 +94,20 @@
   --text-muted: #9ca3af;
   --text-faint: #6b7280;
 
-  --brand-primary: #3b82f6;
-  --brand-primary-hover: #60a5fa;
-  --brand-light: #1e293b;
-  --brand-border: #1d4ed8;
+  --primary: #3b82f6;              /* Readable blue-navy in dark mode */
+  --primary-hover: #60a5fa;
+  --primary-light: #1e293b;
+  --primary-border: #334155;
+
+  --accent: #10b981;               /* Emerald maintains high contrast */
+  --accent-hover: #34d399;
+  --accent-light: #064e3b;
+  --accent-border: #047857;
+
+  --brand-primary: var(--primary);
+  --brand-primary-hover: var(--primary-hover);
+  --brand-light: var(--primary-light);
+  --brand-border: var(--primary-border);
 
   --callout-tip-bg: #064e3b;
   --callout-tip-border: #10b981;
@@ -241,7 +263,7 @@ body {
 
 /* Callout Boxes */
 .callout {
-  border-right: 4px solid;
+  border-inline-start: 4px solid;
   border-radius: var(--radius-sm);
   padding: 1.15rem 1.4rem;
   margin: 1.35rem 0;
