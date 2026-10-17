@@ -5,14 +5,6 @@ import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
 
-declare global {
-  interface Window {
-    mermaid?: {
-      run: (options?: { nodes?: NodeListOf<Element> | Element[] }) => Promise<void>;
-      initialize: (config: Record<string, unknown>) => void;
-    };
-  }
-}
 
 interface TopicDetailModalProps {
   topic: TopicItem;
@@ -115,21 +107,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
     const container = contentContainerRef.current;
     if (!container) return;
 
-    // 1. Re-run Mermaid rendering
-    if (window.mermaid) {
-      const mermaidNodes = container.querySelectorAll('.mermaid:not([data-processed="true"])');
-      if (mermaidNodes.length > 0) {
-        try {
-          window.mermaid.run({ nodes: Array.from(mermaidNodes) }).catch((err) => {
-            console.warn('Mermaid rendering error:', err);
-          });
-        } catch (err) {
-          console.warn('Failed to run mermaid:', err);
-        }
-      }
-    }
-
-    // 2. Wire copy buttons
+    // 1. Wire copy buttons
     const copyBtns = container.querySelectorAll('.copy-btn');
     const handlers: { btn: Element; handler: () => void }[] = [];
 
