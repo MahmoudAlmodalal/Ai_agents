@@ -148,4 +148,9 @@ Output:
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>مهمة Frontend قابلة للإغلاق</h3><p>المهمة الجيدة لها مدخلات ومخرج واضح وطريقة تحقق قصيرة. «ابنِ الواجهة» ليست مهمة؛ «أضف حالة Empty للشاشة X وفق DESIGN.md» مهمة قابلة للمراجعة.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Small Task</span><button class="copy-btn" type="button" aria-label="نسخ برومبت المهمة الصغيرة">نسخ</button></div><pre class="code-content"><code>Break the approved frontend phase into one next task only.
+Return: task ID, exact files, inputs, output, dependencies, acceptance criteria, verification command.
+Exclude backend, authentication, and unrelated UI changes.
+Stop after proposing the task.</code></pre></div></section>
 `;

@@ -95,4 +95,9 @@ export const topic06Html = `
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>اختيار المخطط قبل الرسم</h3><p>ابدأ بالسؤال لا بالأداة: سؤال «من يملك الوظيفة؟» يقود إلى Use Case، وسؤال «كيف تُخزّن البيانات؟» يقود إلى ERD. هذا يقلل خلط Domain Model مع الجداول.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Diagram Lens</span><button class="copy-btn" type="button" aria-label="نسخ برومبت اختيار عدسة المخطط">نسخ</button></div><pre class="code-content"><code>Given the approved requirement below, choose the single best diagram lens.
+Return: question answered, recommended notation, required inputs, and one risk of using the wrong diagram.
+Do not generate the diagram yet.
+Requirement: [PASTE REQUIREMENT]</code></pre></div></section>
 `;

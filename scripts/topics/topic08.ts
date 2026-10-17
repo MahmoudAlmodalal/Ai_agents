@@ -165,4 +165,9 @@ Generate the Initial Dashboard and Browse Equipment screens maintaining strict c
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>شاشة واحدة قبل النظام كله</h3><p>اعتمد شاشة MVP ممثلة أولًا، ثم ثبّت اللغة البصرية والحالات التفاعلية. لا تطلب من Stitch إنتاج كل الشاشات قبل مراجعة الشاشة المرجعية.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — One Screen First</span><button class="copy-btn" type="button" aria-label="نسخ برومبت شاشة واحدة في Stitch">نسخ</button></div><pre class="code-content"><code>Design one representative MVP screen only.
+Use the approved role, content hierarchy, RTL requirements, and documented states.
+Show loading, empty, error, and success states as notes without inventing features.
+Stop after this screen and list decisions that need approval.</code></pre></div></section>
 `;

@@ -709,3 +709,22 @@ details.example-accordion > .example-body {
     print-color-adjust: exact !important;
   }
 }
+
+
+/* Approved-course prompt library and editorial status components */
+.prompt-section { margin: 1.75rem 0; padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-lg); background: var(--bg-card); box-shadow: var(--shadow-sm); }
+.prompt-heading { display: flex; align-items: flex-start; gap: .75rem; flex-wrap: wrap; margin-bottom: .75rem; }
+.prompt-heading h3 { margin: 0; flex: 1; min-width: 12rem; }
+.prompt-index { direction: ltr; white-space: nowrap; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 999px; padding: .2rem .55rem; font: 800 .72rem/1.2 var(--font-mono); }
+[data-theme="dark"] .prompt-index { color: #6ee7b7; background: #064e3b; border-color: #047857; }
+.prompt-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .5rem; margin-bottom: .85rem; color: var(--text-muted); font-size: .82rem; }
+.prompt-meta span { padding: .45rem .6rem; border-radius: var(--radius-sm); background: var(--bg-card-subtle); }
+.prompt-warning { margin: .75rem 0 0; padding: .65rem .8rem; border-right: 3px solid var(--callout-warning-border); background: var(--callout-warning-bg); color: var(--callout-warning-text) !important; font-size: .84rem !important; }
+.status-badge { display: inline-flex; align-items: center; width: fit-content; border-radius: 999px; padding: .25rem .7rem; font-size: .78rem; font-weight: 800; }
+.status-pending { color: #92400e; background: #fef3c7; border: 1px solid #fbbf24; }
+[data-theme="dark"] .status-pending { color: #fde68a; background: #451a03; border-color: #b45309; }
+.warning-callout { border-right: 4px solid var(--callout-warning-border); }
+.supplemental-content { margin: 1.5rem 0; padding: 1rem; border: 1px dashed #0f766e; border-radius: var(--radius-md); background: color-mix(in srgb, var(--brand-light) 55%, var(--bg-card)); }
+.supplemental-label { display: inline-flex; margin-bottom: .5rem; color: #0f766e; font-size: .78rem; font-weight: 800; }
+[data-theme="dark"] .supplemental-label { color: #5eead4; }
+@media (max-width: 640px) { .prompt-section { padding: .75rem; margin: 1rem 0; } .prompt-meta { grid-template-columns: 1fr; } .prompt-heading h3 { min-width: 100%; } }

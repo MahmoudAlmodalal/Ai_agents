@@ -443,4 +443,8 @@ Create: docs/diagrams/class-diagram.md and docs/diagrams/class-diagram.mmd</code
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>قاعدة رسم User Flow قابل للمراجعة</h3><p>كل عقدة في الرسم يجب أن تكون فعلًا أو قرارًا يمكن ربطه بمتطلب. إذا لم تعرف مصدر العقدة داخل PRD، أضفها إلى قائمة المراجعة بدل إبقائها في الرسم.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Flow Audit</span><button class="copy-btn" type="button" aria-label="نسخ برومبت تدقيق User Flow">نسخ</button></div><pre class="code-content"><code>Audit the User Flow against the PRD.
+For every node, report: node label, supporting requirement, actor, success/error outcome.
+Flag any node with no evidence. Do not redraw the flow or invent missing behavior.</code></pre></div></section>
 `;

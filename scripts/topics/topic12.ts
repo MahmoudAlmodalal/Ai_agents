@@ -308,4 +308,9 @@ export const topic12Html = `
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>كيف تستخدم BorrowHub كمثال لا كقالب</h3><p>انقل طريقة التفكير من المثال، لا قواعده تلقائيًا. قبل نسخ أي حالة أو حد أو جدول إلى مشروع آخر، ارجع إلى PRD الخاص بذلك المشروع.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Transfer Check</span><button class="copy-btn" type="button" aria-label="نسخ برومبت فحص نقل القاعدة">نسخ</button></div><pre class="code-content"><code>Compare this BorrowHub rule with the target project's approved PRD.
+Return: transferable, needs-change, or not-supported.
+Give evidence from the target PRD and list the decision owner for anything unresolved.
+Do not copy the rule automatically.</code></pre></div></section>
 `;
