@@ -56,6 +56,46 @@ export default async function RoadmapLessonPage({ params }: LessonPageProps) {
           </ol>
         </section>
 
+        <section className="mt-6 rounded-3xl border border-violet-200 bg-violet-50/60 p-6 dark:border-violet-900 dark:bg-violet-950/20 sm:p-8">
+          <h2 className="flex items-center gap-2 text-xl font-black text-violet-950 dark:text-violet-200"><Sparkles className="h-5 w-5" /> مختبر التطبيق على مشروع الطالب</h2>
+          <p className="mt-3 leading-8 text-violet-950/80 dark:text-violet-100/80">نفّذ المختبر على مشروعك أنت. قبل النسخ، استبدل الحقول التالية: <code>[PROJECT_NAME]</code> و<code>[DOMAIN]</code> و<code>[TARGET_USERS]</code>. أرسل إلى الأداة الوثائق المتاحة فقط، ولا ترسل أسرارًا أو مفاتيح API.</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">01</span><h3 className="mt-2 font-bold text-[var(--text-main)]">حضّر السياق</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">اكتب اسم المشروع والمجال والمستخدمين، واربط مخرجات الدروس السابقة.</p></div>
+            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">02</span><h3 className="mt-2 font-bold text-[var(--text-main)]">نفّذ المطلوب</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">استخدم Prompt الدرس، واسمح بتغيير واحد قابل للمراجعة فقط.</p></div>
+            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">03</span><h3 className="mt-2 font-bold text-[var(--text-main)]">راجع وسلّم</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">استخدم Prompt المراجعة، أصلح العيب الأول، ثم احفظ النتيجة في Git.</p></div>
+          </div>
+          <div className="mt-6 space-y-4">
+            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
+              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt A — تجهيز وتنفيذ مخرج المحاضرة</h3>
+              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`أعمل على مشروع [PROJECT_NAME] في مجال [DOMAIN] للمستخدمين [TARGET_USERS].
+هذه محاضرة: ${lecture.title}.
+اقرأ وثائق المشروع المتاحة، وحدد ما هو مؤكد وما هو ناقص قبل التنفيذ.
+نفّذ المخرج التالي فقط: ${lecture.deliverables[0] ?? lecture.outcome}.
+اربط كل قرار بمصدره، ولا تخترع سلوكًا أو تقنية أو بيانات غير موثقة.
+قبل التعديل اذكر الملفات التي ستتغير ومعايير القبول.
+بعد التعديل شغّل الفحص المناسب، ثم لخّص النتيجة وتوقف.`}</pre>
+            </div>
+            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
+              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt B — مراجعة المخرج</h3>
+              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`أنت Reviewer مستقل لمشروع [PROJECT_NAME].
+راجع مخرج محاضرة ${lecture.number}: ${lecture.title} مقابل PRD وSRS وأي تصميم أو عقد متاح.
+اكتب جدولًا من PASS وFAIL وOPEN QUESTION.
+افحص الاتساق، الحالات الحدية، قابلية التحقق، وعدم إضافة نطاق غير معتمد.
+لا تصلح كل شيء دفعة واحدة: اقترح أعلى عيب تأثيرًا، ثم توقف وانتظر الاعتماد.`}</pre>
+            </div>
+            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
+              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt C — تسليم وتوثيق</h3>
+              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`لخّص إنجاز محاضرة ${lecture.number} لمشروع [PROJECT_NAME].
+اذكر: الملفات والمخرجات، القرارات المعتمدة، الأسئلة المفتوحة، الفحوصات ونتائجها، والمخاطر.
+اكتب ملاحظة Handoff قصيرة ليكمل طالب آخر من نفس المستودع دون تخمين.
+اقترح رسالة Commit واضحة، ولا تقل إن العمل مكتمل إذا بقيت فجوة أو فشل فحص.`}</pre>
+            </div>
+          </div>
+          <div className="mt-5 rounded-2xl border border-violet-300 bg-violet-100/70 p-4 text-sm leading-7 text-violet-950 dark:border-violet-800 dark:bg-violet-950/30 dark:text-violet-100">
+            <strong>شرط إنهاء المختبر:</strong> يوجد مخرج محفوظ، مراجعة PASS أو قائمة فجوات واضحة، فحص موثق، وCommit مرتبط بالمحاضرة. إذا لم يتحقق أحدها، تبقى المحاضرة In Progress ولا تنتقل إلى التالية.
+          </div>
+        </section>
+
         <section className="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50/70 p-6 dark:border-emerald-900 dark:bg-emerald-950/20 sm:p-8">
           <h2 className="flex items-center gap-2 text-xl font-black text-emerald-900 dark:text-emerald-200"><Sparkles className="h-5 w-5" /> البرومبت العملي للدرس</h2>
           <p className="mt-2 text-sm leading-7 text-emerald-900/75 dark:text-emerald-100/75">استبدل الحقول بين الأقواس بمعلومات مشروعك. لا ترسل أسرارًا أو مفاتيح API داخل المحادثة.</p>
