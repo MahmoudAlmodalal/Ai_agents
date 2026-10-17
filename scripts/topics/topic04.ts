@@ -106,34 +106,6 @@ export const topic04Html = `
               النموذج المفاهيمي <strong>لا يحتوي</strong> على مفاتيح أساسية أو أجنبية (PK/FK)، ولا أنواع بيانات SQL، ولا دوال برمجية (Methods). إنه يصف "عالم المشكلة" (Problem Space) وليس "عالم الكود وقاعدة البيانات" (Solution Space).
             </p>
           </div>
-
-          <!-- Mermaid Domain Model -->
-          <div class="diagram-box">
-            <h4>النموذج المفاهيمي لمشروع BorrowHub</h4>
-            <div class="mermaid">
-flowchart LR
-    Student["Student (طالب)\nحساب جامعي معتمد"]
-    LoanReq["Loan Request (طلب استعارة)\nحد أقصى 2 طلب نشط | مدة &le; 10 أيام"]
-    Equipment["Equipment (معدة جامعية)\nكاميرات، لابتوبات..."]
-    Category["Category & Stock (التصنيف والمخزون)\nالكمية الكلية والمتاحة"]
-    Warehouse["Warehouse Admin (مسؤول المستودع)\nيعتمد الطلب ويفحص المعدة"]
-    ReturnRec["Return & Inspection (الإرجاع والفحص)\nإرجاع وفحص سلامة المعدة"]
-
-    Student -- "يقدم طلب استعارة" --> LoanReq
-    LoanReq -- "يحجز وحدة واحدة من" --> Equipment
-    Equipment -- "ينتمي إلى" --> Category
-    Warehouse -- "يعتمد ويسلم" --> LoanReq
-    Warehouse -- "يفحص سلامة المعدة عند" --> ReturnRec
-    ReturnRec -- "يحدث الرصيد السليم في" --> Category
-
-    classDef entity fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    class Student,LoanReq,Equipment,Category,Warehouse,ReturnRec entity;
-            </div>
-            <div class="diagram-caption">
-              الشكل (3): النموذج المفاهيمي يربط مفاهيم العمل بلغة الأعمال الواضحة بعيداً عن تفاصيل البرمجة والجداول.
-            </div>
-          </div>
-
           <!-- PROMPT FOR DOMAIN MODEL -->
           <div class="code-container">
             <div class="code-header">
@@ -289,56 +261,6 @@ Deliverables in docs/diagrams/use-case.md and docs/diagrams/use-case.puml.</code
               يختلف <strong>Activity Diagram</strong> عن <strong>User Flow</strong> في كونه يركز على <strong>منطق العملية وتوزيع المسؤوليات</strong> بين الطالب والنظام ومسؤول المستودع عبر ممرات السباحة (Swimlanes)، وليس مجرد تنقل المستخدم بين شاشات الواجهة.
             </p>
           </div>
-
-          <!-- Mermaid Activity Diagram with Swimlanes -->
-          <div class="diagram-box">
-            <h4>مخطط سير العمليات التجارية عبر الأطراف الثلاثة (Activity Diagram Swimlanes)</h4>
-            <div class="mermaid">
-flowchart TD
-    subgraph Student_Lane ["مسار الطالب (Student)"]
-        A1["1. إرسال طلب استعارة المعدة"]
-        A4["4. الحضور للمستودع خلال مهلة 48س"]
-        A7["7. إرجاع المعدة بعد انتهاء مدة الاستعارة"]
-    end
-
-    subgraph System_Lane ["مسار النظام الآلي (System)"]
-        S2["2. التحقق التلقائي من الأهلية\nوحجز مؤقت لوحدة المعدة"]
-        S3{"هل الشروط مستوفاة؟"}
-        S_Err["عرض سبب الرفض وإلغاء الحجز"]
-        S5["5. تحديث حالة الطلب إلى Checked Out\nوبدء احتساب مدة الـ 10 أيام"]
-        S8["8. تحديث سجلات المخزون السليم المتاح"]
-    end
-
-    subgraph Admin_Lane ["مسار مسؤول المستودع (Warehouse Admin)"]
-        M3["3. مراجعة الطلب والموافقة عليه (خلال مهلة 48س)"]
-        M4["6. تسليم المعدة وتأكيد الهوية"]
-        M9["9. فحص سلامة المعدة وتوثيق حالة الإرجاع"]
-    end
-
-    A1 --> S2
-    S2 --> S3
-    S3 -- لا --> S_Err
-    S3 -- نعم --> M3
-    M3 --> A4
-    A4 --> M4
-    M4 --> S5
-    S5 --> A7
-    A7 --> M9
-    M9 --> S8
-
-    classDef student fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    classDef system fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
-    classDef admin fill:#581c87,stroke:#a855f7,stroke-width:2px,color:#fff;
-    
-    class A1,A4,A7 student;
-    class S2,S3,S_Err,S5,S8 system;
-    class M3,M4,M9 admin;
-            </div>
-            <div class="diagram-caption">
-              الشكل (4): مخطط سير العمليات يوضح تعاقب المسؤوليات بين الطالب والنظام ومسؤول المستودع عبر مسارات واضحة.
-            </div>
-          </div>
-
           <!-- PROMPT FOR ACTIVITY DIAGRAM -->
           <div class="code-container">
             <div class="code-header">
@@ -377,40 +299,6 @@ Save in docs/diagrams/activity-diagram.md.</code></pre>
           <p>
             يركز الـ <strong>Sequence Diagram</strong> على الترتيب الزمني الدقيق لانتقال الرسائل والطلبات (<code>Requests &minus;&gt;&gt;</code>) والردود (<code>Responses --&gt;&gt;</code>) بين المستخدم ومكونات النظام: <code>Student (Actor) &rarr; Frontend UI &rarr; Backend Service &rarr; Database</code>.
           </p>
-
-          <!-- Mermaid Sequence Diagram -->
-          <div class="diagram-box">
-            <h4>مخطط تسلسل التفاعلات الزمني عند إرسال طلب استعارة (Sequence Diagram)</h4>
-            <div class="mermaid">
-sequenceDiagram
-    autonumber
-    actor Student as Student (الطالب)
-    participant UI as Frontend UI
-    participant API as Backend Service
-    participant DB as Database (قاعدة البيانات)
-
-    Student->>UI: اختيار معدة والضغط على إرسال طلب استعارة
-    UI->>API: POST /api/loan-requests (studentId, equipId, duration)
-    
-    API->>DB: استعلام: فحص الطلبات النشطة للطالب (COUNT &lt; 2) ورصيد المعدة المتاح
-    DB-->>API: إرجاع الرصيد وعدد الطلبات الحالية
-    
-    alt الشروط مستوفاة والمعدة متاحة
-        API->>DB: خصم مؤقت للمخزون المتاح (UPDATE available_qty = available_qty - 1)
-        API->>DB: إنشاء سجل طلب جديد بحالة Pending Review + تسجيل Action Log
-        DB-->>API: تأكيد نجاح الحفظ برقم المعرف (UUID)
-        API-->>UI: 201 Created (بيانات الطلب ومهلة الاعتماد 48 ساعة)
-        UI-->>Student: عرض شاشة تأكيد الحجز مع رقم التتبع
-    else الرصيد غير كافٍ أو تجاوز الحد الأقصى (طلبين نشطين)
-        API-->>UI: 400 Bad Request (رسالة خطأ تشرح سبب تعذر الاستعارة)
-        UI-->>Student: عرض تنبيه أحمر موضحاً الشرط المكسور
-    end
-            </div>
-            <div class="diagram-caption">
-              الشكل (5): مخطط التفاعل الزمني يوضح انتقال الرسائل والردود عبر مكونات النظام مع كتل الشروط alt/else.
-            </div>
-          </div>
-
           <!-- PROMPT FOR SEQUENCE DIAGRAM -->
           <div class="code-container">
             <div class="code-header">
@@ -453,39 +341,6 @@ Create: docs/diagrams/sequence-diagrams.md and individual files in docs/diagrams
           <p>
             يرصد الـ <strong>State Diagram</strong> دورة حياة كيان محدد داخل النظام مثل <strong>طلب الاستعارة (Loan Request)</strong>، وما هي الأحداث (Events) والشروط الحارسة (Guards) التي تنقله من حالة إلى أخرى، ومن يملك صلاحية إحداث هذا الانتقال.
           </p>
-
-          <!-- Mermaid State Diagram -->
-          <div class="diagram-box">
-            <h4>دورة حياة طلب الاستعارة في مشروع BorrowHub</h4>
-            <div class="mermaid">
-stateDiagram-v2
-    [*] --> PendingReview: الطالب يرسل الطلب\n[النشطة &lt; 2 والمدة &le; 10 أيام]
-    
-    PendingReview --> Approved: موافقة مسؤول المستودع\n[مهلة الاستلام 48 ساعة]
-    PendingReview --> Rejected: رفض المسؤول مع ذكر السبب
-    PendingReview --> Cancelled: إلغاء الطالب للطلب قبل الموافقة
-    
-    Approved --> Expired: مرور 48 ساعة دون استلام\n[إرجاع المعدة للمخزون المتاح]
-    Approved --> CheckedOut: حضور الطالب واستلام المعدة\n[تأكيد هوية الطالب يدوياً]
-    
-    CheckedOut --> Returned_Good: إرجاع المعدة بحالة سليمة\n[إغلاق الطلب وزيادة الرصيد المتاح]
-    CheckedOut --> Returned_Damaged: إرجاع المعدة بحالة تالفة\n[توثيق التلف وعدم إعادتها للمخزون المتاح]
-    CheckedOut --> Overdue: تأخر الطالب عن موعد الإرجاع المعتمد (&gt; 10 أيام)
-    
-    Overdue --> Returned_Good: إرجاع متأخر سليم
-    Overdue --> Returned_Damaged: إرجاع متأخر تالف
-    
-    Rejected --> [*]
-    Cancelled --> [*]
-    Expired --> [*]
-    Returned_Good --> [*]
-    Returned_Damaged --> [*]
-            </div>
-            <div class="diagram-caption">
-              الشكل (6): مخطط الحالات يوضح جميع التحولات المسموحة لطلب الاستعارة وشروط كل انتقال ومسارات الإغلاق.
-            </div>
-          </div>
-
           <!-- PROMPT FOR STATE DIAGRAM -->
           <div class="code-container">
             <div class="code-header">
@@ -527,63 +382,6 @@ Create: docs/diagrams/state-diagrams.md</code></pre>
           <p>
             يمثل الـ <strong>Class Diagram</strong> الكلاسات البرمجية (Classes)، وخصائصها (Attributes)، وعملياتها الموثقة (Methods)، والعلاقات بينها مع التعددية (Multiplicity). في هذه المرحلة نصمم <strong>Design-Level Class Diagram</strong> مستقلاً عن أي إطار عمل (دون التقيد بـ Django أو Next.js قبل اعتماد التقنية).
           </p>
-
-          <!-- Mermaid Class Diagram -->
-          <div class="diagram-box">
-            <h4>مخطط الكلاسات التصميمي لمشروع BorrowHub</h4>
-            <div class="mermaid">
-classDiagram
-    class User {
-        +UUID id
-        +String email
-        +RoleEnum role
-        +Boolean is_approved
-        +canBorrow() Boolean
-        +approveAccount() void
-    }
-
-    class Equipment {
-        +UUID id
-        +String name
-        +Integer total_qty
-        +Integer available_qty
-        +reserveUnit() Boolean
-        +releaseUnit() void
-        +markDamaged() void
-    }
-
-    class Category {
-        +UUID id
-        +String name
-        +String description
-    }
-
-    class LoanRequest {
-        +UUID id
-        +LoanStatus status
-        +DateTime pickup_deadline
-        +DateTime due_date
-        +approve() void
-        +reject(reason) void
-        +confirmReturn(condition) void
-    }
-
-    class LoanActionLog {
-        +UUID id
-        +String action
-        +DateTime timestamp
-    }
-
-    User "1" --> "0..*" LoanRequest : يقدم / يعتمد
-    Equipment "1" --> "0..*" LoanRequest : يرتبط بـ
-    Category "1" --> "0..*" Equipment : يصنف
-    LoanRequest "1" --> "0..*" LoanActionLog : يوثق أحداث
-            </div>
-            <div class="diagram-caption">
-              الشكل (7): مخطط الكلاسات يوضح الهيكلة البرمجية للخصائص والعمليات والتعددية بين كيانات المشروع.
-            </div>
-          </div>
-
           <!-- PROMPT FOR CLASS DIAGRAM -->
           <div class="code-container">
             <div class="code-header">

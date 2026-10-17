@@ -70,31 +70,5 @@ export const topic01Html = `
             لا تعتمد على ذاكرة المحادثة الشفهية وحدها. الوثائق المكتوبة والمحفوظة داخل مجلد <code>docs/</code> هي المرجع الوحيد القابل للمراجعة والتدقيق والمساءلة الهندسية بين المالك والمصمم والمطور والمختبر.
           </p>
         </div>
-
-        <!-- Master Pipeline Flowchart -->
-        <div class="diagram-box">
-          <h4>المسار الهندسي المعتمد لتحويل الفكرة إلى نظام برمجي متكامل</h4>
-          <div class="mermaid">
-flowchart LR
-    A["1. استجواب الفكرة\nGrill Me"] --> B["2. وثيقة المتطلبات\nPRD.md"]
-    B --> C["3. مسار المستخدم\nUser Flow"]
-    C --> D["4. النمذجة الهندسية\nDomain + Use Case"]
-    D --> E["5. تحليل السلوك\nActivity / Seq / State"]
-    E --> F["6. هيكلة البيانات\nERD + Class Diagram"]
-    F --> G["7. تصميم الواجهات\nGoogle Stitch & Design Tokens"]
-    G --> H["8. جسر الكود\nStitch MCP & DESIGN.md"]
-    H --> I["9. بناء الفرونت إند\nSpec Kit & UI/UX Pro Max"]
-    I --> J["10. التحقق الشامل\nQA & GitHub Release"]
-
-    classDef stage fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#93c5fd;
-    classDef highlight fill:#1d4ed8,stroke:#60a5fa,stroke-width:2px,color:#fff;
-    class A,B,F,G,I highlight;
-    class C,D,E,H,J stage;
-          </div>
-          <div class="diagram-caption">
-            الشكل (1): التسلسل الهندسي المعتمد لتحويل الفكرة إلى وثائق ومخططات متكاملة ثم واجهات وكود خاضع لضمان الجودة قبل النشر.
-          </div>
-        </div>
-
       </section>
 `;

@@ -19,32 +19,6 @@ export const topic09Html = `
           يعد <strong>MCP</strong> معياراً مفتوحاً يمكّن نماذج الذكاء الاصطناعي داخل بيئات التطوير (مثل Antigravity IDE أو Cursor) من الاتصال بأدوات خارجية واسترجاع البيانات منها بشكل آمن ومباشر.
           من خلال خادم <strong>Stitch MCP</strong>، يستطيع وكيل الذكاء الاصطناعي قراءة شاشات التصميم، واستخراج شفرات الألوان والخطوط، وتحويل الأنماط البصرية مباشرة إلى ملفات توثيق وكود دون حاجة لنسخ ولصق يدوي معرض للأخطاء.
         </p>
-
-        <!-- MCP Sequence Flow -->
-        <div class="diagram-box">
-          <h4>تسلسل الاتصال واستخراج عناصر التصميم عبر بروتوكول MCP</h4>
-          <div class="mermaid">
-sequenceDiagram
-    autonumber
-    participant Dev as المهندس (Developer)
-    participant IDE as Antigravity IDE (Agent)
-    participant MCP as Stitch MCP Server
-    participant Cloud as Google Stitch Project
-    participant Repo as docs/DESIGN.md
-
-    Dev->>IDE: تشغيل برومبت استخراج قواعد التصميم
-    IDE->>MCP: طلب فحص الشاشات: get_project_screens(projectId)
-    MCP->>Cloud: جلب عقد التصميم، الألوان، ورموز التايبوجرافي
-    Cloud-->>MCP: إرجاع بيانات التصميم البصرية (JSON Schema)
-    MCP-->>IDE: تدفق عناصر التصميم والرموز البصرية
-    IDE->>Repo: إنشاء وتوليد وثيقة docs/DESIGN.md المرجعية
-    IDE-->>Dev: إشعار باكتمال توثيق نظام التصميم كعقد هندسي ملزم
-          </div>
-          <div class="diagram-caption">
-            الشكل (11): بروتوكول MCP يربط بيئة التطوير بمشروع Google Stitch لاستخراج وتثبيت قواعد التصميم بدقة 100%.
-          </div>
-        </div>
-
         <!-- 2. Deep Dive: Architectural Dissection of DESIGN.md -->
         <div class="step-card">
           <div class="step-header">

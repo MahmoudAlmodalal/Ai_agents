@@ -57,22 +57,21 @@ const PREBUILT_TOPIC_DIAGRAMS: Record<string, Record<DiagramPerspective, string>
   class Permissions,Execution secure;
   class Hallucination,TokenBurn,DestructiveOps risk;`,
 
-    flow: `flowchart TD
-  Start(["بدء طلب برمجي جديد"]) --> Q1{"هل الفكرة مستنطقة وموثقة بالكامل؟"}
-  Q1 -- لا --> Grill["جلسة استنطاق حازمة (Grill Me Interview)"]
-  Grill --> Q1
-  Q1 -- نعم --> BudgetCheck{"فحص ميزانية الـ Tokens والسياق"}
-  BudgetCheck -- سياق مفرط --> PruneContext["تقليم الملفات غير الضرورية وضغط التوثيق"]
-  PruneContext --> BudgetCheck
-  BudgetCheck -- سياق منضبط --> AskPerm["طلب إذن تشغيل أداة برمجية"]
-  AskPerm --> PermDecision{"هل العملية آمنة وغير تدميرية؟"}
-  PermDecision -- نعم --> RunTool["تنفيذ الأداة مع فحص المخرجات"]
-  PermDecision -- لا --> RejectPrompt["رفض العملية وإعادة التوجيه الآمن"]
-  RunTool --> EndSuccess(["كود موثوق ومفحوص"])
+    flow: `flowchart LR
+  A["1. استجواب الفكرة<br/>Grill Me"] --> B["2. وثيقة المتطلبات<br/>PRD.md"]
+  B --> C["3. مسار المستخدم<br/>User Flow"]
+  C --> D["4. النمذجة الهندسية<br/>Domain + Use Case"]
+  D --> E["5. تحليل السلوك<br/>Activity / Seq / State"]
+  E --> F["6. هيكلة البيانات<br/>ERD + Class Diagram"]
+  F --> G["7. تصميم الواجهات<br/>Stitch & Tokens"]
+  G --> H["8. جسر الكود<br/>Stitch MCP & DESIGN.md"]
+  H --> I["9. بناء الفرونت إند<br/>Spec Kit & UI/UX"]
+  I --> J["10. التحقق الشامل<br/>QA & GitHub Release"]
 
-  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
-  classDef decision fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#e0e7ff;
-  class Q1,BudgetCheck,PermDecision decision;`,
+  classDef default fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#93c5fd;
+  classDef highlight fill:#1d4ed8,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+  class A,B,F,G,I highlight;
+  class C,D,E,H,J default;`,
 
     sequence: `sequenceDiagram
   autonumber

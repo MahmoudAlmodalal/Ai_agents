@@ -57,63 +57,6 @@ export const topic05Html = `
             </tbody>
           </table>
         </div>
-
-        <!-- Mermaid Database ERD -->
-        <div class="diagram-box">
-          <h4>مخطط العلاقات بين الجداول الخمسة في قاعدة بيانات BorrowHub (ERD)</h4>
-          <div class="mermaid">
-erDiagram
-    users ||--o{ loan_requests : "places / reviews"
-    equipment_categories ||--|{ equipment : "categorizes"
-    equipment ||--o{ loan_requests : "reserved_in"
-    loan_requests ||--|{ loan_action_logs : "tracks_events"
-    users ||--o{ loan_action_logs : "performs_action"
-
-    users {
-        UUID id PK
-        string email UK "NOT NULL"
-        string role "Student, Admin"
-        boolean is_approved "NOT NULL default false"
-        timestamp created_at
-    }
-
-    equipment_categories {
-        UUID id PK
-        string name UK "NOT NULL"
-        text description
-    }
-
-    equipment {
-        UUID id PK
-        UUID category_id FK "NOT NULL"
-        string name "NOT NULL"
-        int total_qty "CHECK (total_qty >= 0)"
-        int available_qty "CHECK (available_qty >= 0)"
-    }
-
-    loan_requests {
-        UUID id PK
-        UUID student_id FK "NOT NULL"
-        UUID equipment_id FK "NOT NULL"
-        string status "Pending, Approved, CheckedOut, Returned..."
-        datetime pickup_deadline "Approved + 48h"
-        datetime due_date "Pickup + &le; 10 days"
-        string return_condition "Good, Damaged"
-    }
-
-    loan_action_logs {
-        UUID id PK
-        UUID loan_request_id FK "NOT NULL"
-        UUID actor_id FK "NOT NULL"
-        string action "Created, Approved, Rejected, PickedUp, Returned"
-        timestamp created_at "default CURRENT_TIMESTAMP"
-    }
-          </div>
-          <div class="diagram-caption">
-            الشكل (8): مخطط قاعدة البيانات (ERD) للجداول الخمسة يوضح المفاتيح الأساسية والأجنبية والقيود وعلاقات التعددية.
-          </div>
-        </div>
-
         <!-- Relational Core Rules -->
         <div class="grid-2col" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
           <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">

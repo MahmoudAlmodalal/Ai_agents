@@ -18,56 +18,6 @@ export const topic06Html = `
         <p>
           بعد فهم متطلبات المنتج وهيكلة البيانات، نصل إلى الصورة المعمارية الكبرى التي توضح كيف يتكامل تطبيق الواجهة الأمامية (Frontend)، والخادم العكسي (Nginx)، وخادم الباك إند (Backend)، وقاعدة البيانات، وأدوات المهام الخلفية:
         </p>
-
-        <div class="diagram-box">
-          <h4>الصورة المعمارية للنظام وتنظيم الكود الداخلي (System Architecture & Backend Layers)</h4>
-          <div class="mermaid">
-flowchart LR
-    subgraph Client_Side ["طبقة العميل (Client Layer)"]
-        FE["Frontend (واجهة المستخدم)\nReact / Next.js"]
-    end
-
-    subgraph Gateway ["طبقة التوجيه والحماية"]
-        NGX["Nginx Web Server\nReverse Proxy & SSL Termination"]
-    end
-
-    subgraph Backend_App ["طبقات تطبيق الباك إند (Backend Application Layers)"]
-        V["Views / Controllers\nاستقبال الطلب وإرجاع الرد"]
-        S["Services\nتنفيذ قواعد العمل والتحقق"]
-        SEL["Selectors\nاستعلامات قراءة البيانات"]
-    end
-
-    subgraph Storage ["طبقة التخزين والمهام الخلفية"]
-        RDB[("Relational Database\nPostgreSQL / MySQL\nحفظ الجداول والعلاقات")]
-        REDIS[("Redis In-Memory Cache\nتخزين مؤقت فائق السرعة")]
-        WRK["Background Workers\nطابور المهام غير المتزامنة\n(إرسال الإشعارات والتقارير)"]
-    end
-
-    FE -- "HTTP Requests" --> NGX
-    NGX -- "Proxy Pass" --> V
-    V --> S
-    S --> SEL
-    SEL --> RDB
-    S -- "Write / Transactions" --> RDB
-    S -- "Async Job Queue" --> REDIS
-    REDIS --> WRK
-    SEL -- "Cache Hit / Read" --> REDIS
-
-    classDef client fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    classDef gate fill:#0f172a,stroke:#64748b,stroke-width:2px,color:#fff;
-    classDef backend fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff;
-    classDef storage fill:#581c87,stroke:#a855f7,stroke-width:2px,color:#fff;
-
-    class FE client;
-    class NGX gate;
-    class V,S,SEL backend;
-    class RDB,REDIS,WRK storage;
-          </div>
-          <div class="diagram-caption">
-            الشكل (9): معمارية النظام وتكامل طبقات الـ Backend مع خادم Nginx، وقاعدة البيانات، وذاكرة Redis، وعمال الخلفية Workers.
-          </div>
-        </div>
-
         <!-- 2. Separation of Concerns in Backend Code -->
         <h3>فصل المسؤوليات في كود الباك إند (Separation of Concerns)</h3>
         <p>

@@ -31,46 +31,6 @@ export const topic03Html = `
           </p>
         </div>
 
-        <!-- User Flow Diagram for BorrowHub -->
-        <div class="diagram-box">
-          <h4>مخطط مسار استعارة معدة في مشروع BorrowHub</h4>
-          <div class="mermaid">
-flowchart TD
-    Start(["البداية"]) --> Login["تسجيل الدخول بالحساب الجامعي"]
-    Login --> Browse["تصفح قائمة المعدات المتاحة"]
-    Browse --> Select["اختيار معدة محددة وتحديد المدة"]
-    Select --> CheckCondition{"هل عدد الطلبات النشطة &gt; 2\nأو المدة &ge; 10 أيام؟"}
-    
-    CheckCondition -- نعم (فشل) --> ErrorMsg["عرض رسالة خطأ توضح سبب المنع\nوإيقاف إرسال الطلب"]
-    ErrorMsg --> Browse
-    
-    CheckCondition -- لا (استيفاء الشروط) --> CreateReq["إنشاء طلب استعارة بحالة:\nPending Review (حجز مؤقت)"]
-    CreateReq --> AdminReview{"قرار مسؤول المستودع\nخلال مهلة 48 ساعة؟"}
-    
-    AdminReview -- رفض أو انتهاء 48س --> CancelReq["إلغاء الطلب تلقائياً\nوإرجاع وحدة المعدة للمخزون المتاح"]
-    CancelReq --> EndFail(["نهاية الطلب الملغي"])
-    
-    AdminReview -- موافقة معتمدة --> Approved["تغيير الحالة إلى Approved\nوتحديد موعد الاستلام"]
-    Approved --> Pickup["حضور الطالب واستلام المعدة"]
-    Pickup --> CheckedOut["تغيير الحالة إلى Checked Out (نشط)"]
-    CheckedOut --> ReturnProcess["فحص المعدة وإرجاعها للمستودع"]
-    ReturnProcess --> EndSuccess(["إغلاق الطلب بنجاح"])
-
-    classDef action fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff;
-    classDef decision fill:#1e293b,stroke:#f59e0b,stroke-width:2px,color:#fef3c7;
-    classDef fail fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#fecaca;
-    classDef success fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#a7f3d0;
-    
-    class Login,Browse,Select,CreateReq,Approved,Pickup,CheckedOut,ReturnProcess action;
-    class CheckCondition,AdminReview decision;
-    class ErrorMsg,CancelReq,EndFail fail;
-    class EndSuccess success;
-          </div>
-          <div class="diagram-caption">
-            الشكل (2): تمثيل مرئي هندسي لمسار المستخدم يبرز المستطيلات كإجراءات والمعينات كنقاط قرار وفحص للشروط البرمجية.
-          </div>
-        </div>
-
         <!-- PROMPT 04: USER FLOW -->
         <div class="code-container">
           <div class="code-header">
