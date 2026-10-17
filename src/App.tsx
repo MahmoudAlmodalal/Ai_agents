@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { TOPICS } from '@/src/data/topicsData.ts';
 import { TopicCategory, ContentType, TopicItem } from '@/src/types/topic.ts';
@@ -16,25 +18,14 @@ export default function App() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = React.useState<boolean>(false);
 
   // State: Bookmarks / Favorites (stored in localStorage)
-  const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
-    try {
-      const saved = localStorage.getItem('engineering_guide_bookmarks');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [bookmarks, setBookmarks] = React.useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState<boolean>(false);
 
   // State: Modal Detail Reader
   const [activeTopicId, setActiveTopicId] = React.useState<string | null>(null);
 
   // State: Dark Mode (defaults to user preference or localStorage)
-  const [isDark, setIsDark] = React.useState<boolean>(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const [isDark, setIsDark] = React.useState<boolean>(false);
 
   // State: Audio TTS
   const [ttsCurrentTopic, setTtsCurrentTopic] = React.useState<TopicItem | null>(null);
@@ -42,6 +33,19 @@ export default function App() {
   const [isTTSPaused, setIsTTSPaused] = React.useState<boolean>(false);
   const [ttsRate, setTtsRate] = React.useState<number>(1.0);
   const [isTTSActive, setIsTTSActive] = React.useState<boolean>(false);
+
+  // Browser-only preferences are loaded after hydration so the page can be prerendered safely.
+  React.useEffect(() => {
+    try {
+      const savedBookmarks = localStorage.getItem('engineering_guide_bookmarks');
+      if (savedBookmarks) setBookmarks(JSON.parse(savedBookmarks));
+
+      const savedTheme = localStorage.getItem('theme');
+      setIsDark(savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
+    } catch {
+      // Ignore unavailable browser storage and retain the default preferences.
+    }
+  }, []);
 
   // Sync theme attribute with documentElement
   React.useEffect(() => {
