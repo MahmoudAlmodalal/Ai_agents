@@ -24,6 +24,7 @@ The site is organized by learning topic, technical concept, tool, workflow phase
 | Experience | `/ui-ux` | UI وUX | usability, responsive, RTL, states |
 | Experience | `/ui-ux/discovery` | اكتشاف الشاشات | UX blueprint, sitemap, inventory |
 | Design | `/stitch` | Google Stitch | master prompt, screens, prototype |
+| Design → Delivery | `/learn/google-ai-studio-stitch-workflow` | AI Studio وStitch إلى GitHub | AI Studio analysis, Stitch export, Frontend plan, phases, GitHub sync |
 | Design | `/design-md` | Design System وDESIGN.md | approved visual contract |
 | Integration | `/stitch/mcp` | Stitch MCP | verified design retrieval |
 | Frontend | `/frontend` | تخطيط Frontend | Next.js plan, routes, components |
