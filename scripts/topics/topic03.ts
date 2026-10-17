@@ -139,4 +139,8 @@ Validate Mermaid syntax strictly. Do not generate application code, ERD, or othe
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>مراجعة PRD بثلاث عدسات</h3><p>راجع الوثيقة كمالك منتج، وكمنفذ، وكشخص سيختبرها. ابحث عن الغموض القابل للتحول إلى خطأ، لا عن تحسينات شكلية خارج النطاق.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — PRD Review</span><button class="copy-btn" type="button" aria-label="نسخ برومبت مراجعة PRD">نسخ</button></div><pre class="code-content"><code>Review this PRD from three roles: Product Owner, Implementer, QA.
+For each issue provide: Evidence, Risk, Question for Owner, Suggested wording.
+Do not add features and do not mark assumptions as confirmed requirements.</code></pre></div></section>
 `;

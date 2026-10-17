@@ -195,4 +195,8 @@ Do not rewrite the entire PRD. Ask clarifying questions for critical missing dec
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>سجل القرار بعد Grill Me</h3><p>بعد كل إجابة مهمة، سجّل القرار والسبب وما بقي مفتوحًا. هذا السجل يمنع تحول كلام المحادثة إلى قاعدة غير موثقة.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Decision Log</span><button class="copy-btn" type="button" aria-label="نسخ برومبت سجل القرار">نسخ</button></div><pre class="code-content"><code>Using only the confirmed answers in this interview, create a decision log with:
+Question | Confirmed Answer | Product Decision | Evidence | Open Question.
+Do not resolve an open question yourself.</code></pre></div></section>
 `;

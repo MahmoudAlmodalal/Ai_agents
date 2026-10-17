@@ -218,4 +218,9 @@ Create:
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>فحص سلامة المخزون</h3><p>لا يكفي أن تكون أسماء الجداول صحيحة؛ اسأل كيف تمنع عمليتان متزامنتان حجز الوحدة نفسها، وأين تُراجع القيود والمعاملة الذرية.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — ERD Concurrency</span><button class="copy-btn" type="button" aria-label="نسخ برومبت فحص تزامن ERD">نسخ</button></div><pre class="code-content"><code>Review this ERD for concurrent loan requests.
+Trace two students requesting the last available unit at the same time.
+Identify the invariant, transaction boundary, constraint, and unresolved business decision.
+Do not change the schema silently.</code></pre></div></section>
 `;

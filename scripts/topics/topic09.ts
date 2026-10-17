@@ -112,4 +112,9 @@ Ensure the document is strictly structured so that frontend coding agents can us
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>DESIGN.md كعقد لا كزينة</h3><p>أي قيمة لا يمكن تأكيدها من Stitch أو التصدير الحقيقي يجب أن تظهر كغير معروفة، لا أن تُملأ برقم جميل من الذاكرة.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Design Evidence</span><button class="copy-btn" type="button" aria-label="نسخ برومبت دليل DESIGN.md">نسخ</button></div><pre class="code-content"><code>Extract only design values supported by the provided Stitch export.
+For each token include: name, value, source screen, confidence.
+If a value is inaccessible, write UNKNOWN and explain what is missing.
+Never infer a hex color or spacing value.</code></pre></div></section>
 `;

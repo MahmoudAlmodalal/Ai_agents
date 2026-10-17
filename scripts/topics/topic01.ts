@@ -97,4 +97,9 @@ flowchart LR
         </div>
 
       </section>
+
+<section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>اختبار سريع قبل الانتقال</h3><p>اكتب في سطرين المشكلة، المستخدم الأساسي، والنتيجة التي تريد قياسها. إذا لم تستطع فصل هذه العناصر، لا تنتقل إلى PRD؛ أعد المقابلة وسجّل السؤال المفتوح بدل ملء الفراغ بافتراض.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Discovery Check</span><button class="copy-btn" type="button" aria-label="نسخ برومبت إثراء اكتشاف المتطلبات">نسخ</button></div><pre class="code-content"><code>Review the idea below without inventing features.
+Return exactly: Problem, Primary User, Desired Outcome, Assumptions, Open Questions.
+Ask one clarifying question only after listing the evidence.
+Idea: [PASTE IDEA]</code></pre></div></section>
 `;
