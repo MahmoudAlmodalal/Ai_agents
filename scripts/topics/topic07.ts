@@ -6,6 +6,16 @@ export const topic07Html = `
           <span class="step-pill">تنظيم ملفات المشروع وإدارة الإصدارات</span>
         </div>
 
+        <div class="callout tip">
+          <div class="callout-header">
+            <span class="callout-icon">✓</span>
+            <span>حالة المحتوى: متاح — Git وGitHub والتوثيق</span>
+          </div>
+          <p>
+            هذا الموضوع يحتوي على المادة التطبيقية المعتمدة لتنظيم مستودع المشروع، بناء مجلد <code>docs/</code>، حماية الأسرار، استخدام الفروع، تنفيذ Commit، رفع التغييرات إلى GitHub، وفتح Pull Request. لا تُعامل هذه الصفحة كمحاضرة معلّقة أو كصفحة «غير متاح».
+          </p>
+        </div>
+
         <div class="step-header">
           <div class="step-title-wrap">
             <h2 class="step-title">هيكلية ملفات التوثيق في المشروع وقواعد التحقق الحاسمة وإدارة Git / GitHub</h2>
