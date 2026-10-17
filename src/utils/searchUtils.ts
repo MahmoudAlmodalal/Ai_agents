@@ -37,10 +37,30 @@ export function stripHtml(html: string): string {
 }
 
 /**
+ * Calculates estimated reading time in minutes based on word count
+ * (Default ~180 words per minute for technical Arabic/English content)
+ */
+export function calculateReadingTime(htmlContent: string, wordsPerMinute = 180): number {
+  const text = stripHtml(htmlContent);
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / wordsPerMinute));
+}
+
+/**
+ * Formats reading time in natural Arabic
+ */
+export function formatReadingTime(minutes: number): string {
+  if (minutes === 1) return 'دقيقة واحدة';
+  if (minutes === 2) return 'دقيقتان';
+  if (minutes >= 3 && minutes <= 10) return `${minutes} دقائق`;
+  return `${minutes} دقيقة`;
+}
+
+/**
  * Extracts a contextual snippet around the matching keyword
  */
 export function extractSnippet(text: string, query: string, maxLength = 160): string | undefined {
-  if (!query || !text) return undefined;
+  if (!query || !query.trim()) return undefined;
   const normText = normalizeArabic(text);
   const normQuery = normalizeArabic(query);
   const index = normText.indexOf(normQuery);

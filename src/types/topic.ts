@@ -30,6 +30,7 @@ export interface TopicItem {
   promptCount: number;
   codeSnippetCount: number;
   checklistCount: number;
+  readingTimeMinutes: number;
   htmlContent: string;
 }
 

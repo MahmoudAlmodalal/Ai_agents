@@ -11,6 +11,7 @@ import { topic10Html } from '@/scripts/topics/topic10.ts';
 import { topic11Html } from '@/scripts/topics/topic11.ts';
 import { topic12Html } from '@/scripts/topics/topic12.ts';
 import { TopicItem } from '@/src/types/topic.ts';
+import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
 
 export const TOPICS: TopicItem[] = [
   {
@@ -28,6 +29,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 2,
     checklistCount: 4,
+    readingTimeMinutes: calculateReadingTime(topic01Html),
     htmlContent: topic01Html,
   },
   {
@@ -45,6 +47,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 3,
     codeSnippetCount: 2,
     checklistCount: 6,
+    readingTimeMinutes: calculateReadingTime(topic02Html),
     htmlContent: topic02Html,
   },
   {
@@ -62,6 +65,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 2,
     checklistCount: 3,
+    readingTimeMinutes: calculateReadingTime(topic03Html),
     htmlContent: topic03Html,
   },
   {
@@ -79,6 +83,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 6,
     codeSnippetCount: 7,
     checklistCount: 5,
+    readingTimeMinutes: calculateReadingTime(topic04Html),
     htmlContent: topic04Html,
   },
   {
@@ -96,6 +101,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 4,
     checklistCount: 4,
+    readingTimeMinutes: calculateReadingTime(topic05Html),
     htmlContent: topic05Html,
   },
   {
@@ -113,6 +119,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 2,
     checklistCount: 4,
+    readingTimeMinutes: calculateReadingTime(topic06Html),
     htmlContent: topic06Html,
   },
   {
@@ -130,6 +137,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 3,
     checklistCount: 6,
+    readingTimeMinutes: calculateReadingTime(topic07Html),
     htmlContent: topic07Html,
   },
   {
@@ -147,6 +155,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 3,
     codeSnippetCount: 2,
     checklistCount: 5,
+    readingTimeMinutes: calculateReadingTime(topic08Html),
     htmlContent: topic08Html,
   },
   {
@@ -164,6 +173,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 3,
     checklistCount: 4,
+    readingTimeMinutes: calculateReadingTime(topic09Html),
     htmlContent: topic09Html,
   },
   {
@@ -181,6 +191,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 3,
     codeSnippetCount: 3,
     checklistCount: 5,
+    readingTimeMinutes: calculateReadingTime(topic10Html),
     htmlContent: topic10Html,
   },
   {
@@ -198,6 +209,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 2,
     codeSnippetCount: 4,
     checklistCount: 7,
+    readingTimeMinutes: calculateReadingTime(topic11Html),
     htmlContent: topic11Html,
   },
   {
@@ -215,6 +227,7 @@ export const TOPICS: TopicItem[] = [
     promptCount: 8,
     codeSnippetCount: 5,
     checklistCount: 5,
+    readingTimeMinutes: calculateReadingTime(topic12Html),
     htmlContent: topic12Html,
   },
 ];

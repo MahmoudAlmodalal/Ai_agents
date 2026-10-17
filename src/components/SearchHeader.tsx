@@ -7,6 +7,11 @@ interface SearchHeaderProps {
   onToggleTheme: () => void;
   onToggleTTS: () => void;
   isTTSActive: boolean;
+  isMobileSearchOpen: boolean;
+  onToggleMobileSearch: () => void;
+  bookmarksCount: number;
+  showFavoritesOnly: boolean;
+  onToggleFavoritesOnly: () => void;
 }
 
 export const SearchHeader: React.FC<SearchHeaderProps> = ({
@@ -16,8 +21,20 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
   onToggleTheme,
   onToggleTTS,
   isTTSActive,
+  isMobileSearchOpen,
+  onToggleMobileSearch,
+  bookmarksCount,
+  showFavoritesOnly,
+  onToggleFavoritesOnly,
 }) => {
   const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Focus search input when mobile search is opened
+  React.useEffect(() => {
+    if (isMobileSearchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [isMobileSearchOpen]);
 
   // Keyboard shortcut: Pressing '/' focuses search input, 'Escape' clears it
   React.useEffect(() => {
@@ -35,92 +52,165 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
   }, [onSearchChange]);
 
   return (
-    <header className="sticky top-0 z-40 bg-[var(--bg-surface)] border-b border-[var(--border-color)] backdrop-blur-md shadow-xs transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
-        {/* Brand Zone */}
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold text-white bg-linear-to-r from-blue-700 to-blue-500 shadow-xs">
-            <span>⚔️ سلاح العصر</span>
-            <span className="opacity-60">|</span>
-            <span>MET</span>
-          </div>
-          <div>
-            <h1 className="text-base sm:text-lg font-black tracking-tight text-[var(--text-main)] leading-tight whitespace-nowrap">
-              الدليل الهندسي الشامل
-            </h1>
-            <p className="hidden md:block text-xs text-[var(--text-muted)] font-medium">
-              بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي
-            </p>
-          </div>
-        </div>
-
-        {/* Dynamic Search Input Bar */}
-        <div className="flex-1 max-w-2xl min-w-0">
-          <div className="relative flex items-center">
-            <span className="absolute right-3.5 text-slate-400 pointer-events-none text-sm select-none" aria-hidden="true">
-              🔍
+    <header className="sticky top-0 z-40 bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors shadow-2xs">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Main Header Bar: Exactly 52px on mobile, 60px on desktop */}
+        <div className="h-[52px] sm:h-[60px] flex items-center justify-between gap-3">
+          {/* Brand Wordmark (Right in RTL) */}
+          <div className="flex items-center gap-2 min-w-0 shrink-0">
+            <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-linear-to-br from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs select-none">
+              ⚔️
             </span>
-            <input
-              ref={searchInputRef}
-              type="text"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="ابحث بالكلمات المفتاحية (مثال: Sequence, N+1, PRD, B-Tree, Swimlanes)..."
-              className="w-full pr-10 pl-16 py-2.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-sm focus:outline-none focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-blue-500/20 transition-all font-sans shadow-xs"
-              aria-label="البحث في الدليل الهندسي"
-            />
-            {searchQuery ? (
-              <button
-                onClick={() => onSearchChange('')}
-                className="absolute left-2.5 px-2 py-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] bg-[var(--border-color)] rounded transition-colors font-medium cursor-pointer"
-                title="مسح البحث (Esc)"
-              >
-                مسح
-              </button>
-            ) : (
-              <span className="hidden sm:inline-block absolute left-3 px-1.5 py-0.5 text-[10px] text-slate-400 border border-slate-300 dark:border-slate-700 rounded select-none font-mono">
-                /
+            <div className="min-w-0">
+              <span className="text-sm sm:text-base font-extrabold text-[var(--text-main)] truncate block leading-tight">
+                الدليل الهندسي الشامل
               </span>
-            )}
+              <span className="hidden sm:block text-[11px] text-[var(--text-muted)] font-medium truncate">
+                نمذجة وبناء المشاريع بالذكاء الاصطناعي
+              </span>
+            </div>
+          </div>
+
+          {/* Center Search on Desktop (Hidden on mobile) */}
+          <div className="hidden md:flex flex-1 max-w-md lg:max-w-lg mx-4">
+            <div className="relative w-full flex items-center">
+              <span className="absolute right-3 text-slate-400 pointer-events-none text-xs" aria-hidden="true">
+                🔍
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                placeholder="ابحث (Sequence, PRD, N+1, B-Tree, UML)..."
+                className="w-full h-9 pr-8 pl-12 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-blue-500/20 font-sans"
+              />
+              {searchQuery ? (
+                <button
+                  onClick={() => onSearchChange('')}
+                  className="absolute left-2 px-1.5 py-0.5 text-[10px] text-[var(--text-muted)] hover:text-[var(--text-main)] bg-[var(--border-color)] rounded transition-colors font-medium cursor-pointer"
+                >
+                  مسح
+                </button>
+              ) : (
+                <span className="absolute left-2.5 px-1 text-[10px] text-slate-400 border border-slate-300 dark:border-slate-700 rounded font-mono select-none">
+                  /
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Action Utility Controls (Left in RTL) */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Mobile Search Toggle Button */}
+            <button
+              onClick={onToggleMobileSearch}
+              className={`md:hidden w-9 h-9 rounded-lg border transition-colors flex items-center justify-center text-sm cursor-pointer ${
+                isMobileSearchOpen || searchQuery
+                  ? 'bg-blue-50 border-blue-300 text-blue-600 dark:bg-blue-950/40 dark:border-blue-800 dark:text-blue-400'
+                  : 'bg-[var(--bg-card-subtle)] border-[var(--border-color)] text-[var(--text-main)]'
+              }`}
+              title="البحث في المواضيع"
+              aria-label="البحث"
+            >
+              🔍
+            </button>
+
+            {/* Favorites View Toggle Button */}
+            <button
+              onClick={onToggleFavoritesOnly}
+              className={`h-9 px-2 sm:px-2.5 rounded-lg border text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                showFavoritesOnly
+                  ? 'bg-rose-500 text-white border-rose-500 shadow-2xs'
+                  : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-rose-300 hover:text-rose-600'
+              }`}
+              title="عرض المواضيع المفضلة"
+              aria-label="عرض المفضلة"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className={`w-3.5 h-3.5 ${showFavoritesOnly ? 'fill-current' : 'fill-rose-500 stroke-none'}`}
+              >
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              <span className="hidden xs:inline text-[11px]">المفضلة</span>
+              <span
+                className={`text-[10px] font-mono px-1 rounded-full ${
+                  showFavoritesOnly ? 'bg-white/30 text-white' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
+                }`}
+              >
+                {bookmarksCount}
+              </span>
+            </button>
+
+            {/* Audio TTS Button */}
+            <button
+              onClick={onToggleTTS}
+              className={`h-9 px-2 sm:px-2.5 rounded-lg border text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer ${
+                isTTSActive
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                  : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:bg-[var(--border-color)]'
+              }`}
+              title="القارئ الصوتي الذكي (Web Speech API)"
+              aria-label="القارئ الصوتي"
+            >
+              <span className="text-sm">🎧</span>
+              <span className="hidden lg:inline">{isTTSActive ? 'صوت نشط' : 'قراءة صوتية'}</span>
+            </button>
+
+            {/* Print as PDF Button */}
+            <button
+              onClick={() => window.print()}
+              className="h-9 px-2 sm:px-2.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] hover:text-[var(--brand-primary)] text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer no-print"
+              title="طباعة الدليل أو حفظ كملف PDF (Ctrl+P)"
+              aria-label="طباعة كملف PDF"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              <span className="hidden sm:inline text-[11px]">طباعة PDF</span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={onToggleTheme}
+              className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center text-sm cursor-pointer"
+              title="تبديل النمط النهاري / الليلي"
+              aria-label="تبديل النمط"
+            >
+              {isDark ? '☀️' : '🌙'}
+            </button>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={onToggleTTS}
-            className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer whitespace-nowrap ${
-              isTTSActive
-                ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:bg-[var(--border-color)]'
-            }`}
-            title="القارئ الصوتي الذكي (Web Speech API)"
-            aria-label="تبديل القارئ الصوتي"
-          >
-            <span>🎧</span>
-            <span className="hidden lg:inline">{isTTSActive ? 'إيقاف الصوت' : 'القارئ الصوتي'}</span>
-          </button>
-
-          <button
-            onClick={onToggleTheme}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors cursor-pointer whitespace-nowrap"
-            title="تبديل النمط النهاري / الليلي"
-            aria-label="تبديل النمط"
-          >
-            <span>{isDark ? '☀️' : '🌙'}</span>
-            <span className="hidden lg:inline">{isDark ? 'الوضع النهاري' : 'الوضع الليلي'}</span>
-          </button>
-
-          <button
-            onClick={() => window.print()}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors cursor-pointer whitespace-nowrap"
-            title="طباعة الدليل أو تصدير PDF"
-            aria-label="طباعة الدليل"
-          >
-            <span>🖨️</span>
-            <span className="hidden xl:inline">طباعة</span>
-          </button>
-        </div>
+        {/* Collapsible Mobile Search Bar (Only shown on mobile when toggled or search has text) */}
+        {isMobileSearchOpen && (
+          <div className="md:hidden pb-2.5 pt-1 border-t border-[var(--border-color)]/60 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="relative flex items-center">
+              <span className="absolute right-3 text-slate-400 pointer-events-none text-xs" aria-hidden="true">
+                🔍
+              </span>
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                placeholder="ابحث (Sequence, PRD, N+1, UML, استعارة)..."
+                className="w-full h-10 pr-9 pl-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] font-sans"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => onSearchChange('')}
+                  className="absolute left-2 px-2 py-1 text-[11px] text-[var(--text-muted)] bg-[var(--border-color)] rounded-md font-bold cursor-pointer"
+                >
+                  مسح
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

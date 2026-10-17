@@ -13,6 +13,18 @@ export default function App() {
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [selectedCategory, setSelectedCategory] = React.useState<TopicCategory>('all');
   const [selectedContentType, setSelectedContentType] = React.useState<ContentType>('all');
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = React.useState<boolean>(false);
+
+  // State: Bookmarks / Favorites (stored in localStorage)
+  const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('engineering_guide_bookmarks');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [showFavoritesOnly, setShowFavoritesOnly] = React.useState<boolean>(false);
 
   // State: Modal Detail Reader
   const [activeTopicId, setActiveTopicId] = React.useState<string | null>(null);
@@ -42,6 +54,20 @@ export default function App() {
     }
   }, [isDark]);
 
+  // Toggle bookmark handler with persistence
+  const handleToggleBookmark = (topicId: string) => {
+    setBookmarks((prev) => {
+      const exists = prev.includes(topicId);
+      const updated = exists ? prev.filter((id) => id !== topicId) : [...prev, topicId];
+      try {
+        localStorage.setItem('engineering_guide_bookmarks', JSON.stringify(updated));
+      } catch (err) {
+        console.warn('Failed to save bookmark to localStorage:', err);
+      }
+      return updated;
+    });
+  };
+
   // Compute searchable stripped texts once
   const strippedContentMap = React.useMemo(() => {
     const map = new Map<string, string>();
@@ -51,22 +77,27 @@ export default function App() {
     return map;
   }, []);
 
-  // Filtered Topics with score calculation
+  // Filtered Topics with score calculation and bookmarks filter
   const filteredTopics = React.useMemo(() => {
     const normQuery = normalizeArabic(searchQuery.trim());
 
     return TOPICS.filter((topic) => {
-      // 1. Category Filter
+      // 1. Favorites Only Filter
+      if (showFavoritesOnly && !bookmarks.includes(topic.id)) {
+        return false;
+      }
+
+      // 2. Category Filter
       if (selectedCategory !== 'all' && topic.category !== selectedCategory) {
         return false;
       }
 
-      // 2. Content Type Filter
+      // 3. Content Type Filter
       if (selectedContentType !== 'all' && !topic.contentTypes.includes(selectedContentType)) {
         return false;
       }
 
-      // 3. Keyword Search Match
+      // 4. Keyword Search Match
       if (!normQuery) return true;
 
       const normTitle = normalizeArabic(topic.title);
@@ -85,7 +116,7 @@ export default function App() {
 
       return matchTitle || matchSubtitle || matchStage || matchSummary || matchTags || matchContent;
     });
-  }, [searchQuery, selectedCategory, selectedContentType, strippedContentMap]);
+  }, [searchQuery, selectedCategory, selectedContentType, showFavoritesOnly, bookmarks, strippedContentMap]);
 
   // Active topic object for modal
   const activeTopic = React.useMemo(() => {
@@ -110,6 +141,7 @@ export default function App() {
     setSearchQuery('');
     setSelectedCategory('all');
     setSelectedContentType('all');
+    setShowFavoritesOnly(false);
   };
 
   // TTS Helper Functions
@@ -171,7 +203,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-body)] text-[var(--text-main)] flex flex-col font-sans transition-colors selection:bg-blue-600 selection:text-white">
-      {/* 1. Header with live search input, theme toggle and audio button */}
+      {/* 1. Header: Compact single row with mobile search drawer and favorites counter */}
       <SearchHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -187,9 +219,14 @@ export default function App() {
           }
         }}
         isTTSActive={isTTSActive}
+        isMobileSearchOpen={isMobileSearchOpen}
+        onToggleMobileSearch={() => setIsMobileSearchOpen((prev) => !prev)}
+        bookmarksCount={bookmarks.length}
+        showFavoritesOnly={showFavoritesOnly}
+        onToggleFavoritesOnly={() => setShowFavoritesOnly((prev) => !prev)}
       />
 
-      {/* 2. Filter Toolbar (Categories & Content Types) */}
+      {/* 2. Filter Toolbar (Categories, Content Types, and Favorites Chip) */}
       <FilterToolbar
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
@@ -199,48 +236,72 @@ export default function App() {
         filteredCount={filteredTopics.length}
         searchQuery={searchQuery}
         onResetFilters={handleResetFilters}
+        bookmarksCount={bookmarks.length}
+        showFavoritesOnly={showFavoritesOnly}
+        onToggleFavoritesOnly={() => setShowFavoritesOnly((prev) => !prev)}
       />
 
       {/* 3. Main Topic Explorer */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        {/* Hero Kicker & Stats Strip */}
-        <section className="mb-8 p-6 sm:p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xs relative overflow-hidden">
-          <div className="max-w-3xl">
-            <span className="text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider mb-2 block">
-              خريطة الطريق المعتمدة لهندسة وبرمجة الأنظمة
-            </span>
-            <h2 className="text-xl sm:text-3xl font-extrabold text-[var(--text-main)] tracking-tight leading-tight mb-3">
-              من استنطاق الفكرة ووثيقة PRD إلى هندسة المعمارية والواجهات بالذكاء الاصطناعي
-            </h2>
-            <p className="text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
-              ابحث في 12 موضوعاً تخصصياً، وتصفح المخططات المعمارية السبعة (UML)، وقواعد بيانات BorrowHub، وأوامر Spec Kit، والبرومبتات القابلة للنسخ المباشر.
-            </p>
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6">
+        {/* Favorites Active Banner */}
+        {showFavoritesOnly && (
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="text-base">❤️</span>
+              <span className="font-bold text-rose-800 dark:text-rose-200">
+                أنت تتصفح قائمة المواضيع المحفوظة في المفضلة ({filteredTopics.length} موضوعاً)
+              </span>
+            </div>
+            <button
+              onClick={() => setShowFavoritesOnly(false)}
+              className="px-2.5 py-1 text-xs font-semibold text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50 rounded-lg transition-colors cursor-pointer shrink-0"
+            >
+              عرض كافة المواضيع ←
+            </button>
           </div>
+        )}
 
-          {/* Quick Metrics Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-[var(--border-color)]">
-            <div>
-              <div className="text-2xl font-black font-mono text-[var(--brand-primary)]">12</div>
-              <div className="text-xs text-[var(--text-muted)] font-medium">موضوعاً هندسياً شاملاً</div>
+        {/* Compact Hero Kicker & Stats Strip (shown when not in favorites-only mode or when appropriate) */}
+        {!showFavoritesOnly && (
+          <section className="mb-4 sm:mb-6 p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-2xs">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div className="max-w-2xl">
+                <span className="text-[10px] sm:text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider block">
+                  خريطة الطريق الهندسية
+                </span>
+                <h2 className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
+                  من استنطاق الفكرة ووثيقة PRD إلى نمذجة المعمارية وقواعد البيانات بالذكاء الاصطناعي
+                </h2>
+              </div>
+
+              {/* Compact 4-Metric Grid */}
+              <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-[var(--border-color)] shrink-0">
+                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
+                  <div className="text-sm sm:text-base font-black font-mono text-[var(--brand-primary)]">12</div>
+                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">موضوعاً</div>
+                </div>
+                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
+                  <div className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400">8</div>
+                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مخططات</div>
+                </div>
+                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
+                  <div className="text-sm sm:text-base font-black font-mono text-indigo-600 dark:text-indigo-400">38+</div>
+                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">برومبتاً</div>
+                </div>
+                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
+                  <div className="text-sm sm:text-base font-black font-mono text-rose-500">
+                    {bookmarks.length}
+                  </div>
+                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مفضلة</div>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400">8</div>
-              <div className="text-xs text-[var(--text-muted)] font-medium">مخططات UML & ERD تفاعلية</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black font-mono text-indigo-600 dark:text-indigo-400">38+</div>
-              <div className="text-xs text-[var(--text-muted)] font-medium">برومبتاً مهندساً قابلاً للنسخ</div>
-            </div>
-            <div>
-              <div className="text-2xl font-black font-mono text-amber-600 dark:text-amber-400">100%</div>
-              <div className="text-xs text-[var(--text-muted)] font-medium">قراءة صوتية مجانية (TTS)</div>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Dynamic Topic Grid */}
         {filteredTopics.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {filteredTopics.map((topic) => (
               <TopicCard
                 key={topic.id}
@@ -249,41 +310,62 @@ export default function App() {
                 onOpenTopic={(id) => setActiveTopicId(id)}
                 onListenTopic={(t) => playTTSForTopic(t)}
                 isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
+                isBookmarked={bookmarks.includes(topic.id)}
+                onToggleBookmark={handleToggleBookmark}
               />
             ))}
           </div>
+        ) : showFavoritesOnly ? (
+          /* Empty Favorites State */
+          <div className="text-center py-12 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xs">
+            <span className="text-4xl mb-3 block" aria-hidden="true">
+              💔
+            </span>
+            <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] mb-1">
+              قائمة المفضلة فارغة حالياً
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto mb-4 leading-normal">
+              انقر على رمز القلب <span className="text-rose-500 font-bold">❤️</span> في أي بطاقة لحفظ الموضوع في قائمة المفضلة والرجوع إليه بسرعة.
+            </p>
+            <button
+              onClick={() => setShowFavoritesOnly(false)}
+              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
+            >
+              استعراض كافة المواضيع
+            </button>
+          </div>
         ) : (
           /* Empty Search State */
-          <div className="text-center py-16 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-3xl shadow-xs">
-            <span className="text-4xl mb-3 block" aria-hidden="true">
+          <div className="text-center py-10 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xs">
+            <span className="text-3xl mb-2 block" aria-hidden="true">
               🔍
             </span>
-            <h3 className="text-lg font-bold text-[var(--text-main)] mb-1">
+            <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] mb-1">
               لم نعثر على نتائج مطابقة
             </h3>
-            <p className="text-sm text-[var(--text-muted)] max-w-md mx-auto mb-6">
-              لم يتم العثور على أي موضوع يطابق الكلمة المفتاحية{' '}
+            <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto mb-4 leading-normal">
+              لا توجد مواضيع تطابق الكلمة{' '}
               <strong className="text-[var(--text-main)]">"{searchQuery}"</strong> في الفلاتر المحددة.
             </p>
             <button
               onClick={handleResetFilters}
-              className="px-5 py-2.5 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold shadow-sm hover:bg-blue-700 transition-colors cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
             >
-              إعادة ضبط معايير البحث والفلترة
+              إعادة ضبط الفلاتر
             </button>
           </div>
         )}
       </main>
 
       {/* 4. Footer */}
-      <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-6 px-4 text-center text-xs text-[var(--text-muted)]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-3 px-3 text-center text-[11px] text-[var(--text-muted)] no-print">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
           <p>
             الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي © {new Date().getFullYear()}
           </p>
-          <div className="flex items-center gap-4 text-xs font-medium">
-            <span>اختصار البحث: <kbd className="font-mono bg-[var(--border-color)] px-1.5 py-0.5 rounded text-[11px]">/</kbd></span>
-            <span>إغلاق النوافذ: <kbd className="font-mono bg-[var(--border-color)] px-1.5 py-0.5 rounded text-[11px]">Esc</kbd></span>
+          <div className="flex items-center gap-2 text-[10px] text-[var(--text-faint)]">
+            <span>البحث: <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">/</kbd></span>
+            <span>الإغلاق: <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">Esc</kbd></span>
           </div>
         </div>
       </footer>
@@ -298,6 +380,8 @@ export default function App() {
           hasPrev={activeIndex > 0}
           onListen={(t) => playTTSForTopic(t)}
           isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === activeTopic.id}
+          isBookmarked={bookmarks.includes(activeTopic.id)}
+          onToggleBookmark={handleToggleBookmark}
         />
       )}
 

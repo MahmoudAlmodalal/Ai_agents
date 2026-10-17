@@ -1,5 +1,6 @@
 import React from 'react';
 import { TopicItem } from '@/src/types/topic.ts';
+import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 
 declare global {
   interface Window {
@@ -18,6 +19,8 @@ interface TopicDetailModalProps {
   hasPrev: boolean;
   onListen: (topic: TopicItem) => void;
   isCurrentlySpeaking: boolean;
+  isBookmarked: boolean;
+  onToggleBookmark: (topicId: string) => void;
 }
 
 export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
@@ -28,24 +31,47 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   hasPrev,
   onListen,
   isCurrentlySpeaking,
+  isBookmarked,
+  onToggleBookmark,
 }) => {
   const contentContainerRef = React.useRef<HTMLDivElement>(null);
   const [copyToast, setCopyToast] = React.useState<string | null>(null);
+  const [readingProgress, setReadingProgress] = React.useState<number>(0);
 
-  // Close on Escape, Navigate on Arrows
+  // Keep latest callbacks in ref to avoid stale closures during rapid key presses
+  const keyActionRef = React.useRef({ onClose, onNavigateTopic, hasNext, hasPrev });
+  React.useEffect(() => {
+    keyActionRef.current = { onClose, onNavigateTopic, hasNext, hasPrev };
+  });
+
+  // Keyboard shortcut listener: Escape to close, ArrowLeft for Next topic, ArrowRight for Prev topic
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Do not intercept if user is typing in an input/textarea
+      const targetTag = (e.target as HTMLElement)?.tagName;
+      if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') {
+        return;
+      }
+
       if (e.key === 'Escape') {
-        onClose();
-      } else if (e.key === 'ArrowLeft' && hasNext) {
-        onNavigateTopic('next');
-      } else if (e.key === 'ArrowRight' && hasPrev) {
-        onNavigateTopic('prev');
+        e.preventDefault();
+        keyActionRef.current.onClose();
+      } else if (e.key === 'ArrowLeft') {
+        if (keyActionRef.current.hasNext) {
+          e.preventDefault();
+          keyActionRef.current.onNavigateTopic('next');
+        }
+      } else if (e.key === 'ArrowRight') {
+        if (keyActionRef.current.hasPrev) {
+          e.preventDefault();
+          keyActionRef.current.onNavigateTopic('prev');
+        }
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose, onNavigateTopic, hasNext, hasPrev]);
+  }, []);
 
   // Lock body scroll when modal is open
   React.useEffect(() => {
@@ -54,6 +80,30 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
       document.body.style.overflow = '';
     };
   }, []);
+
+  // Calculate Reading Progress on scroll
+  React.useEffect(() => {
+    const container = contentContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const totalScroll = scrollHeight - clientHeight;
+      if (totalScroll > 0) {
+        const percent = Math.min(100, Math.max(0, (scrollTop / totalScroll) * 100));
+        setReadingProgress(percent);
+      } else {
+        setReadingProgress(0);
+      }
+    };
+
+    // Reset progress when topic changes
+    setReadingProgress(0);
+    container.scrollTop = 0;
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [topic]);
 
   // Initialize Mermaid diagrams and copy buttons inside the rendered HTML
   React.useEffect(() => {
@@ -127,89 +177,199 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   }, [topic]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      {/* Click outside backdrop */}
-      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 modal-backdrop-root">
+      {/* Click outside backdrop for desktop */}
+      <div className="absolute inset-0 hidden sm:block modal-backdrop-clickable" onClick={onClose} aria-hidden="true" />
 
-      {/* Main Modal Container */}
-      <div className="relative w-full max-w-5xl max-h-[92vh] bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xl flex flex-col overflow-hidden z-10 transition-colors">
-        {/* Sticky Modal Header */}
-        <header className="px-6 py-4 bg-[var(--bg-surface)] border-b border-[var(--border-color)] flex items-center justify-between gap-4 shrink-0">
-          <div className="flex items-center gap-3 min-w-0">
-            <span className="w-10 h-10 rounded-xl bg-linear-to-br from-blue-700 to-blue-500 text-white font-mono font-extrabold text-base flex items-center justify-center shadow-xs shrink-0">
+      {/* Main Modal Container: Fullscreen on mobile, rounded card on tablet/desktop */}
+      <div className="relative w-full h-full sm:h-auto sm:max-h-[92vh] max-w-5xl bg-[var(--bg-surface)] sm:border sm:border-[var(--border-color)] sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-10 transition-colors modal-container-box">
+        {/* Sticky Modal Header (hidden during print) */}
+        <header className="px-3 sm:px-6 py-2.5 sm:py-3.5 bg-[var(--bg-surface)] flex items-center justify-between gap-2.5 shrink-0 no-print">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-linear-to-br from-blue-700 to-blue-500 text-white font-mono font-black text-xs sm:text-base flex items-center justify-center shadow-xs shrink-0">
               {topic.number}
             </span>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 text-xs font-semibold text-[var(--brand-primary)]">
-                <span>{topic.stageTag}</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-[var(--text-muted)]">{topic.categoryName}</span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-[var(--brand-primary)]">
+                <span className="truncate">{topic.stageTag}</span>
+                <span aria-hidden="true" className="opacity-40">·</span>
+                <span className="text-[var(--text-muted)] truncate hidden xs:inline">{topic.categoryName}</span>
+                <span aria-hidden="true" className="opacity-40 hidden sm:inline">·</span>
+                <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[var(--text-muted)] bg-[var(--bg-card-subtle)] px-1.5 py-0.2 rounded">
+                  <span>⏱️</span>
+                  <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
+                </span>
+                <span aria-hidden="true" className="opacity-40 hidden sm:inline">·</span>
+                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.2 rounded font-bold">
+                  {Math.round(readingProgress)}% مقروء
+                </span>
               </div>
-              <h2 className="text-base sm:text-lg font-black text-[var(--text-main)] truncate">
+              <h2 className="text-xs sm:text-base font-black text-[var(--text-main)] truncate leading-tight">
                 {topic.title}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Print as PDF Button */}
+            <button
+              onClick={() => window.print()}
+              className="min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
+              title="طباعة أو حفظ هذا الموضوع كملف PDF (Ctrl+P)"
+              aria-label="طباعة كملف PDF"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              <span className="hidden sm:inline">طباعة PDF</span>
+            </button>
+
+            {/* Heart Bookmark in Modal */}
+            <button
+              onClick={() => onToggleBookmark(topic.id)}
+              className={`min-h-[36px] min-w-[36px] px-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center justify-center ${
+                isBookmarked
+                  ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-600 dark:text-rose-400'
+                  : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-rose-600 hover:border-rose-300'
+              }`}
+              title={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
+              aria-label={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className={`w-4 h-4 ${
+                  isBookmarked ? 'fill-current text-rose-500' : 'fill-none stroke-current stroke-2'
+                }`}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                />
+              </svg>
+            </button>
+
+            {/* Audio Listen Button */}
             <button
               onClick={() => onListen(topic)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
+              className={`min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
                 isCurrentlySpeaking
                   ? 'bg-emerald-600 text-white border-emerald-600'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)]'
               }`}
               title="الاستماع الصوتي لهذا الموضوع"
             >
-              <span>{isCurrentlySpeaking ? '🔊' : '🎧'}</span>
+              <span className="text-sm">{isCurrentlySpeaking ? '🔊' : '🎧'}</span>
               <span className="hidden sm:inline">
-                {isCurrentlySpeaking ? 'جاري القراءة' : 'استماع صوتي'}
+                {isCurrentlySpeaking ? 'جاري القراءة' : 'استماع'}
               </span>
             </button>
 
+            {/* Close Button with Esc Hint */}
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 text-[var(--text-muted)] border border-[var(--border-color)] flex items-center justify-center text-sm font-bold transition-colors cursor-pointer"
-              title="إغلاق النافذة (Esc)"
+              className="min-h-[36px] px-2.5 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 text-[var(--text-muted)] border border-[var(--border-color)] flex items-center justify-center gap-1 text-xs font-bold transition-colors cursor-pointer"
+              title="إغلاق النافذة (Escape)"
               aria-label="إغلاق"
             >
-              ✕
+              <span>✕</span>
+              <kbd className="hidden sm:inline text-[10px] font-mono text-[var(--text-faint)] bg-[var(--border-color)]/60 px-1 py-0.2 rounded">
+                Esc
+              </kbd>
             </button>
           </div>
         </header>
 
-        {/* Scrollable Content Area */}
+        {/* Formal Publication Header for PDF Print Only */}
+        <div className="hidden print:block p-6 mb-2 border-b-2 border-slate-800 text-right bg-white text-slate-900">
+          <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-300 text-[10pt] font-mono text-slate-600">
+            <span>الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي</span>
+            <span>تاريخ الطباعة: {new Date().toLocaleDateString('ar-EG')}</span>
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-2 py-0.5 bg-blue-700 text-white font-mono font-bold text-xs rounded">
+              الموضوع #{topic.number}
+            </span>
+            <span className="text-xs font-bold text-blue-800">{topic.stageTag} · {topic.categoryName}</span>
+          </div>
+          <h1 className="text-xl font-black text-slate-900 mb-1">{topic.title}</h1>
+          <p className="text-xs text-blue-900 font-bold mb-2">{topic.subtitle}</p>
+          <p className="text-xs text-slate-600 mb-3 leading-relaxed">{topic.summary}</p>
+          <div className="flex items-center gap-3 text-[9pt] text-slate-500 font-mono">
+            <span>⏱️ وقت القراءة التقديري: {formatReadingTime(topic.readingTimeMinutes)}</span>
+            <span>·</span>
+            <span>الوسوم: {topic.tags.join('، ')}</span>
+          </div>
+        </div>
+
+        {/* Visual Reading Progress Bar Track */}
         <div
-          ref={contentContainerRef}
-          className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[var(--bg-body)] content-area"
+          className="w-full h-1 sm:h-1.5 bg-[var(--border-color)]/60 shrink-0 relative overflow-hidden no-print"
+          role="progressbar"
+          aria-valuenow={Math.round(readingProgress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="نسبة التقدم في القراءة"
         >
           <div
-            dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
-            className="prose dark:prose-invert max-w-none"
+            className="h-full bg-linear-to-r from-blue-600 via-indigo-500 to-emerald-500 transition-all duration-75 ease-out shadow-xs"
+            style={{ width: `${readingProgress}%` }}
           />
         </div>
 
-        {/* Sticky Modal Footer with Next / Prev */}
-        <footer className="px-6 py-3.5 bg-[var(--bg-surface)] border-t border-[var(--border-color)] flex items-center justify-between gap-4 shrink-0">
+        {/* Scrollable Content Area */}
+        <div
+          ref={contentContainerRef}
+          className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area"
+        >
+          <div
+            dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
+            className="prose dark:prose-invert max-w-none text-right"
+          />
+        </div>
+
+        {/* Sticky Modal Footer with Next / Prev and Keyboard Hints */}
+        <footer className="px-3 sm:px-6 py-2.5 sm:py-3 bg-[var(--bg-surface)] border-t border-[var(--border-color)] flex items-center justify-between gap-2 shrink-0 no-print">
           <button
             onClick={() => onNavigateTopic('prev')}
             disabled={!hasPrev}
-            className="px-4 py-2 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            className="min-h-[38px] px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            title="الانتقال إلى الموضوع السابق (السهم الأيمن →)"
           >
             <span>→</span>
-            <span>الموضوع السابق</span>
+            <span className="hidden xs:inline">الموضوع</span>
+            <span>السابق</span>
+            <kbd className="hidden sm:inline font-mono text-[10px] bg-[var(--border-color)] text-[var(--text-muted)] px-1 py-0.2 rounded">
+              →
+            </kbd>
           </button>
 
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            موضوع {topic.number} من 12
-          </span>
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-[var(--text-muted)]">
+            <span>موضوع {topic.number} / 12</span>
+            <span className="opacity-40">·</span>
+            <span className="font-bold text-[var(--brand-primary)]">
+              {Math.round(readingProgress)}%
+            </span>
+            <span className="hidden md:inline opacity-40">·</span>
+            <span className="hidden md:inline text-[10px] text-[var(--text-faint)] font-sans">
+              (استخدم <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">←</kbd> <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">→</kbd> للتنقل)
+            </span>
+          </div>
 
           <button
             onClick={() => onNavigateTopic('next')}
             disabled={!hasNext}
-            className="px-4 py-2 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            className="min-h-[38px] px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            title="الانتقال إلى الموضوع التالي (السهم الأيسر ←)"
           >
-            <span>الموضوع التالي</span>
+            <kbd className="hidden sm:inline font-mono text-[10px] bg-[var(--border-color)] text-[var(--text-muted)] px-1 py-0.2 rounded">
+              ←
+            </kbd>
+            <span className="hidden xs:inline">الموضوع</span>
+            <span>التالي</span>
             <span>←</span>
           </button>
         </footer>
@@ -217,7 +377,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 
       {/* Copy Toast Notification */}
       {copyToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-60 px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-60 px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
           <span>✓</span>
           <span>{copyToast}</span>
         </div>
