@@ -23,6 +23,7 @@ import { t09Entries } from '@/src/data/topics/wave2/t09-execution-tools.ts';
 import { t11Entries } from '@/src/data/topics/wave2/t11-tech-stack.ts';
 import { t12Entries } from '@/src/data/topics/wave2/t12-frontend-planning-spec-kit.ts';
 import { t10Entries } from '@/src/data/topics/wave2/t10-stitch-mcp-design-md.ts';
+import { t13Entries } from '@/src/data/topics/wave2/t13-python-postgres-api.ts';
 
 /**
  * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
@@ -436,6 +437,7 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
   t11Entries,
   t12Entries,
   t10Entries,
+  t13Entries,
 ];
 
 /**
