@@ -36,9 +36,9 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { title: 'الرئيسية', href: '/', icon: Home, isPrimary: true },
   { title: 'ابدأ هنا', href: '/start', icon: Compass, isPrimary: true },
-  { title: 'مسار التعلم', href: '/learn/fundamentals-ai-agents', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
-  { title: 'المتطلبات', href: '/learn/requirements-discovery', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
-  { title: 'AI Studio وStitch', href: '/learn/google-ai-studio-stitch-workflow', icon: Sparkles, badge: 'Design → GitHub', isPrimary: true },
+  { title: 'مسار التعلم', href: '/learn/project-idea-mvp', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
+  { title: 'المتطلبات', href: '/learn/requirements-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
+  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-design-md', icon: Sparkles, badge: 'Design → Code', isPrimary: true },
   { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: '20 محاضرة', isPrimary: true },
   { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: true },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: '31 برومبت', isPrimary: true },

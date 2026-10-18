@@ -1,0 +1,10 @@
+import Link from 'next/link';
+export const metadata = { title: 'ورشة BorrowHub | سلاح العصر', description: 'دراسة حالة استعارة المعدات: القصة والأدوار والقواعد.' };
+export default function BorrowHubPage() {
+  const rules = ['الأعضاء فقط يمكنهم تقديم طلب استعارة.','الموافقة تتطلب مراجعة المشرف.','لا إعارة مزدوجة لنفس القطعة.','الإرجاع المتأخر يفرض غرامة.','المعدات المعطلة غير قابلة للاستعارة.','كل طلب له حالة واحدة فقط.','الحذف الفيزيائي ممنوع للسجلات.','التسليم يتطلب توقيع الاستلام.','المخزون لا يظهر سالبا أبدا.','كل تغيير حالة مسجل بتاريخ ومستخدم.'];
+  return (<main className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">
+    <Link href="/" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--primary)]">→ الرئيسية</Link>
+    <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10"><span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">مثال تعليمي — ليس مشروعا إلزاميا</span><h1 className="mt-4 text-3xl font-black sm:text-5xl">BorrowHub — نظام استعارة معدات</h1><p className="mt-4 max-w-4xl leading-8 text-[var(--text-muted)]">مثال مشترك يوضح المنهج: تسجيل الحساب، كتالوج المعدات، طلبات الاستعارة، المراجعة، التسليم، والإرجاع.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/learn/borrowhub-reference" className="rounded-xl bg-[var(--primary)] px-5 py-3 text-sm font-black text-white">افتح الدرس التفصيلي</Link><Link href="/learn/database-erd" className="rounded-xl border border-[var(--border-color)] px-5 py-3 text-sm font-black">مخطط قاعدة البيانات</Link></div></header>
+    <section className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6"><h2 className="font-black">قواعد العمل (10)</h2><ol className="mt-3 space-y-2 text-sm text-[var(--text-muted)]">{rules.map((r,i)=>(<li key={i} className="flex gap-2"><span className="font-mono font-bold text-[var(--accent)]">{i+1}.</span><span>{r}</span></li>))}</ol></section>
+  </div></main>);
+}

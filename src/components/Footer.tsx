@@ -97,10 +97,10 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/learn/github"
+                  href="/learn/git-github-user-flow"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> Git وGitHub والتوثيق
+                  <span className="text-slate-600">›</span> Git وGitHub وUser Flow
                 </Link>
               </li>
               <li>

@@ -8,6 +8,7 @@ export const metadata = {
   description: 'مرجع سريع للبرومبتات العملية وخارطة مخرجات مشروع الطالب.',
 };
 
+
 const fields = '[PROJECT_NAME]، المجال: [DOMAIN]، المستخدمون: [TARGET_USERS]';
 const preparePrompt = `أعمل على مشروع ${fields}.
 هذه محاضرة: [LESSON_TITLE].

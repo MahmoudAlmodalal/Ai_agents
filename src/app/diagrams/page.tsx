@@ -1,0 +1,10 @@
+import Link from 'next/link';
+export const metadata = { title: 'مختبر المخططات | سلاح العصر', description: 'المخططات الهندسية الثمانية: متى تستخدم كل مخطط وأدواته.' };
+export default function DiagramsPage() {
+  const diagrams = [['User Flow','مسار المستخدم خطوة بخطوة','M','/learn/git-github-user-flow'],['Use Case','التفاعل بين Actors والنظام','P','/learn/diagrams-lab'],['Activity','تدفق الأنشطة والقرارات','M','/learn/diagrams-lab'],['Sequence','التفاعل عبر الزمن','M','/learn/diagrams-lab'],['State','حالات الكيان والانتقالات','M','/learn/diagrams-lab'],['Class','هيكل الكلاسات والعلاقات','M','/learn/diagrams-lab'],['ERD','الجداول والمفاتيح والعلاقات','D','/learn/database-erd'],['Domain Model','المفاهيم وقواعد العمل','M','/learn/diagrams-lab']];
+  return (<main className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">
+    <Link href="/" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--primary)]">→ الرئيسية</Link>
+    <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10"><h1 className="text-3xl font-black sm:text-5xl">مختبر المخططات الثمانية</h1><p className="mt-4 max-w-4xl leading-8 text-[var(--text-muted)]">لا تولد كل المخططات معا. ابدأ من PRD، واختر المخطط المناسب للسؤال، وارسم واحدا وتحقق منه قبل التالي.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/learn/diagram-lab" className="rounded-xl bg-[var(--primary)] px-5 py-3 text-sm font-black text-white">افتح المختبر التفاعلي</Link></div></header>
+    <div className="mt-6 grid gap-4 md:grid-cols-2">{diagrams.map((d) => (<Link key={d[0]} href={d[3]} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 hover:border-emerald-400"><div className="flex items-center justify-between"><strong>{d[0]}</strong><span className="rounded-md bg-[var(--bg-card-subtle)] px-2 py-1 font-mono text-xs">{d[2]}</span></div><p className="mt-2 text-xs text-[var(--text-muted)]">{d[1]}</p></Link>))}</div>
+  </div></main>);
+}

@@ -50,7 +50,7 @@ export const LEGACY_TOPIC_ID_MAP: Record<string, string> = {
  */
 export const TOPIC_SLUG_ALIASES: Record<string, string> = {
   'fundamentals-ai-agents': 'project-idea-mvp',
-  'requirements-discovery': 'project-idea-mvp',
+  'requirements-discovery': 'requirements-grill-me',
   'grill-me': 'requirements-grill-me',
   'prd': 'requirements-prd',
   'github': 'git-github-user-flow',
@@ -69,10 +69,6 @@ export const TOPIC_SLUG_ALIASES: Record<string, string> = {
   'spec-kit': 'frontend-planning-spec-kit',
   'incremental-implementation': 'frontend-planning-spec-kit',
   'testing-qa': 'prompt-library',
-  'tools': 'borrowhub-reference',
-  'templates': 'borrowhub-reference',
-  'borrowhub': 'borrowhub-reference',
-  'glossary': 'borrowhub-reference',
 };
 
 const LEGACY_TOPICS: TopicItem[] = [

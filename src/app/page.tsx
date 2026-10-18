@@ -321,8 +321,8 @@ export default function HomePage() {
               {/* Compact 4-Metric Grid */}
               <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-[var(--border-color)] shrink-0">
                 <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-[var(--brand-primary)]">12</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">موضوعاً</div>
+                  <div className="text-sm sm:text-base font-black font-mono text-[var(--brand-primary)]">{TOPICS.length}</div>
+                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">درسًا</div>
                 </div>
                 <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
                   <div className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400">8</div>

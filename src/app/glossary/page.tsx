@@ -1,0 +1,10 @@
+import Link from 'next/link';
+export const metadata = { title: 'القاموس التقني | سلاح العصر', description: 'مصطلحات الدورة بالعربية والإنجليزية.' };
+export default function GlossaryPage() {
+  const terms: string[][] = [['PRD','وثيقة ما نبنيه ولماذا ولمن.'],['MVP','أصغر نطاق عملي يحقق الهدف.'],['MCP','ربط قياسي بين Agent وأداة خارجية.'],['Skill','تعليمات متخصصة مثل Grill Me.'],['ERD','مخطط الجداول والمفاتيح والعلاقات.'],['User Flow','خطوات المستخدم لإنجاز هدف.'],['Use Case','تفاعل Actor مع النظام.'],['Sequence','التفاعل عبر الزمن.'],['State','حالات الكيان والانتقالات.'],['Domain Model','مفاهيم النظام دون تفاصيل تقنية.'],['DESIGN.md','عقد النظام البصري.'],['Spec Kit','مواصفات ثم تخطيط ومهام وتحقق.'],['Non-Goals','ميزات مؤجلة خارج MVP.'],['Acceptance Criteria','حالات قابلة للاختبار.'],['DBML','لغة تعريف الجداول نصيا.'],['RTL','اتجاه الكتابة لليمين.']];
+  return (<main className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">
+    <Link href="/" className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--primary)]">→ الرئيسية</Link>
+    <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10"><h1 className="text-3xl font-black sm:text-5xl">القاموس التقني</h1><p className="mt-4 max-w-4xl leading-8 text-[var(--text-muted)]">نحتفظ بالمصطلح الإنجليزي بجانب الشرح العربي.</p></header>
+    <div className="mt-6 grid gap-3 md:grid-cols-2">{terms.map((t) => (<article key={t[0]} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4"><strong className="font-mono text-sm text-[var(--primary)]" dir="ltr">{t[0]}</strong><p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">{t[1]}</p></article>))}</div>
+  </div></main>);
+}
