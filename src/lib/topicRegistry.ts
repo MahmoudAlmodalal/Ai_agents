@@ -13,6 +13,7 @@ import { topic12Html } from '@/scripts/topics/topic12.ts';
 import { TopicItem } from '@/src/types/topic.ts';
 import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
 import { t02Entries } from '@/src/data/topics/wave2/t02-discovery-prd-srs.ts';
+import { t03Entries } from '@/src/data/topics/wave2/t03-git-github.ts';
 
 /**
  * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
@@ -416,6 +417,7 @@ const LEGACY_TOPICS: TopicItem[] = [
  */
 export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
   t02Entries,
+  t03Entries,
 ];
 
 /**
