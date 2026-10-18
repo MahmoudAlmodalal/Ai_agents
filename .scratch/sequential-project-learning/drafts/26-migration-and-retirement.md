@@ -2,9 +2,11 @@
 
 **What to build:** يجد الطالب العائد محفوظاته وروابطه القديمة بمعناها الصحيح، ويعرض الموقع كاملًا فهرسًا واحدًا دون بقايا محاضرات أو محتوى معنون خطأ.
 
-**Blocked by:** 02: اكتشاف المشروع وكتابة PRD وSRS؛ 03: حفظ وثائق المشروع باستخدام Git وGitHub؛ 04: Mermaid وUser Flow وDomain Model؛ 05: PlantUML ومخططات السلوك المستقلة؛ 06: ERD وDBML وSequence وClass حسب الاعتماديات؛ 07: UI/UX وUX Blueprint وجرد الشاشات؛ 08: Stitch ونظام التصميم وPrototype؛ 09: أدوات التنفيذ عند بدء كود الفرونت؛ 10: Stitch MCP وDESIGN.md؛ 11: TypeScript وReact وTailwind وNext.js؛ 12: تخطيط الفرونت وSpec Kit والتنفيذ التدريجي؛ 13: Python وPostgreSQL ومعمارية API؛ 14: Django أوFastAPI والصلاحيات ومنطق العمل؛ 15: ربط الواجهة بالخادم واختبار الرحلات؛ 16: أداء البيانات وRedis وQA؛ 17: Docker وLinux في تشغيل المشروع؛ 18: Vercel أوNetlify ونشر الخادم والبيانات؛ 19: التشغيل والتسليم وDemo Day وPortfolio؛ 20: مكتبة البرومبتات الـ33 المرتبطة بالمسار؛ 21: مختبر المخططات الثمانية؛ 22: دراسة BorrowHub المرافقة للمسار؛ 23: دليل الأدوات والقوالب المتاحة؛ 24: القاموس والأسئلة الشائعة أثناء التعلم؛ 25: الرئيسية وابدأ هنا وتعريف البرنامج.
+**Blocked by:** [#6](https://github.com/MahmoudAlmodalal/Ai_agents/issues/6)؛ [#7](https://github.com/MahmoudAlmodalal/Ai_agents/issues/7)؛ [#8](https://github.com/MahmoudAlmodalal/Ai_agents/issues/8)؛ [#9](https://github.com/MahmoudAlmodalal/Ai_agents/issues/9)؛ [#10](https://github.com/MahmoudAlmodalal/Ai_agents/issues/10)؛ [#11](https://github.com/MahmoudAlmodalal/Ai_agents/issues/11)؛ [#12](https://github.com/MahmoudAlmodalal/Ai_agents/issues/12)؛ [#13](https://github.com/MahmoudAlmodalal/Ai_agents/issues/13)؛ [#14](https://github.com/MahmoudAlmodalal/Ai_agents/issues/14)؛ [#15](https://github.com/MahmoudAlmodalal/Ai_agents/issues/15)؛ [#16](https://github.com/MahmoudAlmodalal/Ai_agents/issues/16)؛ [#17](https://github.com/MahmoudAlmodalal/Ai_agents/issues/17)؛ [#18](https://github.com/MahmoudAlmodalal/Ai_agents/issues/18)؛ [#19](https://github.com/MahmoudAlmodalal/Ai_agents/issues/19)؛ [#20](https://github.com/MahmoudAlmodalal/Ai_agents/issues/20)؛ [#21](https://github.com/MahmoudAlmodalal/Ai_agents/issues/21)؛ [#22](https://github.com/MahmoudAlmodalal/Ai_agents/issues/22)؛ [#23](https://github.com/MahmoudAlmodalal/Ai_agents/issues/23)؛ [#24](https://github.com/MahmoudAlmodalal/Ai_agents/issues/24)؛ [#25](https://github.com/MahmoudAlmodalal/Ai_agents/issues/25)؛ [#26](https://github.com/MahmoudAlmodalal/Ai_agents/issues/26)؛ [#27](https://github.com/MahmoudAlmodalal/Ai_agents/issues/27)؛ [#28](https://github.com/MahmoudAlmodalal/Ai_agents/issues/28)؛ [#29](https://github.com/MahmoudAlmodalal/Ai_agents/issues/29).
 
-**Status:** draft-awaiting-review
+**Status:** ready-for-agent
+
+**GitHub Issue:** [#30](https://github.com/MahmoudAlmodalal/Ai_agents/issues/30)
 
 - [ ] تُراجع مطابقة المعرّفات القديمة للمحتوى الحقيقي، وتُنقل المفضلة والمشاهدات القابلة للمطابقة دون تبديل معناها.
 - [ ] عند غموض المطابقة، تحفظ البيانات أو يعرض وضع واضح دون ربط تلقائي بمحتوى مختلف أو حذف صامت.
@@ -12,4 +14,4 @@
 - [ ] لا يبقى قارئ نشط يعتمد فهرسًا متعارضًا، ولا تُحذف المواد المصدرية الصحيحة بوصفها إجراء تنظيف.
 - [ ] يفحص المتصفح بيانات قديمة ممثلة وروابط قديمة، ويظل البحث والتصفية والصوت والثيم والطباعة متاحًا حسب دعم المتصفح.
 
-هذه مسودة مراجعة، وليست تذكرة منشورة أو جاهزة للسحب قبل اعتماد التقسيم وتهيئة المتعقّب.
+نسخة مرجعية للتذكرة المعتمدة والمنشورة على GitHub. اعتمادياتها مسجلة أيضًا بعلاقات حجب فعلية؛ يبدأ التنفيذ عندما تكتمل التذاكر التي تحجبها.

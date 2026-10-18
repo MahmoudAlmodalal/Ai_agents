@@ -1,119 +1,119 @@
-# تقسيم تذاكر مسار مشروع الطالب للمراجعة
+# تذاكر مسار مشروع الطالب المعتمدة والمنشورة
 
-الحالة: مقترح للمراجعة فقط. لم يُعتمد التقسيم ولم تُنشر التذاكر في متعقّب مهام؛ يحتاج النشر إعداد المتعقّب عبر /setup-matt-pocock-skills.
+الحالة: اعتمد المستخدم التقسيم، ونُشرت التذاكر الـ27 على GitHub بوسم ready-for-agent. تم التحقق من 51 علاقة حجب فعلية. هذه حالة النشر؛ لم يبدأ تنفيذ تغييرات الموقع.
 
-كل تذكرة مسودة مستقلة تتضمن السلوك ومعايير القبول واعتمادياتها. اعتماديات التذاكر تخص تنفيذ الموقع وتختلف عن ترتيب تعلّم الطالب: يمكن كتابة موضوع متأخر مستقلًا باستخدام مدخلات مراجعة موثقة، لكن لا يُنشر رابط إلى مادة غير متاحة. تختبر كل تذكرة واجهتها وتراجع مخرجات محتواها؛ تذكرة التحقق النهائية تجمع الأدلة وتراجع اتساق الرحلة كاملة.
+كل تذكرة مستقلة تتضمن السلوك ومعايير القبول واعتمادياتها. اعتماديات التذاكر تخص تنفيذ الموقع وتختلف عن ترتيب تعلّم الطالب: يمكن كتابة موضوع متأخر مستقلًا باستخدام مدخلات مراجعة موثقة، لكن لا يُنشر رابط إلى مادة غير متاحة. تختبر كل تذكرة واجهتها وتراجع مخرجات محتواها؛ تذكرة التحقق النهائية تجمع الأدلة وتراجع اتساق الرحلة كاملة.
 
 التذكرة الأولى توسعة متوافقة تقدم موضوعًا كاملًا وتُبقي بقية القراء عاملة. تذاكر المحتوى ترحّل مجموعات صغيرة، ثم تأتي تذكرة إنهاء الفهارس القديمة بعد ترحيل جميع المستهلكين. لا ينشأ Backend للموقع ضمن هذه التذاكر.
 
-1. [موضوع واحد موحّد من الفهرس إلى القراءة](../.scratch/sequential-project-learning/drafts/01-unified-first-topic.md)
+1. [#5: موضوع واحد موحّد من الفهرس إلى القراءة](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5)
    - يعتمد على: لا شيء.
    - النتيجة: يقرأ الطالب موضوع اختيار فكرة المشروع بالعنوان والخطوات والمخرجات نفسها من بطاقة الرئيسية ومن صفحة الموضوع ومن القارئ التفصيلي، مع هوية ثابتة مستقلة عن رقم الترتيب.
 
-2. [اكتشاف المشروع وكتابة PRD وSRS](../.scratch/sequential-project-learning/drafts/02-discovery-requirements.md)
-   - يعتمد على: 01.
+2. [#6: اكتشاف المشروع وكتابة PRD وSRS](https://github.com/MahmoudAlmodalal/Ai_agents/issues/6)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يطبّق الطالب موضوعات Grill Me وPRD وSRS على مشروعه، ويصل لكل موضوع من الفهرس والقراء بترتيب متسق.
 
-3. [حفظ وثائق المشروع باستخدام Git وGitHub](../.scratch/sequential-project-learning/drafts/03-documentation-git.md)
-   - يعتمد على: 01.
+3. [#7: حفظ وثائق المشروع باستخدام Git وGitHub](https://github.com/MahmoudAlmodalal/Ai_agents/issues/7)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتعلم الطالب Git وGitHub في موضوعين مستقلين مبكرًا لحفظ وثائقه ومراجعتها، دون تقديم إعداد أدوات تنفيذ الفرونت.
 
-4. [Mermaid وUser Flow وDomain Model](../.scratch/sequential-project-learning/drafts/04-mermaid-flow-domain.md)
-   - يعتمد على: 01.
+4. [#8: Mermaid وUser Flow وDomain Model](https://github.com/MahmoudAlmodalal/Ai_agents/issues/8)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: ينتقل الطالب من تعلّم صيغة Mermaid إلى رسم رحلة مشروعه ونموذجه المفاهيمي في ثلاثة مواضيع مستقلة.
 
-5. [PlantUML ومخططات السلوك المستقلة](../.scratch/sequential-project-learning/drafts/05-uml-behavior.md)
-   - يعتمد على: 01.
+5. [#9: PlantUML ومخططات السلوك المستقلة](https://github.com/MahmoudAlmodalal/Ai_agents/issues/9)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يصل الطالب إلى PlantUML وUse Case وActivity وState كمواضيع منفصلة ويطبّقها على أدوار مشروعه وعملياته وحالاته.
 
-6. [ERD وDBML وSequence وClass حسب الاعتماديات](../.scratch/sequential-project-learning/drafts/06-data-and-design-diagrams.md)
-   - يعتمد على: 01.
+6. [#10: ERD وDBML وSequence وClass حسب الاعتماديات](https://github.com/MahmoudAlmodalal/Ai_agents/issues/10)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يصمم الطالب تخزين بيانات مشروعه وتفاعلاته وكلاساته في مواضيع مستقلة، مع تقديم مدخلات Class قبله.
 
-7. [UI/UX وUX Blueprint وجرد الشاشات](../.scratch/sequential-project-learning/drafts/07-ux-screen-planning.md)
-   - يعتمد على: 01.
+7. [#11: UI/UX وUX Blueprint وجرد الشاشات](https://github.com/MahmoudAlmodalal/Ai_agents/issues/11)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يحوّل الطالب متطلبات مشروعه إلى احتياجات تجربة وخريطة رحلات وجرد شاشات في ثلاثة مواضيع مستقلة تسبق التصميم المرئي.
 
-8. [Stitch ونظام التصميم وPrototype](../.scratch/sequential-project-learning/drafts/08-stitch-design-prototype.md)
-   - يعتمد على: 01.
+8. [#12: Stitch ونظام التصميم وPrototype](https://github.com/MahmoudAlmodalal/Ai_agents/issues/12)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يصمم الطالب شاشة مرجعية ثم نظامًا بصريًا وبقية الشاشات ونموذجًا تفاعليًا في مواضيع مستقلة، قبل إعداد أدوات الكود.
 
-9. [أدوات التنفيذ عند بدء كود الفرونت](../.scratch/sequential-project-learning/drafts/09-frontend-tools.md)
-   - يعتمد على: 01.
+9. [#13: أدوات التنفيذ عند بدء كود الفرونت](https://github.com/MahmoudAlmodalal/Ai_agents/issues/13)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يجد الطالب مواضيع Coding Agent وGoogle AI Studio وSkills وMCP عند الانتقال من التصميم إلى تنفيذ الفرونت، بدل تحميل بداية المسار بها.
 
-10. [Stitch MCP وDESIGN.md](../.scratch/sequential-project-learning/drafts/10-design-to-code.md)
-   - يعتمد على: 01.
+10. [#14: Stitch MCP وDESIGN.md](https://github.com/MahmoudAlmodalal/Ai_agents/issues/14)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: ينقل الطالب التصميم المعتمد إلى بيئة تنفيذ الفرونت ثم يوثّق القيم والمراجع الحقيقية في موضوعين مستقلين.
 
-11. [TypeScript وReact وTailwind وNext.js](../.scratch/sequential-project-learning/drafts/11-frontend-stack.md)
-   - يعتمد على: 01.
+11. [#15: TypeScript وReact وTailwind وNext.js](https://github.com/MahmoudAlmodalal/Ai_agents/issues/15)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتعلم الطالب التقنيات الأربع كمواضيع مستقلة ومتتابعة بأمثلة مرتبطة بمشروعه قبل التنفيذ التدريجي.
 
-12. [تخطيط الفرونت وSpec Kit والتنفيذ التدريجي](../.scratch/sequential-project-learning/drafts/12-frontend-execution.md)
-   - يعتمد على: 01.
+12. [#16: تخطيط الفرونت وSpec Kit والتنفيذ التدريجي](https://github.com/MahmoudAlmodalal/Ai_agents/issues/16)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتبع الطالب مواضيع Frontend Planning وUI/UX Pro Max وSpec Kit والتنفيذ ليبني واجهته بمهمة صغيرة قابلة للتحقق في كل مرة.
 
-13. [Python وPostgreSQL ومعمارية API](../.scratch/sequential-project-learning/drafts/13-backend-foundations.md)
-   - يعتمد على: 01.
+13. [#17: Python وPostgreSQL ومعمارية API](https://github.com/MahmoudAlmodalal/Ai_agents/issues/17)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يصل الطالب إلى أساسيات الخادم وقاعدة البيانات وعقد API في ثلاثة مواضيع مستقلة مرتبطة بمتطلبات مشروعه وتصميم بياناته.
 
-14. [Django أوFastAPI والصلاحيات ومنطق العمل](../.scratch/sequential-project-learning/drafts/14-backend-frameworks.md)
-   - يعتمد على: 01.
+14. [#18: Django أوFastAPI والصلاحيات ومنطق العمل](https://github.com/MahmoudAlmodalal/Ai_agents/issues/18)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتعلم الطالب بديلَي إطار الخادم في موضوعين مستقلين ثم المصادقة والصلاحيات وServices وSelectors وفق البديل الذي اختاره.
 
-15. [ربط الواجهة بالخادم واختبار الرحلات](../.scratch/sequential-project-learning/drafts/15-integration-testing.md)
-   - يعتمد على: 01.
+15. [#19: ربط الواجهة بالخادم واختبار الرحلات](https://github.com/MahmoudAlmodalal/Ai_agents/issues/19)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتبع الطالب موضوع الربط ثم موضوع Testing لاستبدال البيانات التمثيلية بواجهات API والتحقق من رحلات مشروعه ونجاحها وفشلها.
 
-16. [أداء البيانات وRedis وQA](../.scratch/sequential-project-learning/drafts/16-performance-redis-qa.md)
-   - يعتمد على: 01.
+16. [#20: أداء البيانات وRedis وQA](https://github.com/MahmoudAlmodalal/Ai_agents/issues/20)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يقيس الطالب أداء استعلامات مشروعه ويحدد حاجة Redis ثم يجري تدقيق QA كاملًا في ثلاثة مواضيع مستقلة.
 
-17. [Docker وLinux في تشغيل المشروع](../.scratch/sequential-project-learning/drafts/17-docker-linux.md)
-   - يعتمد على: 01.
+17. [#21: Docker وLinux في تشغيل المشروع](https://github.com/MahmoudAlmodalal/Ai_agents/issues/21)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتعلم الطالب Docker وLinux في موضوعين مستقلين عند تجهيز مسار تشغيل الخادم، مع توضيح متى يحتاجهما ومتى يتجاوزهما.
 
-18. [Vercel أوNetlify ونشر الخادم والبيانات](../.scratch/sequential-project-learning/drafts/18-cloud-deployment.md)
-   - يعتمد على: 01.
+18. [#22: Vercel أوNetlify ونشر الخادم والبيانات](https://github.com/MahmoudAlmodalal/Ai_agents/issues/22)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتعلم الطالب بديلَي نشر الفرونت ثم نشر Backend وقاعدة البيانات وربطهما في منتج حي.
 
-19. [التشغيل والتسليم وDemo Day وPortfolio](../.scratch/sequential-project-learning/drafts/19-operations-delivery.md)
-   - يعتمد على: 01.
+19. [#23: التشغيل والتسليم وDemo Day وPortfolio](https://github.com/MahmoudAlmodalal/Ai_agents/issues/23)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتبع الطالب مواضيع CI/CD والمراقبة والنسخ الاحتياطي، والتسليم، وDemo Day، وPortfolio لإنهاء مشروع قابل للتشغيل والمراجعة والعرض.
 
-20. [مكتبة البرومبتات الـ33 المرتبطة بالمسار](../.scratch/sequential-project-learning/drafts/20-prompt-library.md)
-   - يعتمد على: 01.
+20. [#24: مكتبة البرومبتات الـ33 المرتبطة بالمسار](https://github.com/MahmoudAlmodalal/Ai_agents/issues/24)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يبحث الطالب في البرومبتات ويصفّيها ويفتح تفاصيلها وينسخ النص الكامل ويرى أين يستخدمه في مسار مشروعه.
 
-21. [مختبر المخططات الثمانية](../.scratch/sequential-project-learning/drafts/21-diagram-lab.md)
-   - يعتمد على: 04، 05، 06.
+21. [#25: مختبر المخططات الثمانية](https://github.com/MahmoudAlmodalal/Ai_agents/issues/25)
+   - يعتمد على: [#8](https://github.com/MahmoudAlmodalal/Ai_agents/issues/8)، [#9](https://github.com/MahmoudAlmodalal/Ai_agents/issues/9)، [#10](https://github.com/MahmoudAlmodalal/Ai_agents/issues/10).
    - النتيجة: يقارن الطالب أنواع المخططات ويرى أمثلتها وينسخ مصادرها ويفتح المحرر الصحيح وينتقل إلى موضوع الرسم المعني.
 
-22. [دراسة BorrowHub المرافقة للمسار](../.scratch/sequential-project-learning/drafts/22-borrowhub-case-study.md)
-   - يعتمد على: 01.
+22. [#26: دراسة BorrowHub المرافقة للمسار](https://github.com/MahmoudAlmodalal/Ai_agents/issues/26)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتصفح الطالب دراسة حالة متكاملة ويربط أدوارها وقواعدها ومسارها وجداولها بمراحل تنفيذ مشروعه دون إلزامه بفكرتها.
 
-23. [دليل الأدوات والقوالب المتاحة](../.scratch/sequential-project-learning/drafts/23-tools-templates.md)
-   - يعتمد على: 01.
+23. [#27: دليل الأدوات والقوالب المتاحة](https://github.com/MahmoudAlmodalal/Ai_agents/issues/27)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يجد الطالب وظيفة الأداة ووقت استخدامها والقوالب المناسبة لمخرج خطوته، ويفتح أو ينزّل المتاح فعلًا.
 
-24. [القاموس والأسئلة الشائعة أثناء التعلم](../.scratch/sequential-project-learning/drafts/24-glossary-faq.md)
-   - يعتمد على: 01.
+24. [#28: القاموس والأسئلة الشائعة أثناء التعلم](https://github.com/MahmoudAlmodalal/Ai_agents/issues/28)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يبحث الطالب في المصطلحات ويجد إجابات الأسئلة العملية والمعمارية المرتبطة بموضوعه دون انتظار نهاية المسار.
 
-25. [الرئيسية وابدأ هنا وتعريف البرنامج](../.scratch/sequential-project-learning/drafts/25-entry-and-program.md)
-   - يعتمد على: 01.
+25. [#29: الرئيسية وابدأ هنا وتعريف البرنامج](https://github.com/MahmoudAlmodalal/Ai_agents/issues/29)
+   - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يفهم الزائر رحلة بناء مشروعه، يجيب سؤال الانطلاق، ويصل إلى أول موضوع من الرئيسية أو ابدأ هنا مع تعريف متسق بالبرنامج.
 
-26. [نقل المحفوظات والروابط وإنهاء الفهارس المتضاربة](../.scratch/sequential-project-learning/drafts/26-migration-and-retirement.md)
-   - يعتمد على: 02، 03، 04، 05، 06، 07، 08، 09، 10، 11، 12، 13، 14، 15، 16، 17، 18، 19، 20، 21، 22، 23، 24، 25.
+26. [#30: نقل المحفوظات والروابط وإنهاء الفهارس المتضاربة](https://github.com/MahmoudAlmodalal/Ai_agents/issues/30)
+   - يعتمد على: [#6](https://github.com/MahmoudAlmodalal/Ai_agents/issues/6)، [#7](https://github.com/MahmoudAlmodalal/Ai_agents/issues/7)، [#8](https://github.com/MahmoudAlmodalal/Ai_agents/issues/8)، [#9](https://github.com/MahmoudAlmodalal/Ai_agents/issues/9)، [#10](https://github.com/MahmoudAlmodalal/Ai_agents/issues/10)، [#11](https://github.com/MahmoudAlmodalal/Ai_agents/issues/11)، [#12](https://github.com/MahmoudAlmodalal/Ai_agents/issues/12)، [#13](https://github.com/MahmoudAlmodalal/Ai_agents/issues/13)، [#14](https://github.com/MahmoudAlmodalal/Ai_agents/issues/14)، [#15](https://github.com/MahmoudAlmodalal/Ai_agents/issues/15)، [#16](https://github.com/MahmoudAlmodalal/Ai_agents/issues/16)، [#17](https://github.com/MahmoudAlmodalal/Ai_agents/issues/17)، [#18](https://github.com/MahmoudAlmodalal/Ai_agents/issues/18)، [#19](https://github.com/MahmoudAlmodalal/Ai_agents/issues/19)، [#20](https://github.com/MahmoudAlmodalal/Ai_agents/issues/20)، [#21](https://github.com/MahmoudAlmodalal/Ai_agents/issues/21)، [#22](https://github.com/MahmoudAlmodalal/Ai_agents/issues/22)، [#23](https://github.com/MahmoudAlmodalal/Ai_agents/issues/23)، [#24](https://github.com/MahmoudAlmodalal/Ai_agents/issues/24)، [#25](https://github.com/MahmoudAlmodalal/Ai_agents/issues/25)، [#26](https://github.com/MahmoudAlmodalal/Ai_agents/issues/26)، [#27](https://github.com/MahmoudAlmodalal/Ai_agents/issues/27)، [#28](https://github.com/MahmoudAlmodalal/Ai_agents/issues/28)، [#29](https://github.com/MahmoudAlmodalal/Ai_agents/issues/29).
    - النتيجة: يجد الطالب العائد محفوظاته وروابطه القديمة بمعناها الصحيح، ويعرض الموقع كاملًا فهرسًا واحدًا دون بقايا محاضرات أو محتوى معنون خطأ.
 
-27. [التحقق من رحلة الموقع واكتمال المراجعة التعليمية](../.scratch/sequential-project-learning/drafts/27-full-journey-verification.md)
-   - يعتمد على: 26.
+27. [#31: التحقق من رحلة الموقع واكتمال المراجعة التعليمية](https://github.com/MahmoudAlmodalal/Ai_agents/issues/31)
+   - يعتمد على: [#30](https://github.com/MahmoudAlmodalal/Ai_agents/issues/30).
    - النتيجة: يتبع المراجع مسار الطالب عبر الموقع كاملًا ويملك تقريرًا يثبت سلامة التنقل والمحتوى ومخرجات كل موضوع دون ادعاء فحوص غير منفذة.
 
-## المطلوب مراجعته
+## بدء التنفيذ
 
-هل حجم التذاكر مناسب أم يحتاج تصغيرًا أو تجميعًا؟ هل الاعتماديات تمثل عوائق حقيقية فقط؟ هل توجد تذاكر تريد دمجها أو فصلها؟
+ابدأ بالتذكرة [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5)، وهي الوحيدة التي لا تحجبها تذكرة أخرى عند النشر. وسم ready-for-agent لا يلغي علاقات الحجب. احتُفظ بالنسخ المرجعية المحلية في مجلد المسودات السابق مع تحديث حالتها وروابطها.

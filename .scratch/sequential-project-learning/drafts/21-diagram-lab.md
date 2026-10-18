@@ -2,13 +2,15 @@
 
 **What to build:** يقارن الطالب أنواع المخططات ويرى أمثلتها وينسخ مصادرها ويفتح المحرر الصحيح وينتقل إلى موضوع الرسم المعني.
 
-**Blocked by:** 04: Mermaid وUser Flow وDomain Model؛ 05: PlantUML ومخططات السلوك المستقلة؛ 06: ERD وDBML وSequence وClass حسب الاعتماديات.
+**Blocked by:** [#8](https://github.com/MahmoudAlmodalal/Ai_agents/issues/8)؛ [#9](https://github.com/MahmoudAlmodalal/Ai_agents/issues/9)؛ [#10](https://github.com/MahmoudAlmodalal/Ai_agents/issues/10).
 
-**Status:** draft-awaiting-review
+**Status:** ready-for-agent
+
+**GitHub Issue:** [#25](https://github.com/MahmoudAlmodalal/Ai_agents/issues/25)
 
 - [ ] يغطي المختبر User Flow وDomain Model وUse Case وActivity وSequence وState وClass وERD بأسئلتها وأغراضها المختلفة.
 - [ ] تعرض Mermaid حيث يدعم العارض الصيغة؛ يُعرض PlantUML وDBML بمصدرهما ومحررهما المناسب دون محاولة تشغيلهما داخل Mermaid.
 - [ ] تعمل المقارنة والنسخ والمراجع والتنقل إلى المواضيع المنشورة.
 - [ ] يفحص المتصفح العرض والنسخ والروابط والوصول؛ تسجّل مراجعة تعليمية لصحة الأمثلة واتساقها الوظيفي.
 
-هذه مسودة مراجعة، وليست تذكرة منشورة أو جاهزة للسحب قبل اعتماد التقسيم وتهيئة المتعقّب.
+نسخة مرجعية للتذكرة المعتمدة والمنشورة على GitHub. اعتمادياتها مسجلة أيضًا بعلاقات حجب فعلية؛ يبدأ التنفيذ عندما تكتمل التذاكر التي تحجبها.
