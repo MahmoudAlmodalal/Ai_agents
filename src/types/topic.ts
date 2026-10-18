@@ -15,6 +15,8 @@ export type ContentType =
   | 'checklist'
   | 'glossary';
 
+export type PublicationStatus = 'unified-complete' | 'legacy-pending-migration';
+
 export interface TopicItem {
   id: string;
   number: string;
@@ -32,6 +34,16 @@ export interface TopicItem {
   checklistCount: number;
   readingTimeMinutes: number;
   htmlContent: string;
+
+  // Unified contract fields (Wave 1 foundational)
+  slug: string;
+  goal: string;
+  prerequisites: string[];
+  steps: string[];
+  promptRefs: string[];
+  outputs: string[];
+  checklist: string[];
+  publicationStatus: PublicationStatus;
 }
 
 export interface SearchMatch {

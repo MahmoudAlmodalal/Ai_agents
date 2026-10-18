@@ -73,7 +73,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5">
         {topics.map((topic, index) => {
-          const isBookmarked = bookmarks.includes(topic.id);
+          const isBookmarked = bookmarks.includes(topic.slug) || bookmarks.includes(topic.id);
 
           return (
             <motion.div
@@ -81,7 +81,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.06, duration: 0.3 }}
-              onClick={() => onOpenTopic(topic.id)}
+              onClick={() => onOpenTopic(topic.slug || topic.id)}
               className="group flex flex-col justify-between p-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-md hover:-translate-y-0.5 relative"
             >
               <div>
@@ -99,7 +99,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      onToggleBookmark(topic.id);
+                      onToggleBookmark(topic.slug || topic.id);
                     }}
                     title={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
                     aria-label={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}

@@ -21,6 +21,8 @@ next-env.d.ts.bak
 
 # Testing & Coverage
 coverage/
+test-results/
+playwright-report/
 
 # Environment Variables
 .env*
