@@ -13,7 +13,6 @@ export default defineConfig({
   reporter: 'line',
   use: {
     baseURL: `http://127.0.0.1:${port}`,
-    channel: 'chrome',
     trace: 'on-first-retry',
   },
   webServer: {

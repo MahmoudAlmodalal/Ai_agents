@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { History, Clock } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
@@ -6,7 +7,6 @@ import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 
 interface RecentlyViewedSectionProps {
   topics: TopicItem[];
-  onOpenTopic: (topicId: string) => void;
   onClear: () => void;
   bookmarks: string[];
   onToggleBookmark: (topicId: string) => void;
@@ -14,7 +14,6 @@ interface RecentlyViewedSectionProps {
 
 export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
   topics,
-  onOpenTopic,
   onClear,
   bookmarks,
   onToggleBookmark,
@@ -43,7 +42,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               </span>
             </div>
             <p className="text-xs text-[var(--text-muted)] hidden sm:block">
-              آخر 5 مواضيع قمت بالاطلاع عليها في نافذة القراءة للعودة السريعة
+              آخر 5 مواضيع قرأتها أو عاينتها للعودة السريعة
             </p>
           </div>
         </div>
@@ -124,15 +123,14 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                 </div>
 
                 {/* Title */}
-                <button
-                  onClick={() => onOpenTopic(topic.slug || topic.id)}
-                  type="button"
+                <Link
+                  href={`/learn/${topic.slug}`}
                   className="w-full text-right cursor-pointer"
                 >
                   <h4 className="text-xs font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2 leading-snug mb-2">
                     {topic.title}
                   </h4>
-                </button>
+                </Link>
               </div>
 
               {/* Footer info: Reading time & Open prompt */}
@@ -141,14 +139,13 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                   <Clock className="w-3 h-3" />
                   <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
                 </span>
-                <button
-                  onClick={() => onOpenTopic(topic.slug || topic.id)}
-                  type="button"
+                <Link
+                  href={`/learn/${topic.slug}`}
                   className="font-semibold text-[var(--brand-primary)] flex items-center gap-0.5 cursor-pointer min-h-9 px-2"
                 >
                   <span>فتح</span>
                   <span>←</span>
-                </button>
+                </Link>
               </div>
             </motion.div>
           );

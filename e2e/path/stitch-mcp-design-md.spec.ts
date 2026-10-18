@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('ربط Stitch MCP واسترجاع مراجع التصميم البصري');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/STITCH_SCREEN_REFERENCES.md');
     await expect(header).toContainText('docs/mcp/stitch-connection.md');
     await expect(header).toContainText('الواجهات وتطوير الفرونت إند');
@@ -76,7 +76,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
 
     // Practical steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds: Prev -> Topic 27 (mcp-protocol), Next -> Topic 29 (design-md-spec)
     const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
@@ -94,7 +94,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('وثيقة التصميم DESIGN.md واستخراج القيم المعتمدة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('DESIGN.md');
     await expect(header).toContainText('docs/DESIGN_TOKENS.md');
     await expect(header).toContainText('أنظمة وقواعد التصميم');

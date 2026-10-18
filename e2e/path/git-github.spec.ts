@@ -30,7 +30,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await page.goto('/');
 
     const gitCard = page.locator('article.topic-card').filter({ hasText: 'Git: حفظ وثائق المشروع وتتبع النسخ محلياً' }).first();
-    const openModalBtn = gitCard.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' });
+    const openModalBtn = gitCard.getByRole('button', { name: 'معاينة سريعة' });
     await openModalBtn.click();
 
     // Modal verification
@@ -40,7 +40,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await expect(modal).toContainText('حماية الأسرار مبكراً');
     await expect(modal).toContainText('.gitignore');
     await expect(modal).toContainText('المخرجات المطلوبة:');
-    await expect(modal).toContainText('قائمة التحقق والإنجاز:');
+    await expect(modal).toContainText('قائمة تحقق التطبيق');
 
     // Link to full learning page from modal
     const fullPageLink = modal.locator('a[href*="/learn/git-project-docs"]').first();
@@ -52,7 +52,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('Git: حفظ وثائق المشروع وتتبع النسخ محلياً');
-    await expect(page.getByText('مسار موحد مكتمل ✓')).toBeVisible();
+    await expect(page.getByText('محتوى منشور')).toBeVisible();
 
     // Practical steps on student project
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
@@ -62,13 +62,13 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Outputs and Checklist
     await expect(page.getByText('المخرجات المطلوبة:')).toBeVisible();
-    await expect(page.getByText('قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.getByText('قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds:
-    // Prev points to Topic 1 (project-idea-mvp)
+    // Prev points to published Topic 4 (srs).
     const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
     await expect(prevLink).toBeVisible();
-    await expect(prevLink).toHaveAttribute('href', '/learn/project-idea-mvp');
+    await expect(prevLink).toHaveAttribute('href', '/learn/srs');
 
     // Next points to Topic 6 (github-docs-collaboration)
     const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
@@ -81,7 +81,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('GitHub: المستودع البعيد والمراجعة والتعاون وحماية الأسرار');
-    await expect(page.getByText('مسار موحد مكتمل ✓')).toBeVisible();
+    await expect(page.getByText('محتوى منشور')).toBeVisible();
 
     // Content: PR review, secrets protection, README template
     await expect(page.locator('article')).toContainText('Pull Request');

@@ -95,21 +95,22 @@ export const Navbar: React.FC = () => {
     } catch {
       // Graceful fallback for non-browser/restricted environments
     }
+    const syncTheme = () => setIsDark(document.documentElement.dataset.theme === 'dark');
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    syncTheme();
+    return () => observer.disconnect();
   }, []);
 
   // Toggle Theme handler
   const toggleTheme = () => {
-    const nextDark = !isDark;
+    const nextDark = document.documentElement.dataset.theme !== 'dark';
     setIsDark(nextDark);
     const themeVal = nextDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', themeVal);
+    document.documentElement.classList.toggle('dark', nextDark);
     try {
       localStorage.setItem('theme', themeVal);
-      document.documentElement.setAttribute('data-theme', themeVal);
-      if (nextDark) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
     } catch (e) {
       console.warn('Failed to persist theme:', e);
     }

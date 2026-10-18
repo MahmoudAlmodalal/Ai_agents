@@ -21,7 +21,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
 
     // Practical steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Mermaid Live external reference
     const liveLink = page.locator('a[href*="mermaid.live"]').first();
@@ -106,7 +106,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     // Locate Topic 07 card and open modal
     const topic7Card = page.locator('article.topic-card').filter({ hasText: 'صيغة المخططات النصية' });
     await expect(topic7Card).toBeVisible();
-    await topic7Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic7Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
     // Modal is opened
     const modal = page.locator('.modal-container-box');

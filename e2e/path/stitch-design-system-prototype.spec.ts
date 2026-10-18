@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('تصميم الشاشة المرجعية في Google Stitch');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/STITCH_MASTER_PROMPT.md');
     await expect(header).toContainText('الشاشة المرجعية المعتمدة في Google Stitch');
 
@@ -59,7 +59,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
 
     // Practical steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Next navigation leads to Topic 22 (design-system-rules)
     const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
@@ -73,7 +73,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Title and headers
     await expect(page.locator('h1')).toContainText('قواعد نظام التصميم وبرومبتات الشاشات المنفصلة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/STITCH_SCREEN_PROMPTS.md');
 
     // Design system rules: 60-30-10, Typography, 8px grid, UI states, WCAG 2.1 AA
@@ -121,7 +121,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Title and headers
     await expect(page.locator('h1')).toContainText('النموذج التفاعلي (Prototype) والتحقق من الرحلات');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/PROTOTYPE_JOURNEYS_AUDIT.md');
 
     // Rejection of fake demo button antipattern
@@ -173,7 +173,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await expect(topic23Card).toBeVisible();
 
     // Open detail modal for Topic 21
-    await topic21Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic21Card.getByRole('button', { name: 'معاينة سريعة' }).click();
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
     await expect(modal).toContainText('تصميم الشاشة المرجعية في Google Stitch');

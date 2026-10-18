@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen Inventory (Topics 18, 19, 20)', () => {
+  test.beforeEach(async ({ context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
+
   test('Topic 18 (UI/UX Roles & Navigation): Renders metadata, role matrix, RTL layout, and PROMPT 14 copyable', async ({ page }) => {
     await page.goto('/learn/ui-ux-roles-navigation', { timeout: 40000 });
 
@@ -19,7 +23,7 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     // Goal and practical steps
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Content: Role-based matrix table
     const rolesTable = page.locator('table').filter({ hasText: 'الدور (User Role)' });

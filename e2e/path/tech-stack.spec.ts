@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind CSS, Next.js', () => {
+  test.beforeEach(async ({ context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
+
 
   // -------------------------------------------------------------------------
   // TOPIC 30: TYPESCRIPT (Types & Data Contracts)
@@ -11,7 +15,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('TypeScript: الأنواع وعقود البيانات لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('src/types/project.ts');
     await expect(header).toContainText('docs/TYPESCRIPT_GUIDELINES.md');
 
@@ -45,7 +49,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
 
     // Steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds: Next -> Topic 31 (react-components-state)
     const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
@@ -62,7 +66,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('React: المكونات والحالة وتدفق البيانات في الواجهة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('src/components/common/StatusBadge.tsx');
     await expect(header).toContainText('docs/REACT_ARCHITECTURE.md');
 
@@ -108,7 +112,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('Tailwind CSS: التنسيق والتجاوب ونظام التصميم المعتمد');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('tailwind.config.ts');
     await expect(header).toContainText('docs/TAILWIND_DESIGN_MAPPING.md');
 
@@ -157,7 +161,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('Next.js: بنية App Router والمسارات والصفحات');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('src/app/layout.tsx');
     await expect(header).toContainText('docs/NEXTJS_ROUTING_SPEC.md');
 

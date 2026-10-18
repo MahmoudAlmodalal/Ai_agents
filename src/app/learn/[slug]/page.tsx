@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
+import { TopicReaderTools } from '@/src/components/TopicReaderTools';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, CheckCircle2, FileText, Wrench, Target, CheckSquare, ListOrdered } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, Wrench, CheckSquare, ListOrdered } from 'lucide-react';
 import {
   getTopicBySlug,
   getAllTopics,
@@ -27,10 +30,6 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
   const previous = position > 0 ? allTopics[position - 1] : undefined;
   const next = position >= 0 && position < allTopics.length - 1 ? allTopics[position + 1] : undefined;
 
-  const checklistItems = topic.checklist && topic.checklist.length > 0
-    ? topic.checklist
-    : ['اقرأ المفاهيم قبل التنفيذ', 'راجع الملفات المطلوبة', 'نفّذ خطوة صغيرة', 'تحقق من المخرج يدويًا'];
-
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
       {/* Breadcrumb Navigation */}
@@ -53,11 +52,11 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           </span>
           {topic.publicationStatus === 'unified-complete' ? (
             <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
-              مسار موحد مكتمل ✓
+              محتوى منشور
             </span>
           ) : (
             <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
-              بانتظار استكمال التوحيد
+              المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال
             </span>
           )}
         </div>
@@ -83,6 +82,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             ))}
           </div>
         )}
+        <TopicReaderTools key={topic.slug} topic={topic} />
       </header>
 
       {/* Main Layout Grid */}
@@ -121,32 +121,18 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           )}
 
           {/* Preserved HTML Content */}
-          <div
-            className="prose dark:prose-invert max-w-none text-right"
-            dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
-          />
-
-          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-100">
-            <strong>مراجعة المصدر:</strong> هذا المحتوى موحّد عبر بطاقات الفهرس ونافذة القراءة التفصيلية وصفحة المسار، مع هوية مستقرة غير متأثرة بإعادة الترتيب.
-          </div>
+          <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
         </article>
 
         {/* Aside Sidebar */}
         <aside className="space-y-4">
-          <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
+          {topic.checklist.length > 0 && <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <h2 className="mb-3 text-base font-black text-[var(--text-main)] flex items-center gap-2">
               <CheckSquare className="w-4 h-4 text-emerald-600" />
-              <span>قائمة الإنجاز والتحقق</span>
+              <span>قائمة تحقق التطبيق</span>
             </h2>
-            <div className="space-y-2.5">
-              {checklistItems.map((item, idx) => (
-                <label key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-muted)] cursor-pointer">
-                  <input type="checkbox" className="mt-0.5 accent-emerald-600 shrink-0" />
-                  <span className="leading-5">{item}</span>
-                </label>
-              ))}
-            </div>
-          </section>
+            <ApplicationChecklist topic={topic} items={topic.checklist} />
+          </section>}
 
           <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <h2 className="mb-3 text-base font-black text-[var(--text-main)]">روابط عملية</h2>
@@ -158,10 +144,9 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </Link>
           </section>
 
-          <div className="flex items-center gap-2 rounded-2xl bg-[var(--primary)] p-4 text-sm leading-6 text-white">
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-300" />
-            <span>لا تنتقل للخطوة التالية قبل اعتماد مخرج موضوعك والتأكد من تحقيقه.</span>
-          </div>
+          <p className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-sm leading-7 text-[var(--text-muted)]">
+            راجع مخرجاتك للتقييم الذاتي، ويمكنك تصفح الموضوع التالي في أي وقت.
+          </p>
         </aside>
       </div>
 
@@ -181,10 +166,10 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </strong>
           </Link>
         ) : (
-          <div aria-hidden="true" />
+          <p className="p-4 text-sm text-[var(--text-muted)]">هذا أول موضوع في المسار.</p>
         )}
 
-        {next && (
+        {next ? (
           <Link
             href={`/learn/${next.slug}`}
             className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-left hover:border-emerald-400 transition-all shadow-xs"
@@ -196,8 +181,9 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             <strong className="mt-1 block text-[var(--text-main)] group-hover:text-emerald-600 transition-colors">
               {next.title}
             </strong>
+            {next.publicationStatus === 'legacy-pending-migration' && <span className="mt-2 block text-xs leading-6 text-amber-700 dark:text-amber-300">القراءة متاحة؛ خطوات التطبيق والمخرجات قيد الاستكمال</span>}
           </Link>
-        )}
+        ) : <p className="p-4 text-sm text-[var(--text-muted)]">وصلت إلى آخر موضوع متاح. <Link href="/" className="font-bold text-[var(--brand-primary)] hover:underline">العودة إلى الفهرس</Link></p>}
       </nav>
     </div>
   );

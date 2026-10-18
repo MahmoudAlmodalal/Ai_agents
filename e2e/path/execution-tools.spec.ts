@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('وكيل البرمجة بالذكاء الاصطناعي (AI Coding Agent)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/CODING_AGENT_SETUP.md');
     await expect(header).toContainText('.env.example');
     await expect(header).toContainText('.gitignore');
@@ -58,7 +58,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
 
     // Practical steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds: Prev -> Topic 23 (interactive-prototype), Next -> Topic 25 (google-ai-studio)
     const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
@@ -76,7 +76,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     // Title and headers
     await expect(page.locator('h1')).toContainText('استخدام Google AI Studio في استكشاف النماذج وتوليد الأصول');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/AI_STUDIO_WORKFLOW.md');
     await expect(header).toContainText('src/data/mock-data.json');
 
@@ -117,7 +117,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     // Title and headers
     await expect(page.locator('h1')).toContainText('المهارات المخصصة (Skills) وتوجيه وكيل البرمجة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/PROJECT_AGENT_SKILLS.md');
 
     const content = page.locator('article');
@@ -157,7 +157,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     // Title and headers
     await expect(page.locator('h1')).toContainText('بروتوكول سياق النموذج (MCP - Model Context Protocol)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
     await expect(header).toContainText('docs/MCP_FOUNDATIONS.md');
 
     const content = page.locator('article');
@@ -208,7 +208,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(topic27Card).toBeVisible();
 
     // Open detail modal for Topic 24
-    await topic24Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic24Card.getByRole('button', { name: 'معاينة سريعة' }).click();
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
     await expect(modal).toContainText('وكيل البرمجة بالذكاء الاصطناعي (AI Coding Agent)');

@@ -36,13 +36,13 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('أداة ومحرر PlantUML للنمذجة الهندسية ككود');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 10');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract fields
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/README-plantuml.md' }).first()).toBeVisible();
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Distinction from Mermaid
     await expect(page.locator('text=لا يعمل إطلاقاً داخل Mermaid Live')).toBeVisible();
@@ -81,7 +81,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط حالات الاستخدام (Use Case Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 11');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/use-case.puml' }).first()).toBeVisible();
@@ -126,7 +126,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط النشاط وسير العمليات (Activity Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 12');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/activity-diagram.md' }).first()).toBeVisible();
@@ -166,7 +166,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط الحالات ودورة حياة الكيانات (State Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 13');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/state-diagrams.md' }).first()).toBeVisible();
@@ -211,7 +211,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
 
     // Open Topic 10 in modal
     const t10Card = page.locator('article.topic-card').filter({ hasText: 'أداة ومحرر PlantUML' }).first();
-    await t10Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await t10Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();

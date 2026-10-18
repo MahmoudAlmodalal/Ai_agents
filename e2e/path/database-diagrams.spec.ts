@@ -36,14 +36,14 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط العلاقات بين الكيانات (ERD)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 14');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract fields: Goal, Outputs, Steps, Checklist
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
     await expect(page.locator('code').filter({ hasText: 'docs/ERD.md' }).first()).toBeVisible();
     await expect(page.locator('code').filter({ hasText: 'docs/database-review.md' }).first()).toBeVisible();
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Core content: Difference between Domain Model and ERD
     await expect(page.locator('table.data-table')).toBeVisible();
@@ -80,7 +80,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('لغة DBML ومحرر dbdiagram.io');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 15');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/database.dbml' }).first()).toBeVisible();
@@ -116,7 +116,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط تسلسل التفاعلات (Sequence Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 16');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/sequence-diagrams.md' }).first()).toBeVisible();
@@ -146,7 +146,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط الكلاسات البرمجية (Class Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 17');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('محتوى منشور');
 
     // Prerequisite verification: ERD and Sequence come BEFORE Class Diagram
     const prereqSection = page.locator('section').filter({ hasText: 'المتطلبات السابقة' }).first();
@@ -219,7 +219,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
 
     const t14Card = page.locator('article.topic-card').filter({ hasText: 'مخطط العلاقات بين الكيانات (ERD)' }).first();
     await t14Card.scrollIntoViewIfNeeded();
-    await t14Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click({ force: true });
+    await t14Card.getByRole('button', { name: 'معاينة سريعة' }).click({ force: true });
 
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
@@ -227,7 +227,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(modal).toContainText('مخطط العلاقات بين الكيانات (ERD)');
 
     // Verify unified contract section inside modal
-    await expect(modal.locator('text=مسار المشروع المتسلسل')).toBeVisible();
+    await expect(modal.getByText('التطبيق على مشروعك', { exact: true })).toBeVisible();
     await expect(modal.locator('text=خطوات التطبيق على مشروعك:')).toBeVisible();
 
     // Verify MermaidViewer section

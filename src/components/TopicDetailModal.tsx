@@ -1,10 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
-import { Headphones, Volume2, X, Printer, Heart, BarChart3, CheckCircle, ExternalLink, ArrowLeft } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Headphones, Volume2, X, BarChart3, ExternalLink, ArrowLeft } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
+import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 
 
 interface TopicDetailModalProps {
@@ -13,6 +15,9 @@ interface TopicDetailModalProps {
   onNavigateTopic: (direction: 'next' | 'prev') => void;
   hasNext: boolean;
   hasPrev: boolean;
+  totalTopics: number;
+  openDiagramInitially?: boolean;
+  nextTopicPending?: boolean;
   onListen: (topic: TopicItem) => void;
   isCurrentlySpeaking: boolean;
   isBookmarked: boolean;
@@ -25,6 +30,9 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   onNavigateTopic,
   hasNext,
   hasPrev,
+  totalTopics,
+  openDiagramInitially = false,
+  nextTopicPending = false,
   onListen,
   isCurrentlySpeaking,
   isBookmarked,
@@ -32,9 +40,18 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 }) => {
   const contentContainerRef = React.useRef<HTMLDivElement>(null);
   const diagramSectionRef = React.useRef<HTMLDivElement>(null);
-  const [copyToast, setCopyToast] = React.useState<string | null>(null);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const closeButtonRef = React.useRef<HTMLButtonElement>(null);
   const [readingProgress, setReadingProgress] = React.useState<number>(0);
-  const [showDiagram, setShowDiagram] = React.useState<boolean>(true);
+  const [showDiagram, setShowDiagram] = React.useState<boolean>(topic.diagramCount > 0);
+
+  React.useEffect(() => setShowDiagram(topic.diagramCount > 0), [topic.slug, topic.diagramCount]);
+
+  React.useEffect(() => {
+    if (!openDiagramInitially || topic.diagramCount < 1) return;
+    const frame = requestAnimationFrame(() => diagramSectionRef.current?.scrollIntoView({ block: 'start' }));
+    return () => cancelAnimationFrame(frame);
+  }, [topic.slug, topic.diagramCount, openDiagramInitially]);
 
   // Keep latest callbacks in ref to avoid stale closures during rapid key presses
   const keyActionRef = React.useRef({ onClose, onNavigateTopic, hasNext, hasPrev });
@@ -45,16 +62,37 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   // Keyboard shortcut listener: Escape to close, ArrowLeft for Next topic, ArrowRight for Prev topic
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Do not intercept if user is typing in an input/textarea
-      const targetTag = (e.target as HTMLElement)?.tagName;
-      if (targetTag === 'INPUT' || targetTag === 'TEXTAREA') {
-        return;
-      }
-
       if (e.key === 'Escape') {
         e.preventDefault();
         keyActionRef.current.onClose();
-      } else if (e.key === 'ArrowLeft') {
+        return;
+      }
+
+      // Keep Tab inside the dialog, including HTML controls added by the lesson.
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+        )).filter((element) => element.tabIndex >= 0 && element.getClientRects().length > 0);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first) {
+          e.preventDefault();
+          dialogRef.current.focus();
+        } else if (e.shiftKey && (document.activeElement === first || !dialogRef.current.contains(document.activeElement))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (document.activeElement === last || !dialogRef.current.contains(document.activeElement))) {
+          e.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+
+      // Arrow keys retain their native behavior on form and diagram controls.
+      const target = e.target as HTMLElement;
+      if (target.closest('input, textarea, select, button, a, summary, [role="slider"], [contenteditable="true"]') || e.altKey || e.ctrlKey || e.metaKey) return;
+
+      if (e.key === 'ArrowLeft') {
         if (keyActionRef.current.hasNext) {
           e.preventDefault();
           keyActionRef.current.onNavigateTopic('next');
@@ -71,11 +109,22 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Lock body scroll when modal is open
+  // Capture the opener once; changing the previewed topic keeps focus in the dialog.
   React.useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus({ preventScroll: true });
+    const keepFocusInside = (event: FocusEvent) => {
+      if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+        closeButtonRef.current?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener('focusin', keepFocusInside);
     return () => {
-      document.body.style.overflow = '';
+      document.removeEventListener('focusin', keepFocusInside);
+      document.body.style.overflow = originalOverflow;
+      if (opener?.isConnected) opener.focus({ preventScroll: true });
     };
   }, []);
 
@@ -103,63 +152,6 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
     return () => container.removeEventListener('scroll', handleScroll);
   }, [topic]);
 
-  // Initialize Mermaid diagrams and copy buttons inside the rendered HTML
-  React.useEffect(() => {
-    const container = contentContainerRef.current;
-    if (!container) return;
-
-    // 1. Wire copy buttons
-    const copyBtns = container.querySelectorAll('.copy-btn');
-    const handlers: { btn: Element; handler: () => void }[] = [];
-
-    copyBtns.forEach((btn) => {
-      const handler = () => {
-        const codeContainer = btn.closest('.code-container');
-        const codeElement = codeContainer?.querySelector('code');
-        const textToCopy = codeElement?.textContent || '';
-
-        if (textToCopy) {
-          navigator.clipboard.writeText(textToCopy).then(() => {
-            btn.classList.add('copied');
-            const originalText = btn.textContent;
-            btn.textContent = '✓ تم النسخ!';
-            setCopyToast('تم نسخ المحتوى إلى الحافظة بنجاح');
-
-            setTimeout(() => {
-              btn.classList.remove('copied');
-              btn.textContent = originalText;
-            }, 2000);
-
-            setTimeout(() => setCopyToast(null), 3000);
-          });
-        }
-      };
-
-      btn.addEventListener('click', handler);
-      handlers.push({ btn, handler });
-    });
-
-    // 3. Wire checklists with localStorage
-    const checkboxes = container.querySelectorAll<HTMLInputElement>('.checklist-item input[type="checkbox"]');
-    checkboxes.forEach((cb, idx) => {
-      const storageKey = `checklist_${topic.id}_${idx}`;
-      const saved = localStorage.getItem(storageKey);
-      if (saved !== null) {
-        cb.checked = saved === 'true';
-      }
-
-      cb.addEventListener('change', () => {
-        localStorage.setItem(storageKey, cb.checked ? 'true' : 'false');
-      });
-    });
-
-    return () => {
-      handlers.forEach(({ btn, handler }) => {
-        btn.removeEventListener('click', handler);
-      });
-    };
-  }, [topic]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -184,12 +176,14 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
         role="dialog"
         aria-modal="true"
         aria-label={topic.title}
+        ref={dialogRef}
+        tabIndex={-1}
         className="relative w-full h-full sm:h-auto sm:max-h-[92vh] max-w-5xl bg-[var(--bg-surface)] sm:border sm:border-[var(--border-color)] sm:rounded-2xl flex flex-col overflow-hidden z-10 transition-colors modal-container-box"
         style={{ boxShadow: 'var(--shadow-modal, 0 25px 50px -12px rgba(0,0,0,0.25))' }}
       >
         {/* Sticky Modal Header (hidden during print) */}
-        <header className="px-3 sm:px-6 py-2.5 sm:py-3.5 bg-[var(--bg-surface)] flex items-center justify-between gap-2.5 shrink-0 no-print">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+        <header className="px-3 sm:px-6 py-2.5 sm:py-3.5 bg-[var(--bg-surface)] flex flex-wrap items-center justify-between gap-2.5 shrink-0 no-print">
+          <div className="flex w-full sm:w-auto items-center gap-2 sm:gap-3 min-w-0 sm:flex-1">
             <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-linear-to-br from-blue-700 to-blue-500 text-white font-mono font-black text-xs sm:text-base flex items-center justify-center shadow-xs shrink-0">
               {topic.number}
             </span>
@@ -208,15 +202,15 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
                   {Math.round(readingProgress)}% مقروء
                 </span>
               </div>
-              <h2 className="text-xs sm:text-base font-black text-[var(--text-main)] truncate leading-tight">
+              <h2 className="text-sm sm:text-base font-black text-[var(--text-main)] sm:truncate leading-snug">
                 {topic.title}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex w-full sm:w-auto flex-wrap items-center justify-end gap-1.5 shrink-0">
             {/* Visual Mermaid Diagram Toggle Button */}
-            <button
+            {topic.diagramCount > 0 && <button
               onClick={() => {
                 setShowDiagram((prev) => {
                   const nextVal = !prev;
@@ -241,7 +235,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               <span className="hidden md:inline text-[9px] font-mono bg-[var(--brand-primary)] dark:bg-[#162c46] text-white px-1.5 py-0.2 rounded-full">
                 Mermaid
               </span>
-            </button>
+            </button>}
 
             {/* Print as PDF Button */}
             <button
@@ -305,6 +299,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               href={`/learn/${topic.slug}`}
               className="min-h-[36px] px-2.5 sm:px-3 rounded-xl text-xs font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors flex items-center gap-1.5"
               title="الانتقال إلى صفحة التعلم الكاملة"
+              aria-label="قراءة الموضوع كاملاً"
             >
               <span className="hidden sm:inline">صفحة التعلم</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -313,6 +308,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {/* Close Button with Esc Hint */}
             <button
               onClick={onClose}
+              ref={closeButtonRef}
               className="min-h-[36px] px-2.5 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 text-[var(--text-muted)] border border-[var(--border-color)] flex items-center justify-center gap-1 text-xs font-bold transition-colors cursor-pointer"
               title="إغلاق النافذة (Escape)"
               aria-label="إغلاق"
@@ -367,13 +363,20 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           ref={contentContainerRef}
           className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area space-y-6"
         >
+          <section className="space-y-2" aria-label="ملخص الموضوع">
+            <p className="text-sm font-bold text-[var(--brand-primary)]">{topic.subtitle}</p>
+            <p className="text-sm leading-7 text-[var(--text-muted)]">{topic.summary}</p>
+            <p className="text-xs font-medium text-[var(--text-muted)]">
+              {topic.publicationStatus === 'unified-complete' ? 'محتوى منشور' : 'المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال'}
+            </p>
+          </section>
           {/* Unified Project Contract Section (Wave 1) */}
-          {(topic.publicationStatus === 'unified-complete' || (topic.steps && topic.steps.length > 0)) && (
+          {(topic.goal || topic.steps.length > 0 || topic.outputs.length > 0) && (
             <section className="rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 sm:p-6 space-y-4">
               <div className="flex items-center justify-between gap-2 border-b border-emerald-200/60 dark:border-emerald-900/60 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-xs font-bold text-white">
-                    مسار المشروع المتسلسل
+                    التطبيق على مشروعك
                   </span>
                   <span className="text-xs text-emerald-800 dark:text-emerald-300 font-bold">
                     {topic.stageTag}
@@ -438,23 +441,16 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               {topic.checklist && topic.checklist.length > 0 && (
                 <div>
                   <h4 className="text-xs font-black text-emerald-900 dark:text-emerald-200 mb-2">
-                    قائمة التحقق والإنجاز:
+                    قائمة تحقق التطبيق
                   </h4>
-                  <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
-                    {topic.checklist.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-emerald-600 font-bold">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <ApplicationChecklist topic={topic} items={topic.checklist} />
                 </div>
               )}
             </section>
           )}
 
           {/* Interactive Mermaid Diagram Viewer Section */}
-          <section
+          {topic.diagramCount > 0 && <section
             ref={diagramSectionRef}
             className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-3.5 sm:p-5 shadow-xs transition-all"
             aria-label="المخطط الهندسي التفاعلي"
@@ -484,20 +480,18 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {showDiagram ? (
               <MermaidViewer topic={topic} />
             ) : (
-              <div
+              <button
+                type="button"
                 onClick={() => setShowDiagram(true)}
-                className="p-3 rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-center text-xs text-[var(--text-muted)] cursor-pointer hover:border-[var(--brand-primary)] hover:text-[var(--text-main)] transition-colors"
+                className="w-full p-3 rounded-xl border border-dashed border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-center text-xs text-[var(--text-muted)] cursor-pointer hover:border-[var(--brand-primary)] hover:text-[var(--text-main)] transition-colors"
               >
                 المخطط مطوي حالياً. انقر هنا أو على زر «المخطط البياني» بالأعلى لفتحه فورياً.
-              </div>
+              </button>
             )}
-          </section>
+          </section>}
 
           {/* Rendered HTML Content */}
-          <div
-            dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
-            className="prose dark:prose-invert max-w-none text-right"
-          />
+          <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
         </div>
 
         {/* Sticky Modal Footer with Next / Prev and Keyboard Hints */}
@@ -517,7 +511,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           </button>
 
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-[var(--text-muted)]">
-            <span>موضوع {topic.number} / 12</span>
+            <span>موضوع {topic.number} · {totalTopics} موضوعًا متاحًا</span>
             <span className="opacity-40">·</span>
             <span className="font-bold text-[var(--brand-primary)]">
               {Math.round(readingProgress)}%
@@ -532,7 +526,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             onClick={() => onNavigateTopic('next')}
             disabled={!hasNext}
             className="min-h-[38px] px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
-            title="الانتقال إلى الموضوع التالي (السهم الأيسر ←)"
+            title={nextTopicPending ? 'الموضوع التالي متاح للقراءة؛ خطوات التطبيق والمخرجات قيد الاستكمال' : 'الانتقال إلى الموضوع التالي (السهم الأيسر ←)'}
           >
             <kbd className="hidden sm:inline font-mono text-[10px] bg-[var(--border-color)] text-[var(--text-muted)] px-1 py-0.2 rounded">
               ←
@@ -544,21 +538,6 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
         </footer>
       </motion.div>
 
-      {/* Copy Toast Notification */}
-      <AnimatePresence>
-        {copyToast && (
-          <motion.div
-            initial={{ y: 50, opacity: 0, scale: 0.9, x: '-50%' }}
-            animate={{ y: 0, opacity: 1, scale: 1, x: '-50%' }}
-            exit={{ y: 20, opacity: 0, scale: 0.95, x: '-50%' }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="fixed bottom-6 left-1/2 z-[var(--z-toast)] px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2"
-          >
-            <CheckCircle className="w-4 h-4" />
-            <span>{copyToast}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 };

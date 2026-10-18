@@ -13,7 +13,7 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
 
     // 3. Open detail modal for Topic 02 (Grill Me)
     const topic02Card = cards.filter({ hasText: 'استجواب الفكرة واستكشاف المتطلبات (Grill Me)' });
-    await topic02Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic02Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
@@ -41,7 +41,7 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await expect(page).toHaveURL(/\/learn\/discovery-grill-me/);
     await expect(page.locator('h1')).toContainText('استجواب الفكرة واستكشاف المتطلبات (Grill Me)');
     const topic02Header = page.locator('header.rounded-3xl');
-    await expect(topic02Header).toContainText('مسار موحد مكتمل ✓');
+    await expect(topic02Header).toContainText('محتوى منشور');
     await expect(topic02Header).toContainText('docs/DECISIONS_LOG.md');
 
     // Check prerequisites note that no coding agent, skills or MCP are needed
@@ -101,7 +101,7 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     // 1. Visit Topic 02 in modal to verify distinctions
     await page.goto('/');
     const topic02Card = page.locator('article.topic-card').filter({ hasText: 'استجواب الفكرة واستكشاف المتطلبات (Grill Me)' });
-    await topic02Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic02Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();

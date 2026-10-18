@@ -12,6 +12,7 @@ import { TopicCard } from '@/src/components/TopicCard.tsx';
 import { TopicDetailModal } from '@/src/components/TopicDetailModal.tsx';
 import { AudioPlayerBar } from '@/src/components/AudioPlayerBar.tsx';
 import { RecentlyViewedSection } from '@/src/components/RecentlyViewedSection.tsx';
+import Link from 'next/link';
 
 import {
   readSavedBookmarks,
@@ -22,6 +23,8 @@ import {
   getTopicBySlug,
 } from '@/src/lib/topicRegistry.ts';
 
+const firstTopic = TOPICS[0];
+
 export default function HomePage() {
   // State: Search & Filters
   const [searchQuery, setSearchQuery] = React.useState<string>('');
@@ -30,23 +33,35 @@ export default function HomePage() {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = React.useState<boolean>(false);
 
   // State: Bookmarks / Favorites (stored in localStorage via canonical slugs adapter)
-  const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
-    return readSavedBookmarks();
-  });
+  const [bookmarks, setBookmarks] = React.useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState<boolean>(false);
 
   // State: Modal Detail Reader
   const [activeTopicId, setActiveTopicId] = React.useState<string | null>(null);
+  const [previewDiagramRequested, setPreviewDiagramRequested] = React.useState(false);
 
   // State: Recently Viewed Topics (tracks last 5 topics, stored in localStorage via adapter)
-  const [recentlyViewed, setRecentlyViewed] = React.useState<string[]>(() => {
-    return readSavedRecentlyViewed();
-  });
+  const [recentlyViewed, setRecentlyViewed] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    const readSavedData = () => {
+      setBookmarks(readSavedBookmarks());
+      setRecentlyViewed(readSavedRecentlyViewed());
+    };
+    readSavedData();
+    window.addEventListener('storage', readSavedData);
+    window.addEventListener('pageshow', readSavedData);
+    return () => {
+      window.removeEventListener('storage', readSavedData);
+      window.removeEventListener('pageshow', readSavedData);
+    };
+  }, []);
 
   // Track opening a topic in Recently Viewed (persisting up to 5 topics)
-  const handleOpenTopic = React.useCallback((topicId: string) => {
+  const handleOpenTopic = React.useCallback((topicId: string, section?: 'diagram') => {
     const slug = resolveCanonicalSlug(topicId);
     setActiveTopicId(slug);
+    setPreviewDiagramRequested(section === 'diagram');
     setRecentlyViewed((prev) => {
       const filtered = prev.filter((id) => id !== slug);
       const updated = [slug, ...filtered].slice(0, 5);
@@ -62,12 +77,7 @@ export default function HomePage() {
   }, []);
 
   // State: Dark Mode (defaults to user preference or localStorage)
-  const [isDark, setIsDark] = React.useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const [isDark, setIsDark] = React.useState<boolean>(false);
 
   // State: Audio TTS
   const [ttsCurrentTopic, setTtsCurrentTopic] = React.useState<TopicItem | null>(null);
@@ -76,19 +86,24 @@ export default function HomePage() {
   const [ttsRate, setTtsRate] = React.useState<number>(1.0);
   const [isTTSActive, setIsTTSActive] = React.useState<boolean>(false);
 
-  // Sync theme attribute with documentElement
+  // Follow the global Navbar theme without overwriting it when returning home.
   React.useEffect(() => {
-    if (typeof document === 'undefined') return;
-    if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
+    const syncTheme = () => setIsDark(document.documentElement.dataset.theme === 'dark');
+    syncTheme();
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleTheme = () => {
+    const nextDark = document.documentElement.dataset.theme !== 'dark';
+    document.documentElement.dataset.theme = nextDark ? 'dark' : 'light';
+    document.documentElement.classList.toggle('dark', nextDark);
+    setIsDark(nextDark);
+    try { localStorage.setItem('theme', nextDark ? 'dark' : 'light'); } catch { /* Theme remains usable without storage. */ }
+  };
+
+  React.useEffect(() => () => window.speechSynthesis?.cancel(), []);
 
   // Toggle bookmark handler with persistence
   const handleToggleBookmark = (topicIdOrSlug: string) => {
@@ -247,7 +262,7 @@ export default function HomePage() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         isDark={isDark}
-        onToggleTheme={() => setIsDark((prev) => !prev)}
+        onToggleTheme={toggleTheme}
         onToggleTTS={() => {
           if (isTTSActive && isTTSPlaying) {
             stopTTS();
@@ -307,15 +322,16 @@ export default function HomePage() {
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] sm:text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider block">
-                    خريطة الطريق الهندسية · Next.js App Router
-                  </span>
-                  <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                    Zero-API Ready
+                    تعلّم بناء المشاريع بالذكاء الاصطناعي
                   </span>
                 </div>
                 <h2 className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
                   من استنطاق الفكرة ووثيقة PRD إلى نمذجة المعمارية وقواعد البيانات بالذكاء الاصطناعي
                 </h2>
+                <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6">لمن يعرف أساسيات البرمجة ويبدأ تعلّم وكلاء الذكاء الاصطناعي (AI Agents)، ويريد تحويل فكرة تطبيق إلى مشروع واضح خطوة بخطوة.</p>
+                <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6"><strong>ستبدأ بـ {firstTopic.title}: </strong>{firstTopic.goal}</p>
+                <p className="mt-2 text-xs text-[var(--text-muted)] leading-6"><strong>مخرجك الأول: </strong>{firstTopic.outputs.join('، ')}</p>
+                <Link href={`/learn/${firstTopic.slug}`} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-xl bg-[var(--brand-primary)] px-4 text-sm font-bold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)]">ابدأ بالموضوع الأول</Link>
               </div>
 
               {/* Compact 4-Metric Grid */}
@@ -347,7 +363,6 @@ export default function HomePage() {
         {!showFavoritesOnly && (
           <RecentlyViewedSection
             topics={recentlyViewedTopics}
-            onOpenTopic={handleOpenTopic}
             onClear={handleClearRecentlyViewed}
             bookmarks={bookmarks}
             onToggleBookmark={handleToggleBookmark}
@@ -456,6 +471,9 @@ export default function HomePage() {
           onNavigateTopic={handleNavigateTopic}
           hasNext={activeIndex < TOPICS.length - 1}
           hasPrev={activeIndex > 0}
+          totalTopics={TOPICS.length}
+          openDiagramInitially={previewDiagramRequested}
+          nextTopicPending={TOPICS[activeIndex + 1]?.publicationStatus === 'legacy-pending-migration'}
           onListen={(t) => playTTSForTopic(t)}
           isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === activeTopic.id}
           isBookmarked={bookmarks.includes(activeTopic.slug) || bookmarks.includes(activeTopic.id)}

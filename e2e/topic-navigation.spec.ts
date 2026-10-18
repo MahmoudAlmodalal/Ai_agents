@@ -1,43 +1,127 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Topic Navigation Journey', () => {
-  test('navigates from home card to modal reader to /learn page and validates bounds', async ({ page }) => {
-    // 1. Visit Home page
+  test('opens the full reader directly and follows the real first and second topics', async ({ page }) => {
     await page.goto('/');
-
-    // 2. Locate first topic card (must have canonical title)
     const firstCard = page.locator('article.topic-card').first();
     await expect(firstCard).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(firstCard).toContainText('docs/PROJECT_CONTEXT.md');
+    await expect(firstCard.getByRole('button', { name: /عرض المخطط البياني/ })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'ابدأ بالموضوع الأول' })).toHaveAttribute('href', '/learn/project-idea-mvp');
+    await firstCard.getByRole('link', { name: 'قراءة الموضوع كاملاً' }).click();
 
-    // 3. Open modal detail reader
-    const openDetailBtn = firstCard.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' });
-    await openDetailBtn.click();
+    await expect(page).toHaveURL(/\/learn\/project-idea-mvp\/?$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(page.getByText('خطوات التطبيق على مشروعك', { exact: true })).toBeVisible();
+    await expect(page.getByRole('complementary')).toContainText('قائمة تحقق التطبيق');
 
-    // 4. Modal is visible and contains consistent topic details
-    const modal = page.locator('.modal-container-box');
-    await expect(modal).toBeVisible();
-    await expect(modal).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    // Check bounds on the full reader before leaving it.
+    const navigation = page.getByRole('navigation', { name: 'التنقل بين المواضيع' });
+    await expect(navigation.getByRole('link', { name: /الموضوع السابق/ })).toHaveCount(0);
+    const nextLink = navigation.getByRole('link', { name: /الموضوع التالي/ });
+    await expect(nextLink).toHaveAttribute('href', '/learn/discovery-grill-me');
+    // Navigation remains available with every self-assessment box unchecked.
+    await expect(page.getByRole('complementary').getByRole('checkbox').first()).not.toBeChecked();
+    await nextLink.click();
+    await expect(page).toHaveURL(/\/learn\/discovery-grill-me\/?$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('استجواب الفكرة واستكشاف المتطلبات (Grill Me)');
+    await expect(page.getByRole('navigation', { name: 'التنقل بين المواضيع' }).getByRole('link', { name: /الموضوع السابق/ }))
+      .toHaveAttribute('href', '/learn/project-idea-mvp');
+  });
 
-    // 5. Navigate to full /learn page from modal
-    const fullPageLink = modal.locator('a[href*="/learn/"]').first();
-    await expect(fullPageLink).toBeVisible();
-    await fullPageLink.click();
+  test('last available topic has a previous link and no invented next topic', async ({ page }) => {
+    await page.goto('/learn/borrowhub-reference');
+    const navigation = page.getByRole('navigation', { name: 'التنقل بين المواضيع' });
+    await expect(navigation.getByRole('link', { name: /الموضوع السابق/ })).toHaveAttribute('href', '/learn/prompt-library');
+    await expect(navigation.getByRole('link', { name: /الموضوع التالي/ })).toHaveCount(0);
+    await expect(navigation).toContainText('آخر موضوع متاح');
+  });
 
-    // 6. Arrive on /learn/[slug] for the first topic
-    await expect(page).toHaveURL(/\/learn\/(project-idea-mvp|topic-01)/);
-    await expect(page.locator('h1')).toContainText('اختيار فكرة المشروع وتحديد MVP');
+  test('optional preview traps keyboard focus and restores its opener', async ({ page }) => {
+    await page.goto('/');
+    const previewButton = page.locator('article.topic-card').first().getByRole('button', { name: 'معاينة سريعة' });
+    await previewButton.click();
+    const dialog = page.getByRole('dialog', { name: 'اختيار فكرة المشروع وتحديد MVP' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('button', { name: 'إغلاق', exact: true })).toBeFocused();
+    await expect(dialog.getByRole('region', { name: 'المخطط الهندسي التفاعلي' })).toHaveCount(0);
+    await expect(dialog.getByRole('link', { name: 'قراءة الموضوع كاملاً', exact: true })).toHaveAttribute('href', '/learn/project-idea-mvp');
 
-    // 7. Verify unified contract fields are present on the learning page
-    await expect(page.locator('article')).toContainText('PROJECT_CONTEXT.md');
-    // Check that numbered practical steps exist
-    await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
+    const firstButton = dialog.getByRole('button').first();
+    const lastButton = dialog.getByRole('button').last();
+    await firstButton.focus();
+    await page.keyboard.press('Shift+Tab');
+    await expect(lastButton).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(firstButton).toBeFocused();
 
-    // 8. Verify navigation bounds for topic 1 (no previous, next points to topic 2)
-    const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
-    await expect(prevLink).toHaveCount(0);
+    await page.keyboard.press('Escape');
+    await expect(dialog).toHaveCount(0);
+    await expect(previewButton).toBeFocused();
+  });
 
-    const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
-    await expect(nextLink).toBeVisible();
-    await expect(nextLink).toHaveAttribute('href', /\/learn\//);
+  test('copy buttons work in the full reader and optional preview', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async (text: string) => { (window as any).__copiedTopicText = text; } },
+      });
+    });
+    await page.goto('/learn/project-idea-mvp');
+    const fullCopyButton = page.locator('article .copy-btn').first();
+    const fullText = await fullCopyButton.locator('xpath=ancestor::*[contains(@class,"code-container")]').locator('code').textContent();
+    await fullCopyButton.click();
+    await expect.poll(() => page.evaluate(() => (window as any).__copiedTopicText)).toBe(fullText);
+
+    await page.goto('/');
+    await page.locator('article.topic-card').first().getByRole('button', { name: 'معاينة سريعة' }).click();
+    const previewCopyButton = page.getByRole('dialog').locator('.copy-btn').first();
+    const previewText = await previewCopyButton.locator('xpath=ancestor::*[contains(@class,"code-container")]').locator('code').textContent();
+    await previewCopyButton.click();
+    await expect.poll(() => page.evaluate(() => (window as any).__copiedTopicText)).toBe(previewText);
+  });
+
+  test('legacy pending content stays readable without fabricated checklist items', async ({ page }) => {
+    await page.goto('/learn/requirements-grill-me');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Product Discovery');
+    await expect(page.getByText('المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال', { exact: true })).toBeVisible();
+    await expect(page.getByRole('complementary').getByRole('checkbox')).toHaveCount(0);
+    await expect(page.locator('article .topic-section')).toBeVisible();
+  });
+
+  test('copy feedback keeps authored DOM and legacy checklist listeners after toast updates', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.addInitScript(() => {
+      (window as any).__copyWrites = [];
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async (text: string) => { (window as any).__copyWrites.push(text); } },
+      });
+    });
+
+    await page.goto('/learn/ai-coding-agent');
+    const inlineCopy = page.locator('article .copy-btn').first();
+    const expectedText = await inlineCopy.locator('xpath=ancestor::*[contains(@class,"code-container")]').locator('code').textContent();
+    await inlineCopy.click();
+    await expect(page.getByRole('status').filter({ hasText: 'تم نسخ المحتوى إلى الحافظة بنجاح' })).toBeVisible();
+    await expect(inlineCopy).toContainText('تم النسخ');
+    expect(await page.evaluate(() => (window as any).__copyWrites)).toEqual([expectedText]);
+
+    await page.goto('/learn/requirements-prd');
+    const inlineCheckbox = page.locator('article .checklist-item input[type="checkbox"]').first();
+    await inlineCheckbox.check();
+    const legacyCopy = page.locator('article .copy-btn').first();
+    await legacyCopy.click();
+    await expect(page.getByRole('status').filter({ hasText: 'تم نسخ المحتوى إلى الحافظة بنجاح' })).toBeVisible();
+    await expect(legacyCopy).toContainText('تم النسخ');
+    await expect(inlineCheckbox).toBeChecked();
+    await inlineCheckbox.uncheck();
+    await page.reload();
+    // Wait for a real reader interaction after hydration before checking restore.
+    await legacyCopy.click();
+    await expect(page.getByRole('status').filter({ hasText: 'تم نسخ المحتوى إلى الحافظة بنجاح' })).toBeVisible();
+    await expect(inlineCheckbox).not.toBeChecked();
+    expect(errors).toEqual([]);
   });
 });

@@ -78,32 +78,32 @@ const LEGACY_TOPICS: TopicItem[] = [
     number: '01',
     slug: 'project-idea-mvp',
     title: 'اختيار فكرة المشروع وتحديد MVP',
-    subtitle: 'صياغة المشكلة وتحديد المستخدمين وحسم نطاق النسخة الأولى',
+    subtitle: 'مثال محلول وتمرين موجّه لكتابة سياق مشروعك ونطاق نسخته الأولى',
     category: 'foundations',
     categoryName: 'المرحلة التأسيسية',
-    stageTag: 'الأساسيات والمدخل الهندسي',
-    summary: 'معضلة البرمجة التخمينية (Vibe Coding) وكيفية إغلاق باب التخمين باستنطاق الفكرة، صياغة المشكلة والمستخدمين، وحسم نطاق MVP وتوثيق سياق المشروع في ملف PROJECT_CONTEXT.md.',
-    tags: ['Vibe Coding', 'AI Agents', 'MVP', 'PROJECT_CONTEXT.md', 'Problem Statement', 'Target Users', 'Non-Goals'],
-    contentTypes: ['prompt', 'checklist'],
+    stageTag: 'الفكرة ونطاق النسخة الأولى',
+    summary: 'تعلّم تحديد المشكلة والمستخدم والقيمة ورحلة MVP بمثال BorrowHub اختياري، ثم اكتب docs/PROJECT_CONTEXT.md لمشروعك وراجع القرارات والافتراضات والأسئلة قبل Grill Me.',
+    tags: ['MVP', 'PROJECT_CONTEXT.md', 'Problem Statement', 'Target Users', 'Non-Goals', 'BorrowHub'],
+    contentTypes: ['prompt', 'checklist', 'code'],
     diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 2,
+    promptCount: 1,
+    codeSnippetCount: 3,
     checklistCount: 5,
     readingTimeMinutes: calculateReadingTime(topic01Html),
     htmlContent: topic01Html,
 
     // Shared contract fields (Wave 1 foundational)
-    goal: 'صياغة المشكلة الأساسية وتحديد الفئات المستهدفة وحسم نطاق النسخة الأولى (MVP) وعزل الميزات المؤجلة (Non-Goals)، وتوثيق سياق المشروع في ملف PROJECT_CONTEXT.md قبل البدء بالمتطلبات التفصيلية أو البرمجة.',
-    prerequisites: ['لا توجد متطلبات برمجية مسبقة؛ يكفي وجود فكرة تطبيق أو مشكلة واقعية يراد حلها.'],
+    goal: 'كتابة docs/PROJECT_CONTEXT.md لمشروعك: مشكلة ومستخدمون وقيمة ورحلة MVP وميزات مؤجلة، مع فصل القرارات عن الافتراضات والأسئلة استعدادًا لمقابلة Grill Me.',
+    prerequisites: ['معرفة أساسيات البرمجة وفكرة أو مشكلة تريد فهمها؛ لا تحتاج خبرة في AI Agents.', 'محرر نصوص أو ورقة تنقلها لاحقًا إلى ملف؛ لا يلزم تثبيت وكيل أو Skills أو MCP.'],
     steps: [
-      '1. اختر فكرة المشروع وصغ بيان المشكلة (Problem Statement) بدقة: ما هي المشكلة الحقيقية ولمن تُحل؟',
-      '2. حدد فئات المستخدمين المستهدفين (Target Users) واحتياجاتهم الأساسية وصلاحياتهم الأولية.',
-      '3. عرّف نطاق النسخة التجريبية الأولى (MVP Scope) واعزل الميزات المؤجلة (Non-Goals / Future Features).',
-      '4. وثّق قرارات الفكرة ونطاقها في ملف سياق المشروع docs/PROJECT_CONTEXT.md.',
-      '5. راجع حدود المشروع وتأكد من اكتمال المعطيات قبل الانتقال لمرحلة استنطاق المتطلبات (Grill Me).'
+      '1. اقرأ مثال BorrowHub الاختياري ولاحظ مصدر كل حقيقة وسبب كل خطوة، ثم اختر مشكلة لمشروعك أنت.',
+      '2. اكتب المستخدم والموقف والمشكلة والقيمة وأفعال الأدوار، مع مصدر معرفتك وما لم تتحقق منه.',
+      '3. صف رحلة MVP من البداية إلى النتيجة وأجّل ميزتين على الأقل مع تفسير بقاء الرحلة مفيدة بدونهما.',
+      '4. املأ قالب docs/PROJECT_CONTEXT.md بنطاق MVP والقرارات ومصادرها وافتراض موسوم وسؤالين محددين ومعيار نجاح قابل للملاحظة.',
+      '5. راجع ملفك بمعايير المخرج، ثم استخدمه مدخلًا لجلسة Grill Me لحسم الأسئلة المتبقية.'
     ],
     promptRefs: ['prompt-01-grill-me-product-discovery'],
-    outputs: ['docs/PROJECT_CONTEXT.md', 'وثيقة نطاق MVP'],
+    outputs: ['docs/PROJECT_CONTEXT.md'],
     checklist: [
       'تمت صياغة بيان المشكلة والهدف الرئيسي من المنتج بوضوح دون غموض.',
       'تم تحديد المستخدمين المستهدفين واحتياجاتهم وفصل أدوارهم.',
@@ -458,19 +458,19 @@ export const UNIFIED_TOPICS: TopicItem[] = assembleTopics();
 export const TOPICS = UNIFIED_TOPICS;
 
 /**
- * Resolves any topic identifier (legacy ID like topic-05, legacy route slug, or canonical slug)
+ * Resolves any topic identifier (legacy ID, current topic ID, route alias, or canonical slug)
  * to its stable canonical slug.
  */
 export function resolveCanonicalSlug(identifier: string): string {
   if (!identifier) return '';
   const trimmed = identifier.trim();
-  if (LEGACY_TOPIC_ID_MAP[trimmed]) {
+  if (Object.hasOwn(LEGACY_TOPIC_ID_MAP, trimmed)) {
     return LEGACY_TOPIC_ID_MAP[trimmed];
   }
-  if (TOPIC_SLUG_ALIASES[trimmed]) {
+  if (Object.hasOwn(TOPIC_SLUG_ALIASES, trimmed)) {
     return TOPIC_SLUG_ALIASES[trimmed];
   }
-  return trimmed;
+  return UNIFIED_TOPICS.find((topic) => topic.id === trimmed)?.slug ?? trimmed;
 }
 
 /**
