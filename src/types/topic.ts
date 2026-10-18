@@ -44,6 +44,9 @@ export interface TopicItem {
   outputs: string[];
   checklist: string[];
   publicationStatus: PublicationStatus;
+
+  // Authoritative sequence position (1–58; undefined = legacy anchor)
+  sequencePosition?: number;
 }
 
 export interface SearchMatch {

@@ -63,7 +63,7 @@ export const TOPIC_SLUG_ALIASES: Record<string, string> = {
   'glossary': 'borrowhub-reference',
 };
 
-export const UNIFIED_TOPICS: TopicItem[] = [
+const LEGACY_TOPICS: TopicItem[] = [
   {
     id: 'topic-01',
     number: '01',
@@ -103,6 +103,7 @@ export const UNIFIED_TOPICS: TopicItem[] = [
       'تمت مراجعة الافتراضات والتأكد من وضوح الفكرة لجلسة استكشاف المتطلبات.'
     ],
     publicationStatus: 'unified-complete',
+    sequencePosition: 1,
   },
   {
     id: 'topic-02',
@@ -403,6 +404,34 @@ export const UNIFIED_TOPICS: TopicItem[] = [
   },
 ];
 
+/**
+ * Wave-2 topic sources registry:
+ * Each Wave-2 ticket creates a module under `src/data/topics/wave2/` exporting `TopicItem[]`.
+ * To register topics, each ticket makes ONLY two one-line edits in this file:
+ *   1. Import line at top of file:
+ *      import { myTopicEntries } from '@/src/data/topics/wave2/<ticketModule>.ts';
+ *   2. Topic source line inside WAVE2_TOPIC_SOURCES array below:
+ *      myTopicEntries,
+ */
+export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [];
+
+/**
+ * Computes assembled topic sequence:
+ * - Positioned topics (sequencePosition defined) come FIRST, sorted ascending by sequencePosition.
+ * - Ties preserve insertion order.
+ * - Unpositioned legacy anchors (02–12) keep their relative order AFTER the positioned block.
+ * - Positioned topic-01 (sequencePosition: 1) stays at the front.
+ */
+function assembleTopics(): TopicItem[] {
+  const all = [...LEGACY_TOPICS, ...WAVE2_TOPIC_SOURCES.flat()];
+  const positioned = all
+    .filter((t) => t.sequencePosition !== undefined)
+    .sort((a, b) => a.sequencePosition! - b.sequencePosition!);
+  const unpositioned = all.filter((t) => t.sequencePosition === undefined);
+  return [...positioned, ...unpositioned];
+}
+
+export const UNIFIED_TOPICS: TopicItem[] = assembleTopics();
 export const TOPICS = UNIFIED_TOPICS;
 
 /**
