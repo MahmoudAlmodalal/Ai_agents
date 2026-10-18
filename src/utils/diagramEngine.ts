@@ -675,6 +675,173 @@ const PREBUILT_TOPIC_DIAGRAMS: Record<string, Record<DiagramPerspective, string>
   App->>Clipboard: نسخ النص البرمجي الكامل مع إشعار نجاح
   Engineer->>IDE: لصق البرومبت وتنفيذه فوراً بجودة هندسية متقنة`,
   },
+
+  'mermaid-syntax': {
+    architecture: `flowchart TD
+  subgraph ClientApp["بيئة المتصفح التفاعلية (Browser Client-Side)"]
+    Source["كود المخطط النصي<br/>(Markdown / Code Block)"] --> Parser["محلل الصياغة النحوية<br/>(Mermaid Lexer & AST)"]
+    Parser --> Validator{"فحص سلامة الصياغة<br/>(Syntax Check)"}
+    Validator -- سليمة --> SvgGen["محرك توليد الرسوم<br/>(SVG Vector Generator)"]
+    SvgGen --> DomMount["عرض المخطط التفاعلي<br/>(Interactive DOM Canvas)"]
+    Validator -- خطأ صياغي --> ErrorBox["تنبيه خطأ موضعي غير معطّل<br/>(Inline Non-blocking Alert)"]
+  end
+
+  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
+  classDef success fill:#065f46,stroke:#10b981,stroke-width:2px,color:#ecfdf5;
+  classDef error fill:#881337,stroke:#f43f5e,stroke-width:1.5px,color:#fff1f2;
+  class SvgGen,DomMount success;
+  class ErrorBox error;`,
+
+    flow: `flowchart LR
+  A["1. كتابة كود نصي LTR"] --> B["2. معاينة في Mermaid Live"]
+  B --> C{"3. التحقق من الصياغة"}
+  C -- خطأ في الصياغة --> D["معالجة سريعة لسطر الخطأ"]
+  D --> B
+  C -- صياغة سليمة --> E["4. تصيير SVG في المتصفح"]
+  E --> F["5. حفظ في docs/diagrams/"]
+
+  classDef default fill:#0f172a,stroke:#3b82f6,stroke-width:1.5px,color:#93c5fd;
+  classDef highlight fill:#1d4ed8,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+  class A,E,F highlight;`,
+
+    sequence: `sequenceDiagram
+  autonumber
+  actor User as الطالب / المطوّر
+  participant Editor as محرر الكود / المتصفح
+  participant Engine as محرك Mermaid.js المدمج
+  participant Canvas as عارض المخططات (Viewer)
+
+  User->>Editor: كتابة أو تعديل كود Mermaid النصي
+  Editor->>Engine: استدعاء mermaid.render()
+  alt كود صالح وسليم
+    Engine-->>Canvas: إرجاع وسم SVG المتجهي وتثبيته في الصفحة
+    Canvas-->>User: عرض المخطط مع أدوات التكبير والنسخ
+  else خطأ في الصياغة (Syntax Error)
+    Engine-->>Canvas: اعتراض الخطأ عبر try / catch
+    Canvas-->>User: إظهار تنبيه موضعي يحدد مكان الخطأ دون كسر الصفحة
+  end`,
+  },
+
+  'user-flow-modeling': {
+    architecture: `flowchart TD
+  subgraph FlowArchitecture["هيكلية مخطط تدفق المستخدم (User Flow)"]
+    Entry["نقطة الانطلاق (Entry State)"] --> Actions["إجراءات المستخدم (User Actions)"]
+    Actions --> Gate{"بوابات القرار (Decision Gates)"}
+    Gate -- شروط مستوفاة --> Happy["مسار النجاح (Happy Path)"]
+    Gate -- شروط غير مستوفاة --> Fallback["مسارات الفشل والاعتذار (Failure Paths)"]
+    Happy --> ExitSuccess["إتمام الهدف بنجاح (Exit State)"]
+    Fallback --> ExitError["التعافي أو إغلاق الطلب (Recovery / Exit)"]
+  end
+
+  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
+  classDef success fill:#065f46,stroke:#10b981,stroke-width:2px,color:#ecfdf5;
+  classDef error fill:#881337,stroke:#f43f5e,stroke-width:1.5px,color:#fff1f2;
+  class Happy,ExitSuccess success;
+  class Fallback,ExitError error;`,
+
+    flow: `flowchart TD
+  Start(["بدء: استعارة معدة معملية"]) --> Browse["تصفح كتالوج المعدات المتاحة"]
+  Browse --> SelectItem["اختيار معدة والنقر على طلب استعارة"]
+  SelectItem --> CheckAuth{"هل حساب الطالب معتمد؟"}
+  CheckAuth -- لا --> ShowAuthError["عرض تنبيه: الحساب بانتظار الاعتماد"] --> ExitAuth(["نهاية: إيقاف الطلب"])
+  CheckAuth -- نعم --> CheckStock{"هل المعدة متوفرة بالمخزن؟"}
+  CheckStock -- لا --> ShowOutOfStock["عرض تنبيه: المعدة غير متوفرة"] --> ExitStock(["نهاية: اقتراح بدائل"])
+  CheckStock -- نعم --> CheckLoans{"هل عدد الإعارات النشطة < 2؟"}
+  CheckLoans -- لا --> ShowLimitError["خطأ: بلوغ الحد الأقصى (جهازان)"] --> ExitLimit(["نهاية: رفض الطلب"])
+  CheckLoans -- نعم --> SubmitRequest["إرسال طلب الاستعارة (قيد المراجعة)"]
+  SubmitRequest --> AdminDecision{"قرار مسؤول المستودع"}
+  AdminDecision -- رفض --> NotifyReject["إشعار الطالب بسبب الرفض"] --> ExitReject(["نهاية: طلب مرفوض"])
+  AdminDecision -- موافقة --> Handover["تسليم المعدة خلال 48 ساعة"]
+  Handover --> ActiveLoan(["إعارة نشطة بنجاح ✓"])
+
+  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
+  classDef decision fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#e0e7ff;
+  classDef error fill:#881337,stroke:#f43f5e,stroke-width:1.5px,color:#fff1f2;
+  classDef success fill:#065f46,stroke:#10b981,stroke-width:2px,color:#ecfdf5;
+  class CheckAuth,CheckStock,CheckLoans,AdminDecision decision;
+  class ShowAuthError,ShowOutOfStock,ShowLimitError,NotifyReject error;
+  class ActiveLoan success;`,
+
+    sequence: `sequenceDiagram
+  autonumber
+  actor Student as الطالب (Student)
+  participant UI as واجهة الاستعارة (Frontend UI)
+  participant Core as نظام إدارة الإعارة (BorrowHub)
+  actor Staff as مسؤول المستودع (Staff)
+
+  Student->>UI: تصفح كتالوج الأجهزة واختيار معدة
+  UI->>Core: فحص أهلية الطالب ورصيد الإعارات النشطة
+  alt تجاوز الحد الأقصى (أكثر من جهازين)
+    Core-->>UI: رفض الطلب (Rule 3: Limit Exceeded)
+    UI-->>Student: إشعار بالحد الأقصى واقتراح إعادة الأجهزة السابقة
+  else مؤهل والكمية متوفرة
+    Core-->>UI: إتاحة نموذج الاستعارة
+    Student->>UI: تقديم الطلب وتحديد التواريخ
+    UI->>Core: تسجيل الطلب بحالة "قيد المراجعة"
+    Core->>Staff: إشعار بوجود طلب استعارة جديد
+    Staff->>Core: اعتماد الطلب وبدء مهلة التسليم
+    Core-->>Student: إشعار بالموافقة ومهلة الاستلام (48 ساعة)
+  end`,
+  },
+
+  'conceptual-domain-model': {
+    architecture: `flowchart LR
+  subgraph UsersBoundary["مجال الفواعل والمستفيدين"]
+    Student["الطالب (Student)<br/>المستعير المعتمد"]
+    Staff["مسؤول المستودع (Staff)<br/>إدارة الأصول والتسليم"]
+  end
+
+  subgraph AssetsBoundary["مجال الأجهزة والعهد"]
+    Category["تصنيف المعدة (Equipment Category)<br/>القواعد والتعليمات العامة"]
+    Equipment["المعدة المعملية (Equipment)<br/>الأصل الفيزيائي القابل للإعارة"]
+  end
+
+  subgraph OperationBoundary["مجال عمليات الاستعارة والتدقيق"]
+    LoanRequest["طلب الاستعارة (Loan Request)<br/>فترة الحجز، الغرض، والحالة"]
+    Handover["محضر التسليم (Handover Record)<br/>توثيق الاستلام وبدء الإعارة"]
+    Inspection["فحص الإرجاع (Inspection Record)<br/>معاينة السلامة وتقدير التلفيات"]
+  end
+
+  Category -- "يصنف ويحدد شروط" --> Equipment
+  Student -- "يقدّم" --> LoanRequest
+  LoanRequest -- "يطلب" --> Equipment
+  Staff -- "يعتمد أو يرفض" --> LoanRequest
+  LoanRequest -- "ينتج عنه عند الاعتماد" --> Handover
+  Staff -- "يسلّم بموجب" --> Handover
+  Handover -- "يُختتم بـ" --> Inspection
+  Inspection -- "يحدّث حالة التوفر لـ" --> Equipment
+
+  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
+  classDef conceptual fill:#0f3460,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff;
+  class Student,Staff,Category,Equipment,LoanRequest,Handover,Inspection conceptual;`,
+
+    flow: `flowchart TD
+  Concept1["1. استخراج المفاهيم من PRD"] --> Concept2["2. صياغة مسؤوليات كل مفهوم"]
+  Concept2 --> Concept3["3. تحديد العلاقات بلغة الأعمال"]
+  Concept3 --> BoundaryCheck{"4. فحص حدود النموذج المفاهيمي"}
+  BoundaryCheck -- وجود مفاتيح PK/FK أو SQL --> Cleanse["حذف التفاصيل التقنية والتخزينية فوراً"]
+  Cleanse --> BoundaryCheck
+  BoundaryCheck -- مفاهيمي خالص ومطابق لـ PRD --> FinalModel["5. اعتماد Conceptual Domain Model"]
+
+  classDef default fill:#1e293b,stroke:#3b82f6,stroke-width:1.5px,color:#f8fafc;
+  classDef decision fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#e0e7ff;
+  classDef success fill:#065f46,stroke:#10b981,stroke-width:2px,color:#ecfdf5;
+  class BoundaryCheck decision;
+  class FinalModel success;`,
+
+    sequence: `sequenceDiagram
+  autonumber
+  actor Analyst as محلل النظم / الطالب
+  participant PRD as وثيقة المتطلبات (PRD.md)
+  participant Domain as النموذج المفاهيمي (Domain Model)
+  participant Review as صاحب العمل / خبير المجال
+
+  Analyst->>PRD: قراءة وتحديد مصطلحات العمل الأساسية
+  Analyst->>Domain: استخراج الكيانات والمسؤوليات والعلاقات
+  Domain->>Domain: تنقية النموذج من مفاتيح SQL والدوال التقنية
+  Analyst->>Review: عرض المخطط بلغة الأعمال الصافية
+  Review-->>Analyst: تأكيد مطابقة العلاقات لقواعد المنظومة الواقعية`,
+  },
 };
 
 /**
