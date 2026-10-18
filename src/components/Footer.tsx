@@ -157,7 +157,15 @@ export const Footer: React.FC = () => {
                   href="/tools"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> أدوات التطوير والتثبيت
+                  <span className="text-slate-600">›</span> وكلاء البرمجة (13 وكيلا)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/models"
+                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <span className="text-slate-600">›</span> مؤشر الموديلات (الأفضل الآن)
                 </Link>
               </li>
               <li>
