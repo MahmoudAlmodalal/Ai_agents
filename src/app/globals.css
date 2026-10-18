@@ -165,7 +165,62 @@ body {
   scrollbar-width: none;
 }
 
-/* Headings inside content */
+/* ---- Global stacking scale (prevents click-blocking overlaps) ----
+   header(navbar)=50 > search=30 > toolbar=30 > dropdown=60 >
+   audio=65 > drawer=70 > modal=80 > modal-toast/toast=90 ---- */
+:root {
+  --z-header: 50;
+  --z-search: 30;
+  --z-toolbar: 30;
+  --z-dropdown: 60;
+  --z-drawer: 70;
+  --z-modal: 80;
+  --z-audio: 75;
+  --z-toast: 90;
+}
+
+.site-header-main {
+  z-index: var(--z-header);
+}
+
+.site-header-sub {
+  z-index: var(--z-search);
+}
+
+.filter-toolbar {
+  z-index: var(--z-toolbar);
+}
+
+/* Keep cards below sticky bars; keep their buttons above card transforms */
+.topic-card {
+  isolation: isolate;
+  z-index: 0;
+}
+.topic-card-actions {
+  position: relative;
+  z-index: 10;
+}
+
+/* Modal always above drawer + audio player */
+.modal-backdrop-root {
+  z-index: var(--z-modal);
+}
+.audio-player-bar {
+  z-index: var(--z-audio);
+}
+
+/* Exiting grid items must never swallow clicks */
+.grid [data-exiting],
+.motion-exiting {
+  pointer-events: none !important;
+}
+
+/* Scaled diagram must stay inside its own box */
+.diagram-box,
+.mermaid-viewport {
+  isolation: isolate;
+  z-index: 0;
+}
 .content-area h1, .content-area h2, .content-area h3, .content-area h4 {
   color: var(--text-main);
   font-weight: 800;

@@ -81,8 +81,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.06, duration: 0.3 }}
-              onClick={() => onOpenTopic(topic.slug || topic.id)}
-              className="group flex flex-col justify-between p-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-md hover:-translate-y-0.5 relative"
+              className="group flex flex-col justify-between p-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] transition-colors duration-200 shadow-2xs hover:shadow-md relative"
             >
               <div>
                 {/* Header row: Number, stage tag & heart */}
@@ -97,13 +96,11 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                   </div>
 
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleBookmark(topic.slug || topic.id);
-                    }}
+                    onClick={() => onToggleBookmark(topic.slug || topic.id)}
+                    type="button"
                     title={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
                     aria-label={isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}
-                    className={`w-6 h-6 rounded-md flex items-center justify-center transition-all cursor-pointer shrink-0 ${
+                    className={`min-w-9 min-h-9 w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer shrink-0 relative z-10 ${
                       isBookmarked
                         ? 'text-rose-500 bg-rose-50 dark:bg-rose-950/50'
                         : 'text-slate-400 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -127,9 +124,15 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                 </div>
 
                 {/* Title */}
-                <h4 className="text-xs font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2 leading-snug mb-2">
-                  {topic.title}
-                </h4>
+                <button
+                  onClick={() => onOpenTopic(topic.slug || topic.id)}
+                  type="button"
+                  className="w-full text-right cursor-pointer"
+                >
+                  <h4 className="text-xs font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors line-clamp-2 leading-snug mb-2">
+                    {topic.title}
+                  </h4>
+                </button>
               </div>
 
               {/* Footer info: Reading time & Open prompt */}
@@ -138,10 +141,14 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                   <Clock className="w-3 h-3" />
                   <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
                 </span>
-                <span className="font-semibold text-[var(--brand-primary)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
+                <button
+                  onClick={() => onOpenTopic(topic.slug || topic.id)}
+                  type="button"
+                  className="font-semibold text-[var(--brand-primary)] flex items-center gap-0.5 cursor-pointer min-h-9 px-2"
+                >
                   <span>فتح</span>
                   <span>←</span>
-                </span>
+                </button>
               </div>
             </motion.div>
           );

@@ -34,11 +34,11 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
 
   return (
     <motion.aside
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 100, opacity: 0 }}
+      initial={{ y: 100, opacity: 0, x: '-50%' }}
+      animate={{ y: 0, opacity: 1, x: '-50%' }}
+      exit={{ y: 100, opacity: 0, x: '-50%' }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed bottom-2.5 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[92%] max-w-2xl bg-[var(--bg-surface)]/95 border border-[var(--border-color)] rounded-2xl shadow-2xl p-2.5 sm:px-4 sm:py-3 backdrop-blur-md flex items-center justify-between gap-2 transition-all no-print audio-player-bar"
+      className="fixed bottom-2.5 left-1/2 z-[var(--z-audio)] w-[95%] sm:w-[92%] max-w-2xl bg-[var(--bg-surface)]/95 border border-[var(--border-color)] rounded-2xl shadow-2xl p-2.5 sm:px-4 sm:py-3 backdrop-blur-md flex items-center justify-between gap-2 transition-[bottom] no-print audio-player-bar"
       aria-label="مشغل القراءة الصوتية الذكية"
     >
       {/* Left: Indicator & Title */}

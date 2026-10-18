@@ -164,7 +164,7 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header
-        className="sticky top-0 z-40 w-full bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors"
+        className="site-header-main sticky top-0 z-[var(--z-header)] w-full bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors"
         dir="rtl"
         role="banner"
       >
@@ -251,7 +251,7 @@ export const Navbar: React.FC = () => {
 
                 {/* Dropdown Content */}
                 {isMoreDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-50">
+                  <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-[var(--z-dropdown)]">
                     <div className="text-[11px] font-extrabold text-[var(--text-faint)] px-3 py-1 border-b border-[var(--border-color)] mb-1">
                       أقسام ومراجع إضافية
                     </div>
@@ -347,7 +347,7 @@ export const Navbar: React.FC = () => {
       <div
         id="mobile-nav-drawer"
         aria-hidden={!isDrawerOpen}
-        className={`fixed inset-0 z-50 lg:hidden transition-visibility duration-300 ${
+        className={`fixed inset-0 z-[var(--z-drawer)] lg:hidden transition-visibility duration-300 ${
           isDrawerOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
         }`}
       >

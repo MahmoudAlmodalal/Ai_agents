@@ -56,7 +56,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   onToggleBookmark,
 }) => {
   return (
-    <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-all duration-200 ease-out shadow-xs hover:shadow-lg hover:scale-[1.015] hover:-translate-y-0.5 relative will-change-transform">
+    <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
       {/* Top Header Row */}
       <div>
         <div className="flex items-center justify-between gap-2 mb-2.5">
@@ -84,8 +84,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           <div className="topic-card-actions flex items-center gap-1.5 shrink-0">
             {/* Bookmark Heart Button */}
             <button
-              onClick={() => onToggleBookmark(topic.id)}
-              className={`w-8 h-8 rounded-lg border transition-all cursor-pointer flex items-center justify-center ${
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleBookmark(topic.id);
+              }}
+              type="button"
+              className={`min-w-9 min-h-9 w-9 h-9 rounded-lg border transition-colors cursor-pointer flex items-center justify-center relative z-10 ${
                 isBookmarked
                   ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-600 dark:text-rose-400 shadow-2xs scale-105'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50/50'
@@ -112,8 +116,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
 
             {/* Quick listen button */}
             <button
-              onClick={() => onListenTopic(topic)}
-              className={`h-8 px-2.5 rounded-lg text-xs font-bold border transition-all cursor-pointer flex items-center gap-1 ${
+              onClick={(e) => {
+                e.stopPropagation();
+                onListenTopic(topic);
+              }}
+              type="button"
+              className={`min-h-9 h-9 px-2.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1 relative z-10 ${
                 isCurrentlySpeaking
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)]'
@@ -129,8 +137,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
 
             {/* Quick Diagram Button */}
             <button
-              onClick={() => onOpenTopic(topic.id)}
-              className="h-8 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all cursor-pointer flex items-center gap-1 no-print"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenTopic(topic.id);
+              }}
+              type="button"
+              className="min-h-9 h-9 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors cursor-pointer flex items-center gap-1 no-print relative z-10"
               title="عرض المخطط البياني التفاعلي (Mermaid.js)"
               aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
             >
@@ -140,11 +152,13 @@ export const TopicCard: React.FC<TopicCardProps> = ({
 
             {/* Quick Print PDF Button */}
             <button
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 onOpenTopic(topic.id);
                 setTimeout(() => window.print(), 350);
               }}
-              className="w-8 h-8 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-all cursor-pointer flex items-center justify-center no-print"
+              type="button"
+              className="min-w-9 min-h-9 w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors cursor-pointer flex items-center justify-center no-print relative z-10"
               title="طباعة أو تصدير كملف PDF"
               aria-label={`طباعة الموضوع ${topic.number} كملف PDF`}
             >
@@ -225,7 +239,8 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         {/* Action Button: Touch Target >= 40px */}
         <button
           onClick={() => onOpenTopic(topic.id)}
-          className="w-full h-10 px-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--brand-primary)] text-[var(--text-main)] hover:text-white border border-[var(--border-color)] hover:border-[var(--brand-primary)] text-xs font-bold transition-all duration-150 cursor-pointer flex items-center justify-center gap-1.5"
+          type="button"
+          className="w-full min-h-10 h-10 px-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--brand-primary)] text-[var(--text-main)] hover:text-white border border-[var(--border-color)] hover:border-[var(--brand-primary)] text-xs font-bold transition-colors duration-150 cursor-pointer flex items-center justify-center gap-1.5 relative z-10"
         >
           <span>تصفح الموضوع بالتفصيل</span>
           <span className="text-xs transition-transform group-hover:-translate-x-1">←</span>

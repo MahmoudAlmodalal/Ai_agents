@@ -166,10 +166,14 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm modal-backdrop-root"
+      className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm modal-backdrop-root"
     >
       {/* Click outside backdrop for desktop */}
-      <div className="absolute inset-0 hidden sm:block modal-backdrop-clickable" onClick={onClose} aria-hidden="true" />
+      <div
+        className="absolute inset-0 hidden sm:block modal-backdrop-clickable cursor-pointer"
+        onClick={onClose}
+        aria-hidden="true"
+      />
 
       {/* Main Modal Container: Fullscreen on mobile, rounded card on tablet/desktop */}
       <motion.div
@@ -544,11 +548,11 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
       <AnimatePresence>
         {copyToast && (
           <motion.div
-            initial={{ y: 50, opacity: 0, scale: 0.9 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 20, opacity: 0, scale: 0.95 }}
+            initial={{ y: 50, opacity: 0, scale: 0.9, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, scale: 1, x: '-50%' }}
+            exit={{ y: 20, opacity: 0, scale: 0.95, x: '-50%' }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-60 px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2"
+            className="fixed bottom-6 left-1/2 z-[var(--z-toast)] px-4 py-2 bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-lg flex items-center gap-2"
           >
             <CheckCircle className="w-4 h-4" />
             <span>{copyToast}</span>

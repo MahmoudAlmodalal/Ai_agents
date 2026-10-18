@@ -54,7 +54,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
   }, [onSearchChange]);
 
   return (
-    <header className="site-header sticky top-0 z-40 bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors shadow-2xs">
+    <header className="site-header-sub relative z-[var(--z-search)] bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors shadow-2xs">
       <div className="header-inner max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Main Header Bar: Exactly 52px on mobile, 60px on desktop */}
         <div className="h-[52px] sm:h-[60px] flex items-center justify-between gap-3">

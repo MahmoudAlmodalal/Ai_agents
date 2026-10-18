@@ -29,13 +29,13 @@ button {
   }
 
   .topic-card-actions {
-    max-width: 64%;
-    gap: 0.3rem;
+    gap: 0.4rem;
   }
 
-  .topic-card-actions > button {
-    min-width: 2.35rem;
-    min-height: 2.35rem;
+  .topic-card-actions > button,
+  .recently-viewed-actions > button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 
   pre.code-content {
@@ -46,7 +46,8 @@ button {
 
 /* Mobile & Tablet Compact (<768px) */
 @media (max-width: 767px) {
-  .site-header {
+  .site-header-main,
+  .site-header-sub {
     box-shadow: 0 4px 18px rgb(15 23 42 / 0.06);
   }
 
@@ -69,7 +70,7 @@ button {
   .filter-toolbar {
     position: sticky;
     top: 52px;
-    z-index: 30;
+    z-index: var(--z-toolbar);
     box-shadow: 0 5px 16px rgb(15 23 42 / 0.04);
   }
 
@@ -127,14 +128,13 @@ button {
   }
 
   .topic-card-actions {
-    max-width: 58%;
     flex-wrap: wrap;
     justify-content: flex-end;
   }
 
   .topic-card-actions > button {
-    min-width: 2.5rem;
-    min-height: 2.5rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 
   .topic-card-actions > button span {
@@ -161,19 +161,13 @@ button {
     padding-inline: 1.5rem;
     max-width: 750px;
   }
-
-  .filter-toolbar {
-    position: sticky;
-    top: 60px;
-    z-index: 30;
-  }
 }
 
 @media (min-width: 768px) {
   .filter-toolbar {
     position: sticky;
     top: 60px;
-    z-index: 30;
+    z-index: var(--z-toolbar);
   }
 }
 

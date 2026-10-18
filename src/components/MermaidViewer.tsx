@@ -271,7 +271,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
       {/* Canvas Viewport */}
       <div
         ref={containerRef}
-        className="relative min-h-[300px] max-h-[550px] overflow-auto p-4 sm:p-6 flex items-center justify-center bg-[var(--bg-body)] select-none"
+        className="mermaid-viewport relative min-h-[300px] max-h-[550px] overflow-auto p-4 sm:p-6 flex items-center justify-center bg-[var(--bg-body)] select-none"
         dir="ltr"
       >
         {isRendering ? (
@@ -288,11 +288,12 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
           </div>
         ) : (
           <div
-            className="transition-transform duration-150 ease-out origin-center flex items-center justify-center w-full"
+            className="mermaid-zoombox transition-transform duration-150 ease-out origin-center flex items-center justify-center w-full max-w-full overflow-hidden pointer-events-none"
             style={{
               transform: `scale(${zoomLevel})`,
               transformOrigin: 'center center',
             }}
+            aria-hidden="true"
             dangerouslySetInnerHTML={{ __html: svgContent }}
           />
         )}
