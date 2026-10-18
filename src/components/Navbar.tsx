@@ -190,7 +190,7 @@ export const Navbar: React.FC = () => {
                   <span className="text-sm sm:text-base font-extrabold text-[var(--text-main)] leading-tight group-hover:text-[#1e3a5f] dark:group-hover:text-[#10b981] transition-colors">
                     سلاح العصر
                   </span>
-                  <span className="text-[10px] sm:text-[11px] font-medium text-[var(--text-muted)] tracking-tight">
+                  <span className="hidden xl:block text-[10px] sm:text-[11px] font-medium text-[var(--text-muted)] tracking-tight">
                     MET Academy — من الفكرة إلى الواجهات
                   </span>
                 </div>
@@ -199,7 +199,7 @@ export const Navbar: React.FC = () => {
 
             {/* 2. Desktop Primary Navigation Links (Hidden on < lg) */}
             <nav
-              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-center max-w-4xl"
+              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-center max-w-4xl min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               aria-label="شريط التنقل الرئيسي"
             >
               {primaryItems.map((item) => {
@@ -209,7 +209,7 @@ export const Navbar: React.FC = () => {
                     key={item.href}
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`relative px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] ${
+                    className={`relative px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] ${
                       active
                         ? 'bg-[#1e3a5f]/10 text-[#1e3a5f] dark:bg-[#10b981]/15 dark:text-[#10b981]'
                         : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -253,7 +253,7 @@ export const Navbar: React.FC = () => {
                 {/* Dropdown Content */}
                 {isMoreDropdownOpen && (
                   <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-[var(--z-dropdown)]">
-                    <div className="text-[11px] font-extrabold text-[var(--text-faint)] px-3 py-1 border-b border-[var(--border-color)] mb-1">
+                    <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 py-1 border-b border-[var(--border-color)] mb-1">
                       أقسام ومراجع إضافية
                     </div>
                     {secondaryItems.map((item) => {
@@ -288,7 +288,7 @@ export const Navbar: React.FC = () => {
                               )}
                             </div>
                             {item.description && (
-                              <p className="text-[11px] text-[var(--text-muted)] truncate mt-1">
+                              <p className="text-xs text-[var(--text-muted)] truncate mt-1">
                                 {item.description}
                               </p>
                             )}
@@ -301,8 +301,8 @@ export const Navbar: React.FC = () => {
               </div>
             </nav>
 
-            {/* 3. Action Utility Controls (Left side in RTL) */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* 3. Action Utility Controls (Left side in RTL) — isolated above nav layer */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 relative z-10 bg-[var(--bg-surface)]">
               {/* Quick CTA Button (Desktop only) */}
               <Link
                 href="/start"
@@ -398,7 +398,7 @@ export const Navbar: React.FC = () => {
           <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
             {/* Group 1: الأساسيات والمسار التعليمي */}
             <div>
-              <div className="text-[11px] font-extrabold text-[var(--text-faint)] px-3 mb-1.5 uppercase tracking-wider">
+              <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 mb-1.5 uppercase tracking-wider">
                 المسار الأساسي
               </div>
               <div className="space-y-1">
@@ -437,7 +437,7 @@ export const Navbar: React.FC = () => {
 
             {/* Group 2: المختبرات والمشاريع العملية */}
             <div>
-              <div className="text-[11px] font-extrabold text-[var(--text-faint)] px-3 mb-1.5 uppercase tracking-wider">
+              <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 mb-1.5 uppercase tracking-wider">
                 المختبرات والمشاريع
               </div>
               <div className="space-y-1">
@@ -476,7 +476,7 @@ export const Navbar: React.FC = () => {
 
             {/* Group 3: المراجع والملفات والأسئلة */}
             <div>
-              <div className="text-[11px] font-extrabold text-[var(--text-faint)] px-3 mb-1.5 uppercase tracking-wider">
+              <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 mb-1.5 uppercase tracking-wider">
                 المراجع والدعم
               </div>
               <div className="space-y-1">

@@ -17,7 +17,7 @@ export default function ToolsPage() {
       <p className="mt-1 text-xs text-[var(--text-muted)]">{a.vendor} · {a.platform}</p>
       <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]"><strong className="text-[var(--text-main)]">السعر:</strong> {a.pricingAr}</p>
       <p className="text-xs leading-6 text-[var(--text-muted)]"><strong className="text-[var(--text-main)]">المجاني:</strong> {a.freeOfferAr}</p>
-      <pre className="mt-3 overflow-auto rounded-xl bg-slate-950 p-3 text-left text-[11px] leading-6 text-emerald-300" dir="ltr">{a.install}</pre>
+      <pre className="mt-3 overflow-auto rounded-xl bg-slate-950 p-3 text-left text-xs leading-6 text-emerald-300" dir="ltr">{a.install}</pre>
       <details className="mt-3 rounded-xl bg-[var(--bg-card-subtle)] p-3 text-xs leading-6 text-[var(--text-muted)]"><summary className="cursor-pointer font-bold text-[var(--text-main)]">المميزات والحدود والأنسب</summary><p className="mt-2"><strong>المميزات:</strong></p><ul className="list-disc pr-4">{a.strengths.map((s) => (<li key={s}>{s}</li>))}</ul><p className="mt-2"><strong>الحدود:</strong></p><ul className="list-disc pr-4">{a.limits.map((s) => (<li key={s}>{s}</li>))}</ul><p className="mt-2"><strong className="text-emerald-700 dark:text-emerald-300">الأنسب لـ:</strong> {a.bestForAr}</p></details>
       <a href={a.officialUrl} target="_blank" rel="noreferrer" className="mt-3 block text-xs font-bold text-emerald-600" dir="ltr">{a.officialUrl} ← الموقع الرسمي</a>
     </article>))}</div>

@@ -402,7 +402,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={() => setShowFavoritesOnly(false)}
-              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] dark:bg-[#162c46] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
             >
               استعراض كافة المواضيع
             </button>
@@ -426,7 +426,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={handleResetFilters}
-              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] dark:bg-[#162c46] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
             >
               إعادة ضبط الفلاتر
             </button>
@@ -435,7 +435,7 @@ export default function HomePage() {
       </main>
 
       {/* 4. Footer */}
-      <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-3 px-3 text-center text-[11px] text-[var(--text-muted)] no-print">
+      <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-3 px-3 text-center text-xs text-[var(--text-muted)] no-print">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
           <p>
             الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي · معمارية Next.js App Router © {new Date().getFullYear()}

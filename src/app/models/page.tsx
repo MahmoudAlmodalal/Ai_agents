@@ -4,7 +4,7 @@ import { MODELS, BEST_PICKS, LAST_VERIFIED_MODELS } from '@/src/data/models';
 export const metadata = { title: 'مؤشر الموديلات | سلاح العصر', description: 'مقارنة الموديلات الحالية: البرمجة والعربية والاستدلال والتكلفة — دليل تكميلي محدث.' };
 
 const scoreColor: Record<string, string> = {
-  'ممتاز': 'bg-emerald-600 text-white',
+  'ممتاز': 'bg-emerald-600 dark:bg-emerald-800 text-white',
   'جيد جدا': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300',
   'جيد': 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300',
   'مقبول': 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300',

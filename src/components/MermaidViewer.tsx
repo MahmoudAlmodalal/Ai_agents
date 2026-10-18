@@ -160,7 +160,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
                 onClick={() => setPerspective(item.id)}
                 className={`min-h-[32px] px-2.5 sm:px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
                   isActive
-                    ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-xs'
+                    ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] shadow-xs'
                     : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)] hover:border-[var(--brand-primary)]/50'
                 }`}
                 title={item.description}
@@ -188,7 +188,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
           {/* Zoom Reset */}
           <button
             onClick={handleResetZoom}
-            className="h-8 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-all cursor-pointer flex items-center justify-center font-mono text-[11px]"
+            className="h-8 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-all cursor-pointer flex items-center justify-center font-mono text-xs"
             title="إعادة ضبط المقياس 100%"
             aria-label="إعادة ضبط المقياس"
           >
@@ -227,7 +227,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
             onClick={handleCopyCode}
             className={`h-8 px-2.5 rounded-lg border text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
               copied
-                ? 'bg-emerald-600 text-white border-emerald-600'
+                ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)] hover:border-[var(--brand-primary)]'
             }`}
             title="نسخ كود Mermaid إلى الحافظة"
@@ -300,7 +300,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
       </div>
 
       {/* Footer Info Strip */}
-      <div className="px-3 sm:px-4 py-2 bg-[var(--bg-surface)] border-t border-[var(--border-color)] flex items-center justify-between text-[11px] text-[var(--text-muted)] font-medium">
+      <div className="px-3 sm:px-4 py-2 bg-[var(--bg-surface)] border-t border-[var(--border-color)] flex items-center justify-between text-xs text-[var(--text-muted)] font-medium">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>محرك تصيير محلي 100% داخل المتصفح (Zero API)</span>

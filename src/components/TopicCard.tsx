@@ -62,14 +62,14 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         <div className="flex items-center justify-between gap-2 mb-2.5">
           {/* Badge & Stage Info */}
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-blue-600 text-white font-mono font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 shadow-2xs select-none">
+            <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-blue-600 dark:bg-blue-800 text-white font-mono font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 shadow-2xs select-none">
               {topic.number}
             </span>
             <div className="min-w-0">
-              <span className="text-[11px] sm:text-xs font-bold text-[var(--brand-primary)] block truncate">
+              <span className="text-xs font-bold text-[var(--brand-primary)] block truncate">
                 {topic.stageTag}
               </span>
-              <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-[var(--text-muted)] truncate">
+              <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] truncate">
                 <span className="truncate">{topic.categoryName}</span>
                 <span aria-hidden="true" className="opacity-40 shrink-0">·</span>
                 <span className="inline-flex items-center gap-0.5 text-slate-700 dark:text-slate-300 font-medium shrink-0" title={`وقت القراءة التقديري: ${formatReadingTime(topic.readingTimeMinutes)}`}>
@@ -123,14 +123,14 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               type="button"
               className={`min-h-9 h-9 px-2.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1 relative z-10 ${
                 isCurrentlySpeaking
-                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
+                  ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 shadow-2xs'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)]'
               }`}
               title="الاستماع الصوتي لهذا الموضوع"
               aria-label={`الاستماع الصوتي للموضوع ${topic.number}`}
             >
               {isCurrentlySpeaking ? <Volume2 className="w-3.5 h-3.5" /> : <Headphones className="w-3.5 h-3.5" />}
-              <span className="text-[11px] font-medium hidden xs:inline">
+              <span className="text-xs font-medium hidden xs:inline">
                 {isCurrentlySpeaking ? 'يقرأ' : 'استماع'}
               </span>
             </button>
@@ -147,7 +147,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
             >
               <BarChart3 className="w-3.5 h-3.5" />
-              <span className="text-[11px] font-medium hidden xs:inline">مخطط</span>
+              <span className="text-xs font-medium hidden xs:inline">مخطط</span>
             </button>
 
             {/* Quick Print PDF Button */}
@@ -186,7 +186,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
       {/* Bottom Zone: Content Stats, Tags & Primary Action */}
       <div className="pt-2.5 border-t border-[var(--border-color)]/70 mt-auto space-y-2.5">
         {/* Content Indicators */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[var(--text-muted)] font-medium">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-muted)] font-medium">
           <span className="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300 font-semibold" title={`وقت القراءة التقديري: ${formatReadingTime(topic.readingTimeMinutes)}`}>
             <Clock className="w-3 h-3" />
             <span>{formatReadingTime(topic.readingTimeMinutes)}</span>

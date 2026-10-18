@@ -35,7 +35,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
             onClick={() => setFamilyFilter('ALL')}
             className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               familyFilter === 'ALL'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46]'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -45,7 +45,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
             onClick={() => setFamilyFilter('Mermaid')}
             className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               familyFilter === 'Mermaid'
-                ? 'bg-blue-600 text-white border-blue-600'
+                ? 'bg-blue-600 dark:bg-blue-800 text-white border-blue-600 dark:border-blue-800'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -55,7 +55,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
             onClick={() => setFamilyFilter('PlantUML')}
             className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               familyFilter === 'PlantUML'
-                ? 'bg-purple-600 text-white border-purple-600'
+                ? 'bg-purple-600 dark:bg-purple-800 text-white border-purple-600 dark:border-purple-800'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -65,7 +65,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
             onClick={() => setFamilyFilter('DBML')}
             className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               familyFilter === 'DBML'
-                ? 'bg-emerald-600 text-white border-emerald-600'
+                ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -113,7 +113,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
                     {/* Name */}
                     <td className="p-4">
                       <div className="font-black text-[var(--text-main)] text-sm">{item.name}</div>
-                      <div className="text-[11px] text-[var(--text-muted)] leading-4">{item.title}</div>
+                      <div className="text-xs text-[var(--text-muted)] leading-4">{item.title}</div>
                     </td>
 
                     {/* Core Question */}
@@ -125,7 +125,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
 
                     {/* Family */}
                     <td className="p-4">
-                      <span className={`inline-block px-2.5 py-1 rounded-lg font-bold border text-[11px] ${familyStyle}`}>
+                      <span className={`inline-block px-2.5 py-1 rounded-lg font-bold border text-xs ${familyStyle}`}>
                         {item.family}
                       </span>
                       <div className="font-mono text-[10px] text-[var(--text-muted)] mt-1" dir="ltr">
@@ -136,12 +136,12 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
                     {/* Rendered in Browser? */}
                     <td className="p-4 text-center">
                       {item.supportsMermaidRender ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-100 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full text-[11px]">
+                        <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-100 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full text-xs">
                           <Check className="w-3.5 h-3.5" />
                           <span>نعم (Mermaid)</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/60 px-2.5 py-1 rounded-full text-[11px]">
+                        <span className="inline-flex items-center gap-1 text-amber-700 dark:text-amber-300 font-bold bg-amber-100 dark:bg-amber-950/60 px-2.5 py-1 rounded-full text-xs">
                           <X className="w-3.5 h-3.5" />
                           <span>محرر خارجي</span>
                         </span>
@@ -183,7 +183,7 @@ export const DiagramComparisonTable: React.FC<DiagramComparisonTableProps> = ({ 
                       {topicInfo.isAvailable ? (
                         <Link
                           href={topicInfo.url}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-emerald-500 hover:text-emerald-600 font-bold text-[11px] transition-colors"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-emerald-500 hover:text-emerald-600 font-bold text-xs transition-colors"
                         >
                           <BookOpen className="w-3 h-3" />
                           <span>موضوع {topicInfo.sequencePosition}</span>

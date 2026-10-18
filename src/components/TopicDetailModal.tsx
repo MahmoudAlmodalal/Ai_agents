@@ -194,17 +194,17 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               {topic.number}
             </span>
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-[var(--brand-primary)]">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--brand-primary)]">
                 <span className="truncate">{topic.stageTag}</span>
                 <span aria-hidden="true" className="opacity-40">·</span>
                 <span className="text-[var(--text-muted)] truncate hidden xs:inline">{topic.categoryName}</span>
                 <span aria-hidden="true" className="opacity-40 hidden sm:inline">·</span>
-                <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[var(--text-muted)] bg-[var(--bg-card-subtle)] px-1.5 py-0.2 rounded">
+                <span className="inline-flex items-center gap-1 text-xs font-mono text-[var(--text-muted)] bg-[var(--bg-card-subtle)] px-1.5 py-0.2 rounded">
                   <span>⏱️</span>
                   <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
                 </span>
                 <span aria-hidden="true" className="opacity-40 hidden sm:inline">·</span>
-                <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.2 rounded font-bold">
+                <span className="hidden sm:inline-flex items-center gap-1 text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.2 rounded font-bold">
                   {Math.round(readingProgress)}% مقروء
                 </span>
               </div>
@@ -238,7 +238,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             >
               <BarChart3 className="w-4 h-4" />
               <span className="hidden sm:inline">المخطط البياني</span>
-              <span className="hidden md:inline text-[9px] font-mono bg-[var(--brand-primary)] text-white px-1.5 py-0.2 rounded-full">
+              <span className="hidden md:inline text-[9px] font-mono bg-[var(--brand-primary)] dark:bg-[#162c46] text-white px-1.5 py-0.2 rounded-full">
                 Mermaid
               </span>
             </button>
@@ -289,7 +289,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               onClick={() => onListen(topic)}
               className={`min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
                 isCurrentlySpeaking
-                  ? 'bg-emerald-600 text-white border-emerald-600'
+                  ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)]'
               }`}
               title="الاستماع الصوتي لهذا الموضوع"

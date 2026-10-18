@@ -177,7 +177,7 @@ export const DiagramSideBySide: React.FC<DiagramSideBySideProps> = ({ items }) =
 
             {/* Core Question */}
             <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 space-y-1">
-              <div className="text-[11px] font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
+              <div className="text-xs font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>السؤال الذي يجيب عنه:</span>
               </div>
@@ -221,7 +221,7 @@ export const DiagramSideBySide: React.FC<DiagramSideBySideProps> = ({ items }) =
                 {diagramA.inputDependencies.map((dep, idx) => (
                   <span
                     key={idx}
-                    className="bg-[var(--bg-surface)] px-2 py-0.5 rounded text-[11px] border border-[var(--border-color)] font-mono"
+                    className="bg-[var(--bg-surface)] px-2 py-0.5 rounded text-xs border border-[var(--border-color)] font-mono"
                   >
                     {dep}
                   </span>
@@ -285,7 +285,7 @@ export const DiagramSideBySide: React.FC<DiagramSideBySideProps> = ({ items }) =
 
             {/* Core Question */}
             <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 space-y-1">
-              <div className="text-[11px] font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
+              <div className="text-xs font-black text-emerald-800 dark:text-emerald-300 flex items-center gap-1">
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>السؤال الذي يجيب عنه:</span>
               </div>
@@ -329,7 +329,7 @@ export const DiagramSideBySide: React.FC<DiagramSideBySideProps> = ({ items }) =
                 {diagramB.inputDependencies.map((dep, idx) => (
                   <span
                     key={idx}
-                    className="bg-[var(--bg-surface)] px-2 py-0.5 rounded text-[11px] border border-[var(--border-color)] font-mono"
+                    className="bg-[var(--bg-surface)] px-2 py-0.5 rounded text-xs border border-[var(--border-color)] font-mono"
                   >
                     {dep}
                   </span>

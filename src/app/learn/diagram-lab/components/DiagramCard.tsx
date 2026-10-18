@@ -51,7 +51,7 @@ export const DiagramCard: React.FC<DiagramCardProps> = ({ item }) => {
             <span className="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-2.5 py-0.5 text-xs font-medium text-[var(--text-muted)]">
               {item.categoryLabel}
             </span>
-            <span className="rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-2.5 py-0.5 text-[11px] font-mono text-[var(--text-muted)]">
+            <span className="rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-2.5 py-0.5 text-xs font-mono text-[var(--text-muted)]">
               {item.syntaxLabel}
             </span>
           </div>
@@ -86,7 +86,7 @@ export const DiagramCard: React.FC<DiagramCardProps> = ({ item }) => {
 
       {/* 2. Core Question Answered (Distinct Callout) */}
       <div className="rounded-2xl border-2 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 sm:p-5 flex items-start gap-3">
-        <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
+        <div className="w-9 h-9 rounded-xl bg-emerald-600 dark:bg-emerald-800 text-white flex items-center justify-center shrink-0 shadow-2xs mt-0.5">
           <HelpCircle className="w-5 h-5" />
         </div>
         <div className="space-y-1">
@@ -138,7 +138,7 @@ export const DiagramCard: React.FC<DiagramCardProps> = ({ item }) => {
         {item.inputDependencies.map((dep, idx) => (
           <span
             key={idx}
-            className="rounded-lg bg-[var(--bg-card-subtle)] px-2 py-0.5 font-mono text-[11px] text-[var(--text-main)] border border-[var(--border-color)]"
+            className="rounded-lg bg-[var(--bg-card-subtle)] px-2 py-0.5 font-mono text-xs text-[var(--text-main)] border border-[var(--border-color)]"
             dir="ltr"
           >
             {dep}
@@ -150,7 +150,7 @@ export const DiagramCard: React.FC<DiagramCardProps> = ({ item }) => {
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold text-[var(--text-muted)]">
           <span>معاينة وتجربة المخطط ومصدره:</span>
-          <span className="font-mono text-[11px] text-[var(--text-faint)]">
+          <span className="font-mono text-xs text-[var(--text-faint)]">
             {item.supportsMermaidRender ? 'Mermaid Live Rendered' : `${item.family} Dedicated Editor`}
           </span>
         </div>

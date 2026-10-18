@@ -52,11 +52,11 @@ export default function DiagramLabPage() {
       {/* Main Header Hero */}
       <header
         data-testid="diagram-lab-hero"
-        className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10 shadow-xs relative overflow-hidden"
+        className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10 shadow-xs relative overflow-hidden min-w-0 max-w-full"
       >
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-emerald-500/10 via-blue-500/5 to-transparent rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
+        <div aria-hidden="true" className="absolute top-0 left-0 w-96 h-96 max-w-full bg-gradient-to-br from-emerald-500/10 via-blue-500/5 to-transparent rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" />
 
-        <div className="relative z-10 space-y-4">
+        <div className="relative z-10 space-y-4 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/40 px-3 py-1 text-xs font-bold text-blue-800 dark:text-blue-300 flex items-center gap-1.5">
               <Workflow className="w-3.5 h-3.5" />
@@ -71,8 +71,8 @@ export default function DiagramLabPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl font-black tracking-tight text-[var(--text-main)] sm:text-5xl">
-            مختبر المخططات الثمانية (The 8 Engineering Diagrams Lab)
+          <h1 className="text-3xl font-black tracking-tight text-[var(--text-main)] sm:text-5xl break-words [overflow-wrap:anywhere] text-balance leading-tight">
+            مختبر المخططات الثمانية <span dir="ltr" className="inline-block">(The 8 Engineering Diagrams Lab)</span>
           </h1>
           <p className="max-w-4xl text-sm sm:text-base leading-8 text-[var(--text-muted)]">
             يقارن الطالب هنا أنواع المخططات الهندسية الثمانية المعتمدة في مسار بناء مشروعه: يتعرف على السؤال المحوري لكل مخطط، وغرضه المعماري، وأسئلة القرار ومتى يختاره، ويعاين ويستنسخ مصادره الصافية، ويفتح المحرر المتخصص الصحيح، وينتقل للموضوع المنشور بالمسار.
@@ -93,19 +93,19 @@ export default function DiagramLabPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-center">
               <span className="block text-2xl font-black text-[var(--text-main)]">8</span>
-              <span className="text-[11px] font-bold text-[var(--text-muted)]">مخططات معمارية</span>
+              <span className="text-xs font-bold text-[var(--text-muted)]">مخططات معمارية</span>
             </div>
             <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-center">
               <span className="block text-2xl font-black text-[var(--text-main)]">3</span>
-              <span className="text-[11px] font-bold text-[var(--text-muted)]">عائلات رسم (Mermaid / PlantUML / DBML)</span>
+              <span className="text-xs font-bold text-[var(--text-muted)]">عائلات رسم (Mermaid / PlantUML / DBML)</span>
             </div>
             <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-center">
               <span className="block text-2xl font-black text-[var(--text-main)]">3</span>
-              <span className="text-[11px] font-bold text-[var(--text-muted)]">محررات حية معتمدة</span>
+              <span className="text-xs font-bold text-[var(--text-muted)]">محررات حية معتمدة</span>
             </div>
             <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-center">
               <span className="block text-2xl font-black text-emerald-600">8 / 8</span>
-              <span className="text-[11px] font-bold text-[var(--text-muted)]">مواضيع منشورة بالمسار</span>
+              <span className="text-xs font-bold text-[var(--text-muted)]">مواضيع منشورة بالمسار</span>
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function DiagramLabPage() {
             aria-selected={activeTab === 'cards'}
             className={`min-h-[40px] px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 border ${
               activeTab === 'cards'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-xs'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46] shadow-xs'
                 : 'bg-[var(--bg-surface)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -135,7 +135,7 @@ export default function DiagramLabPage() {
             aria-selected={activeTab === 'matrix'}
             className={`min-h-[40px] px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 border ${
               activeTab === 'matrix'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-xs'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46] shadow-xs'
                 : 'bg-[var(--bg-surface)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -149,7 +149,7 @@ export default function DiagramLabPage() {
             aria-selected={activeTab === 'side-by-side'}
             className={`min-h-[40px] px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 border ${
               activeTab === 'side-by-side'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-xs'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46] shadow-xs'
                 : 'bg-[var(--bg-surface)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -169,7 +169,7 @@ export default function DiagramLabPage() {
               onClick={() => setFamilyFilter('ALL')}
               className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 familyFilter === 'ALL'
-                  ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)]'
+                  ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46]'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
               }`}
             >
@@ -179,7 +179,7 @@ export default function DiagramLabPage() {
               onClick={() => setFamilyFilter('Mermaid')}
               className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 familyFilter === 'Mermaid'
-                  ? 'bg-blue-600 text-white border-blue-600'
+                  ? 'bg-blue-600 dark:bg-blue-800 text-white border-blue-600 dark:border-blue-800'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
               }`}
             >
@@ -189,7 +189,7 @@ export default function DiagramLabPage() {
               onClick={() => setFamilyFilter('PlantUML')}
               className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 familyFilter === 'PlantUML'
-                  ? 'bg-purple-600 text-white border-purple-600'
+                  ? 'bg-purple-600 dark:bg-purple-800 text-white border-purple-600 dark:border-purple-800'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
               }`}
             >
@@ -199,7 +199,7 @@ export default function DiagramLabPage() {
               onClick={() => setFamilyFilter('DBML')}
               className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                 familyFilter === 'DBML'
-                  ? 'bg-emerald-600 text-white border-emerald-600'
+                  ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
               }`}
             >

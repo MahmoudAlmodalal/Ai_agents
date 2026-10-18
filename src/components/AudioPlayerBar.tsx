@@ -85,7 +85,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
         {isPlaying && !isPaused ? (
           <button
             onClick={onPause}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--brand-primary)] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#1e3a5f] dark:bg-[#162c46] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
             title="إيقاف مؤقت"
           >
             <Pause className="w-3.5 h-3.5 fill-current" />
@@ -93,7 +93,7 @@ export const AudioPlayerBar: React.FC<AudioPlayerBarProps> = ({
         ) : (
           <button
             onClick={onPlay}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--brand-primary)] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#1e3a5f] dark:bg-[#162c46] hover:bg-blue-700 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md transition-transform hover:scale-105 cursor-pointer"
             title="تشغيل القراءة"
           >
             <Play className="w-3.5 h-3.5 fill-current ml-0.5" />

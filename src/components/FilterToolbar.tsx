@@ -101,7 +101,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
                 }}
                 className={`h-8 sm:h-9 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
                   active
-                    ? 'bg-[var(--brand-primary)] text-white shadow-2xs'
+                    ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white shadow-2xs'
                     : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-color)]'
                 }`}
               >

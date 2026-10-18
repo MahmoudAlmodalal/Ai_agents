@@ -42,7 +42,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                 {topics.length} من 5
               </span>
             </div>
-            <p className="text-[11px] text-[var(--text-muted)] hidden sm:block">
+            <p className="text-xs text-[var(--text-muted)] hidden sm:block">
               آخر 5 مواضيع قمت بالاطلاع عليها في نافذة القراءة للعودة السريعة
             </p>
           </div>
@@ -67,7 +67,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
               d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
             />
           </svg>
-          <span className="text-[11px]">مسح السجل</span>
+          <span className="text-xs">مسح السجل</span>
         </button>
       </div>
 
@@ -87,7 +87,7 @@ export const RecentlyViewedSection: React.FC<RecentlyViewedSectionProps> = ({
                 {/* Header row: Number, stage tag & heart */}
                 <div className="flex items-center justify-between gap-1.5 mb-1.5">
                   <div className="flex items-center gap-1.5 min-w-0">
-                    <span className="w-5 h-5 rounded-md bg-blue-600 text-white font-mono font-bold text-[10px] flex items-center justify-center shrink-0">
+                    <span className="w-5 h-5 rounded-md bg-blue-600 dark:bg-blue-800 text-white font-mono font-bold text-[10px] flex items-center justify-center shrink-0">
                       {topic.number}
                     </span>
                     <span className="text-[10px] font-bold text-[var(--brand-primary)] truncate">

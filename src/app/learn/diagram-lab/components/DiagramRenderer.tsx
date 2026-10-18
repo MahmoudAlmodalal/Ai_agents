@@ -167,7 +167,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
             aria-selected={activeTab === 'preview'}
             className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
               activeTab === 'preview'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-2xs'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46] shadow-2xs'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -181,7 +181,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
             aria-selected={activeTab === 'code'}
             className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
               activeTab === 'code'
-                ? 'bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-2xs'
+                ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] dark:border-[#162c46] shadow-2xs'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)]'
             }`}
           >
@@ -196,7 +196,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
               aria-selected={activeTab === 'boundary'}
               className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
                 activeTab === 'boundary'
-                  ? 'bg-amber-600 text-white border-amber-600 shadow-2xs'
+                  ? 'bg-amber-600 dark:bg-amber-800 text-white border-amber-600 shadow-2xs'
                   : 'bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800 hover:bg-amber-100'
               }`}
             >
@@ -215,7 +215,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                 onClick={() => setSelectedVariant('primary')}
                 className={`px-2 py-0.5 rounded-lg transition-colors cursor-pointer ${
                   selectedVariant === 'primary'
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-emerald-600 dark:bg-emerald-800 text-white'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
                 }`}
                 title="عرض بصيغة DBML"
@@ -226,7 +226,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                 onClick={() => setSelectedVariant('alternative')}
                 className={`px-2 py-0.5 rounded-lg transition-colors cursor-pointer ${
                   selectedVariant === 'alternative'
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-blue-600 dark:bg-blue-800 text-white'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
                 }`}
                 title="عرض بصيغة Mermaid erDiagram"
@@ -241,7 +241,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
             onClick={handleCopy}
             className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
               copied
-                ? 'bg-emerald-600 text-white border-emerald-600'
+                ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)] hover:border-[var(--brand-primary)]'
             }`}
             aria-label={`نسخ كود ${item.name}`}
@@ -283,7 +283,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                   </button>
                   <button
                     onClick={handleResetZoom}
-                    className="h-7 px-1.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center justify-center font-mono text-[11px] cursor-pointer"
+                    className="h-7 px-1.5 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center justify-center font-mono text-xs cursor-pointer"
                     title="إعادة ضبط 100%"
                     aria-label="إعادة ضبط المقياس"
                   >
@@ -315,7 +315,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                   ) : renderError ? (
                     <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs max-w-md text-center">
                       <p className="font-bold mb-1">تعذر تصيير مخطط Mermaid:</p>
-                      <p className="font-mono text-[11px] opacity-80">{renderError}</p>
+                      <p className="font-mono text-xs opacity-80">{renderError}</p>
                     </div>
                   ) : (
                     <div
@@ -370,7 +370,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                       href={item.editor.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white hover:bg-emerald-500 transition-colors shadow-2xs"
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 dark:bg-emerald-800 text-white hover:bg-emerald-500 transition-colors shadow-2xs"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span>فتح في {item.editor.name} ↗</span>
@@ -453,10 +453,10 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
                     <span className="w-2 h-2 rounded-full bg-rose-500" />
                     <span>Uncaught Error: Mermaid SyntaxError</span>
                   </div>
-                  <pre className="text-rose-300 text-[11px] overflow-x-auto whitespace-pre-wrap leading-5">
+                  <pre className="text-rose-300 text-xs overflow-x-auto whitespace-pre-wrap leading-5">
                     {item.engineBoundaryNotice.simulatedMermaidError}
                   </pre>
-                  <p className="text-[11px] text-slate-400 pt-1 border-t border-slate-800">
+                  <p className="text-xs text-slate-400 pt-1 border-t border-slate-800">
                     Engine State: Parse aborted gracefully to prevent host DOM crash.
                   </p>
                 </div>
@@ -489,7 +489,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({ item }) => {
               : `محرك خارجي معتمد (${item.family}) — محرر ${item.editor.name}`}
           </span>
         </div>
-        <div className="flex items-center gap-2 text-[11px]">
+        <div className="flex items-center gap-2 text-xs">
           <span>الصيغة: <code className="font-mono font-bold" dir="ltr">{item.syntaxLabel}</code></span>
         </div>
       </div>
