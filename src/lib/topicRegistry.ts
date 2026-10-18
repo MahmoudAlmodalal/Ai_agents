@@ -17,6 +17,7 @@ import { t03Entries } from '@/src/data/topics/wave2/t03-git-github.ts';
 import { t04Entries } from '@/src/data/topics/wave2/t04-visual-modeling.ts';
 import { t05Entries } from '@/src/data/topics/wave2/t05-plantuml-behavior.ts';
 import { t06Entries } from '@/src/data/topics/wave2/t06-database-diagrams.ts';
+import { t07Entries } from '@/src/data/topics/wave2/t07-ui-ux.ts';
 
 /**
  * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
@@ -424,6 +425,7 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
   t04Entries,
   t05Entries,
   t06Entries,
+  t07Entries,
 ];
 
 /**
