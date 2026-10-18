@@ -147,6 +147,152 @@ Output:
           </div>
         </div>
 
+        <!-- 4. Next.js App Router Complete Guide -->
+        <div class="step-card" style="margin-top: 2rem;">
+          <div class="step-header">
+            <span class="step-number">N1</span>
+            <div class="step-title-wrap">
+              <h3 class="step-title">Next.js App Router: الملفات، المكونات، والـRoutes</h3>
+              <div class="step-subtitle">افهم أين يذهب كل ملف قبل أن تطلب من الذكاء الاصطناعي كتابة الكود</div>
+            </div>
+          </div>
+
+          <p>
+            في هذا المسار نستخدم Next.js مع App Router لبناء واجهة منظمة وقابلة للنمو. القاعدة الأساسية هي أن مجلد <code>app/</code> يصف عناوين الصفحات، وكل مجلد داخله يمثل جزءًا من الرابط، بينما ملفات خاصة مثل <code>page.tsx</code> و<code>layout.tsx</code> و<code>loading.tsx</code> و<code>error.tsx</code> تحدد سلوك ذلك الجزء من التطبيق.
+          </p>
+
+          <div class="callout tip">
+            <div class="callout-header"><span class="callout-icon">N</span><span>الفكرة المختصرة</span></div>
+            <p><strong>Route</strong> هو عنوان يمكن فتحه، <strong>Page</strong> هو واجهة ذلك العنوان، <strong>Layout</strong> هو الغلاف المشترك، <strong>Component</strong> هو جزء قابل لإعادة الاستخدام، و<strong>Server/Client Component</strong> يحدد أين ينفذ الكود وما الصلاحيات المتاحة له.</p>
+          </div>
+
+          <h4>1. الهيكل المقترح لمشروع Next.js</h4>
+          <div class="code-container">
+            <div class="code-header"><span class="code-lang">Next.js App Router — Project Tree</span><button class="copy-btn" onclick="copyCode(this)" title="نسخ الهيكل">نسخ الهيكل</button></div>
+            <pre class="code-content"><code>my-app/
+├── app/
+│   ├── layout.tsx              # الغلاف الجذري: html وbody والمزودات
+│   ├── page.tsx                # الصفحة الرئيسية /
+│   ├── loading.tsx             # واجهة التحميل
+│   ├── error.tsx               # واجهة الخطأ، وتحتاج use client
+│   ├── not-found.tsx            # صفحة 404
+│   ├── globals.css             # الأنماط العامة وDesign Tokens
+│   ├── about/page.tsx          # /about
+│   ├── dashboard/
+│   │   ├── layout.tsx          # غلاف خاص بالـdashboard
+│   │   ├── page.tsx            # /dashboard
+│   │   └── settings/page.tsx   # /dashboard/settings
+│   ├── learn/[slug]/page.tsx   # Route ديناميكي مثل /learn/github
+│   └── api/health/route.ts     # Route Handler: /api/health
+├── components/
+│   ├── ui/                     # Button وInput وCard وModal
+│   ├── layout/                 # Navbar وSidebar وFooter
+│   └── features/               # مكونات مرتبطة بميزة محددة
+├── lib/                        # data وvalidations وutils
+├── public/                     # صور وملفات ثابتة من /
+├── types/                      # TypeScript interfaces وtypes
+├── next.config.ts              # إعدادات Next.js
+├── tsconfig.json               # إعدادات TypeScript
+├── package.json                # scripts والاعتماديات
+└── .env.local                  # أسرار محلية، لا تُرفع إلى GitHub</code></pre>
+          </div>
+
+          <h4>2. كيف يتحول المجلد إلى Route؟</h4>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th>الملف</th><th>الرابط</th><th>الوظيفة</th></tr></thead>
+              <tbody>
+                <tr><td><code>app/page.tsx</code></td><td><code>/</code></td><td>الصفحة الرئيسية</td></tr>
+                <tr><td><code>app/about/page.tsx</code></td><td><code>/about</code></td><td>Route ثابت</td></tr>
+                <tr><td><code>app/learn/[slug]/page.tsx</code></td><td><code>/learn/github</code></td><td>Route ديناميكي، وslug يصل كـparam</td></tr>
+                <tr><td><code>app/(marketing)/pricing/page.tsx</code></td><td><code>/pricing</code></td><td>Route Group لا يظهر في الرابط</td></tr>
+                <tr><td><code>app/api/health/route.ts</code></td><td><code>/api/health</code></td><td>استجابة HTTP وليست صفحة UI</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>3. الملفات الخاصة داخل كل Route</h4>
+          <ul style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li><code>page.tsx</code>: الملف الذي يجعل المجلد قابلًا للفتح كصفحة.</li>
+            <li><code>layout.tsx</code>: عناصر مشتركة تبقى أثناء الانتقال، مثل Navbar أو Sidebar.</li>
+            <li><code>loading.tsx</code>: واجهة فورية أثناء انتظار الصفحة أو البيانات، ويفضل أن تحتوي Skeleton.</li>
+            <li><code>error.tsx</code>: Error Boundary للجزء الحالي، ويجب أن تكون Client Component.</li>
+            <li><code>not-found.tsx</code>: واجهة واضحة عندما لا يوجد السجل أو الـslug المطلوب.</li>
+            <li><code>template.tsx</code>: غلاف يعاد تركيبه عند الانتقال عندما نحتاج دورة حياة جديدة.</li>
+            <li><code>route.ts</code>: Route Handler للطلبات، ولا يخلط مع <code>page.tsx</code> في نفس المسار.</li>
+          </ul>
+
+          <h4>4. Server Components وClient Components</h4>
+          <p>
+            مكونات Next.js تكون Server Components افتراضيًا. هذا مناسب لقراءة البيانات وتقليل JavaScript المرسل للمتصفح وإبقاء الأسرار خارج الواجهة. نضيف عبارة <code>use client</code> في أول الملف فقط عندما يحتاج المكون إلى <code>useState</code> أو <code>useEffect</code> أو أحداث مثل <code>onClick</code> أو APIs المتصفح مثل Clipboard وLocal Storage.
+          </p>
+          <div class="grid-2col" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+            <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;"><h4 style="color: var(--brand-primary);">Server Component</h4><p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">اقرأ البيانات ونفّذ منطق الخادم واعرض HTML قريبًا من المصدر. لا تستخدم أحداث المتصفح مباشرة.</p></div>
+            <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;"><h4 style="color: #10b981;">Client Component</h4><p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">أضف التفاعل والحالة المحلية وأحداث النقر. اجعله صغيرًا ومرر له بيانات typed من Server Component.</p></div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header"><span class="code-lang">Server page + interactive Client component</span><button class="copy-btn" onclick="copyCode(this)" title="نسخ الكود">نسخ الكود</button></div>
+            <pre class="code-content"><code>// app/learn/[slug]/page.tsx — Server Component
+import { notFound } from 'next/navigation';
+import { TopicActions } from '@/components/features/TopicActions';
+
+export default async function LearnPage({ params }: { params: Promise&lt;{ slug: string }&gt; }) {
+  const { slug } = await params;
+  const topic = await getTopicBySlug(slug);
+  if (!topic) notFound();
+  return &lt;main&gt;&lt;h1&gt;{topic.title}&lt;/h1&gt;&lt;TopicActions topicId={topic.id} /&gt;&lt;/main&gt;;
+}
+
+// components/features/TopicActions.tsx — Client Component
+'use client';
+import { useState } from 'react';
+export function TopicActions({ topicId }: { topicId: string }) {
+  const [saved, setSaved] = useState(false);
+  return &lt;button onClick={() =&gt; setSaved(!saved)} aria-pressed={saved}&gt;{saved ? 'تم الحفظ' : 'حفظ الموضوع'}&lt;/button&gt;;
+}</code></pre>
+          </div>
+
+          <h4>5. جلب البيانات والـRoutes الديناميكية</h4>
+          <ol style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li>عرّف أنواع البيانات في <code>types/</code> بدل استخدام <code>any</code>.</li>
+            <li>ضع قراءة البيانات في <code>lib/</code> ولا تكررها داخل كل مكون.</li>
+            <li>استخدم <code>loading.tsx</code> للانتظار و<code>error.tsx</code> للفشل.</li>
+            <li>استخدم <code>generateStaticParams</code> عندما تكون قيم الـslug معروفة ويمكن توليد صفحات ثابتة.</li>
+            <li>استخدم <code>generateMetadata</code> لعناوين وأوصاف ديناميكية، واضبط Cache وRevalidation بوعي.</li>
+          </ol>
+
+          <h4>6. الصور والـMetadata والأنماط</h4>
+          <p>
+            ضع الصور الثابتة في <code>public/</code> واستخدم <code>next/image</code> للصور التي تحتاج تحسينًا وأبعادًا واضحة. استخدم <code>metadata</code> أو <code>generateMetadata</code> للعناوين والوصف وOpen Graph. اجعل الخطوط وRTL وDesign Tokens جزءًا من النظام واختبرها على الهاتف.
+          </p>
+
+          <h4>7. قواعد تنفيذ Next.js</h4>
+          <ul style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li>لا تضع كل الكود في <code>page.tsx</code>؛ استخرج المكونات ذات المسؤولية الواضحة.</li>
+            <li>لا تجعل <code>layout.tsx</code> صندوقًا ضخمًا لكل منطق التطبيق.</li>
+            <li>لا تضف <code>use client</code> إلى أعلى الشجرة إلا عند الحاجة.</li>
+            <li>لا تستخدم API key في Client Component أو <code>public/</code> أو GitHub.</li>
+            <li>كل Route يملك حالات Loading وEmpty وError وSuccess المناسبة.</li>
+            <li>كل تعديل يمر على TypeScript وBuild وفحص Responsive وAccessibility.</li>
+          </ul>
+
+          <div class="code-container">
+            <div class="code-header"><span class="code-lang">دورة التحقق لكل Route</span><button class="copy-btn" onclick="copyCode(this)" title="نسخ الأوامر">نسخ الأوامر</button></div>
+            <pre class="code-content"><code>npx tsc --noEmit
+npm run build
+git status
+git add app/ components/ lib/ types/
+git commit -m "feat: implement verified frontend route"
+git push origin feature/frontend-route</code></pre>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-header"><span class="callout-icon">!</span><span>كيف تطلب من AI تنفيذ Next.js؟</span></div>
+            <p>لا تطلب «ابنِ تطبيقًا كاملًا» دفعة واحدة. أعطِ الوكيل <code>PRD.md</code> و<code>DESIGN.md</code> وحدد Route ومكونًا وحالة واحدة، ثم اطلب الملفات ومعايير القبول وأمر التحقق. راجع الفرق وشغّل Build قبل الانتقال إلى Task التالية.</p>
+          </div>
+        </div>
+
       </section>
 
 <section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>مهمة Frontend قابلة للإغلاق</h3><p>المهمة الجيدة لها مدخلات ومخرج واضح وطريقة تحقق قصيرة. «ابنِ الواجهة» ليست مهمة؛ «أضف حالة Empty للشاشة X وفق DESIGN.md» مهمة قابلة للمراجعة.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — Small Task</span><button class="copy-btn" type="button" aria-label="نسخ برومبت المهمة الصغيرة">نسخ</button></div><pre class="code-content"><code>Break the approved frontend phase into one next task only.

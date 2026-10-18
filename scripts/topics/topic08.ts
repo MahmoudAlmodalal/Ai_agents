@@ -164,6 +164,134 @@ Generate the Initial Dashboard and Browse Equipment screens maintaining strict c
           </div>
         </div>
 
+        <!-- 4. Google AI Studio to Stitch to Frontend Workflow -->
+        <div class="step-card" style="margin-top: 2rem;">
+          <div class="step-header">
+            <span class="step-number">S3</span>
+            <div class="step-title-wrap">
+              <h3 class="step-title">من Google AI Studio إلى Google Stitch ثم تنفيذ الواجهة</h3>
+              <div class="step-subtitle">حلّل المتطلبات أولاً، اعتمد التصميم ثانياً، ثم نفّذ Frontend صغيراً وقابلاً للتحقق</div>
+            </div>
+          </div>
+
+          <div class="callout tip">
+            <div class="callout-header">
+              <span class="callout-icon">→</span>
+              <span>المسار المعتمد: AI Studio → Stitch → DESIGN.md → Frontend Plan → GitHub</span>
+            </div>
+            <p>
+              لا نبدأ بطلب «ابنِ التطبيق كاملًا». نستخدم Google AI Studio لتحليل <code>PRD.md</code> واستخراج الشاشات والحالات وقواعد العمل، ثم نستخدم Google Stitch لاستكشاف الواجهة وتثبيت اللغة البصرية، وبعد اعتماد شاشة ممثلة نوثق القيم في <code>DESIGN.md</code> وننفذ مكوّناً أو شاشة واحدة في كل دورة.
+            </p>
+          </div>
+
+          <h4>أولاً: جلسة التحليل في Google AI Studio</h4>
+          <ol style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li>افتح <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer">Google AI Studio</a> من الهاتف أو اللاب، وأرفق نسخة من <code>PROJECT_CONTEXT.md</code> و<code>PRD.md</code> دون مفاتيح أو أسرار.</li>
+            <li>اطلب استخراج جدول الشاشات، هدف كل شاشة، المستخدم المستهدف، المدخلات، الحالات، ورسائل النجاح والفشل.</li>
+            <li>اطلب تحويل القواعد المؤكدة إلى متطلبات واجهة قابلة للملاحظة، مع فصل المؤكد عن الافتراضات والأسئلة المفتوحة.</li>
+            <li>احفظ الناتج في <code>docs/FRONTEND_DISCOVERY.md</code> وراجعه يدويًا قبل إرساله إلى Stitch.</li>
+          </ol>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">PROMPT 05A — تحليل الواجهة في Google AI Studio</span>
+              <button class="copy-btn" onclick="copyCode(this)" title="نسخ البرومبت">نسخ البرومبت</button>
+            </div>
+            <pre class="code-content"><code>Act as a Product Designer and Senior Frontend Architect.
+Read PROJECT_CONTEXT.md and PRD.md.
+
+Do not write application code and do not invent backend behavior.
+Create a frontend discovery brief containing:
+1. User roles and the primary goal of each role.
+2. A screen inventory with route, purpose, entry point, and exit action.
+3. Required states for every screen: loading, empty, error, success, disabled, and permission denied.
+4. Business rules that must be visible in the UI.
+5. Open questions and assumptions that require approval.
+6. A recommended order for designing the screens in Stitch.
+
+Output only docs/FRONTEND_DISCOVERY.md content in clear Markdown.</code></pre>
+          </div>
+
+          <h4>ثانياً: تحويل الاكتشاف إلى تصميم في Stitch</h4>
+          <p>
+            في <a href="https://stitch.withgoogle.com/" target="_blank" rel="noreferrer">Google Stitch</a> أنشئ مشروعًا جديدًا وابدأ بشاشة ممثلة واحدة، مثل شاشة Browse Equipment أو Dashboard. أرفق وصف الشاشة أو wireframe، ثم ثبّت اتجاه RTL، نوع الخط، أحجام اللمس، الألوان الدلالية، وحالات الشاشة قبل توليد بقية الشاشات. يمكن أن يساعد Stitch في توليد واجهات Web وMobile من نص أو صورة، لكن الناتج يحتاج مراجعة بشرية ولا يُعد Backend أو عقد بيانات نهائيًا.
+          </p>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">PROMPT 05B — توليد شاشة ممثلة في Stitch</span>
+              <button class="copy-btn" onclick="copyCode(this)" title="نسخ البرومبت">نسخ البرومبت</button>
+            </div>
+            <pre class="code-content"><code>Design one representative responsive screen for the approved product requirements.
+Product: BorrowHub university equipment borrowing platform.
+Screen: Browse Equipment.
+Users: approved university students.
+Direction: Arabic RTL with clear Latin labels where technical names are required.
+
+Show only behaviors confirmed in the requirements:
+- search and category filtering;
+- equipment availability and maintenance status;
+- maximum active-loan rule;
+- clear action for starting a borrowing request.
+
+Create all required states: default, loading, empty search result, unavailable item, error, and success feedback.
+Use an academic, trustworthy visual style and a consistent 8px spacing system.
+Do not add payments, chat, notifications, login flows, or backend data that are not in the PRD.
+Return a screen structure, design tokens, and component inventory for review.</code></pre>
+          </div>
+
+          <h4>ثالثاً: الاعتماد والتوثيق قبل كتابة الكود</h4>
+          <ul style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li>اعتمد شاشة واحدة ومكوّناتها قبل توليد بقية الشاشات.</li>
+            <li>انقل القيم المعتمدة إلى <code>docs/DESIGN.md</code>: الألوان، الخطوط، المسافات، الحواف، الظلال، نقاط التوقف، وحالات المكونات.</li>
+            <li>أنشئ <code>docs/STITCH_SCREEN_REFERENCES.md</code> لربط كل شاشة بمسار المستخدم وقواعد <code>PRD.md</code>.</li>
+            <li>استخدم خيار تصدير Frontend أو النقل إلى Figma أو <a href="https://stitch.withgoogle.com/docs/mcp/setup" target="_blank" rel="noreferrer">Stitch MCP</a> عندما يكون متاحًا في حسابك وبيئة التطوير.</li>
+          </ul>
+
+          <h4>رابعاً: تنفيذ Frontend على مراحل</h4>
+          <ol style="margin: 0.5rem 0 1rem 1.5rem; line-height: 1.9;">
+            <li><strong>Phase 1 — Foundation:</strong> إعداد Next.js، الخطوط، Direction، Design Tokens، وملف قواعد الواجهة.</li>
+            <li><strong>Phase 2 — Primitives:</strong> بناء Button وInput وBadge وCard وModal مع حالات التركيز والتعطيل.</li>
+            <li><strong>Phase 3 — Representative screen:</strong> تنفيذ شاشة واحدة ببيانات Mock مطابقة لعقد البيانات.</li>
+            <li><strong>Phase 4 — States:</strong> إضافة Loading وEmpty وError وSuccess وPermission Denied.</li>
+            <li><strong>Phase 5 — Expansion:</strong> تكرار النمط للشاشات التالية فقط بعد مراجعة الشاشة الممثلة.</li>
+            <li><strong>Phase 6 — Verification:</strong> تشغيل TypeScript وBuild وفحص RTL وResponsive وWCAG وZero Overflow.</li>
+          </ol>
+
+          <div class="callout warning">
+            <div class="callout-header">
+              <span class="callout-icon">!</span>
+              <span>الـTokens والأمان</span>
+            </div>
+            <p>
+              لا يوجد وعد عام بأن استخدام Stitch أو AI Studio لا يستهلك أي quota؛ راجع حدود حسابك وصفحة Usage في AI Studio. إذا استُخدم Gemini API، فالمفتاح سرّ ولا يوضع داخل Frontend أو GitHub، بل في متغيرات بيئة على خادم آمن أو Backend proxy. لا ترفع ملفات <code>.env</code> أو أي مفتاح إلى المستودع.
+            </p>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-lang">PROMPT 05C — تحويل التصميم المعتمد إلى خطة تنفيذ</span>
+              <button class="copy-btn" onclick="copyCode(this)" title="نسخ البرومبت">نسخ البرومبت</button>
+            </div>
+            <pre class="code-content"><code>Read PRD.md, docs/DESIGN.md, and docs/STITCH_SCREEN_REFERENCES.md.
+Create:
+- docs/FRONTEND_PLAN.md
+- docs/FRONTEND_TASKS.md
+- docs/ROUTES_MAP.md
+- docs/COMPONENT_ARCHITECTURE.md
+- docs/FRONTEND_DATA_CONTRACTS.md
+
+For each task specify: files, dependencies, input contract, acceptance criteria, verification command, and visual reference.
+Choose only the first task that is ready. Do not implement backend, authentication, payments, or API calls unless explicitly confirmed in PRD.md.
+After implementation, run the available checks and stop for review.</code></pre>
+          </div>
+
+          <h4>العمل من الهاتف واللاب ثم المزامنة</h4>
+          <p>
+            الهاتف مناسب لفتح AI Studio وStitch، مراجعة التصميم، اعتماد المخرجات، ومتابعة Commits وIssues وPull Requests. تنفيذ Frontend طويل وتشغيل Build وفحص Responsive أفضل على اللاب أو Cloud IDE. بعد كل دورة اعمل Commit وPush إلى GitHub، وعند الانتقال إلى جهاز آخر نفّذ Pull قبل التعديل، ولا تعمل على نسختين متعارضتين في الوقت نفسه.
+          </p>
+        </div>
+
       </section>
 
 <section class="supplemental-content"><span class="supplemental-label">إثراء مقترح — من إعداد الموقع</span><h3>شاشة واحدة قبل النظام كله</h3><p>اعتمد شاشة MVP ممثلة أولًا، ثم ثبّت اللغة البصرية والحالات التفاعلية. لا تطلب من Stitch إنتاج كل الشاشات قبل مراجعة الشاشة المرجعية.</p><div class="code-container" dir="ltr"><div class="code-header"><span class="code-lang">SUPPLEMENTAL PROMPT — One Screen First</span><button class="copy-btn" type="button" aria-label="نسخ برومبت شاشة واحدة في Stitch">نسخ</button></div><pre class="code-content"><code>Design one representative MVP screen only.

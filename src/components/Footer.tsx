@@ -125,7 +125,23 @@ export const Footer: React.FC = () => {
                   href="/prompts"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> مكتبة الـ30 برومبت
+                  <span className="text-slate-600">›</span> مكتبة الـ31 برومبت
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/roadmap"
+                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <span className="text-slate-600">›</span> خارطة 20 محاضرة للمشروع
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cheatsheet"
+                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <span className="text-slate-600">›</span> Cheatsheet البرومبتات
                 </Link>
               </li>
               <li>

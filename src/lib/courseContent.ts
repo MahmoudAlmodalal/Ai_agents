@@ -161,7 +161,7 @@ export function getTopicContent(topic: CourseTopic): string {
 
 const promptHeadingPattern = /^## PROMPT (\d{2}) — (.+)$/gm;
 
-export const PROMPTS: PromptEntry[] = Array.from(source.matchAll(promptHeadingPattern)).map((match, index, matches) => {
+const parsedPrompts: PromptEntry[] = Array.from(source.matchAll(promptHeadingPattern)).map((match, index, matches) => {
   const start = match.index ?? 0;
   const end = matches[index + 1]?.index ?? source.length;
   const body = source.slice(start + match[0].length, end).trim();
@@ -181,6 +181,147 @@ export const PROMPTS: PromptEntry[] = Array.from(source.matchAll(promptHeadingPa
     body,
   } satisfies PromptEntry;
 });
+
+const FRONTEND_PHASE_PROMPT: PromptEntry = {
+  slug: 'prompt-31-frontend-phased-implementation-plan',
+  number: '31',
+  title: 'خطة تنفيذ واجهة المستخدم على مراحل Phases وTasks',
+  category: 'الفرونت إند والتنفيذ',
+  difficulty: 'متقدم',
+  operation: 'تعديل كود',
+  inputFiles: ['PRD.md', 'PROJECT_CONTEXT.md', 'DESIGN.md', 'STITCH_SCREEN_REFERENCES.md'],
+  outputFiles: [
+    'docs/FRONTEND_PLAN.md',
+    'docs/FRONTEND_PHASES.md',
+    'docs/FRONTEND_TASKS.md',
+    'docs/ROUTES_MAP.md',
+    'docs/COMPONENT_ARCHITECTURE.md',
+    'docs/FRONTEND_DATA_CONTRACTS.md',
+    'تنفيذ أول Task فقط بعد اعتماد الخطة',
+  ],
+  recommendedTool: 'Google AI Studio أو Coding Agent مع مراجعة بشرية وGitHub',
+  body: `
+## متى تستخدم هذا البرومبت؟
+
+استخدمه بعد اعتماد \`PRD.md\` و\`DESIGN.md\` ومراجع Stitch، وقبل البدء في بناء صفحات Next.js. وظيفته ليست توليد التطبيق كاملًا دفعة واحدة، بل تحويل المتطلبات والتصميم إلى خطة قابلة للتنفيذ، ثم اختيار أول Task جاهزة فقط وتنفيذها والتحقق منها.
+
+## البرومبت الجاهز للنسخ
+
+أنت Principal Frontend Architect وقائد تنفيذ Next.js. تعمل داخل مستودع موجود، وهدفك تحويل متطلبات المنتج والتصميم المعتمد إلى واجهة مستخدم قابلة للتنفيذ على مراحل صغيرة يمكن مراجعتها وقياسها.
+
+### قواعد المصدر والحماية
+
+1. اقرأ الملفات التالية قبل أي اقتراح: \`PROJECT_CONTEXT.md\` و\`PRD.md\` و\`DESIGN.md\` و\`STITCH_SCREEN_REFERENCES.md\` وأي \`docs/FRONTEND_*.md\` موجودة.
+2. اعتبر PRD مصدر الحقيقة للوظائف وقواعد العمل، واعتبر DESIGN.md مصدر الحقيقة البصري، واعتبر مراجع Stitch مرجعًا للشاشات فقط.
+3. لا تخترع Login أو Dashboard أو Checkout أو API أو Backend أو قاعدة بيانات أو صلاحيات غير مذكورة بوضوح في المصادر.
+4. إذا وجدت تعارضًا بين الملفات، أوقف التنفيذ وسجّل التعارض في قسم Open Questions بدل اختيار حل من عندك.
+5. لا تقرأ أو تطبع أسرار \`.env\`، ولا تنشئ API keys أو تضعها في Client Components أو GitHub.
+6. هذه المرحلة Frontend فقط. استخدم Mock data وtyped contracts عندما لا يوجد API معتمد.
+
+### المرحلة الأولى: تحليل النطاق
+
+استخرج في جدول واضح:
+
+- المستخدمين والأدوار.
+- الشاشات والـroutes المطلوبة.
+- هدف كل شاشة ونقطة الدخول والخروج.
+- المكونات المشتركة والميزات الخاصة بكل شاشة.
+- قواعد العمل التي يجب أن تظهر في الواجهة.
+- حالات Loading وEmpty وError وSuccess وDisabled وPermission Denied.
+- الاعتماديات والأسئلة المفتوحة والافتراضات غير المعتمدة.
+
+أنشئ أو حدّث \`docs/FRONTEND_DISCOVERY.md\`، ولا تنتقل إلى التخطيط إذا كان هناك غموض يمنع تحديد Route أو حالة قبول.
+
+### المرحلة الثانية: تخطيط المعمارية
+
+أنشئ الملفات التالية بمحتوى عملي وليس عناوين فارغة:
+
+- \`docs/FRONTEND_PLAN.md\`: النطاق، خارج النطاق، القرارات، ترتيب التنفيذ، ومخاطر الواجهة.
+- \`docs/FRONTEND_PHASES.md\`: Phases مرتبة مع هدف كل Phase ومدخلاتها ومخرجاتها وشروط بدايتها ونهايتها.
+- \`docs/FRONTEND_TASKS.md\`: Tasks مرقمة، صغيرة، مستقلة قدر الإمكان، ومرتبطة بملفات محددة.
+- \`docs/ROUTES_MAP.md\`: كل Route، نوعها، مكون الصفحة، الـlayout، مصدر البيانات، والحالات المطلوبة.
+- \`docs/COMPONENT_ARCHITECTURE.md\`: UI primitives، shared components، feature components، وpage composition.
+- \`docs/FRONTEND_DATA_CONTRACTS.md\`: TypeScript types وMock data shapes وحقول الحالات، دون اختراع API حقيقي.
+
+قسّم العمل إلى Phases مناسبة للمشروع. استخدم هذه القائمة كنقطة بداية فقط وعدّلها حسب المصادر:
+
+Phase 0 — Baseline: تثبيت Next.js، TypeScript، RTL، الخطوط، lint، build، وDesign Tokens.
+Phase 1 — Foundation: Button وInput وCard وBadge وModal وContainer وTypography.
+Phase 2 — Shell: root layout وNavbar وSidebar وFooter وresponsive navigation.
+Phase 3 — Representative Route: تنفيذ شاشة واحدة ممثلة ببيانات Mock وحالاتها الكاملة.
+Phase 4 — Feature Routes: توسيع النمط إلى الشاشات التالية مع الحفاظ على العقد البصري.
+Phase 5 — Interaction: النماذج، الفلاتر، modals، validation، وfeedback states.
+Phase 6 — Responsive and Accessibility: RTL، نقاط التوقف، keyboard navigation، focus، contrast، وtouch targets.
+Phase 7 — Verification and Handoff: TypeScript، build، QA، توثيق القرار، Commit، وPull Request.
+
+لا تعتبر كل شاشة Phase مستقلة تلقائيًا، ولا تجعل كل زر Task. اجعل Phase تمثل مخرجًا قابلًا للمراجعة، واجعل Task تمثل تغييرًا صغيرًا يمكن تنفيذه والتحقق منه في دورة واحدة.
+
+### مواصفات كل Phase
+
+لكل Phase اكتب:
+
+- الهدف والسبب.
+- الملفات الداخلة والمخرجات.
+- الاعتماديات التي يجب أن تكتمل قبل البدء.
+- Tasks التابعة لها بالترتيب.
+- Acceptance Criteria قابلة للملاحظة.
+- Verification method وأوامر الفحص.
+- المخاطر وطريقة الرجوع الآمن.
+- شرط الانتقال إلى Phase التالية.
+
+### مواصفات كل Task
+
+لكل Task اكتب:
+
+- ID وعنوانًا فعليًا يبدأ بفعل.
+- الملفات التي ستنشأ أو تتغير.
+- المكون أو الـRoute المتأثر.
+- المدخلات والعقد المطلوبة.
+- خطوات التنفيذ القصيرة.
+- ما لن يتم تنفيذه.
+- Acceptance Criteria بصيغة Given / When / Then عند الحاجة.
+- أمر التحقق والنتيجة المتوقعة.
+- الاعتماديات وحالة Task: Ready أو Blocked أو Done.
+
+### قواعد Next.js
+
+- استخدم App Router وبنية \`app/\` الواضحة.
+- اجعل Server Components هي الافتراضية، وأضف \`use client\` فقط للمكون الذي يحتاج state أو browser events.
+- استخدم \`page.tsx\` للصفحة و\`layout.tsx\` للغلاف و\`loading.tsx\` للانتظار و\`error.tsx\` للفشل و\`not-found.tsx\` للموارد غير الموجودة.
+- لا تضع كل الكود في \`page.tsx\`; استخرج components وlib وtypes.
+- لا تستخدم \`any\`، ولا تضع أسرارًا في Client Components.
+- أضف loading وempty وerror وsuccess states لكل Route يحتاج بيانات أو تفاعلًا.
+
+### طريقة التنفيذ الإلزامية
+
+بعد كتابة الملفات والخطة، لا تنفذ كل الخطة. اختر أول Task حالتها Ready فقط.
+
+1. اعرض ملخص Task والملفات التي ستتغير.
+2. اذكر Acceptance Criteria قبل التعديل.
+3. نفّذ Task واحدة فقط.
+4. افحص \`git diff\` وراجع أن التعديل لم يخرج عن DESIGN.md وPRD.md.
+5. شغّل \`npx tsc --noEmit\` ثم \`npm run build\` أو أوامر المشروع المعتمدة.
+6. إذا فشل الفحص، أصلح سبب الفشل ضمن نفس Task ولا تبدأ Task أخرى.
+7. لخّص الملفات المتغيرة والنتائج والأسئلة المفتوحة.
+8. توقف وانتظر الاعتماد قبل الانتقال إلى Task التالية.
+
+### صيغة التقرير النهائي
+
+أعد التقرير بهذا الترتيب:
+
+1. Scope understood.
+2. Conflicts and open questions.
+3. Files created or changed.
+4. Phase and Task selected.
+5. Acceptance Criteria.
+6. Verification commands and results.
+7. Remaining work with exact next Task.
+
+ابدأ بالتحليل والتخطيط فقط، ثم نفّذ أول Task Ready. لا تنشئ Backend، ولا تغيّر التصميم، ولا تضف ميزة غير موثقة.
+`,
+};
+
+export const PROMPTS: PromptEntry[] = [...parsedPrompts, FRONTEND_PHASE_PROMPT];
 
 export function getPrompt(slug: string): PromptEntry | undefined {
   return PROMPTS.find((prompt) => prompt.slug === slug);
