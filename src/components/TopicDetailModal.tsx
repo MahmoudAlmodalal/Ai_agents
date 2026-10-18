@@ -1,6 +1,7 @@
 import React from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
-import { Headphones, Volume2, X, Printer, Heart, BarChart3, CheckCircle } from 'lucide-react';
+import { Headphones, Volume2, X, Printer, Heart, BarChart3, CheckCircle, ExternalLink, ArrowLeft } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
@@ -176,6 +177,9 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.97 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={topic.title}
         className="relative w-full h-full sm:h-auto sm:max-h-[92vh] max-w-5xl bg-[var(--bg-surface)] sm:border sm:border-[var(--border-color)] sm:rounded-2xl flex flex-col overflow-hidden z-10 transition-colors modal-container-box"
         style={{ boxShadow: 'var(--shadow-modal, 0 25px 50px -12px rgba(0,0,0,0.25))' }}
       >
@@ -292,6 +296,16 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
               </span>
             </button>
 
+            {/* Link to Full Learning Page */}
+            <Link
+              href={`/learn/${topic.slug}`}
+              className="min-h-[36px] px-2.5 sm:px-3 rounded-xl text-xs font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors flex items-center gap-1.5"
+              title="الانتقال إلى صفحة التعلم الكاملة"
+            >
+              <span className="hidden sm:inline">صفحة التعلم</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
+
             {/* Close Button with Esc Hint */}
             <button
               onClick={onClose}
@@ -349,6 +363,92 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           ref={contentContainerRef}
           className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area space-y-6"
         >
+          {/* Unified Project Contract Section (Wave 1) */}
+          {(topic.publicationStatus === 'unified-complete' || (topic.steps && topic.steps.length > 0)) && (
+            <section className="rounded-2xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 sm:p-6 space-y-4">
+              <div className="flex items-center justify-between gap-2 border-b border-emerald-200/60 dark:border-emerald-900/60 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 text-xs font-bold text-white">
+                    مسار المشروع المتسلسل
+                  </span>
+                  <span className="text-xs text-emerald-800 dark:text-emerald-300 font-bold">
+                    {topic.stageTag}
+                  </span>
+                </div>
+                <Link
+                  href={`/learn/${topic.slug}`}
+                  className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
+                >
+                  <span>عرض في صفحة التعلم الكاملة</span>
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              {topic.goal && (
+                <div>
+                  <h4 className="text-xs font-black text-emerald-900 dark:text-emerald-200 mb-1">
+                    الهدف من الموضوع:
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-6 text-slate-700 dark:text-slate-300">
+                    {topic.goal}
+                  </p>
+                </div>
+              )}
+
+              {topic.outputs && topic.outputs.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-black text-emerald-900 dark:text-emerald-200 mb-1.5">
+                    المخرجات المطلوبة:
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {topic.outputs.map((out) => (
+                      <span
+                        key={out}
+                        className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 text-xs font-mono font-bold text-emerald-800 dark:text-emerald-300"
+                      >
+                        {out}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {topic.steps && topic.steps.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-black text-emerald-900 dark:text-emerald-200 mb-2">
+                    خطوات التطبيق على مشروعك:
+                  </h4>
+                  <ol className="space-y-1.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed pr-2">
+                    {topic.steps.map((step, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-5 h-5 rounded-full bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                          {idx + 1}
+                        </span>
+                        <span>{step.replace(/^\d+\.\s*/, '')}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {topic.checklist && topic.checklist.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-black text-emerald-900 dark:text-emerald-200 mb-2">
+                    قائمة التحقق والإنجاز:
+                  </h4>
+                  <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+                    {topic.checklist.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-emerald-600 font-bold">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
+
           {/* Interactive Mermaid Diagram Viewer Section */}
           <section
             ref={diagramSectionRef}

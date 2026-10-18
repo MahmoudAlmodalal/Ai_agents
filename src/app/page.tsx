@@ -13,6 +13,15 @@ import { TopicDetailModal } from '@/src/components/TopicDetailModal.tsx';
 import { AudioPlayerBar } from '@/src/components/AudioPlayerBar.tsx';
 import { RecentlyViewedSection } from '@/src/components/RecentlyViewedSection.tsx';
 
+import {
+  readSavedBookmarks,
+  writeSavedBookmarks,
+  readSavedRecentlyViewed,
+  writeSavedRecentlyViewed,
+  resolveCanonicalSlug,
+  getTopicBySlug,
+} from '@/src/lib/topicRegistry.ts';
+
 export default function HomePage() {
   // State: Search & Filters
   const [searchQuery, setSearchQuery] = React.useState<string>('');
@@ -20,45 +29,28 @@ export default function HomePage() {
   const [selectedContentType, setSelectedContentType] = React.useState<ContentType>('all');
   const [isMobileSearchOpen, setIsMobileSearchOpen] = React.useState<boolean>(false);
 
-  // State: Bookmarks / Favorites (stored in localStorage)
+  // State: Bookmarks / Favorites (stored in localStorage via canonical slugs adapter)
   const [bookmarks, setBookmarks] = React.useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
-    try {
-      const saved = localStorage.getItem('engineering_guide_bookmarks');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
+    return readSavedBookmarks();
   });
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState<boolean>(false);
 
   // State: Modal Detail Reader
   const [activeTopicId, setActiveTopicId] = React.useState<string | null>(null);
 
-  // State: Recently Viewed Topics (tracks last 5 topics, stored in localStorage)
+  // State: Recently Viewed Topics (tracks last 5 topics, stored in localStorage via adapter)
   const [recentlyViewed, setRecentlyViewed] = React.useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
-    try {
-      const saved = localStorage.getItem('engineering_guide_recently_viewed');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
+    return readSavedRecentlyViewed();
   });
 
   // Track opening a topic in Recently Viewed (persisting up to 5 topics)
   const handleOpenTopic = React.useCallback((topicId: string) => {
-    setActiveTopicId(topicId);
+    const slug = resolveCanonicalSlug(topicId);
+    setActiveTopicId(slug);
     setRecentlyViewed((prev) => {
-      const filtered = prev.filter((id) => id !== topicId);
-      const updated = [topicId, ...filtered].slice(0, 5);
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(updated));
-        } catch (err) {
-          console.warn('Failed to save recently viewed to localStorage:', err);
-        }
-      }
+      const filtered = prev.filter((id) => id !== slug);
+      const updated = [slug, ...filtered].slice(0, 5);
+      writeSavedRecentlyViewed(updated);
       return updated;
     });
   }, []);
@@ -66,13 +58,7 @@ export default function HomePage() {
   // Clear recently viewed history
   const handleClearRecentlyViewed = React.useCallback(() => {
     setRecentlyViewed([]);
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem('engineering_guide_recently_viewed');
-      } catch (err) {
-        console.warn('Failed to clear recently viewed from localStorage:', err);
-      }
-    }
+    writeSavedRecentlyViewed([]);
   }, []);
 
   // State: Dark Mode (defaults to user preference or localStorage)
@@ -105,17 +91,12 @@ export default function HomePage() {
   }, [isDark]);
 
   // Toggle bookmark handler with persistence
-  const handleToggleBookmark = (topicId: string) => {
+  const handleToggleBookmark = (topicIdOrSlug: string) => {
+    const slug = resolveCanonicalSlug(topicIdOrSlug);
     setBookmarks((prev) => {
-      const exists = prev.includes(topicId);
-      const updated = exists ? prev.filter((id) => id !== topicId) : [...prev, topicId];
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem('engineering_guide_bookmarks', JSON.stringify(updated));
-        } catch (err) {
-          console.warn('Failed to save bookmark to localStorage:', err);
-        }
-      }
+      const exists = prev.includes(slug);
+      const updated = exists ? prev.filter((id) => id !== slug) : [...prev, slug];
+      writeSavedBookmarks(updated);
       return updated;
     });
   };
@@ -135,7 +116,7 @@ export default function HomePage() {
 
     return TOPICS.filter((topic) => {
       // 1. Favorites Only Filter
-      if (showFavoritesOnly && !bookmarks.includes(topic.id)) {
+      if (showFavoritesOnly && !bookmarks.includes(topic.slug) && !bookmarks.includes(topic.id)) {
         return false;
       }
 
@@ -173,18 +154,18 @@ export default function HomePage() {
   // Active topic object for modal
   const activeTopic = React.useMemo(() => {
     if (!activeTopicId) return null;
-    return TOPICS.find((t) => t.id === activeTopicId) || null;
+    return getTopicBySlug(activeTopicId) || TOPICS.find((t) => t.id === activeTopicId) || null;
   }, [activeTopicId]);
 
   const activeIndex = React.useMemo(() => {
-    if (!activeTopicId) return -1;
-    return TOPICS.findIndex((t) => t.id === activeTopicId);
-  }, [activeTopicId]);
+    if (!activeTopic) return -1;
+    return TOPICS.findIndex((t) => t.slug === activeTopic.slug || t.id === activeTopic.id);
+  }, [activeTopic]);
 
   // Resolve Recently Viewed Topic Objects (max 5)
   const recentlyViewedTopics = React.useMemo(() => {
     return recentlyViewed
-      .map((id) => TOPICS.find((t) => t.id === id))
+      .map((id) => getTopicBySlug(id) || TOPICS.find((t) => t.id === id))
       .filter((t): t is TopicItem => Boolean(t));
   }, [recentlyViewed]);
 
@@ -192,7 +173,7 @@ export default function HomePage() {
     if (activeIndex === -1) return;
     const targetIdx = direction === 'next' ? activeIndex + 1 : activeIndex - 1;
     if (targetIdx >= 0 && targetIdx < TOPICS.length) {
-      handleOpenTopic(TOPICS[targetIdx].id);
+      handleOpenTopic(TOPICS[targetIdx].slug);
     }
   };
 
@@ -396,7 +377,7 @@ export default function HomePage() {
                     onOpenTopic={handleOpenTopic}
                     onListenTopic={(t) => playTTSForTopic(t)}
                     isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
-                    isBookmarked={bookmarks.includes(topic.id)}
+                    isBookmarked={bookmarks.includes(topic.slug) || bookmarks.includes(topic.id)}
                     onToggleBookmark={handleToggleBookmark}
                   />
                 </motion.div>
@@ -477,7 +458,7 @@ export default function HomePage() {
           hasPrev={activeIndex > 0}
           onListen={(t) => playTTSForTopic(t)}
           isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === activeTopic.id}
-          isBookmarked={bookmarks.includes(activeTopic.id)}
+          isBookmarked={bookmarks.includes(activeTopic.slug) || bookmarks.includes(activeTopic.id)}
           onToggleBookmark={handleToggleBookmark}
         />
       )}
