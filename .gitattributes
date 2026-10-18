@@ -1,0 +1,3 @@
+src/lib/topicRegistry.ts merge=union
+e2e/** merge=union
+src/data/topics/** merge=union
