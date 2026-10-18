@@ -1,0 +1,89 @@
+<task>
+Implement #34: من الرئيسية إلى القراءة الكاملة والمعاينة السريعة.
+Ticket: https://github.com/MahmoudAlmodalal/Ai_agents/issues/34
+Workspace: /tmp/ai-agents-story-33/i34-entry. Expected branch: story/33-i34-entry.
+</task>
+<implementation>
+Own the homepage, TopicCard entry actions, reader layout/navigation/accessibility, recently-viewed tracking, and existing navigation/compatibility tests.
+The current TopicCard main button calls the homepage's modal opener. Replace the primary reading action with a real link labeled "قراءة الموضوع" to /learn/<canonical-slug>. Add a separate clearly named "معاينة سريعة" button using the existing modal mechanism. Preserve diagram, audio, bookmark, and print affordances.
+The homepage should explain the intended learner, project path, and output. Its single primary starting action is "ابدأ مسار مشروعك" linking directly to /learn/project-idea-mvp. Use the existing visual tokens; replace implementation-oriented hero copy with learner-oriented copy.
+Direct topic visits and return navigation must maintain the existing canonical recently-viewed meaning. Reuse the existing registry adapter, including aliases and legacy IDs; do not fork its mappings.
+Improve heading hierarchy, spacing, comfortable typography, mobile navigation, and diagram readability. Ensure preview focus entry, containment, Escape closing even when a checkbox is focused, and focus return to its trigger. Preserve useful existing keyboard navigation without intercepting input editing.
+Use the registry's actual order for navigation and actual publication status for readiness. Remove wording suggesting forced progression or automatic approval. Do not invent a reviewed/pending state for a neighboring topic.
+Checklist persistence belongs to #36. Keep your shared-reader edits focused on shell/presentation/navigation, leaving checklist content and storage implementation to that task. First-topic authored HTML/criteria belong to #35; avoid editing their semantics.
+Update existing E2E tests that expect the main reading button to open a modal: choose the new preview action for modal assertions and the direct link for reading assertions. Preserve each test's original behavioral coverage.
+</implementation>
+<verification_loop>
+Run from the assigned workspace:
+  npm run lint
+  E2E_PORT=3131 CI=1 npm run test:e2e -- e2e/topic-navigation.spec.ts e2e/saved-data-compat.spec.ts
+Run each other modified Playwright file with E2E_PORT=3131 CI=1 as well.
+Check direct URL entry, homepage starting link, card reading link, optional preview/return, canonical history, free navigation bounds, keyboard focus, and narrow/desktop layouts.
+Production build and the full suite belong to final combined verification; report if not run here.
+</verification_loop>
+
+<published_acceptance_criteria>
+# 01: من الرئيسية إلى القراءة الكاملة والمعاينة السريعة
+
+## Parent
+
+[مواصفة نموذج تحسين تجربة التعلّم #33](https://github.com/MahmoudAlmodalal/Ai_agents/issues/33)
+
+## What to build
+
+يعرف المتعلّم أين يبدأ، ويفتح الموضوع الكامل مباشرة من الرئيسية وبطاقته، مع معاينة سريعة اختيارية وهوية بصرية مألوفة وقراءة مريحة.
+
+## Acceptance criteria
+
+- [ ] توضح الرئيسية جمهور النموذج ومخرجه ونقطة بدايته، ويصل الإجراء الأساسي إلى الموضوع الأول الصحيح مباشرة دون نافذة إلزامية.
+- [ ] يفتح إجراء القراءة الأساسي في بطاقة الموضوع الصفحة الكاملة المطابقة له، وتبقى المعاينة السريعة إجراءً مستقلًا ذا اسم واضح.
+- [ ] تظل هوية الموضوع وترتيبه وهدفه ومخرجه متفقة بين البطاقة والمعاينة والقراءة الكاملة، ولا ينتقل سجل المشاهدة أو المفضلة إلى موضوع مختلف.
+- [ ] تتحسن بنية الرئيسية وإطار القراءة من حيث ترتيب المعلومات والخطوط والمسافات ووضوح المخططات المعروضة، مع إبقاء هوية MET والألوان الحالية وRTL واتجاه الكود والبرومبتات المناسب.
+- [ ] يعمل التنقل السابق والتالي بحرية وبحدود صحيحة؛ تظهر حالة الموضوع التالي غير المستكمل بصدق دون استكمال محتواه ضمن هذه المهمة.
+- [ ] تبقى الوظائف الحالية المتأثرة من البحث والتصفية والمفضلة وسجل المشاهدة والنسخ والثيم والصوت والطباعة ضمن قدراتها، ويُراجع أثر الدخول المباشر على سجل المشاهدة.
+- [ ] يغطي اختبار رحلة متصفح قائم الدخول المباشر والمعاينة الاختيارية والرجوع، ويُفحص استخدام الأفعال بلوحة المفاتيح ووضوح التركيز والقراءة على الهاتف والحاسوب. لا تؤجل اختبارات هذه المهمة للمهمة النهائية.
+
+## Blocked by
+
+None (can start immediately).
+
+<!-- learning-experience-pilot-33:01 -->
+
+</published_acceptance_criteria>
+
+<execution_contract>
+You are the agy implementer for one approved ticket of story #33 in MahmoudAlmodalal/Ai_agents.
+Work only in the workspace supplied to this run. The orchestrator will review and commit your changes.
+Leave all edits uncommitted: do not run git add, git commit, git push, reset, clean, or change branches.
+Use the configured default model and normal tool permissions. Do not change global CLI permission settings.
+Do not launch other implementers or modify sibling worktrees. Run verification synchronously and wait for completion before your final report.
+Read GLOSSARY.md and applicable repository instructions before editing. Route shell/read/search work through available lean-ctx tools, or the lean-ctx CLI at /home/mahmoud/.local/bin/lean-ctx; full instructions are /home/mahmoud/.codex/LEAN-CTX.md.
+</execution_contract>
+
+<shared_spec>
+Parent: https://github.com/MahmoudAlmodalal/Ai_agents/issues/33
+Approved scope is the homepage and first-topic learning pilot, with shared reader behavior where required. Preserve MET identity, current colors, Arabic RTL, and suitable direction for code/prompts.
+Audience: learners with programming basics who are new to AI Agents. BorrowHub is an optional companion case study, not their mandatory project.
+Preserve canonical topic identity, aliases, favorites, recently viewed, search/filter meaning, copying, audio controls, theme, printing, and free previous/next navigation within existing capabilities.
+The current registry contains already-migrated later topics as well as legacy anchors. Read actual publication metadata; do not assume that topic 2 is pending or that unified content has educational approval.
+Keep TopicItem.checklist as string[]. Application assessment is separate from reading progress, and neither proves mastery or output correctness.
+There is no authorization to add a backend, external integration, dependency, mandatory account, learner upload, grading, completion gate, new brand identity, or broader lesson migration.
+Each independent Wave 1 task starts on the same baseline. Other tasks' changes do not exist in this workspace.
+</shared_spec>
+
+<testing_contract>
+The pre-agreed seams are the learner's browser journey and the checklist storage read/write boundary. Test observable behavior, using roles and accessible names, rather than source text, internal component structure, or private helpers.
+Use the TDD red/green loop: one failing behavioral test, the smallest complete implementation for that slice, then the next slice. Re-run typechecking and the focused test file regularly.
+Existing tests open the modal using the old main action. Task A changes that action. New B/C tests should open the optional reader using a role/name matcher accepting the existing "تصفح الموضوع بالتفصيل" or the agreed "معاينة سريعة"; the final integration task will require the explicit preview action.
+Tests must use this task's E2E_PORT and CI=1 so they cannot accidentally test another task's development server. Keep .next, test-results, and any evidence in this workspace.
+</testing_contract>
+
+<report_contract>
+End with:
+1. What changed and why.
+2. Files touched.
+3. Every gate command, outcome, and test counts; distinguish Failed and Not Run.
+4. Evidence of the red-to-green slices, educational/browser checks actually performed, and remaining limitations.
+5. Design choices, deviations, unresolved requirements, and integration notes for the next wave.
+Confirm no changes were staged/committed, no background verification remains running, and only scoped files changed.
+</report_contract>

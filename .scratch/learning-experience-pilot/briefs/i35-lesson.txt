@@ -1,0 +1,92 @@
+<task>
+Implement #35: موضوع اختيار الفكرة بمثال محلول وتطبيق على مشروع المتدرّب.
+Ticket: https://github.com/MahmoudAlmodalal/Ai_agents/issues/35
+Workspace: /tmp/ai-agents-story-33/i35-lesson. Expected branch: story/33-i35-lesson.
+</task>
+<implementation>
+Own first-topic authored content/metadata, focused content consistency tests, and educational review evidence.
+The first topic is topic-01 / project-idea-mvp. Its shared HTML is scripts/topics/topic01.ts; metadata and its string checklist are in the first registry entry. Both readers consume that source. Reuse this architecture.
+Explain the goal, accurate prerequisites for the specified audience, why discovery/MVP decisions matter, and the expected docs/PROJECT_CONTEXT.md plus MVP scope output before asking learners to apply it.
+Provide a complete BorrowHub worked example, with ordered steps, the reason behind every step, and a finished usable project-context/MVP output. Separate documented facts from explicitly labeled teaching assumptions and open questions.
+Use the BorrowHub story/roles/rules documented in Weapon_of_the_Era_Website_Content_AR.md, especially section 11, and existing course sources. Preserve their meaning. Do not invent extra business rules or treat an assumption as confirmed.
+Then guide learners through applying the same reasoning to their own chosen project. Include concrete output criteria, common weak examples, corrective guidance, and self-assessment criteria. Learners must be able to complete this before installing implementation tools.
+Keep the same identity, goal, outputs, and criteria in both readers. Add only targeted reader rendering needed to show authored material consistently (for example missing prerequisite display), preserving their other behavior. Keep checklist strings as strings; storage/component work belongs to #36.
+Use the existing heading/content styles, readable mixed-direction blocks, and copying conventions. Fix content-local width problems rather than redesigning unrelated pages.
+Create e2e/first-topic-lesson.spec.ts for observable content agreement across both readers.
+Write docs/edu-review/pilot-33-first-topic.md containing an actual worked walkthrough: expected output, the finished sample produced by following the lesson, whether a learner-selected project can use it, fit for the next discovery step, gaps, corrective actions, and Passed/Failed/Not Run. State that this is an agent walkthrough and owner review remains pending; do not claim a user study or unperformed checks.
+</implementation>
+<verification_loop>
+Run from the assigned workspace:
+  npm run lint
+  E2E_PORT=3132 CI=1 npm run test:e2e -- e2e/first-topic-lesson.spec.ts
+Work through the example and exercise, creating the sample output in the review report. Heading presence/build success alone does not count as educational review.
+Check mobile and desktop readability, RTL and code direction, and the existing copy behavior where available. Record gaps honestly.
+Production build and the full suite belong to final combined verification; report if not run here.
+</verification_loop>
+
+<published_acceptance_criteria>
+# 02: موضوع اختيار الفكرة بمثال محلول وتطبيق على مشروع المتدرّب
+
+## Parent
+
+[مواصفة نموذج تحسين تجربة التعلّم #33](https://github.com/MahmoudAlmodalal/Ai_agents/issues/33)
+
+## What to build
+
+يقرأ المتعلّم موضوع اختيار الفكرة وتحديد MVP، ويفهم مثال BorrowHub مكتملًا ثم ينتج سياق مشروعه ونطاقه ويراجعه بمعايير واضحة.
+
+## Acceptance criteria
+
+- [ ] يعرض الموضوع هدفًا ومتطلبات سابقة وشرحًا ملائمًا لمتعلّم يعرف أساسيات البرمجة ومبتدئ في AI Agents، مع بيان المخرج المطلوب من البداية.
+- [ ] يوجد مثال BorrowHub محلول خطوة بخطوة لسياق المشروع وتحديد MVP؛ تُشرح أسباب الخطوات وتُفصل الافتراضات عن الحقائق دون اختراع قواعد عمل لدراسة الحالة.
+- [ ] يتبع المثال تمرين موجّه على مشروع المتدرّب نفسه، مع أخطاء شائعة وإرشادات تصحيح ومعايير محددة لمراجعة المخرج.
+- [ ] يبقى BorrowHub مثالًا مرافقًا لا مشروعًا إلزاميًا، ويمكن إتمام التمرين دون إعداد أدوات تنفيذ كود مبكرًا.
+- [ ] تعرض البطاقة والقارئان المادة والهوية والهدف والمخرجات ومعايير التحقق نفسها؛ لا تُنشأ نسخ محتوى متباينة لإرضاء كل قارئ.
+- [ ] تنظم مادة المثال والتمرين والعناوين والمقاطع التوضيحية للقراءة المريحة بالهوية والألوان الحالية، وتظل الأكواد والبرومبتات قابلة للفهم والنسخ بحسب الوظائف القائمة.
+- [ ] يغطي فحص المتصفح الوصول إلى المادة من القارئين واتساق عناصرها المرئية، وتُنفذ مراجعة تعليمية فعلية للمثال والتمرين وكفاية المخرج للخطوة التالية.
+- [ ] يسجل تقرير المراجعة المخرج المتوقع ودليل التطبيق والفجوات والإجراءات والنتيجة Passed أو Failed أو Not Run؛ تُعالج أي فجوة تمنع التطبيق قبل اعتبار المهمة مكتملة.
+
+## Blocked by
+
+None (can start immediately).
+
+<!-- learning-experience-pilot-33:02 -->
+
+</published_acceptance_criteria>
+
+<execution_contract>
+You are the agy implementer for one approved ticket of story #33 in MahmoudAlmodalal/Ai_agents.
+Work only in the workspace supplied to this run. The orchestrator will review and commit your changes.
+Leave all edits uncommitted: do not run git add, git commit, git push, reset, clean, or change branches.
+Use the configured default model and normal tool permissions. Do not change global CLI permission settings.
+Do not launch other implementers or modify sibling worktrees. Run verification synchronously and wait for completion before your final report.
+Read GLOSSARY.md and applicable repository instructions before editing. Route shell/read/search work through available lean-ctx tools, or the lean-ctx CLI at /home/mahmoud/.local/bin/lean-ctx; full instructions are /home/mahmoud/.codex/LEAN-CTX.md.
+</execution_contract>
+
+<shared_spec>
+Parent: https://github.com/MahmoudAlmodalal/Ai_agents/issues/33
+Approved scope is the homepage and first-topic learning pilot, with shared reader behavior where required. Preserve MET identity, current colors, Arabic RTL, and suitable direction for code/prompts.
+Audience: learners with programming basics who are new to AI Agents. BorrowHub is an optional companion case study, not their mandatory project.
+Preserve canonical topic identity, aliases, favorites, recently viewed, search/filter meaning, copying, audio controls, theme, printing, and free previous/next navigation within existing capabilities.
+The current registry contains already-migrated later topics as well as legacy anchors. Read actual publication metadata; do not assume that topic 2 is pending or that unified content has educational approval.
+Keep TopicItem.checklist as string[]. Application assessment is separate from reading progress, and neither proves mastery or output correctness.
+There is no authorization to add a backend, external integration, dependency, mandatory account, learner upload, grading, completion gate, new brand identity, or broader lesson migration.
+Each independent Wave 1 task starts on the same baseline. Other tasks' changes do not exist in this workspace.
+</shared_spec>
+
+<testing_contract>
+The pre-agreed seams are the learner's browser journey and the checklist storage read/write boundary. Test observable behavior, using roles and accessible names, rather than source text, internal component structure, or private helpers.
+Use the TDD red/green loop: one failing behavioral test, the smallest complete implementation for that slice, then the next slice. Re-run typechecking and the focused test file regularly.
+Existing tests open the modal using the old main action. Task A changes that action. New B/C tests should open the optional reader using a role/name matcher accepting the existing "تصفح الموضوع بالتفصيل" or the agreed "معاينة سريعة"; the final integration task will require the explicit preview action.
+Tests must use this task's E2E_PORT and CI=1 so they cannot accidentally test another task's development server. Keep .next, test-results, and any evidence in this workspace.
+</testing_contract>
+
+<report_contract>
+End with:
+1. What changed and why.
+2. Files touched.
+3. Every gate command, outcome, and test counts; distinguish Failed and Not Run.
+4. Evidence of the red-to-green slices, educational/browser checks actually performed, and remaining limitations.
+5. Design choices, deviations, unresolved requirements, and integration notes for the next wave.
+Confirm no changes were staged/committed, no background verification remains running, and only scoped files changed.
+</report_contract>

@@ -1,0 +1,94 @@
+<task>
+Implement #36: قائمة تحقق تطبيق محفوظة ومتسقة بين القارئين.
+Ticket: https://github.com/MahmoudAlmodalal/Ai_agents/issues/36
+Workspace: /tmp/ai-agents-story-33/i36-checklist. Expected branch: story/33-i36-checklist.
+</task>
+<implementation>
+Own the shared checklist component, persistence boundary, reader checklist integration, and focused checklist tests.
+Current state: /learn/[slug] is a server component with unmanaged sidebar checkboxes; TopicDetailModal's structured checklist is static text. Its HTML checkbox effect reads/writes checklist_<topic.id>_<index> without storage guards. Reuse the current topic identity resolver and UI tokens.
+Provide a shared client ApplicationChecklist component receiving canonical topicSlug and items:string[]. Keep the full reader server-rendered around this client island. Both readers must use the same criteria and storage behavior.
+Persist by canonical slug plus exact criterion text normalized with Unicode NFC and trimmed/collapsed whitespace. Preserve case, words, and meaningful Arabic characters; do not derive identity from position or fuzzy matching. Use a collision-safe encoding of the slug/criterion pair.
+The data adapter must validate stored shapes and handle unavailable/corrupt data without crashing. Avoid initial render/hydration writes that overwrite saved choices. If reading or writing fails, maintain usable in-memory interaction and show a concise, accessible notice that saving is unavailable. Do not claim successful persistence after a failure.
+Reordering criteria must keep their selections. Changed text means a new criterion unless an explicit verified old-to-new mapping is provided. Keep TopicItem.checklist as string[] and avoid dependencies.
+For old positional HTML-checklist saves, migrate only with a frozen, verified baseline mapping from the original topic/criterion label. Never infer a structured-checklist match merely because indexes coincide. Preserve unmapped old data without assigning it elsewhere. The first topic's baseline HTML has no inline checklist.
+Preserve existing legacy HTML-checklist interaction safely; route any changed persistence through stable identity, guard storage, and clean up listeners. Keep unrelated reading tools functional.
+Label this "قائمة تحقق التطبيق" and identify it as self-assessment separate from reading progress. Selecting/scrolling/opening must not grant mastery or restrict navigation.
+Keep reader edits limited to checklist sections, storage wiring, and changes concretely necessary for required storage-failure paths. Homepage entry/layout belongs to #34 and authored first-topic text belongs to #35.
+Create e2e/application-checklist.spec.ts. For reordered criteria, safe migration, malformed shapes, and read/write failures, add focused tests at the public storage boundary using the installed tsx/Node test tooling, e.g. src/lib/applicationChecklist.test.ts, rather than adding a test framework or testing private helpers.
+</implementation>
+<verification_loop>
+Run from the assigned workspace:
+  npm run lint
+  E2E_PORT=3133 CI=1 npm run test:e2e -- e2e/application-checklist.spec.ts
+  npx tsx --test src/lib/applicationChecklist.test.ts
+Cover selection and clearing, both readers, refresh, leaving/returning, cross-topic isolation, reorder identity, unchanged and changed labels, safe legacy matching, corrupt/blocked reads, failed writes, and reading progress independence.
+Check label/keyboard interaction and narrow-screen usability.
+Production build and the full suite belong to final combined verification; report if not run here.
+</verification_loop>
+
+<published_acceptance_criteria>
+# 03: قائمة تحقق تطبيق محفوظة ومتسقة بين القارئين
+
+## Parent
+
+[مواصفة نموذج تحسين تجربة التعلّم #33](https://github.com/MahmoudAlmodalal/Ai_agents/issues/33)
+
+## What to build
+
+يؤشر المتعلّم معايير التطبيق بنفسه، ويجد اختياراته عند العودة أو تحديث الصفحة وعلى القارئين في نفس المتصفح والجهاز، دون خلط ذلك بتقدم القراءة.
+
+## Acceptance criteria
+
+- [ ] يمكن اختيار بنود قائمة تحقق التطبيق وإلغاء اختيارها في المعاينة والقراءة الكاملة، وتظهر الاختيارات نفسها عند التنقل بين القارئين.
+- [ ] تُستعاد الاختيارات بعد تحديث الصفحة والخروج من الموضوع والعودة إليه في نفس المتصفح والجهاز، دون حساب أو خادم أو مزامنة أجهزة.
+- [ ] ترتبط العلامات بهوية الموضوع ومعنى بند التحقق، ولا تنتقل لموضوع آخر أو لبند مختلف بسبب إعادة الترتيب أو تبدل النص.
+- [ ] تُحافظ على بيانات الحفظ السابقة عند وجود تطابق موثوق، دون اختلاق تطابق أو تغيير معنى العناصر المحفوظة القديمة.
+- [ ] يبقى المحتوى والتفاعل بالقائمة عاملين عند تعذر التخزين أو تلف بياناته، دون انهيار أو تأكيد حفظ مضلل.
+- [ ] تُقدم القائمة كتقييم ذاتي منفصل عن تقدم القراءة؛ لا يؤدي تمرير النص أو فتح الموضوع إلى اختيار البنود أو تقييم صحة العمل أو قفل الموضوع التالي.
+- [ ] يمكن البدء بالقائمة الحالية؛ يتعامل السلوك مع تغيّر معايير الموضوع بأمان، فلا يتطلب انتظار إعادة كتابة المحتوى أو تغيير إجراء الدخول.
+- [ ] يغطي تحقق سلوكي عبر المتصفح الاختيار والإلغاء والتحديث والعودة والتبديل بين القارئين وعزل المواضيع وإعادة الترتيب، مع تغطية فشل التخزين عند حد قراءته وكتابته. تُراجع قابلية استخدام القائمة بلوحة المفاتيح وعلى الهاتف.
+
+## Blocked by
+
+None (can start immediately).
+
+<!-- learning-experience-pilot-33:03 -->
+
+</published_acceptance_criteria>
+
+<execution_contract>
+You are the agy implementer for one approved ticket of story #33 in MahmoudAlmodalal/Ai_agents.
+Work only in the workspace supplied to this run. The orchestrator will review and commit your changes.
+Leave all edits uncommitted: do not run git add, git commit, git push, reset, clean, or change branches.
+Use the configured default model and normal tool permissions. Do not change global CLI permission settings.
+Do not launch other implementers or modify sibling worktrees. Run verification synchronously and wait for completion before your final report.
+Read GLOSSARY.md and applicable repository instructions before editing. Route shell/read/search work through available lean-ctx tools, or the lean-ctx CLI at /home/mahmoud/.local/bin/lean-ctx; full instructions are /home/mahmoud/.codex/LEAN-CTX.md.
+</execution_contract>
+
+<shared_spec>
+Parent: https://github.com/MahmoudAlmodalal/Ai_agents/issues/33
+Approved scope is the homepage and first-topic learning pilot, with shared reader behavior where required. Preserve MET identity, current colors, Arabic RTL, and suitable direction for code/prompts.
+Audience: learners with programming basics who are new to AI Agents. BorrowHub is an optional companion case study, not their mandatory project.
+Preserve canonical topic identity, aliases, favorites, recently viewed, search/filter meaning, copying, audio controls, theme, printing, and free previous/next navigation within existing capabilities.
+The current registry contains already-migrated later topics as well as legacy anchors. Read actual publication metadata; do not assume that topic 2 is pending or that unified content has educational approval.
+Keep TopicItem.checklist as string[]. Application assessment is separate from reading progress, and neither proves mastery or output correctness.
+There is no authorization to add a backend, external integration, dependency, mandatory account, learner upload, grading, completion gate, new brand identity, or broader lesson migration.
+Each independent Wave 1 task starts on the same baseline. Other tasks' changes do not exist in this workspace.
+</shared_spec>
+
+<testing_contract>
+The pre-agreed seams are the learner's browser journey and the checklist storage read/write boundary. Test observable behavior, using roles and accessible names, rather than source text, internal component structure, or private helpers.
+Use the TDD red/green loop: one failing behavioral test, the smallest complete implementation for that slice, then the next slice. Re-run typechecking and the focused test file regularly.
+Existing tests open the modal using the old main action. Task A changes that action. New B/C tests should open the optional reader using a role/name matcher accepting the existing "تصفح الموضوع بالتفصيل" or the agreed "معاينة سريعة"; the final integration task will require the explicit preview action.
+Tests must use this task's E2E_PORT and CI=1 so they cannot accidentally test another task's development server. Keep .next, test-results, and any evidence in this workspace.
+</testing_contract>
+
+<report_contract>
+End with:
+1. What changed and why.
+2. Files touched.
+3. Every gate command, outcome, and test counts; distinguish Failed and Not Run.
+4. Evidence of the red-to-green slices, educational/browser checks actually performed, and remaining limitations.
+5. Design choices, deviations, unresolved requirements, and integration notes for the next wave.
+Confirm no changes were staged/committed, no background verification remains running, and only scoped files changed.
+</report_contract>
