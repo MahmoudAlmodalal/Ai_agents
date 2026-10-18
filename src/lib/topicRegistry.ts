@@ -15,6 +15,7 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
 import { t02Entries } from '@/src/data/topics/wave2/t02-discovery-prd-srs.ts';
 import { t03Entries } from '@/src/data/topics/wave2/t03-git-github.ts';
 import { t04Entries } from '@/src/data/topics/wave2/t04-visual-modeling.ts';
+import { t07Entries } from '@/src/data/topics/wave2/t07-ui-ux.ts';
 
 /**
  * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
@@ -420,6 +421,7 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
   t02Entries,
   t03Entries,
   t04Entries,
+  t07Entries,
 ];
 
 /**
