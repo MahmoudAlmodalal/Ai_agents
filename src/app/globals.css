@@ -142,7 +142,7 @@
 /* Base Styles */
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: clamp(15px, 0.25vw + 15px, 16px);
 }
 
 body {
@@ -153,7 +153,7 @@ body {
   direction: rtl;
   text-align: right;
   transition: background-color 0.25s ease, color 0.25s ease;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Hide scrollbar utility for horizontal carousels */
@@ -249,7 +249,8 @@ body {
 .content-area p {
   margin-bottom: 1rem;
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: clamp(1rem, 0.96rem + 0.16vw, 1.08rem);
+  line-height: 1.85;
 }
 
 /* Step Badges and Pills */

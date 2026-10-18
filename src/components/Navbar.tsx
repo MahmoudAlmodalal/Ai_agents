@@ -62,8 +62,12 @@ export const Navbar: React.FC = () => {
   const drawerButtonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const primaryItems = NAV_ITEMS.filter((item) => item.isPrimary);
-  const secondaryItems = NAV_ITEMS.filter((item) => !item.isPrimary);
+  const desktopPrimaryItems = NAV_ITEMS.filter((item) =>
+    ['/start', '/learn/project-idea-mvp', '/prompts', '/diagrams'].includes(item.href)
+  );
+  const desktopMoreItems = NAV_ITEMS.filter(
+    (item) => item.href !== '/' && !desktopPrimaryItems.includes(item)
+  );
 
   // Check active route
   const isRouteActive = useCallback(
@@ -76,7 +80,7 @@ export const Navbar: React.FC = () => {
     [pathname]
   );
 
-  const isMoreActive = secondaryItems.some((item) => isRouteActive(item.href));
+  const isMoreActive = desktopMoreItems.some((item) => isRouteActive(item.href));
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
@@ -197,12 +201,12 @@ export const Navbar: React.FC = () => {
               </Link>
             </div>
 
-            {/* 2. Desktop Primary Navigation Links (Hidden on < lg) */}
+            {/* 2. Desktop Navigation: keep only the most-used destinations visible */}
             <nav
-              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-center max-w-4xl min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-center max-w-4xl min-w-0"
               aria-label="شريط التنقل الرئيسي"
             >
-              {primaryItems.map((item) => {
+              {desktopPrimaryItems.map((item) => {
                 const active = isRouteActive(item.href);
                 return (
                   <Link
@@ -252,11 +256,11 @@ export const Navbar: React.FC = () => {
 
                 {/* Dropdown Content */}
                 {isMoreDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-[var(--z-dropdown)]">
+                  <div className="absolute left-0 mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-[var(--z-dropdown)]">
                     <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 py-1 border-b border-[var(--border-color)] mb-1">
                       أقسام ومراجع إضافية
                     </div>
-                    {secondaryItems.map((item) => {
+                    {desktopMoreItems.map((item) => {
                       const active = isRouteActive(item.href);
                       return (
                         <Link
@@ -318,7 +322,7 @@ export const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={isDark ? 'التحويل إلى النمط النهاري' : 'التحويل إلى النمط الليلي'}
                 title={isDark ? 'التحويل إلى النمط النهاري' : 'التحويل إلى النمط الليلي'}
-                className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="w-11 h-11 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
               >
                 {isDark ? (
                   <Sun className="w-4 h-4 text-amber-400" />
@@ -335,7 +339,7 @@ export const Navbar: React.FC = () => {
                 aria-expanded={isDrawerOpen}
                 aria-controls="mobile-nav-drawer"
                 aria-label="فتح قائمة التنقل الرئيسية"
-                className="lg:hidden w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="lg:hidden w-11 h-11 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
               >
                 <Menu className="w-5 h-5" />
               </button>

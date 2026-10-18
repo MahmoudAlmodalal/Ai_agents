@@ -1,8 +1,8 @@
 /* Responsive UX refinements & Zero Horizontal Overflow Enforcers */
 
 html, body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 :where(button, a, input, [role='button']):focus-visible {
@@ -30,6 +30,11 @@ button {
 
   .topic-card-actions {
     gap: 0.4rem;
+  }
+
+  .topic-card-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .topic-card-actions > button,
@@ -69,7 +74,7 @@ button {
 
   .filter-toolbar {
     position: sticky;
-    top: 52px;
+    top: 4rem;
     z-index: var(--z-toolbar);
     box-shadow: 0 5px 16px rgb(15 23 42 / 0.04);
   }
@@ -166,7 +171,7 @@ button {
 @media (min-width: 768px) {
   .filter-toolbar {
     position: sticky;
-    top: 60px;
+    top: 4rem;
     z-index: var(--z-toolbar);
   }
 }
@@ -216,6 +221,44 @@ button {
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+}
+
+#mobile-nav-drawer [role='dialog'] a,
+.modal-header-actions > :is(a, button) {
+  min-height: 44px;
+}
+
+.modal-header-actions > :is(a, button) {
+  min-width: 44px;
+}
+
+.mermaid-viewport {
+  min-width: 0;
+  max-width: 100%;
+  overscroll-behavior-inline: contain;
+}
+
+.mermaid-zoombox {
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  overflow: visible;
+  flex: 0 0 auto;
+}
+
+.mermaid-zoombox > svg {
+  max-width: none !important;
+}
+
+.page-shell,
+.content-area,
+.modal-content-area {
+  min-width: 0;
+}
+
+.content-area {
+  overflow-wrap: anywhere;
 }
 
 .diagram-box svg {

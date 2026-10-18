@@ -1,0 +1,22 @@
+{
+  "routes": [
+    { "path": "/", "title": "الرئيسية" },
+    { "path": "/about", "title": "عن الدورة" },
+    { "path": "/borrowhub", "title": "BorrowHub" },
+    { "path": "/cheatsheet", "title": "ملخص البرومبتات" },
+    { "path": "/diagrams", "title": "مختبر المخططات" },
+    { "path": "/faq", "title": "الأسئلة الشائعة" },
+    { "path": "/glossary", "title": "القاموس التقني" },
+    { "path": "/learn/:slug", "title": "موضوع تعليمي" },
+    { "path": "/learn/diagram-lab", "title": "مختبر المخططات التفاعلي" },
+    { "path": "/lectures/04-pending", "title": "المحاضرة الرابعة قيد الاعتماد" },
+    { "path": "/models", "title": "مؤشر الموديلات" },
+    { "path": "/prompts", "title": "مكتبة البرومبتات" },
+    { "path": "/prompts/:slug", "title": "برومبت" },
+    { "path": "/roadmap", "title": "خارطة التنفيذ" },
+    { "path": "/roadmap/:number", "title": "مرحلة في خارطة التنفيذ" },
+    { "path": "/start", "title": "ابدأ هنا" },
+    { "path": "/templates", "title": "الملفات والقوالب" },
+    { "path": "/tools", "title": "الأدوات" }
+  ]
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, HeartCrack } from 'lucide-react';
 import { TOPICS } from '@/src/data/topicsData.ts';
@@ -281,7 +282,7 @@ export default function HomePage() {
       />
 
       {/* 3. Main Topic Explorer */}
-      <main className={`page-shell flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 ${isTTSActive ? 'pb-32 sm:pb-28' : 'pb-10'}`} style={isTTSActive && activeTopic ? { paddingBottom: '9rem' } : undefined}>
+      <div className={`page-shell flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 ${isTTSActive ? 'pb-32 sm:pb-28' : 'pb-10'}`} style={isTTSActive && activeTopic ? { paddingBottom: '9rem' } : undefined}>
         {/* Favorites Active Banner */}
         {showFavoritesOnly && (
           <div className="mb-4 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 flex items-center justify-between gap-3 text-xs">
@@ -300,46 +301,66 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Compact Hero Kicker & Stats Strip */}
+        {/* Learning path introduction and guide to the topic sequence */}
         {!showFavoritesOnly && (
-          <section className="mb-4 sm:mb-6 p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-2xs">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-              <div className="max-w-2xl">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] sm:text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider block">
-                    خريطة الطريق الهندسية · Next.js App Router
-                  </span>
-                  <span className="px-2 py-0.5 text-[9px] font-mono font-bold rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                    Zero-API Ready
-                  </span>
+          <section className="mb-5 sm:mb-7 overflow-hidden rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] shadow-sm">
+            <div className="grid gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(17rem,0.8fr)] lg:items-center">
+              <div className="min-w-0 max-w-3xl">
+                <span className="mb-2 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
+                  دليل هندسي تفاعلي · تعلّم خطوة بخطوة
+                </span>
+                <h1 className="text-2xl font-black leading-tight text-[var(--text-main)] sm:text-3xl lg:text-4xl">
+                  من فكرة واضحة إلى واجهة قابلة للتطوير
+                </h1>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--text-muted)] sm:text-base">
+                  ابدأ بفهم المشكلة وتوثيق المتطلبات، ثم نمذج التدفقات والعلاقات، وانتقل إلى تخطيط الواجهة ومراجعة جودتها. يشرح كل موضوع أين يقع ضمن هذا المسار وما الذي يساعدك على إنجازه.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2.5">
+                  <Link href="/start" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--brand-primary)] px-4 text-sm font-bold text-white transition-colors hover:bg-[var(--brand-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                    ابدأ من البداية <span aria-hidden="true">←</span>
+                  </Link>
+                  <a href="#topic-list" className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[var(--border-color)] px-4 text-sm font-bold text-[var(--text-main)] transition-colors hover:bg-[var(--bg-card-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
+                    استعرض الموضوعات
+                  </a>
                 </div>
-                <h2 className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
-                  من استنطاق الفكرة ووثيقة PRD إلى نمذجة المعمارية وقواعد البيانات بالذكاء الاصطناعي
-                </h2>
               </div>
 
-              {/* Compact 4-Metric Grid */}
-              <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-[var(--border-color)] shrink-0">
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-[var(--brand-primary)]">{TOPICS.length}</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">درسًا</div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2" aria-label="ملخص محتوى الدليل">
+                <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 py-2.5 text-center">
+                  <div className="font-mono text-lg font-black text-[var(--brand-primary)]">{TOPICS.length}</div>
+                  <div className="text-xs text-[var(--text-muted)]">موضوعًا تعليميًا</div>
                 </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400">8</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مخططات</div>
+                <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 py-2.5 text-center">
+                  <div className="font-mono text-lg font-black text-emerald-600 dark:text-emerald-400">8</div>
+                  <div className="text-xs text-[var(--text-muted)]">أنواع من المخططات</div>
                 </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-indigo-600 dark:text-indigo-400">38+</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">برومبتاً</div>
+                <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 py-2.5 text-center">
+                  <div className="font-mono text-lg font-black text-indigo-600 dark:text-indigo-400">31</div>
+                  <div className="text-xs text-[var(--text-muted)]">برومبتًا معتمدًا</div>
                 </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-rose-500">
-                    {bookmarks.length}
-                  </div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مفضلة</div>
+                <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 py-2.5 text-center">
+                  <div className="font-mono text-lg font-black text-rose-500">{bookmarks.length}</div>
+                  <div className="text-xs text-[var(--text-muted)]">موضوعًا محفوظًا</div>
                 </div>
               </div>
             </div>
+
+            <ol className="grid gap-2 border-t border-[var(--border-color)] bg-[var(--bg-card-subtle)]/60 p-4 sm:grid-cols-2 sm:p-6 lg:grid-cols-4" aria-label="مراحل مسار التعلم">
+              {[
+                { title: 'اكتشف الفكرة', description: 'حدّد المشكلة والأسئلة المهمة قبل اختيار الحل.' },
+                { title: 'وثّق المتطلبات', description: 'حوّل القرارات إلى متطلبات واضحة قابلة للمراجعة.' },
+                { title: 'نمذج النظام', description: 'استخدم التدفقات والمخططات لتوضيح أجزاء الحل.' },
+                { title: 'خطّط وراجع', description: 'رتّب خطوات الواجهة ثم تحقّق من جودتها.' },
+              ].map((stage, index) => (
+                <li key={stage.title} className="flex min-w-0 items-start gap-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-primary)] font-mono text-xs font-bold text-white">{String(index + 1).padStart(2, '0')}</span>
+                  <div className="min-w-0">
+                    <h2 className="text-sm font-extrabold text-[var(--text-main)]">{stage.title}</h2>
+                    <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">{stage.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </section>
         )}
 
@@ -356,7 +377,7 @@ export default function HomePage() {
 
         {/* Dynamic Topic Grid */}
         {filteredTopics.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+          <div id="topic-list" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 scroll-mt-24">
             <AnimatePresence mode="popLayout">
               {filteredTopics.map((topic, index) => (
                 <motion.div
@@ -432,20 +453,14 @@ export default function HomePage() {
             </button>
           </div>
         )}
-      </main>
+      </div>
 
-      {/* 4. Footer */}
-      <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-3 px-3 text-center text-xs text-[var(--text-muted)] no-print">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
-          <p>
-            الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي · معمارية Next.js App Router © {new Date().getFullYear()}
-          </p>
-          <div className="flex items-center gap-2 text-[10px] text-[var(--text-faint)]">
-            <span>البحث: <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">/</kbd></span>
-            <span>الإغلاق: <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">Esc</kbd></span>
-          </div>
+      <aside aria-label="اختصارات لوحة المفاتيح" className="no-print border-t border-[var(--border-color)] bg-[var(--bg-surface)] px-3 py-2 text-center text-xs text-[var(--text-faint)]">
+        <div className="mx-auto flex max-w-7xl items-center justify-center gap-3">
+          <span>البحث: <kbd className="rounded bg-[var(--border-color)] px-1 font-mono">/</kbd></span>
+          <span>الإغلاق: <kbd className="rounded bg-[var(--border-color)] px-1 font-mono">Esc</kbd></span>
         </div>
-      </footer>
+      </aside>
 
       {/* 5. Deep Detail Reader Modal */}
       <AnimatePresence>
