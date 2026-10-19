@@ -22,6 +22,7 @@ import {
   Home,
   Rocket,
   Layers,
+  Download,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -44,6 +45,7 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
   { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: true },
   { title: 'ورشة BorrowHub', href: '/borrowhub', icon: FolderGit2, badge: 'حالة عملية', isPrimary: true },
+  { title: 'المحتوى المحفوظ', href: '/saved', icon: Download, badge: 'أوفلاين', isPrimary: true },
   { title: 'الأدوات والتثبيت', href: '/tools', icon: Wrench, badge: '13 وكيلا', isPrimary: true },
   { title: 'مؤشر الموديلات', href: '/models', icon: Sparkles, badge: 'الأفضل الآن', isPrimary: true },
   { title: 'الملفات والقوالب', href: '/templates', icon: Files, badge: '14 قالب', isPrimary: false, description: 'قوالب PRD و DESIGN.md ومخططات جاهزة' },
