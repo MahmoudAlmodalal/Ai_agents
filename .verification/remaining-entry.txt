@@ -1,0 +1,24 @@
+<task>
+You are the Antigravity implementation lane for live issues #29 (الرئيسية وابدأ هنا وتعريف البرنامج) and #30 (نقل المحفوظات والروابط وإنهاء الفهارس المتضاربة) in /home/mahmoud/Desktop/كورس/Ai_agents, baseline 3242248 on main. User asked to complete remaining tickets using parallel agy implementers while root only orchestrates/reviews. Audit current implementation against the exact current issue bodies in .verification/remaining-issues-current.json and source contracts. Implement only genuine unmet criteria. If already satisfied, do not force product edits; produce a precise current evidence report.
+Read docs/ISSUE_29_30_REVIEW.md and docs/ISSUES_26_31_37_REVIEW.md first. Historical evidence is not fresh execution. Read actual callers before touching shared symbols. Use the smallest complete change and surrounding patterns; no new dependencies or broad refactor.
+</task>
+<ownership>
+Other independent agy lanes work concurrently. You may modify ONLY src/app/page.tsx; src/app/start/**; src/app/about/**; src/app/roadmap/**; src/app/lectures/**; src/components/EntryQuestion.tsx; src/components/HistoricalSavedItems.tsx; src/components/FilterToolbar.tsx; src/lib/topicRegistry.ts; e2e/entry-compatibility.spec.ts; e2e/saved-data-compat.spec.ts; e2e/navigation-category-consistency.spec.ts; e2e/topic-navigation.spec.ts; docs/REMAINING_ENTRY_20261019.md. Read other files as needed but do not modify them. Do not revert other lanes' edits. If a genuine requirement needs another file, report it without editing it.
+</ownership>
+<constraints>
+Preserve composite and unknown saved identifiers in localStorage; never map by current ordinal. Prototype-like unknown IDs must stay safe and visibly unresolved. Preserve canonical registry semantics, direct reading/preview, optional BorrowHub, MET identity, official 40-hour duration, full-stack flow and delayed setup. #33 owner approval remains pending; do not extend the pilot pattern or fabricate approval. No pushes, issue mutations, deployment, provisioning, git add or commits. No permission bypass flags or permission setting edits.
+Use lean-ctx tools/CLI for reads/search/shell where available and obey project instructions. Do not launch a new server or use port3000 (unrelated app). Root provides this repository's shared server on port3199. If unavailable, report environment failure explicitly.
+</constraints>
+<verification_loop>
+Where an actual behavioral defect exists, add one meaningful failing behavior regression first (RED), then the smallest product fix and GREEN; do not weaken existing assertions or introduce skip/conditional pass. Changes require real evidence, not source-text tests or implementation-derived expectations.
+Run synchronously and wait to completion:
+E2E_PORT=3199 E2E_BROWSER_CHANNEL=chrome npx playwright test e2e/entry-compatibility.spec.ts e2e/saved-data-compat.spec.ts e2e/navigation-category-consistency.spec.ts e2e/topic-navigation.spec.ts --output=.verification/remaining-entry-results --reporter=line
+npm run lint -- --incremental false
+No full suite or production build in this lane; root handles integrated gates once at the end. Do not leave tasks pending at final response. Confirm only owned files changed by you.
+</verification_loop>
+<documentation>
+Write docs/REMAINING_ENTRY_20261019.md: date, exact titles/numbers, acceptance-by-acceptance current evidence, actual changes or no-op determination, actual gate counts/exit and commands, any RED/GREEN outcomes, owner-only requirements and honest Not Run limitations. Do not copy historical pass claims as fresh evidence.
+</documentation>
+<structured_output_contract>
+Final report must contain: 1. What changed and why, or no remaining implementation found with concrete evidence. 2. Exact files touched. 3. Gate commands, actual results/counts and any RED/GREEN. 4. Deviations, unknowns, owner-only work, remaining risks. No commit; root reviews and commits after independent verification.
+</structured_output_contract>

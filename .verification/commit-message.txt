@@ -1,0 +1,17 @@
+Complete course references, compatibility and pilot verification
+
+Restore source-backed BorrowHub references, 14 template entries, glossary,
+FAQ and tool guidance. Align entry pages with the Full-Stack project path
+and preserve historical saves by content meaning, including unresolved IDs.
+
+Review educational dependencies and retain the bounded first-topic pilot.
+Reconcile stale browser expectations and fix damaged-return routing,
+filtered-card retention and the cheatsheet landmark hierarchy.
+
+Verified TypeScript, 12 storage tests and production build. Complete browser
+run: 174 passed, four stale expectations failed; corrected affected-file
+rerun: 22 passed. Final landmark regression passed on rebuilt production.
+Separate Standards and Spec reviews completed; root reviewed corrections.
+
+Refs #26, #27, #28, #29, #30, #31, #37.
+#33 remains pending content-owner review. No push or deployment.
