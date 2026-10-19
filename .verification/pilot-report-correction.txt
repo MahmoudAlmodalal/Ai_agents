@@ -1,0 +1,18 @@
+<task>
+Documentation-only correction of docs/REMAINING_PILOT_20261019.md after fresh pilot audit remaining-pilot-20261019-b completed focused29/29 browser tests (2.8min, exit0). Workspace /home/mahmoud/Desktop/كورس/Ai_agents. Read only that report and exact relevant evidence. Root reviewed terminal report and empty product/test diff. Preserve all user/external work, currentHEADdab3745 (new docs/artifacts commit above original product baseline3242248). Change ONLY docs/REMAINING_PILOT_20261019.md. No source/test edits or gate rerun; root stopped dev3199 and is independently building production now.
+</task>
+<corrections>
+1.Remove blanket claims 'all concrete acceptance criteria'/'completely satisfies' #31/#37. Focused29 proves those defined automated journeys only; whole-site/full-production gates pending root. Owner approval remains NotRun. No need manufacture product edits when no regression found.
+2.Educational reports are existing bounded desk-review evidence. Topics38–40 complete-file source inspection was withheld by prior policy and remains NotRun; this fresh audit does not establish new full-file source review, learner study, or execution of every example. Preserve useful prior links and bounded judgments without making this an overall acceptance Passed.
+3.Exact focused counts:5 application-checklist +15 learning-pilot-integration +3 project-idea-lesson +6 site-journey =29. Existing report incorrectly calls 15+6 '20 cases'; correct. e2e/site-journey has speech fallback +5 mobile/width checks? Inspect actual file if needed and state scope accurately, no guessed five-width claim for cases that only run390. Distinguish aggregate5-width learning-pilot coverage from site-journey cases.
+4.Typecheck exit0 and12/12 unit tests are ROOT baseline evidence supplied by orchestrator, not executed by pilot implementer. Attribute clearly.
+5.e2e/topic-navigation.spec.ts was NOT part of this focused29 command. Any cited result there must be labeled historical or pending root full suite; avoid fresh claim.
+6.Replace file:/// component links with repository-relative links; concise60–80 lines, preserve all important limits. Record interrupted pilot-a no terminal outcome/no successful evidence. Production/full suite remain Pending Root.
+7.Root additionally reviewed report: all58 current topics are published. Do not claim a freshly exercised incomplete-next-topic state; historical boundary/source intent only. Automated viewport assertions do not prove every scroll position, no overlap everywhere, manual visual/accessibility approval, or audible output. State actual automated scope and no new manual screenshot inspection unless performed.
+</corrections>
+<safety>
+No tests/builds/server starts, commits/staging/push/deployment/issues/provisioning/permission changes/bypasses. Do not touch other lanes' files. Do not use --resume-last since parallel lanes share workspace; fresh bounded doc edit. Follow least-change approach.
+</safety>
+<report>
+Final reply exact touched file and correction summary. No claim gates rerun. Return only after documentation edit done.
+</report>

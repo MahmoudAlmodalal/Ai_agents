@@ -1,0 +1,5 @@
+Final docs-only correction. Edit ONLY docs/REMAINING_ENTRY_20261019.md in /home/mahmoud/Desktop/كورس/Ai_agents. Other agents and user work concurrently: preserve all other files and current HEAD; no commits, push, tests, settings or permission bypass. No product/test changes.
+Two precise corrections to your condensed report:
+1. Replace both historical-ledger file:///home/... Markdown link targets with relative ISSUES_26_31_37_REVIEW.md. Keep labels. Repository docs must work on GitHub and other checkouts.
+2. Table #30 criterion4 mentions retained source files and a unified registry. Its e2e refs prove routing/storage behavior rather than source retention itself. Explicitly label registry/source retention as source observation, and label the e2e refs as redirect/storage compatibility evidence only; do not claim browser proof of source file existence/content equivalence. Keep rest bounded.
+No new runtime gates for this docs-only correction. Read final file/diff and report exact touched file/wording edits. Remain within about60–80lines. Do not claim tests rerun.

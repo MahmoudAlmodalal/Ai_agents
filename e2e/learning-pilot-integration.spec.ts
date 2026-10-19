@@ -34,6 +34,40 @@ test.describe('Learning pilot integration', () => {
     });
   }
 
+  test('dark utility colors follow the saved theme when OS preference differs', async ({ page }) => {
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.goto('/');
+    await page.evaluate(() => localStorage.setItem('theme', 'light'));
+    await page.goto('/learn/project-idea-mvp');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+
+    const steps = page.getByRole('heading', { name: 'خطوات التطبيق على مشروعك' }).locator('xpath=..').locator('ol');
+    const goal = page.getByText('الهدف من الموضوع:', { exact: true }).locator('xpath=..');
+    const readColors = async () => ({
+      steps: await steps.evaluate((element) => getComputedStyle(element).color),
+      goal: await goal.evaluate((element) => getComputedStyle(element).color),
+      background: await goal.evaluate((element) => getComputedStyle(element).backgroundColor),
+    });
+    const lightColors = await readColors();
+
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    expect(await readColors()).toEqual(lightColors);
+
+    await page.evaluate(() => localStorage.setItem('theme', 'dark'));
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    const darkColors = await readColors();
+    expect(darkColors).not.toEqual(lightColors);
+
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    expect(await readColors()).toEqual(darkColors);
+  });
+
   for (const width of VIEWPORT_WIDTHS) {
     test(`full reader copies authored content and invokes print and speech controls at ${width}px`, async ({ page, context }) => {
       await page.setViewportSize({ width, height: 900 });
