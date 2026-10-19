@@ -15,7 +15,6 @@ import {
   Loader2,
 } from 'lucide-react';
 import type { TopicItem } from '@/src/types/topic';
-import { readSavedBookmarks, writeSavedBookmarks, readSavedRecentlyViewed, writeSavedRecentlyViewed } from '@/src/lib/topicRegistry';
 import {
   getTopicOfflineStatus,
   saveTopicOffline,
@@ -23,12 +22,23 @@ import {
   TopicOfflineStatus,
   OFFLINE_STORAGE_CHANGE_EVENT,
 } from '@/src/lib/offlineStorage';
+import {
+  readSavedBookmarks,
+  writeSavedBookmarks,
+  readSavedRecentlyViewed,
+  writeSavedRecentlyViewed,
+  getSavedBookmarksStatus,
+  subscribeTopicStorage,
+  type TopicStorageStatus,
+} from '@/src/lib/topicRegistry';
 import { stripHtml } from '@/src/utils/searchUtils';
 import { useToast } from '@/src/components/Toast';
+import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNotice';
 
 export function TopicReaderTools({ topic }: { topic: TopicItem }) {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [offlineStatus, setOfflineStatus] = React.useState<TopicOfflineStatus>('unsaved');
+  const [storageStatus, setStorageStatus] = React.useState<TopicStorageStatus>('loading');
   const [audioState, setAudioState] = React.useState<'stopped' | 'playing' | 'paused'>('stopped');
   const [audioSupported, setAudioSupported] = React.useState(false);
   const { showToast } = useToast();
@@ -56,14 +66,19 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
   }, [topic.slug]);
 
   React.useEffect(() => {
-    const updateBookmark = () => setIsBookmarked(readSavedBookmarks().includes(topic.slug));
-    updateBookmark();
+    const update = () => {
+      setIsBookmarked(readSavedBookmarks().includes(topic.slug));
+      setStorageStatus(getSavedBookmarksStatus());
+    };
+    update();
     writeSavedRecentlyViewed([topic.slug, ...readSavedRecentlyViewed().filter((slug) => slug !== topic.slug)]);
     setAudioSupported('speechSynthesis' in window);
     setAudioState('stopped');
-    window.addEventListener('storage', updateBookmark);
+    const unsub = subscribeTopicStorage(update);
+    window.addEventListener('storage', update);
     return () => {
-      window.removeEventListener('storage', updateBookmark);
+      unsub();
+      window.removeEventListener('storage', update);
       window.speechSynthesis?.cancel();
     };
   }, [topic.slug]);
@@ -72,6 +87,7 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
     const saved = readSavedBookmarks();
     const updated = saved.includes(topic.slug) ? saved.filter((slug) => slug !== topic.slug) : [...saved, topic.slug];
     writeSavedBookmarks(updated);
+    setStorageStatus(getSavedBookmarksStatus());
     setIsBookmarked(updated.includes(topic.slug));
   };
 
@@ -241,6 +257,7 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
           )}
         </>
       )}
+      <LearnerPersistenceNotice status={storageStatus} showExplanation={false} className="mt-2 w-full" />
     </div>
   );
 }

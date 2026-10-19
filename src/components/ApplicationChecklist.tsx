@@ -28,7 +28,7 @@ export function ApplicationChecklist({ topic, items }: { topic: TopicItem; items
   return (
     <div role="group" aria-label="قائمة تحقق التطبيق" aria-describedby={helpId} className="space-y-2.5">
       <p id={helpId} className="text-xs leading-6 text-[var(--text-muted)]">
-        هذه قائمة تقييم ذاتي لتطبيقك، مستقلة عن نسبة القراءة بالتمرير. يمكنك الانتقال بين المواضيع بحرية. تُحفظ الاختيارات في هذا المتصفح عند توفر التخزين.
+        هذه قائمة تقييم ذاتي لتطبيقك، مستقلة عن قراءة المواضيع أو تقدم التصفح. تُحفظ الاختيارات محلياً في هذا المتصفح على هذا الجهاز فقط، وتُفقد عند مسح بيانات المتصفح ولا تنتقل إلى متصفح آخر.
       </p>
       {items.map((item) => {
         const key = applicationChecklistItemKey(item);

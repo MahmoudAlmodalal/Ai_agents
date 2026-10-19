@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
 import { TopicItem } from '@/src/types/topic.ts';

@@ -247,58 +247,50 @@ export function getAllTopicSlugs(): string[] {
  * the audited source identities, preserving ambiguous composites.
  * ========================================================================= */
 
-const BOOKMARKS_KEY = 'engineering_guide_bookmarks';
-const RECENTLY_VIEWED_KEY = 'engineering_guide_recently_viewed';
+import {
+  getBrowserTopicStorage,
+  type TopicStorageStatus,
+} from './topicStorage';
+
+export type { TopicStorageStatus };
 
 export function readSavedBookmarks(): string[] {
   if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(BOOKMARKS_KEY);
-    if (!raw) return [];
-    const list = JSON.parse(raw);
-    if (!Array.isArray(list)) return [];
-    return Array.from(new Set(list.filter((id): id is string => typeof id === 'string').map(resolveCanonicalSlug).filter(Boolean)));
-  } catch (err) {
-    console.warn('Failed reading bookmarks from localStorage:', err);
-    return [];
-  }
+  return getBrowserTopicStorage().readBookmarks();
 }
 
 export function writeSavedBookmarks(slugs: string[]): string[] {
-  const canonicalSlugs = Array.from(new Set(slugs.map((s) => resolveCanonicalSlug(s)).filter(Boolean)));
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(canonicalSlugs));
-    } catch (err) {
-      console.warn('Failed writing bookmarks to localStorage:', err);
-    }
+  if (typeof window === 'undefined') {
+    return Array.from(new Set(slugs.map((s) => resolveCanonicalSlug(s)).filter(Boolean)));
   }
-  return canonicalSlugs;
+  return getBrowserTopicStorage().writeBookmarks(slugs);
 }
 
 export function readSavedRecentlyViewed(): string[] {
   if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(RECENTLY_VIEWED_KEY);
-    if (!raw) return [];
-    const list = JSON.parse(raw);
-    if (!Array.isArray(list)) return [];
-    return Array.from(new Set(list.filter((id): id is string => typeof id === 'string').map(resolveCanonicalSlug).filter(Boolean)));
-  } catch (err) {
-    console.warn('Failed reading recently viewed from localStorage:', err);
-    return [];
-  }
+  return getBrowserTopicStorage().readRecentlyViewed();
 }
 
 export function writeSavedRecentlyViewed(slugs: string[]): string[] {
-  const saved = Array.from(new Set(slugs.map(resolveCanonicalSlug).filter(Boolean)));
-  const canonicalSlugs = [...saved.filter((slug) => getTopicBySlug(slug)).slice(0, 5), ...saved.filter((slug) => !getTopicBySlug(slug))];
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(canonicalSlugs));
-    } catch (err) {
-      console.warn('Failed writing recently viewed to localStorage:', err);
-    }
+  if (typeof window === 'undefined') {
+    const saved = Array.from(new Set(slugs.map(resolveCanonicalSlug).filter(Boolean)));
+    return [...saved.filter((slug) => getTopicBySlug(slug)).slice(0, 5), ...saved.filter((slug) => !getTopicBySlug(slug))];
   }
-  return canonicalSlugs;
+  return getBrowserTopicStorage().writeRecentlyViewed(slugs);
 }
+
+export function getSavedBookmarksStatus(): TopicStorageStatus {
+  if (typeof window === 'undefined') return 'available';
+  return getBrowserTopicStorage().getBookmarksStatus();
+}
+
+export function getSavedRecentlyViewedStatus(): TopicStorageStatus {
+  if (typeof window === 'undefined') return 'available';
+  return getBrowserTopicStorage().getRecentlyViewedStatus();
+}
+
+export function subscribeTopicStorage(listener: () => void): () => void {
+  if (typeof window === 'undefined') return () => {};
+  return getBrowserTopicStorage().subscribe(listener);
+}
+
