@@ -23,7 +23,11 @@ import {
   writeSavedRecentlyViewed,
   resolveCanonicalSlug,
   getTopicBySlug,
+  getSavedBookmarksStatus,
+  subscribeTopicStorage,
+  type TopicStorageStatus,
 } from '@/src/lib/topicRegistry.ts';
+import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNotice';
 
 const firstTopic = TOPICS[0];
 
@@ -37,6 +41,7 @@ export default function HomePage() {
   // State: Bookmarks / Favorites (stored in localStorage via canonical slugs adapter)
   const [bookmarks, setBookmarks] = React.useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = React.useState<boolean>(false);
+  const [storageStatus, setStorageStatus] = React.useState<TopicStorageStatus>('loading');
 
   // State: Modal Detail Reader
   const [activeTopicId, setActiveTopicId] = React.useState<string | null>(null);
@@ -49,11 +54,14 @@ export default function HomePage() {
     const readSavedData = () => {
       setBookmarks(readSavedBookmarks());
       setRecentlyViewed(readSavedRecentlyViewed());
+      setStorageStatus(getSavedBookmarksStatus());
     };
     readSavedData();
+    const unsub = subscribeTopicStorage(readSavedData);
     window.addEventListener('storage', readSavedData);
     window.addEventListener('pageshow', readSavedData);
     return () => {
+      unsub();
       window.removeEventListener('storage', readSavedData);
       window.removeEventListener('pageshow', readSavedData);
     };
@@ -67,13 +75,18 @@ export default function HomePage() {
     setRecentlyViewed((prev) => {
       const filtered = prev.filter((id) => id !== slug);
       const updated = writeSavedRecentlyViewed([slug, ...filtered]);
+      setStorageStatus(getSavedBookmarksStatus());
       return updated;
     });
   }, []);
 
   // Clear recently viewed history
   const handleClearRecentlyViewed = React.useCallback(() => {
-    setRecentlyViewed((previous) => writeSavedRecentlyViewed(previous.filter((id) => !getTopicBySlug(id))));
+    setRecentlyViewed((previous) => {
+      const updated = writeSavedRecentlyViewed(previous.filter((id) => !getTopicBySlug(id)));
+      setStorageStatus(getSavedBookmarksStatus());
+      return updated;
+    });
   }, []);
 
   // State: Dark Mode (defaults to user preference or localStorage)
@@ -111,8 +124,9 @@ export default function HomePage() {
     setBookmarks((prev) => {
       const exists = prev.includes(slug);
       const updated = exists ? prev.filter((id) => id !== slug) : [...prev, slug];
-      writeSavedBookmarks(updated);
-      return updated;
+      const saved = writeSavedBookmarks(updated);
+      setStorageStatus(getSavedBookmarksStatus());
+      return saved;
     });
   };
 
@@ -368,6 +382,9 @@ export default function HomePage() {
             <EntryQuestion />
           </section>
         )}
+
+        {/* Persistence status notice */}
+        <LearnerPersistenceNotice status={storageStatus} className="mb-4" />
 
         {/* Recently Viewed Section (tracks last 5 topics opened) */}
         {!showFavoritesOnly && (
