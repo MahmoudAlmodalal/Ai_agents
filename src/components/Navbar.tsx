@@ -37,9 +37,9 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'الرئيسية', href: '/', icon: Home, isPrimary: true },
   { title: 'ابدأ هنا', href: '/start', icon: Compass, isPrimary: true },
   { title: 'مسار التعلم', href: '/learn/project-idea-mvp', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
-  { title: 'المتطلبات', href: '/learn/requirements-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
-  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-design-md', icon: Sparkles, badge: 'Design → Code', isPrimary: true },
-  { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: '20 محاضرة', isPrimary: true },
+  { title: 'المتطلبات', href: '/learn/discovery-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
+  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: true },
+  { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: 'مسار متسلسل', isPrimary: true },
   { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: true },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
   { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: true },
@@ -192,7 +192,7 @@ export const Navbar: React.FC = () => {
                     سلاح العصر
                   </span>
                   <span className="hidden xl:block text-[10px] sm:text-[11px] font-medium text-[var(--text-muted)] tracking-tight">
-                    MET Academy — من الفكرة إلى الواجهات
+                    MET Academy — من الفكرة إلى النشر والعرض
                   </span>
                 </div>
               </Link>
@@ -200,7 +200,7 @@ export const Navbar: React.FC = () => {
 
             {/* 2. Desktop Primary Navigation Links (Hidden on < lg) */}
             <nav
-              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-center max-w-4xl min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-start max-w-4xl min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               aria-label="شريط التنقل الرئيسي"
             >
               {primaryItems.map((item) => {

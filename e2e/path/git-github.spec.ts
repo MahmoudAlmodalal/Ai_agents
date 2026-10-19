@@ -107,8 +107,10 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await page.goto('/prompts/prompt-04-github-documentation-setup');
 
     // Title and metadata
-    await expect(page.locator('h1')).toContainText('GitHub Documentation Setup');
-    await expect(page.getByText('PROMPT 04', { exact: true })).toBeVisible();
+    const header = page.locator('header.rounded-3xl');
+    await expect(header.locator('h1')).toContainText('GitHub Documentation Setup');
+    await expect(header.getByText('04', { exact: true })).toBeVisible();
+    await expect(header.getByText(/المصدر:.*PROMPT 04/)).toBeVisible();
 
     // Click copy button
     const copyBtn = page.getByRole('button', { name: /نسخ البرومبت/ });

@@ -30,9 +30,9 @@ test.describe('Topic Navigation Journey', () => {
   });
 
   test('last available topic has a previous link and no invented next topic', async ({ page }) => {
-    await page.goto('/learn/borrowhub-reference');
+    await page.goto('/learn/project-portfolio-entry');
     const navigation = page.getByRole('navigation', { name: 'التنقل بين المواضيع' });
-    await expect(navigation.getByRole('link', { name: /الموضوع السابق/ })).toHaveAttribute('href', '/learn/prompt-library');
+    await expect(navigation.getByRole('link', { name: /الموضوع السابق/ })).toHaveAttribute('href', '/learn/project-demo-day');
     await expect(navigation.getByRole('link', { name: /الموضوع التالي/ })).toHaveCount(0);
     await expect(navigation).toContainText('آخر موضوع متاح');
   });
@@ -81,15 +81,14 @@ test.describe('Topic Navigation Journey', () => {
     await expect.poll(() => page.evaluate(() => (window as any).__copiedTopicText)).toBe(previewText);
   });
 
-  test('legacy pending content stays readable without fabricated checklist items', async ({ page }) => {
+  test('retired composite routes reach the active index without a conflicting reader', async ({ page }) => {
     await page.goto('/learn/requirements-grill-me');
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Product Discovery');
-    await expect(page.getByText('المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال', { exact: true })).toBeVisible();
-    await expect(page.getByRole('complementary').getByRole('checkbox')).toHaveCount(0);
-    await expect(page.locator('article .topic-section')).toBeVisible();
+    await expect(page).toHaveURL(/\/#topics$/);
+    await expect(page.locator('article.topic-card')).toHaveCount(58);
+    await expect(page.getByText('المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال', { exact: true })).toHaveCount(0);
   });
 
-  test('copy feedback keeps authored DOM and legacy checklist listeners after toast updates', async ({ page }) => {
+  test('copy feedback keeps authored DOM and application checklist state after toast updates', async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.addInitScript(() => {
@@ -108,8 +107,8 @@ test.describe('Topic Navigation Journey', () => {
     await expect(inlineCopy).toContainText('تم النسخ');
     expect(await page.evaluate(() => (window as any).__copyWrites)).toEqual([expectedText]);
 
-    await page.goto('/learn/requirements-prd');
-    const inlineCheckbox = page.locator('article .checklist-item input[type="checkbox"]').first();
+    await page.goto('/learn/project-idea-mvp');
+    const inlineCheckbox = page.getByRole('complementary').getByRole('checkbox').first();
     await inlineCheckbox.check();
     const legacyCopy = page.locator('article .copy-btn').first();
     await legacyCopy.click();

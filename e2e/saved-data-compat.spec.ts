@@ -4,14 +4,14 @@ test.describe('Saved Data Compatibility', () => {
   test('legacy bookmarks map to the same topic and newly saved favorites persist', async ({ page }) => {
     await page.goto('/');
 
-    // 1. Preload localStorage with legacy bookmark id "topic-05" (Database Analysis & ERD)
+    // 1. Preload localStorage with legacy bookmark id "topic-03" (User Flow)
     await page.evaluate(() => {
-      localStorage.setItem('engineering_guide_bookmarks', JSON.stringify(['topic-05']));
+      localStorage.setItem('engineering_guide_bookmarks', JSON.stringify(['topic-03']));
     });
     await page.reload();
 
     // 2. Find topic card 05 and verify it is bookmarked
-    const card05 = page.locator('article.topic-card').filter({ has: page.getByRole('link', { name: /Database Analysis/ }) });
+    const card05 = page.locator('article.topic-card').filter({ has: page.getByRole('link', { name: /User Flow/ }) });
     const bookmarkBtn05 = card05.getByRole('button', { name: /إزالة من المفضلة|حفظ في المفضلة/ });
     await expect(bookmarkBtn05).toHaveAttribute('aria-label', 'إزالة من المفضلة');
 
@@ -27,8 +27,8 @@ test.describe('Saved Data Compatibility', () => {
     const savedBookmarks = JSON.parse(savedBookmarksRaw!);
     // Must contain canonical slug
     expect(savedBookmarks).toContain('project-idea-mvp');
-    // Must translate legacy topic-05 to database-erd
-    expect(savedBookmarks).toContain('database-erd');
+    // Must translate legacy topic-03 to user-flow-modeling
+    expect(savedBookmarks).toContain('user-flow-modeling');
 
     // 5. Reload page and confirm favorites persist
     await page.reload();
@@ -39,16 +39,16 @@ test.describe('Saved Data Compatibility', () => {
   test('legacy recently-viewed entries still identify the same topic and persist newly as canonical slugs', async ({ page }) => {
     await page.goto('/');
 
-    // 1. Preload legacy recently-viewed with "topic-05"
+    // 1. Preload legacy recently-viewed with "topic-03"
     await page.evaluate(() => {
-      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['topic-05']));
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['topic-03']));
     });
     await page.reload();
 
     // 2. Recently viewed section should display topic 05
     const recentlyViewedSection = page.locator('section').filter({ hasText: /شوهدت مؤخراً|شاهدتها مؤخراً/ });
     await expect(recentlyViewedSection).toBeVisible();
-    await expect(recentlyViewedSection).toContainText('Database Analysis');
+    await expect(recentlyViewedSection).toContainText('User Flow');
 
     // 3. Open topic 01 from card
     const card01 = page.locator('article.topic-card').first();

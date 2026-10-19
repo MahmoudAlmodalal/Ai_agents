@@ -323,17 +323,14 @@ export const topic25AiStudioHtml = `
         <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
       </div>
       <pre class="code-content"><code>Act as a Senior Database & Frontend Mock Data Engineer.
-Using the approved ERD schema and SCREEN_INVENTORY.md for the BorrowHub platform:
-Generate 6 realistic equipment records and 3 category records in pure JSON format.
-Ensure fields strictly match the database types:
-- id (UUID string)
-- name (Arabic equipment title)
-- categoryId (UUID)
-- serialNumber (Unique alphanumeric)
-- status (AVAILABLE, BORROWED, MAINTENANCE)
-- dailyBorrowLimit (Integer, default 1)
-- isAvailable (Boolean)
-- specifications (Key-value map)
+Read the approved ERD, PRD and SCREEN_INVENTORY.md for the student's project.
+Generate a small illustrative JSON dataset for equipment and categories.
+First list the required schema fields, types and enum values from those documents.
+If a field or enum is unspecified, ask instead of inventing it.
+Preserve foreign keys, quantity constraints and approved loan rules.
+Do not invent dailyBorrowLimit, notification features or new role permissions.
+This is frontend mock data, not proof that a database or backend exists.
+Before using it, map it to the canonical TypeScript contracts from topic 30.
 
 Return ONLY valid raw JSON array without markdown formatting, introductions, or apologies.</code></pre>
     </div>
@@ -522,7 +519,7 @@ export const topic26SkillsHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. مهارة معايير الفرونت إند لمشروع الطالب</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      يقوم الطالب بإنشاء ملف المهارة المخصصة لمشروعه داخل مستودعه في <code>docs/skills/frontend-standards.md</code> ليكون مرجعاً يلزم أي وكيل برمجي بقواعد التقنيات المعتمدة (Next.js 15, React 19, TypeScript Strict, Tailwind CSS, RTL):
+      يقوم الطالب بكتابة مسودة تعليمات في <code>docs/skills/frontend-standards.md</code>. هذا مسار توثيق فقط؛ لا يعني أن الوكيل اكتشف المهارة أو ثبّتها. لتحميلها فعليًا اتبع دليل وكيلك للإصدار المثبت، أو أرفق الملف يدويًا بالسياق إذا لم يدعم المهارات. لا يوجد أمر استدعاء موحد مضمون لكل الوكلاء. المثال التالي مرتبط بإصدارات الدورة؛ طابقه مع package.json بعد تهيئة مشروعك:
     </p>
 
     <!-- Copyable Skill Snippet -->
@@ -919,7 +916,7 @@ export const t09Entries: TopicItem[] = [
       '3. حلّل مشكلة «تخمة المهارات» (Skill Bloat): تجنب تفعيل عشرات المهارات غير ذات الصلة حتى لا تستنزف نافذة السياق وتشتت دقة الوكيل.',
       '4. أنشئ مهارة مخصصة لمشروعك (مثلاً docs/skills/frontend-standards.md أو .project-rules.md) تتضمن: بنية المشروع، قواعد TypeScript الصارمة، مكونات Tailwind، ودعم RTL.',
       '5. اختبر استدعاء المهارة مع وكيلك عبر توجيه مهمة فرعية (مثل توليد مكون بطاقة المعدة وفق المعايير الموثقة).',
-      '6. وثّق المهارات المعتمدة لمشروعك في docs/PROJECT_AGENT_SKILLS.md وتأكد من سهولة تشغيلها على أي وكيل برمجي.'
+      '6. وثّق المهارات وطريقة التحميل الفعلية في وكيلك داخل docs/PROJECT_AGENT_SKILLS.md؛ استخدم إرفاق الملف يدويًا عند غياب دعم المهارات، ولا تدّع أنها مثبّتة لمجرد حفظها في docs.'
     ],
     promptRefs: [
       'prompt-25-ui-ux-pro-max-review-before-coding',

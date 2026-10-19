@@ -24,7 +24,11 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(content).toContainText('البرمجة الاندفاعية');
     await expect(content).toContainText('docs/PRD.md');
     await expect(content).toContainText('docs/SCREEN_INVENTORY.md');
-    await expect(content).toContainText('docs/DESIGN.md');
+    const prereqSection = content.locator('section').filter({ hasText: 'المتطلبات السابقة' });
+    await expect(prereqSection).toContainText('نظام التصميم DESIGN.md ومراجع شاشات Stitch');
+    await expect(content.locator('code').filter({ hasText: /^DESIGN\.md$/ }).first()).toBeVisible();
+    await expect(content).toContainText('نظام التصميم (DESIGN.md ومراجع Stitch)');
+    await expect(content).not.toContainText('docs/DESIGN.md');
 
     // Content: Frontend-Only boundary
     await expect(content).toContainText('حدود النطاق الصارمة: الواجهة الأمامية فقط');

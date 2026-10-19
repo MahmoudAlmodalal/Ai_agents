@@ -13,6 +13,7 @@ export default defineConfig({
   reporter: 'line',
   use: {
     baseURL: `http://127.0.0.1:${port}`,
+    channel: process.env.E2E_BROWSER_CHANNEL,
     trace: 'on-first-retry',
   },
   webServer: {

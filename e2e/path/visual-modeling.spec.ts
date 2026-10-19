@@ -6,7 +6,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
 
     // Header & metadata
     await expect(page.locator('h1')).toContainText('Mermaid');
-    await expect(page.locator('header').getByText('أدوات وصيغ المخططات النصية')).toBeVisible();
+    await expect(page.locator('header').getByText('أدوات الرسم والنمذجة', { exact: true })).toBeVisible();
 
     // Directionality checks: Page is RTL, Code blocks are LTR
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
@@ -39,7 +39,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     await expect(promptHeader).toBeVisible();
 
     // Verifies User Flow source contains Decision Points, Happy Path, and Failure Paths
-    const flowCode = page.locator('.code-container').filter({ hasText: 'MERMAID SOURCE — User Flow' });
+    const flowCode = page.locator('.code-container').filter({ has: page.getByRole('button', { name: 'نسخ كود مسار الاستعارة', exact: true }) });
     await expect(flowCode).toBeVisible();
     const flowText = await flowCode.innerText();
 
@@ -47,19 +47,21 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     expect(flowText).toContain('CheckAuth');
     expect(flowText).toContain('CheckActiveLoans');
     expect(flowText).toContain('CheckStock');
-    expect(flowText).toContain('Inspection');
+    expect(flowText).toContain('AdminDecision');
 
     // Tied to PRD requirements (Rule 3)
-    expect(flowText).toContain('قاعدة PRD رقم 3');
+    await expect(page.locator('article')).toContainText('الحد الأقصى 2 استعارة نشطة - القاعدة 3');
 
     // Success path
-    expect(flowText).toContain('ExitSuccess');
-    expect(flowText).toContain('إتمام الدورة بنجاح');
+    expect(flowText).toContain('Handover');
+    expect(flowText).toContain('تأكيد التسليم');
+    expect(flowText).toContain('ActiveLoan');
 
     // Failure / exception paths
-    expect(flowText).toContain('ExitFail');
+    expect(flowText).toContain('ExitAuth');
+    expect(flowText).toContain('ExitStock');
+    expect(flowText).toContain('ExitLimit');
     expect(flowText).toContain('ExitReject');
-    expect(flowText).toContain('LogDamage');
 
     // Output deliverable
     await expect(page.locator('article')).toContainText('docs/user-flow.md');
@@ -76,7 +78,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     await expect(promptHeader).toBeVisible();
 
     // Inspect the Domain Model Mermaid source code
-    const domainCodeContainer = page.locator('.code-container').filter({ hasText: 'MERMAID SOURCE — Conceptual Domain Model' });
+    const domainCodeContainer = page.locator('.code-container').filter({ has: page.getByRole('button', { name: 'نسخ كود النموذج المفاهيمي', exact: true }) });
     await expect(domainCodeContainer).toBeVisible();
     const domainText = await domainCodeContainer.innerText();
 
@@ -86,15 +88,16 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     // Must NOT contain DB keys, SQL data types, or functions
     expect(domainText).not.toMatch(/\b(PK|FK|Primary Key|Foreign Key)\b/i);
     expect(domainText).not.toMatch(/\b(VARCHAR|INTEGER|BOOLEAN|TIMESTAMP|BIGINT)\b/i);
-    expect(domainText).not.toMatch(/\b(function|def|void|return)\b/i);
+    // Business labels such as "Inspection & Return" are concepts, not code.
+    expect(domainText).not.toMatch(/^\s*(?:(?:function|def|void)\s+\w+\s*\(|return\s+\w+)/im);
     expect(domainText).not.toMatch(/\w+\s*\([^)]*\)\s*;/); // method calls / function signatures
 
     // Must contain business concepts and labeled relationships
     expect(domainText).toContain('Student');
     expect(domainText).toContain('Equipment');
     expect(domainText).toContain('LoanRequest');
-    expect(domainText).toContain('يقدّم ويتابع');
-    expect(domainText).toContain('يراجع ويعتمد');
+    expect(domainText).toContain('يطلب استعارة');
+    expect(domainText).toContain('يعتمد أو يرفض');
 
     // Deliverables
     await expect(page.locator('article')).toContainText('docs/diagrams/domain-model.md');
@@ -104,7 +107,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     await page.goto('/');
 
     // Locate Topic 07 card and open modal
-    const topic7Card = page.locator('article.topic-card').filter({ hasText: 'صيغة المخططات النصية' });
+    const topic7Card = page.locator('article.topic-card').filter({ has: page.getByRole('heading', { name: 'صيغة Mermaid ومحرك التصيير في المتصفح', exact: true }) });
     await expect(topic7Card).toBeVisible();
     await topic7Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
@@ -122,18 +125,16 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
 
     // Test perspective buttons
     const flowPerspectiveBtn = modal.getByRole('button', { name: /مسار العمليات/ });
-    if (await flowPerspectiveBtn.isVisible()) {
-      await flowPerspectiveBtn.click();
-      await expect(viewer.locator('svg')).toBeVisible({ timeout: 10000 });
-    }
+    await flowPerspectiveBtn.click();
+    await expect(flowPerspectiveBtn).toHaveAttribute('aria-pressed', 'true');
+    await expect(viewer.locator('svg')).toBeVisible({ timeout: 10000 });
 
     // Toggle Raw Syntax Code
-    const codeToggleBtn = modal.getByRole('button', { name: /عرض \/ إخفاء كود Mermaid/ });
-    if (await codeToggleBtn.isVisible()) {
-      await codeToggleBtn.click();
-      const rawSyntax = modal.locator('pre.text-emerald-400');
-      await expect(rawSyntax).toBeVisible();
-    }
+    const codeToggleBtn = modal.getByTitle('عرض / إخفاء كود Mermaid');
+    await codeToggleBtn.click();
+    await expect(codeToggleBtn).toHaveAttribute('aria-pressed', 'true');
+    const rawSyntax = modal.locator('pre.text-emerald-400');
+    await expect(rawSyntax).toBeVisible();
   });
 
   test('Sequential Navigation Bounds: Topics 07, 08, 09 connect smoothly in sequence', async ({ page }) => {

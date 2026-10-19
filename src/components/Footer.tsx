@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              دورة تطبيقية متخصصة لنقل طلاب وهواة البرمجة من مجرد توجيه الأسئلة للذكاء الاصطناعي إلى قيادة عمليات هندسة البرمجيات وتحليل النظم وبناء واجهات احترافية قابلة للإنتاج.
+              دورة تطبيقية متخصصة لنقل طلاب وهواة البرمجة من مجرد توجيه الأسئلة للذكاء الاصطناعي إلى قيادة عمليات هندسة البرمجيات وتحليل النظم وبناء منتجات Full-Stack قابلة للإنتاج والتسليم.
             </p>
 
             <div className="pt-1">
@@ -97,10 +97,10 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/learn/git-github-user-flow"
+                  href="/learn/project-idea-mvp"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> Git وGitHub وUser Flow
+                  <span className="text-slate-600">›</span> مسار مواضيع التعلم
                 </Link>
               </li>
               <li>
@@ -133,7 +133,7 @@ export const Footer: React.FC = () => {
                   href="/roadmap"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> خارطة 20 محاضرة للمشروع
+                  <span className="text-slate-600">›</span> مسار مواضيع المشروع
                 </Link>
               </li>
               <li>

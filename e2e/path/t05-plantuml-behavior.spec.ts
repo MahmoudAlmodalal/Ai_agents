@@ -135,7 +135,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     // Decision gates explanation
     await expect(page.locator('text=بوابات اتخاذ القرار المنطقية')).toBeVisible();
     await expect(page.locator('text=بوابة سقف الإعارة النشطة (Active Loans Limit - Rule 3)')).toBeVisible();
-    await expect(page.locator('text=بوابة مهلة الاستلام (48-Hour Deadline - Rule 7)')).toBeVisible();
+    await expect(page.locator('text=بوابة مهلة الاستلام (48-Hour Deadline - Rule 6)')).toBeVisible();
     await expect(page.locator('text=بوابة فحص السلامة عند الإرجاع (Return Inspection - Rule 8)')).toBeVisible();
 
     // Code block with Mermaid flowchart TD
@@ -156,6 +156,29 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     const nextLink = page.locator('a[href="/learn/state-diagram"]').first();
     await expect(prevLink).toBeVisible();
     await expect(nextLink).toBeVisible();
+  });
+
+  test('Topic 12 Activity diagram damage branch adheres to Rule 8 (no restock on damage, explicit staff confirmation and finish)', async ({ page }) => {
+    await page.goto('/learn/activity-diagram');
+    const codeBlock = page.locator('pre.code-content').filter({ hasText: 'flowchart TD' }).first();
+    await expect(codeBlock).toBeVisible();
+    const diagram = await codeBlock.innerText();
+
+    // Pickup deadline must cite Rule 6, not Rule 7
+    await expect(page.locator('text=بوابة مهلة الاستلام (48-Hour Deadline - Rule 6)')).toBeVisible();
+    // Invented notify-when-available suggestion removed
+    await expect(page.locator('text=ويُقترح إشعاره عند التوفر')).toHaveCount(0);
+
+    // Rule 8: Damaged branch must NOT flow into Restock or unconditional CloseReturn that restocks
+    expect(diagram).not.toMatch(/RecordDamage[^\n]*-->\s*CloseReturn\b/);
+    expect(diagram).not.toMatch(/RecordDamage[^\n]*-->\s*Restock\b/);
+
+    // Damaged branch must have explicit staff confirmation and explicit finish without restock
+    expect(diagram).toMatch(/RecordDamage.*-->.*CloseDamaged.*-->.*EndDamaged|RecordDamage.*-->.*EndDamaged/);
+    expect(diagram).toContain('تأكيد المسؤول');
+
+    // Only undamaged path restores available stock
+    expect(diagram).toMatch(/InspectItem -- لا -->.*Restock/);
   });
 
   test('Topic 13 (State Diagram) reflects documented lifecycle states without invented states, transition table, and PROMPT 10', async ({ page, context }) => {
@@ -193,7 +216,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(codeBlock).toBeVisible();
     await expect(codeBlock).toContainText('Draft --> Submitted : إرسال الطلب');
     await expect(codeBlock).toContainText('Submitted --> Approved : موافقة مسؤول المعمل');
-    await expect(codeBlock).toContainText('Approved --> Active : حضور الطالب وتسليم المعدة');
+    await expect(codeBlock).toContainText('Approved --> Active : تأكيد المسؤول التسليم المادي');
     await expect(codeBlock).toContainText('Active --> Overdue : تجاوز تاريخ الاستحقاق دون إرجاع');
 
     // PROMPT 10

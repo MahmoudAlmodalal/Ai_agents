@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, HeartCrack } from 'lucide-react';
-import { TOPICS } from '@/src/data/topicsData.ts';
+import { TOPICS, deriveCategoryCounts } from '@/src/data/topicsData.ts';
 import { TopicCategory, ContentType, TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, stripHtml } from '@/src/utils/searchUtils.ts';
 import { SearchHeader } from '@/src/components/SearchHeader.tsx';
@@ -13,6 +13,8 @@ import { TopicDetailModal } from '@/src/components/TopicDetailModal.tsx';
 import { AudioPlayerBar } from '@/src/components/AudioPlayerBar.tsx';
 import { RecentlyViewedSection } from '@/src/components/RecentlyViewedSection.tsx';
 import Link from 'next/link';
+import { HistoricalSavedItems } from '@/src/components/HistoricalSavedItems';
+import { EntryQuestion } from '@/src/components/EntryQuestion';
 
 import {
   readSavedBookmarks,
@@ -64,16 +66,14 @@ export default function HomePage() {
     setPreviewDiagramRequested(section === 'diagram');
     setRecentlyViewed((prev) => {
       const filtered = prev.filter((id) => id !== slug);
-      const updated = [slug, ...filtered].slice(0, 5);
-      writeSavedRecentlyViewed(updated);
+      const updated = writeSavedRecentlyViewed([slug, ...filtered]);
       return updated;
     });
   }, []);
 
   // Clear recently viewed history
   const handleClearRecentlyViewed = React.useCallback(() => {
-    setRecentlyViewed([]);
-    writeSavedRecentlyViewed([]);
+    setRecentlyViewed((previous) => writeSavedRecentlyViewed(previous.filter((id) => !getTopicBySlug(id))));
   }, []);
 
   // State: Dark Mode (defaults to user preference or localStorage)
@@ -125,8 +125,8 @@ export default function HomePage() {
     return map;
   }, []);
 
-  // Filtered Topics with search and bookmarks filter
-  const filteredTopics = React.useMemo(() => {
+  // Candidate topics matching bookmarks, content-type, and keyword search across metadata and stripped HTML
+  const candidateTopics = React.useMemo(() => {
     const normQuery = normalizeArabic(searchQuery.trim());
 
     return TOPICS.filter((topic) => {
@@ -135,17 +135,12 @@ export default function HomePage() {
         return false;
       }
 
-      // 2. Category Filter
-      if (selectedCategory !== 'all' && topic.category !== selectedCategory) {
-        return false;
-      }
-
-      // 3. Content Type Filter
+      // 2. Content Type Filter
       if (selectedContentType !== 'all' && !topic.contentTypes.includes(selectedContentType)) {
         return false;
       }
 
-      // 4. Keyword Search Match
+      // 3. Keyword Search Match
       if (!normQuery) return true;
 
       const normTitle = normalizeArabic(topic.title);
@@ -164,7 +159,18 @@ export default function HomePage() {
 
       return matchTitle || matchSubtitle || matchStage || matchSummary || matchTags || matchContent;
     });
-  }, [searchQuery, selectedCategory, selectedContentType, showFavoritesOnly, bookmarks, strippedContentMap]);
+  }, [searchQuery, selectedContentType, showFavoritesOnly, bookmarks, strippedContentMap]);
+
+  // Derived category counts before selected-category restriction
+  const categoryCounts = React.useMemo(() => {
+    return deriveCategoryCounts(candidateTopics);
+  }, [candidateTopics]);
+
+  // Filtered Topics with category filter applied
+  const filteredTopics = React.useMemo(() => {
+    if (selectedCategory === 'all') return candidateTopics;
+    return candidateTopics.filter((topic) => topic.category === selectedCategory);
+  }, [candidateTopics, selectedCategory]);
 
   // Active topic object for modal
   const activeTopic = React.useMemo(() => {
@@ -293,6 +299,7 @@ export default function HomePage() {
         bookmarksCount={bookmarks.length}
         showFavoritesOnly={showFavoritesOnly}
         onToggleFavoritesOnly={() => setShowFavoritesOnly((prev) => !prev)}
+        categoryCounts={categoryCounts}
       />
 
       {/* 3. Main Topic Explorer */}
@@ -322,16 +329,18 @@ export default function HomePage() {
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] sm:text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider block">
-                    تعلّم بناء المشاريع بالذكاء الاصطناعي
+                    MET Academy — سلاح العصر
                   </span>
                 </div>
                 <h2 className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
-                  من استنطاق الفكرة ووثيقة PRD إلى نمذجة المعمارية وقواعد البيانات بالذكاء الاصطناعي
+                  من فكرة مشروعك إلى منتج Full-Stack: واجهات وخادم وبيانات واختبار ونشر
                 </h2>
                 <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6">لمن يعرف أساسيات البرمجة ويبدأ تعلّم وكلاء الذكاء الاصطناعي (AI Agents)، ويريد تحويل فكرة تطبيق إلى مشروع واضح خطوة بخطوة.</p>
+                <p className="mt-2 text-xs text-[var(--text-muted)] leading-6">المدة الرسمية للبرنامج: 40 ساعة. ترتيب المواضيع يتبع اعتماديات مشروعك؛ ليس توزيعًا زمنيًا للساعات.</p>
                 <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6"><strong>ستبدأ بـ {firstTopic.title}: </strong>{firstTopic.goal}</p>
                 <p className="mt-2 text-xs text-[var(--text-muted)] leading-6"><strong>مخرجك الأول: </strong>{firstTopic.outputs.join('، ')}</p>
                 <Link href={`/learn/${firstTopic.slug}`} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-xl bg-[var(--brand-primary)] px-4 text-sm font-bold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)]">ابدأ بالموضوع الأول</Link>
+                <Link href="/start" className="mx-3 inline-flex min-h-10 items-center text-sm font-bold text-[var(--primary)] underline">ابدأ هنا: كيف تستخدم المسار؟</Link>
               </div>
 
               {/* Compact 4-Metric Grid */}
@@ -356,6 +365,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            <EntryQuestion />
           </section>
         )}
 
@@ -369,35 +379,32 @@ export default function HomePage() {
           />
         )}
 
+        <HistoricalSavedItems bookmarks={bookmarks} recentlyViewed={recentlyViewed} />
         {/* Dynamic Topic Grid */}
         {filteredTopics.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            <AnimatePresence mode="popLayout">
-              {filteredTopics.map((topic, index) => (
-                <motion.div
-                  key={topic.id}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                  transition={{
-                    duration: 0.35,
-                    delay: index * 0.04,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  layout
-                >
-                  <TopicCard
-                    topic={topic}
-                    searchQuery={searchQuery}
-                    onOpenTopic={handleOpenTopic}
-                    onListenTopic={(t) => playTTSForTopic(t)}
-                    isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
-                    isBookmarked={bookmarks.includes(topic.slug) || bookmarks.includes(topic.id)}
-                    onToggleBookmark={handleToggleBookmark}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+          <div id="topics" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+            {filteredTopics.map((topic, index) => (
+              <motion.div
+                key={topic.id}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.25,
+                  delay: Math.min(index * 0.02, 0.2),
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+              >
+                <TopicCard
+                  topic={topic}
+                  searchQuery={searchQuery}
+                  onOpenTopic={handleOpenTopic}
+                  onListenTopic={(t) => playTTSForTopic(t)}
+                  isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
+                  isBookmarked={bookmarks.includes(topic.slug) || bookmarks.includes(topic.id)}
+                  onToggleBookmark={handleToggleBookmark}
+                />
+              </motion.div>
+            ))}
           </div>
         ) : showFavoritesOnly ? (
           /* Empty Favorites State */

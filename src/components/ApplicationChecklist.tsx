@@ -18,6 +18,8 @@ const storageMessages = {
 
 export function ApplicationChecklist({ topic, items }: { topic: TopicItem; items: string[] }) {
   const helpId = React.useId();
+  const [ready, setReady] = React.useState(false);
+  React.useEffect(() => setReady(true), []);
   const subscribe = React.useCallback((listener: () => void) => subscribeApplicationChecklist(topic.slug, listener), [topic.slug]);
   const getSnapshot = React.useCallback(() => getApplicationChecklistSnapshot(topic.slug), [topic.slug]);
   const { selected, storageStatus } = React.useSyncExternalStore(subscribe, getSnapshot, () => EMPTY_APPLICATION_CHECKLIST);
@@ -34,6 +36,7 @@ export function ApplicationChecklist({ topic, items }: { topic: TopicItem; items
           <label key={key} className="flex min-h-11 items-start gap-2.5 py-2 text-xs sm:text-sm text-[var(--text-muted)] cursor-pointer">
             <input
               type="checkbox"
+              disabled={!ready}
               checked={selected.has(key)}
               onChange={(event) => toggleApplicationChecklistItem(topic.slug, item, event.target.checked)}
               className="mt-0.5 h-4 w-4 accent-emerald-600 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"

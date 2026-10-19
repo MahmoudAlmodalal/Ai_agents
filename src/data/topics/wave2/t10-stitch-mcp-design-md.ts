@@ -334,20 +334,20 @@ Never output or expose API keys.</code></pre>
 
 ## Project Overview
 - **Project Name:** BorrowHub Equipment Share (أو مشروع الطالب الخاص)
-- **Stitch Project ID:** stitch-proj-borrowhub-mvp
-- **Connection Mode:** Stitch MCP Sync (أو Manual Export Fallback)
-- **Last Verification Date:** 2026-10-18
-- **Read-only Safety Verified:** Yes (No write/delete mutations performed)
+- **Stitch Project ID:** [ضع المعرّف الحقيقي من حسابك؛ غير متاح في هذا المثال]
+- **Connection Mode:** [MCP أو تصدير يدوي حسب ما اختبرته فعليًا]
+- **Last Verification Date:** Not Run — اكتب تاريخ فحصك الفعلي
+- **Read-only Safety Verified:** Not Run — لا تسجل النجاح قبل مراجعة الصلاحيات
 
 ## Approved Screens Inventory
 | Screen ID | Screen Name (AR) | Role / Route | Stitch Screen URL / Asset Path | Status |
 |-----------|------------------|--------------|--------------------------------|--------|
-| SCREEN-01 | تصفح واستعارة المعدات | Member / /items | stitch://screen/browse-01 أو docs/assets/screens/browse.png | Approved ✓ |
-| SCREEN-02 | تفاصيل المعدة وطلب الحجز | Member / /items/[id] | stitch://screen/detail-02 أو docs/assets/screens/detail.png | Approved ✓ |
-| SCREEN-03 | نافذة تأكيد مدة الاستعارة | Member / Modal | stitch://screen/modal-03 أو docs/assets/screens/modal.png | Approved ✓ |
-| SCREEN-04 | لوحة تحكم المشرف وإدارة الطلبات | Admin / /admin/loans | stitch://screen/admin-04 أو docs/assets/screens/admin.png | Approved ✓ |
+| SCREEN-01 | تصفح المعدات | student / مسار من الجرد | أضف الرابط الحقيقي أو ملفًا موجودًا | Not Run |
+| SCREEN-02 | تفاصيل المعدة وطلب الحجز | student / مسار من الجرد | غير متاح في المثال | Not Run |
+| SCREEN-03 | تأكيد الطلب | student / حسب الجرد | غير متاح في المثال | Not Run |
+| SCREEN-04 | إدارة الطلبات | staff / حسب الجرد | غير متاح في المثال | Not Run |
 
-## Confirmed Primary Palette Sample (For Verification)
+## Illustrative Palette — Replace From Your Approved Design
 - **Primary Brand:** #059669 (Emerald 600)
 - **Surface Background:** #f8fafc (Slate 50)
 - **Text Main:** #0f172a (Slate 900)
@@ -355,7 +355,7 @@ Never output or expose API keys.</code></pre>
 
 ## Security &amp; Keys Declaration
 - No API keys or authorization tokens are stored in this document or repository.
-- Local MCP connection configured via user-level environment settings.</code></pre>
+- Local MCP connection: Not Run in this example; record actual setup separately.</code></pre>
     </div>
   </div>
 </section>
@@ -422,7 +422,7 @@ export const topic29DesignMdHtml = `
             <td><strong>1. رموز التصميم (Tokens)</strong></td>
             <td><code>YAML Frontmatter</code> (في أعلى الملف)</td>
             <td>رموز الألوان الدقيقة بصيغة Hex، مقياس الخطوط (Font Sizes)، مقياس المسافات (Spacing)، أنصاف أقطار الحواف (Radii)، والظلال (Elevation)</td>
-            <td>إعدادات <code>tailwind.config.ts</code> والمتغيرات البرمجية</td>
+            <td><code>@theme</code> في CSS لـ Tailwind v4، أو إعداد الإصدار المثبت في مشروع قائم</td>
           </tr>
           <tr>
             <td><strong>2. فلسفة التصميم (Rationale)</strong></td>
@@ -563,9 +563,9 @@ Report inaccessible properties. Do not modify Stitch screens.</code></pre>
 
   <!-- 5. Concrete DESIGN.md Template -->
   <div class="content-block mt-8">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. النموذج المعتمد الكامل لملف DESIGN.md القياسي</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. نموذج تعليمي لملف DESIGN.md — يحتاج قيم مشروعك ومراجعتها</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      فيما يلي نموذج واقعي مكتمل لملف <code>DESIGN.md</code> يعكس معايير Google وتوكنز حقيقية متوافقة مع مشروع الطالب ودعم اللغة العربية (RTL):
+      فيما يلي مثال توضيحي لملف <code>DESIGN.md</code>، وليس تصديرًا حقيقيًا أو تصميمًا معتمدًا لمشروعك. استبدل القيم والخطوط من شاشتك المعتمدة وافحص التباين. YAML هنا اختيار تعليمي لا شرط لكل صيغة DESIGN.md؛ راجع المعيار الرسمي قبل وصف نتيجة lint بأنها ناجحة.
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -575,8 +575,8 @@ Report inaccessible properties. Do not modify Stitch screens.</code></pre>
       </div>
       <pre class="code-content"><code>---
 # DESIGN.md - Project Design System Tokens &amp; Specifications
-# Generated from Approved Google Stitch Prototype (Topics 21-23 &amp; 28)
-# All values are CONFIRMED REAL decisions - No invented or random values!
+# Illustrative example only. Replace from your actual approved prototype.
+# External extraction, approval and lint: Not Run in this example.
 
 name: "BorrowHub Design System"
 version: "1.0.0"
@@ -590,15 +590,15 @@ tokens:
       default: "#059669"      # Emerald 600 - Main CTA &amp; Brand Accent
       hover: "#047857"        # Emerald 700 - Interactive Hover State
       subtle: "#ecfdf5"       # Emerald 50 - Badge &amp; Highlight Background
-      contrast: "#ffffff"     # White - Text on primary (Ratio 4.8:1 ✓ WCAG AA)
+      contrast: "#ffffff"     # Illustrative: measure actual contrast before approval
     surface:
       page: "#f8fafc"         # Slate 50 - Background
       card: "#ffffff"         # Pure White - Card &amp; Modal Background
       subtle: "#f1f5f9"       # Slate 100 - Table Headers &amp; Skeletons
       border: "#e2e8f0"       # Slate 200 - Borders &amp; Dividers
     text:
-      main: "#0f172a"         # Slate 900 - High Contrast Headings (14.2:1 ✓)
-      muted: "#475569"        # Slate 600 - Body &amp; Descriptive Text (5.6:1 ✓)
+      main: "#0f172a"         # Measure against the actual background
+      muted: "#475569"        # Contrast review required before use
       faint: "#94a3b8"        # Slate 400 - Placeholders &amp; Captions
     status:
       available: "#059669"    # Green - Equipment Ready for Loan

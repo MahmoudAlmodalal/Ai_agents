@@ -6,7 +6,8 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 18
  * ========================================================================= */
 export const topic18UiUxHtml = `
-<section id="topic-18-ui-ux" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-18-ui-ux" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 18 · المحطة الأساسية</span>
     <span class="step-pill">هندسة تجربة المستخدم وتوزيع الأدوار</span>
@@ -240,7 +241,8 @@ Start with the first question only.</code></pre>
  * Sequence Position: 19
  * ========================================================================= */
 export const topic19UxBlueprintHtml = `
-<section id="topic-19-ux-blueprint" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-19-ux-blueprint" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 19 · المحطة الأساسية</span>
     <span class="step-pill">مخطط التجربة وهندسة الحالات</span>
@@ -344,7 +346,7 @@ export const topic19UxBlueprintHtml = `
             <td><strong>4. النجاح (Success)</strong></td>
             <td>الحاجة للتأكيد التام على اكتمال الإجراء ومعرفة الخطوة التالية.</td>
             <td>إشعار تأكيد عائم (Toast)، شاشة تأكيد تحتوي رقم الطلب، مع خطوات الاستلام التالية بوضوح.</td>
-            <td>عند إرسال الطلب: "تم تسجيل طلبك بنجاح! رقم الطلب #1042. مهلة الاستلام من المعمل 48 ساعة من تاريخ الاعتماد".</td>
+            <td>عند إرسال الطلب: "تم تسجيل طلبك بنجاح! رقم الطلب #1042. مهلة الاستلام من المعمل 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق؛ لا يبدأ عدّها عند إرسال الطلب أو اعتماده".</td>
           </tr>
           <tr>
             <td><strong>5. التجاوب (Responsive)</strong></td>
@@ -429,7 +431,8 @@ Do not design screens yet or write code.</code></pre>
  * Sequence Position: 20
  * ========================================================================= */
 export const topic20ScreenInventoryHtml = `
-<section id="topic-20-screen-inventory" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-20-screen-inventory" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 20 · المحطة الأساسية</span>
     <span class="step-pill">جرد الشاشات وهندسة النطاق</span>
@@ -568,7 +571,7 @@ export const topic20ScreenInventoryHtml = `
             <td><code>/staff/inspections</code><br />مشرف المستودع</td>
             <td>توثيق حالة المعدة عند إرجاعها إلى المعمل، التأكد من سلامتها الفنية، أو تسجيل الأضرار والملاحظات.</td>
             <td>بيانات الإعارة المنتهية، قائمة فحص السلامة (Checklist)، حقل رصد الأضرار ونوع العطل وصور الإثبات.</td>
-            <td>تأكيد الإرجاع السليم وإخلاء طرف الطالب، أو تسجيل تلف وتجميد الحساب مؤقتاً (القاعدة 8).</td>
+            <td>تأكيد الإرجاع السليم وإخلاء طرف الطالب، أو تسجيل تلف دون إعادة الوحدة للمتاح كسؤال PRD مفتوح للسياسات الإضافية (القاعدة 8).</td>
             <td><strong>خطأ:</strong> حظر إغلاق الإعارة المتضررة دون كتابة تقرير فحص تفصيلي موثق.</td>
           </tr>
         </tbody>
@@ -601,7 +604,7 @@ export const topic20ScreenInventoryHtml = `
             <td>فحص عدد الأجهزة قبل فتح نموذج الطلب؛ عند وصول الحد يظهر تنبيه مانع ويتعطل زر الإرسال.</td>
           </tr>
           <tr>
-            <td><strong>القاعدة 7:</strong> استلام الجهاز خلال 48 ساعة من الاعتماد</td>
+            <td><strong>القاعدة 6:</strong> استلام الجهاز خلال 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق</td>
             <td>عقدة التسليم <code>ApprovedReady &rarr; Handover</code></td>
             <td><code>SCR-04</code> للوحة الطالب و <code>SCR-05</code> للمشرف</td>
             <td>عرض مؤقت عد تنازلي لمهلة الـ 48 ساعة؛ يتم إلغاء الحجز تلقائياً في حال عدم الحضور.</td>

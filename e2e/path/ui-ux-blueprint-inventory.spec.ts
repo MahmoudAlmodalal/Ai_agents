@@ -121,10 +121,13 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     await expect(page.locator('strong:has-text("SCR-05")')).toBeVisible();
     await expect(page.locator('strong:has-text("SCR-06")')).toBeVisible();
 
-    // Verify traceability matrix for PRD Rules 3, 7, 8
+    // Verify traceability matrix for PRD Rules 3, 6, 8
     await expect(page.locator('h3:has-text("مصفوفة تدقيق التغطية الهندسية")')).toBeVisible();
     await expect(page.locator('text=القاعدة 3:')).toBeVisible();
-    await expect(page.locator('text=القاعدة 7:')).toBeVisible();
+    const pickupRow = page.locator('tr').filter({ hasText: 'القاعدة 6:' });
+    await expect(pickupRow).toBeVisible();
+    await expect(pickupRow).toContainText('48 ساعة');
+    await expect(page.locator('text=القاعدة 6:')).toBeVisible();
     await expect(page.locator('text=القاعدة 8:')).toBeVisible();
 
     // Deliverable code template

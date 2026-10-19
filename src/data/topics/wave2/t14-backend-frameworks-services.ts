@@ -26,9 +26,9 @@ export const topic41DjangoHtml = `
       <span>قرار المعمارية: بديلان مستقلان لخادم المشروع (Django أو FastAPI)</span>
     </div>
     <p class="leading-7">
-      يمثل <strong>Django</strong> (الموضوع 41) و<strong>FastAPI</strong> (الموضوع 42) بديلين تقنيين مستقلين لتنفيذ خادم مشروعك. 
-      <strong>يختار الطالب إطار عمل واحد فقط لبناء خادم مشروعه، ولا يلزم إطلاقاً بإعادة بناء الخادم مرتين.</strong> 
-      إذا كان خيارك المعماري المعتمد هو Django، أكمل هذا الموضوع ثم انتقل مباشرة للمصادقة (الموضوع 43) متجاوزاً تطبيق FastAPI. 
+      يمثل <strong>Django</strong> (الموضوع 41) و<strong>FastAPI</strong> (الموضوع 42) بديلين تقنيين مستقلين لتنفيذ خادم مشروعك.
+      <strong>يختار الطالب إطار عمل واحد فقط لبناء خادم مشروعه، ولا يلزم إطلاقاً بإعادة بناء الخادم مرتين.</strong>
+      إذا كان خيارك المعماري المعتمد هو Django، أكمل هذا الموضوع ثم انتقل مباشرة للمصادقة (الموضوع 43) متجاوزاً تطبيق FastAPI.
       وإذا اخترت FastAPI، يمكنك <a href="/learn/fastapi-backend" class="text-[var(--accent)] underline font-bold">الانتقال مباشرة لموضوع FastAPI (الموضوع 42)</a>.
     </p>
   </div>
@@ -219,8 +219,8 @@ class Equipment(models.Model):
       <span>تنبيه منهجي: قواعد BorrowHub دراسة حالة إرشادية وليست قيوداً لمشروعك</span>
     </div>
     <p class="leading-7">
-      نماذج الأجهزة وفئات التصنيف المعروضة أعلاه مأخوذة من دراسة حالة نظام BorrowHub لإعارة المعدات الجامعية. 
-      <strong>هذه القواعد والحقول ليست متطلبات إلزامية لمشروع الطالب الشخصي.</strong> 
+      نماذج الأجهزة وفئات التصنيف المعروضة أعلاه مأخوذة من دراسة حالة نظام BorrowHub لإعارة المعدات الجامعية.
+      <strong>هذه القواعد والحقول ليست متطلبات إلزامية لمشروع الطالب الشخصي.</strong>
       عليك استخراج نماذج خادم مشروعك وحقولها وعلاقاتها مباشرة من وثيقة <code>docs/ERD.md</code> ومواصفة SRS الخاصة بفكرتك المعتمدة.
     </p>
   </div>
@@ -252,9 +252,9 @@ export const topic42FastApiHtml = `
       <span>قرار المعمارية: بديلان مستقلان لخادم المشروع (FastAPI أو Django)</span>
     </div>
     <p class="leading-7">
-      يمثل <strong>FastAPI</strong> البديل التقني الثاني المستقل لبناء خادم مشروعك. 
-      <strong>إذا اخترت FastAPI، فهذا هو مسارك البرمجي؛ لست بحاجة لبناء الخادم بـ Django في الموضوع 41 ولن تبني الخادم مرتين.</strong> 
-      بمجرد إنجاز هذا الموضوع، انتقل مباشرة إلى المصادقة والصلاحيات (الموضوع 43). 
+      يمثل <strong>FastAPI</strong> البديل التقني الثاني المستقل لبناء خادم مشروعك.
+      <strong>إذا اخترت FastAPI، فهذا هو مسارك البرمجي؛ لست بحاجة لبناء الخادم بـ Django في الموضوع 41 ولن تبني الخادم مرتين.</strong>
+      بمجرد إنجاز هذا الموضوع، انتقل مباشرة إلى المصادقة والصلاحيات (الموضوع 43).
       وإذا كنت قد نفذت خادمك بالفعل بـ Django في الموضوع السابق، يمكنك <a href="/learn/auth-permissions" class="text-[var(--accent)] underline font-bold">الانتقال مباشرة إلى موضوع المصادقة (الموضوع 43)</a>.
     </p>
   </div>
@@ -440,8 +440,8 @@ class EquipmentResponseSchema(BaseModel):
       <span>تنبيه منهجي: أمثلة BorrowHub إرشادية وليست إلزامية لمشروع الطالب</span>
     </div>
     <p class="leading-7">
-      مخططات ونماذج المعدات والتصنيفات المعروضة أعلاه تمثل دراسة حالة لنظام BorrowHub. 
-      <strong>قواعد BorrowHub وحقولها ليست متطلبات مفروضة على مشروعك الخاص.</strong> 
+      مخططات ونماذج المعدات والتصنيفات المعروضة أعلاه تمثل دراسة حالة لنظام BorrowHub.
+      <strong>قواعد BorrowHub وحقولها ليست متطلبات مفروضة على مشروعك الخاص.</strong>
       قم ببناء نماذج SQLAlchemy ومخططات Pydantic بما يطابق تحديداً وثيقة ERD وSRS الخاصة بمنتجك المستقل.
     </p>
   </div>
@@ -593,6 +593,7 @@ class IsOwnerOrAdminOnly(permissions.BasePermission):
 </code></pre>
     </div>
 
+    <p class="leading-7 text-[var(--text-muted)]">حارس JWT التالي مثال للتحقق من توقيع الرمز ووجود وقت انتهائه وبيانات هويته، وليس نظام دخول وتجديد مكتملًا. أدخل JWT_SECRET_KEY من بيئة الخادم، واضبط issuer وaudience بحسب عقدك، وتحقق من حساب المستخدم وحالة اعتماده قبل تنفيذ العملية؛ استمد الدور والصلاحيات الحالية من سجل الحساب الموثوق، لا من claim قديم في الرمز وحده. أضف إصدار الرموز وإبطالها وتجديدها واختبارات الرمز المنتهي والحساب المعطل؛ وجود الحارس وحده لا يثبت اكتمال المصادقة.</p>
     <!-- Code Block: FastAPI OAuth2 & Dependencies -->
     <div class="code-container my-6" dir="ltr">
       <div class="code-header">
@@ -602,9 +603,10 @@ class IsOwnerOrAdminOnly(permissions.BasePermission):
       <pre class="code-content"><code>from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 import jwt
+import os
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
-SECRET_KEY = "your-verified-production-secret-key"
+SECRET_KEY = os.environ["JWT_SECRET_KEY"]  # inject server-side; no fallback secret
 ALGORITHM = "HS256"
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -614,13 +616,13 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM], options={"require": ["exp", "sub", "role"]})
         user_id: str = payload.get("sub")
         role: str = payload.get("role")
         if user_id is None or role is None:
             raise credentials_exception
         return {"id": user_id, "role": role}
-    except jwt.PyJWTError:
+    except jwt.InvalidTokenError:
         raise credentials_exception
 
 def require_roles(allowed_roles: list[str]):
@@ -688,8 +690,8 @@ def require_roles(allowed_roles: list[str]):
       <span>تنبيه منهجي: أدوار وصلاحيات BorrowHub دراسة حالة إرشادية وليست قيوداً لمشروعك</span>
     </div>
     <p class="leading-7">
-      أدوار المستخدمين المذكورة في الأمثلة (طالب، مشرف مستودع، عضو هيئة تدريس) والصلاحيات المقترنة بها خاصة بدراسة حالة نظام BorrowHub. 
-      <strong>لا تفرض هذه الأدوار على مشروعك ما لم تكن جزءاً من فكرتك.</strong> 
+      أدوار المستخدمين المذكورة في الأمثلة (طالب، مسؤول مستودع/موظف، مشرف نظام) والصلاحيات المقترنة بها خاصة بدراسة حالة نظام BorrowHub.
+      <strong>لا تفرض هذه الأدوار على مشروعك ما لم تكن جزءاً من فكرتك.</strong>
       عليك الرجوع لوثيقتي PRD وSRS الخاصتين بمشروعك لتحديد أدوارك الحقيقية وصياغة مصفوفة الصلاحيات المطابقة لنطاق عملك.
     </p>
   </div>
@@ -732,8 +734,8 @@ export const topic44ServicesSelectorsHtml = `
         <span>الحل المعماري القياسي: نمط Services & Selectors</span>
       </div>
       <p class="leading-7">
-        نقوم بفصل المنطق إلى طبقتين صريحتين ونظيفين: 
-        <strong>طبقة الخدمات (Services)</strong> مسؤولة حصرياً عن العمليات التغييرية (Writes / Mutations) والتحقق من الشروط وإدارة المعاملات الذرية؛ 
+        نقوم بفصل المنطق إلى طبقتين صريحتين ونظيفين:
+        <strong>طبقة الخدمات (Services)</strong> مسؤولة حصرياً عن العمليات التغييرية (Writes / Mutations) والتحقق من الشروط وإدارة المعاملات الذرية؛
         بينما <strong>طبقة المحددات (Selectors)</strong> مسؤولة حصرياً عن استعلامات القراءة النقية (Pure Reads) دون أي آثار جانبية (Side Effects).
       </p>
     </div>
@@ -804,6 +806,8 @@ export const topic44ServicesSelectorsHtml = `
       طبق النمط البرمجي وفق الإطار الذي اعتمدته في مشروعك:
     </p>
 
+    <div class="callout warning my-6"><p><strong>حدود المثال البرمجي:</strong> هذه مقاطع توضيحية لفصل القراءة والكتابة والمعاملات، وليست تنفيذ BorrowHub كاملًا أو عقد API جاهزًا. قبل استخدامها طابق أسماء الحقول والحالات مع نماذجك وعقد API، وأضف التحقق من اعتماد الحساب والسبب والتواريخ ووحدة الطلب وحالات الطلبات النشطة بحسب PRD. قفل المعدة وحده لا يحمي حد طلبات المستخدم عند طلب معدتين مختلفتين بالتزامن؛ يلزم تسلسل أو قفل مناسب للمستخدم واختبار تزامن. إنشاء طلب pending لا يساوي التسليم ولا يحوّل المعدة إلى borrowed. لا تعتمد المخرج قبل اختبارات الأهلية والحدود والتزامن والتسليم والإرجاع.</p></div>
+
     <!-- Code Block: Django Services & Selectors -->
     <div class="code-container my-6" dir="ltr">
       <div class="code-header">
@@ -820,8 +824,8 @@ from apps.equipment.models import Equipment
 # ============================================================================
 def create_loan_request(*, user, equipment_id: str, duration_days: int) -> LoanRequest:
     """خدمة إنشاء طلب إعارة: تتحقق من الشروط وتحدث الحالة في معاملة ذرية"""
-    if duration_days > 14:
-        raise ValidationError("لا يمكن أن تتجاوز مدة الإعارة 14 يوماً وفق متطلبات هذا النظام")
+    if not 1 <= duration_days <= 10:
+        raise ValidationError("لا يمكن أن تتجاوز مدة الإعارة 10 أيام وفق متطلبات هذا النظام")
 
     with transaction.atomic():
         # قفل سجل المعدة لمنع الحجز المتزامن (Race Condition Protection)
@@ -834,15 +838,14 @@ def create_loan_request(*, user, equipment_id: str, duration_days: int) -> LoanR
         if active_loans_count >= 2:
             raise ValidationError("تجاوزت الحد الأقصى للإعارات المتزامنة المسموح بها")
 
-        # إنشاء الطلب وتحديث حالة المعدة
+        # إنشاء الطلب فقط؛ التسليم وتحديث المخزون عملية منفصلة
         loan = LoanRequest.objects.create(
             user=user,
             equipment=equipment,
             duration_days=duration_days,
             status='pending'
         )
-        equipment.status = 'borrowed'
-        equipment.save(update_fields=['status'])
+        # الطلب pending لا يعني تسليم المعدة؛ حدّث المخزون عند الانتقال المعتمد للتسليم
 
         return loan
 
@@ -878,7 +881,7 @@ from app.models.equipment import EquipmentModel
 # 1. Service (Async Write Operation with Transaction & Invariant Check)
 # ============================================================================
 async def request_loan_service(*, session: AsyncSession, user_id: UUID, equipment_id: UUID, days: int) -> LoanRequestModel:
-    if days > 14:
+    if not 1 <= days <= 10:
         raise HTTPException(status_code=400, detail="مدة الإعارة تتجاوز الحد الأقصى المسموح")
 
     async with session.begin():
@@ -908,7 +911,7 @@ async def request_loan_service(*, session: AsyncSession, user_id: UUID, equipmen
             status="pending"
         )
         session.add(loan)
-        equipment.status = "borrowed"
+        # لا تغيّر حالة المعدة إلى borrowed قبل تسليمها فعليًا وفق قواعد المشروع
         await session.flush()
         return loan
 
@@ -938,8 +941,8 @@ async def list_active_loans_selector(*, session: AsyncSession, user_id: UUID):
       <span>تحذير منهجي صارم: لا تجعل قواعد BorrowHub قواعد إلزامية لمشروعك</span>
     </div>
     <p class="leading-7">
-      الشروط الواردة في الأكواد أعلاه (مثل: <strong>ألا تتجاوز الإعارة 14 يوماً</strong>، و<strong>ألا تزيد الطلبات النشطة عن 2</strong>) هي <strong>قواعد خاصة بدراسة حالة نظام BorrowHub حصراً</strong> لتوضيح كيفية تطبيق القيود وحمايتها بالمعاملات. 
-      <strong>يُحظر نسخ هذه القواعد حرفياً لمشروع الطالب الشخصي ما لم تكن جزءاً أصيلاً وموثقاً في وثيقة المتطلبات (PRD وSRS) الخاصة به.</strong> 
+      الشروط الواردة في الأكواد أعلاه (مثل: <strong>ألا تتجاوز الإعارة 10 أيام</strong>، و<strong>ألا تزيد الطلبات النشطة عن 2</strong>) هي <strong>قواعد خاصة بدراسة حالة نظام BorrowHub حصراً</strong> لتوضيح كيفية تطبيق القيود وحمايتها بالمعاملات.
+      <strong>يُحظر نسخ هذه القواعد حرفياً لمشروع الطالب الشخصي ما لم تكن جزءاً أصيلاً وموثقاً في وثيقة المتطلبات (PRD وSRS) الخاصة به.</strong>
       عليك تحديد شروط العمل، والحدود القصوى، والتحققات الخاصة بفكرة تطبيقك الفريدة وكتابتها في دوال Services الخاصة بك.
     </p>
   </div>
@@ -977,7 +980,7 @@ export const t14Entries: TopicItem[] = [
       'مخطط الكيانات والعلاقات المعتمد docs/ERD.md (الموضوع 14)',
       'تجهيز بيئة بايثون وأساسيات اللغة (الموضوع 38)',
       'إعداد قاعدة بيانات PostgreSQL والاتصال الآمن بها (الموضوع 39)',
-      'معمارية الخادم وعقود API الموثقة في docs/BACKEND_API_SPEC.md (الموضوع 40)'
+      'معمارية الخادم وعقود API الموثقة في docs/API_CONTRACTS.md (الموضوع 40)'
     ],
     steps: [
       '1. أنشئ بيئة بايثون الافتراضية وثبّت حزم django وdjangorestframework وpsycopg2-binary وضبط ملف .env لربط PostgreSQL.',
@@ -1037,7 +1040,7 @@ export const t14Entries: TopicItem[] = [
       'مخطط الكيانات والعلاقات المعتمد docs/ERD.md (الموضوع 14)',
       'تجهيز بيئة بايثون وأساسيات اللغة والبرمجة غير المتزامنة async/await (الموضوع 38)',
       'إعداد قاعدة بيانات PostgreSQL وبروتوكول الاتصال (الموضوع 39)',
-      'وثيقة معمارية الخادم وعقود API في docs/BACKEND_API_SPEC.md (الموضوع 40)'
+      'وثيقة معمارية الخادم وعقود API في docs/API_CONTRACTS.md (الموضوع 40)'
     ],
     steps: [
       '1. ثبّت حزم fastapi وuvicorn وpydantic وsqlalchemy وalembic وasyncpg في بيئة المشروع.',
@@ -1097,7 +1100,7 @@ export const t14Entries: TopicItem[] = [
     goal: 'تنفيذ منظومة متكاملة ومحكمة لتسجيل الدخول والتحقق من الهوية بـ JWT، وتطبيق حراس الصلاحيات المستندة للأدوار (RBAC) لحماية نقاط النهاية وفق الإطار البرمجي المعتمد لمشروع الطالب (Django أو FastAPI).',
     prerequisites: [
       'خادم مشروع مهيأ وقاعدة بيانات متصلة (الموضوع 41 أو الموضوع 42)',
-      'وثيقة عقود نقاط النهاية docs/BACKEND_API_SPEC.md (الموضوع 40)',
+      'وثيقة عقود نقاط النهاية docs/API_CONTRACTS.md (الموضوع 40)',
       'مصفوفة أدوار ومستخدمي النظام في docs/SRS.md (الموضوع 04)'
     ],
     steps: [
@@ -1182,7 +1185,7 @@ export const t14Entries: TopicItem[] = [
       'إدارة المعاملات الذرية (Atomic Transactions) وضمان تراجع التغييرات فوراً عند حدوث أي خطأ.',
       'استخدام قفل السجلات (select_for_update) لمنع حالات السباق وتضارب البيانات المتزامنة.',
       'القضاء على مشكلة N+1 Queries في طبقة Selectors باستخدام التحميل المسبق المناسب.',
-      'الالتزام الصارم بعدم نسخ قواعد BorrowHub الخاصة (مثل حد الإعارتين و14 يوماً) كقواعد إلزامية لمشروع الطالب.',
+      'الالتزام الصارم بعدم نسخ قواعد BorrowHub الخاصة (مثل حد الإعارتين و10 أيام) كقواعد إلزامية لمشروع الطالب.',
       'كتابة اختبارات وحدة تثبت صحة تنفيذ قواعد العمل وحالات التراجع وتوثيق المعمارية في docs/SERVICES_SELECTORS_ARCHITECTURE.md.'
     ],
     publicationStatus: 'unified-complete',

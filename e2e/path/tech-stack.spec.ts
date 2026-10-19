@@ -113,7 +113,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     await expect(page.locator('h1')).toContainText('Tailwind CSS: التنسيق والتجاوب ونظام التصميم المعتمد');
     const header = page.locator('header.rounded-3xl');
     await expect(header).toContainText('محتوى منشور');
-    await expect(header).toContainText('tailwind.config.ts');
+    await expect(header).toContainText('src/app/globals.css');
     await expect(header).toContainText('docs/TAILWIND_DESIGN_MAPPING.md');
 
     const content = page.locator('article');

@@ -96,7 +96,7 @@ test.describe('Sequential Project Path — Ticket 19: Operations and delivery', 
     await page.goBack();
     await page.locator('article').getByRole('link', { name: 'الملفات والقوالب' }).click();
     await expect(page).toHaveURL(/\/templates\/?$/);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('الملفات والقوالب');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('القوالب المرجعية الأربعة عشر');
 
     await page.goto('/learn/project-portfolio-entry');
     await expect(page.locator('article').getByRole('link', { name: 'مكتبة البرومبتات' })).toHaveAttribute('href', '/prompts');

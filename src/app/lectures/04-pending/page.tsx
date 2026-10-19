@@ -6,5 +6,5 @@ import { redirect } from 'next/navigation';
  * so the old unavailable lecture entry points to the complete topic page.
  */
 export default function LegacyPendingLectureRoute() {
-  redirect('/learn/github');
+  redirect('/learn/git-project-docs');
 }

@@ -95,16 +95,10 @@ test('malformed storage stays intact while selections and navigation remain avai
   await expect(page.getByRole('navigation', { name: 'التنقل بين المواضيع' }).getByRole('link', { name: /الموضوع التالي/ })).toBeEnabled();
 });
 
-test('verified inline legacy checkbox restores and clearing survives reload with stable identity', async ({ page }) => {
-  const errors: string[] = [];
-  page.on('pageerror', (error) => errors.push(error.message));
+test('mislabeled old route reaches User Flow and leaves unrelated historical checklist untouched', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('checklist_topic-03_0', 'true'); });
   await page.goto('/learn/requirements-prd');
-  const inlineCheck = page.getByRole('checkbox', { name: /^وضوح المخرج لكل قرار:/ });
-  await expect(inlineCheck).toBeChecked();
-  await inlineCheck.uncheck();
-  await page.reload();
-  await expect(page.getByRole('checkbox', { name: /^وضوح المخرج لكل قرار:/ })).not.toBeChecked();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('User Flow');
+  await expect(page.getByRole('complementary').getByRole('checkbox').first()).not.toBeChecked();
   expect(await page.evaluate(() => localStorage.getItem('checklist_topic-03_0'))).toBe('true');
-  expect(errors).toEqual([]);
 });

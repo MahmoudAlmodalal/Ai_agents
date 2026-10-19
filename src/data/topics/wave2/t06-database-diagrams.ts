@@ -6,6 +6,7 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 14
  * ========================================================================= */
 export const topic14Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-14-relational-erd" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 14 · المحطة الأساسية</span>
@@ -262,6 +263,7 @@ Do not silently change the schema. Save docs/database-review.md.</code></pre>
  * Sequence Position: 15
  * ========================================================================= */
 export const topic15Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-15-dbml-dbdiagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 15 · المحطة الأساسية</span>
@@ -469,6 +471,7 @@ Ref: loan_action_logs.actor_id > users.id [delete: restrict]</code></pre>
  * Sequence Position: 16
  * ========================================================================= */
 export const topic16Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-16-sequence-diagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 16 · المحطة الأساسية</span>
@@ -605,7 +608,7 @@ export const topic16Html = `
             DB--&gt;&gt;LoanService: logConfirmed
 
             LoanService--&gt;&gt;WebApp: نجاح: تم تسجيل الطلب بنجاح وهو بانتظار اعتماد المعمل
-            WebApp--&gt;&gt;Student: عرض رقم الطلب وبطاقة المتابعة مع مهلة 48 ساعة للتسليم
+            WebApp--&gt;&gt;Student: عرض رقم الطلب وحالة انتظار مراجعة المسؤول؛ لا يبدأ مؤقت الاستلام عند إرسال الطلب
         end
     end</code></pre>
     </div>
@@ -650,6 +653,7 @@ Generate no application code.</code></pre>
  * Sequence Position: 17
  * ========================================================================= */
 export const topic17Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-17-class-diagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 17 · المحطة الأساسية</span>

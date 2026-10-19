@@ -6,7 +6,8 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 10
  * ========================================================================= */
 export const topic10Html = `
-<section id="topic-10-plantuml" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-10-plantuml" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 10 · المحطة الأساسية</span>
     <span class="step-pill">أدوات النمذجة السلوكية ككود</span>
@@ -230,7 +231,8 @@ Staff --&gt; UC_Approve
  * Sequence Position: 11
  * ========================================================================= */
 export const topic11Html = `
-<section id="topic-11-use-case" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-11-use-case" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 11 · المحطة الأساسية</span>
     <span class="step-pill">صلاحيات الأدوار والحدود الهندسية</span>
@@ -293,7 +295,7 @@ export const topic11Html = `
             <td><strong>مجدول النظام الآلي (System Scheduler)</strong></td>
             <td>فاعل تقني مؤتمت (Automated System Actor)</td>
             <td>
-              • فحص مهلة الاستلام (48 ساعة - قاعدة 7) وإلغاء الطلبات غير المستلمة.<br/>
+              • فحص مهلة الاستلام (48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق - قاعدة 6) وإلغاء الطلبات غير المستلمة.<br/>
               • رصد الإعارات المتأخرة وتعديل حالة الطلب إلى متأخر (Overdue).
             </td>
           </tr>
@@ -435,7 +437,8 @@ Flag conflicts and missing rules. Do not create other diagrams or code.</code></
  * Sequence Position: 12
  * ========================================================================= */
 export const topic12Html = `
-<section id="topic-12-activity" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-12-activity" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 12 · المحطة الأساسية</span>
     <span class="step-pill">مسارات وقرارات العمليات التشغيلية</span>
@@ -501,10 +504,10 @@ export const topic12Html = `
     <ol class="space-y-3 text-[var(--text-muted)] my-4 leading-7">
       <li><strong>بوابة فحص اعتماد الحساب (Account Verification):</strong> هل الطالب مسجل وحسابه معتمد؟ إذا لا، يتم رفض الطلب وتوجيهه للتفعيل.</li>
       <li><strong>بوابة سقف الإعارة النشطة (Active Loans Limit - Rule 3):</strong> هل يمتلك الطالب أقل من إعارتين نشطتين؟ إذا كان لديه جهازان، يُرفض الطلب فوراً.</li>
-      <li><strong>بوابة توفر الأصل في المستودع (Stock Check):</strong> هل المعدة متوفرة في المخزون الفعلي؟ إذا نفدت، يُعتذر للطالب ويُقترح إشعاره عند التوفر.</li>
-      <li><strong>بوابة مراجعة المسؤول (Staff Approval Decision):</strong> هل اعتمد المشرف الطلب؟ إن رفضه، يُسجل سبب الرفض ويُشعر الطالب؛ وإن اعتماده، ينتقل لمهلة التسليم.</li>
-      <li><strong>بوابة مهلة الاستلام (48-Hour Deadline - Rule 7):</strong> هل حضر الطالب للاستلام خلال 48 ساعة؟ إن لم يحضر، يلغي النظام الحجز آلياً ويُعاد المخزون.</li>
-      <li><strong>بوابة فحص السلامة عند الإرجاع (Return Inspection - Rule 8):</strong> هل المعدة سليمة؟ إن وُجد عطل أو تلف، يُفتح تقرير أضرار وتُفرض غرامة صيانة.</li>
+      <li><strong>بوابة توفر الأصل في المستودع (Stock Check):</strong> هل المعدة متوفرة في المخزون الفعلي؟ إذا نفدت، يُعتذر للطالب ويُرفض الطلب دون إضافة ميزات غير معتمدة.</li>
+      <li><strong>بوابة مراجعة وتأكيد المسؤول (Staff Confirmation - Rule 7):</strong> يؤكد مسؤول المعمل التسليم المادي والإرجاع بعد الإجراء الواقعي؛ ولا يُعتبر إجراء الطالب بديلاً عن تأكيد المسؤول.</li>
+      <li><strong>بوابة مهلة الاستلام (48-Hour Deadline - Rule 6):</strong> هل حضر الطالب للاستلام خلال 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق؟ قد تنتهي المهلة آليًا ويُحرر الحجز وفق PRD؛ لا نفترض بدءها عند الموافقة.</li>
+      <li><strong>بوابة فحص السلامة عند الإرجاع (Return Inspection - Rule 8):</strong> هل المعدة سليمة؟ يسجل المسؤول التلف ولا يعيد الوحدة التالفة إلى الكمية المتاحة. لا تفرض قواعد المصدر غرامة؛ توثق أي سياسة إضافية كسؤال PRD.</li>
     </ol>
   </div>
 
@@ -534,20 +537,18 @@ export const topic12Html = `
 
     SubmitReq --&gt; StaffReview{"قرار مسؤول المعمل"}
     StaffReview -- رفض --&gt; RecordRejection["تسجيل سبب الرفض وإشعار الطالب"] --&gt; EndRejected
-    StaffReview -- اعتماد --&gt; SetApproved["تغيير الحالة إلى Approved وبدء مهلة 48 ساعة"]
+    StaffReview -- اعتماد --&gt; SetApproved["Approved؛ المهلة 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق"]
 
-    SetApproved --&gt; PickupCheck{"هل حضر الطالب للاستلام خلال 48 ساعة؟"}
+    SetApproved --&gt; PickupCheck{"هل حضر الطالب ضمن المهلة الموثقة من تاريخ بداية الطلب؟"}
     PickupCheck -- لا --&gt; AutoCancel["إلغاء الحجز آلياً وإعادة المعدة للمخزون"] --&gt; EndCancelled(["نهاية: إلغاء لتجاوز المهلة"])
-    PickupCheck -- نعم --&gt; Handover["تسجيل التسليم المادي وتغيير الحالة إلى Active"]
+    PickupCheck -- نعم --&gt; Handover["تأكيد المسؤول التسليم المادي وتغيير الحالة إلى Active (Rule 7)"]
 
     Handover --&gt; ActiveUsage["استخدام الطالب للمعدة حتى تاريخ الاستحقاق"]
-    ActiveUsage --&gt; ReturnPhysically["حضور الطالب لإرجاع المعدة"]
+    ActiveUsage --&gt; ReturnPhysically["حضور الطالب لإرجاع المعدة وتأكيد المسؤول الاستلام (Rule 7)"]
 
     ReturnPhysically --&gt; InspectItem{"فحص المعدة: هل بها تلف أو كسر؟ (Rule 8)"}
-    InspectItem -- نعم --&gt; RecordDamage["تسجيل تقرير الأضرار وتحميل غرامة الإصلاح"] --&gt; CloseReturn["إغلاق الإعارة بحالة Returned"]
-    InspectItem -- لا --&gt; CloseReturn
-
-    CloseReturn --&gt; Restock["إعادة المعدة للمخزون المتاح وتحديث رصيد الطالب"] --&gt; EndSuccess(["نهاية: إتمام الإعارة بنجاح"])</code></pre>
+    InspectItem -- نعم --&gt; RecordDamage["تسجيل المسؤول التلف دون إعادة الوحدة إلى المتاح (Rule 8)"] --&gt; CloseDamaged["تأكيد المسؤول إغلاق الإعارة مع قيد التلف وتحديث رصيد الطالب دون إعادة للمخزون"] --&gt; EndDamaged(["نهاية: إتمام الإرجاع مع إثبات التلف"])
+    InspectItem -- لا --&gt; Restock["إعادة المعدة للمخزون المتاح وتحديث رصيد الطالب"] --&gt; CloseReturn["تأكيد المسؤول إغلاق الإعارة بحالة Returned"] --&gt; EndSuccess(["نهاية: إتمام الإعارة بنجاح"])</code></pre>
     </div>
   </div>
 
@@ -580,7 +581,8 @@ Explain in Arabic. Do not invent steps or build code.</code></pre>
  * Sequence Position: 13
  * ========================================================================= */
 export const topic13Html = `
-<section id="topic-13-state" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-13-state" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 13 · المحطة الأساسية</span>
     <span class="step-pill">حالات الكائنات والانتقالات الموثقة</span>
@@ -657,7 +659,7 @@ export const topic13Html = `
           </tr>
           <tr>
             <td><code>Approved</code></td>
-            <td>وافق المشرف على الطلب، وبدأت مهلة الـ 48 ساعة للاستلام المادي</td>
+            <td>وافق المشرف على الطلب؛ مهلة الاستلام 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق، لا من الموافقة</td>
             <td><code>Submitted</code></td>
             <td><code>Active</code>, <code>Cancelled</code> (انتهاء المهلة)</td>
           </tr>
@@ -727,7 +729,7 @@ export const topic13Html = `
             <td>قرار المسؤول: موافقة</td>
             <td>[المعدة متوفرة بالمخزون]</td>
             <td><code>Approved</code></td>
-            <td>حجز الأصل وبدء مؤقت مهلة 48 ساعة</td>
+            <td>حجز الأصل ومراجعة مهلة الاستلام من تاريخ بداية الطلب وفق التعريف الموثق</td>
           </tr>
           <tr>
             <td><code>Submitted</code></td>
@@ -798,13 +800,13 @@ export const topic13Html = `
     Submitted --&gt; Rejected : رفض المسؤول [مع ذكر السبب]
     Submitted --&gt; Cancelled : إلغاء الطالب قبل المعالجة
     
-    Approved --&gt; Active : حضور الطالب وتسليم المعدة [خلال 48 ساعة]
-    Approved --&gt; Cancelled : مضي 48 ساعة دون استلام [إلغاء آلي وتحرير الأصل]
+    Approved --&gt; Active : تأكيد المسؤول التسليم المادي [ضمن المهلة من تاريخ بداية الطلب]
+    Approved --&gt; Cancelled : انقضاء المهلة من تاريخ بداية الطلب [وفق تعريف PRD وتحرير الحجز]
     
-    Active --&gt; Returned : تسليم المعدة وإجراء الفحص المادي
+    Active --&gt; Returned : تأكيد المسؤول الإرجاع والفحص المادي وتسجيل التلف إن وجد
     Active --&gt; Overdue : تجاوز تاريخ الاستحقاق دون إرجاع
     
-    Overdue --&gt; Returned : تسليم متأخر وتسوية الغرامة والفحص
+    Overdue --&gt; Returned : تأكيد المسؤول الإرجاع المتأخر والفحص [متابعة يدوية دون حظر تلقائي]
     
     Rejected --&gt; [*]
     Cancelled --&gt; [*]
@@ -1007,7 +1009,7 @@ export const t05Entries: TopicItem[] = [
     prerequisites: [
       'مخطط النشاط docs/diagrams/activity-diagram.md',
       'وثيقة متطلبات المنتج docs/PRD.md',
-      'قواعد عمل BorrowHub'
+      'قواعد مشروع الطالب المعتمدة؛ BorrowHub مثال اختياري'
     ],
     steps: [
       '1. حدد الكيان الجوهري صاحب دورة الحياة المتقلبة في مشروعك (مثل LoanRequest أو Order).',

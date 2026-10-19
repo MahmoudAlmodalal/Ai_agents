@@ -2,12 +2,13 @@ import Link from 'next/link';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 import { TopicReaderTools } from '@/src/components/TopicReaderTools';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { ArrowLeft, ArrowRight, FileText, Wrench, CheckSquare, ListOrdered } from 'lucide-react';
 import {
   getTopicBySlug,
   getAllTopics,
   getAllTopicSlugs,
+  LEGACY_ROUTE_DESTINATIONS,
 } from '@/src/lib/topicRegistry';
 
 export function generateStaticParams() {
@@ -16,12 +17,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (Object.hasOwn(LEGACY_ROUTE_DESTINATIONS, slug)) redirect(LEGACY_ROUTE_DESTINATIONS[slug]);
   const topic = getTopicBySlug(slug);
   return topic ? { title: `${topic.title} — ${topic.categoryName}`, description: topic.summary } : {};
 }
 
 export default async function LearningTopicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (Object.hasOwn(LEGACY_ROUTE_DESTINATIONS, slug)) redirect(LEGACY_ROUTE_DESTINATIONS[slug]);
   const topic = getTopicBySlug(slug);
   if (!topic) notFound();
 

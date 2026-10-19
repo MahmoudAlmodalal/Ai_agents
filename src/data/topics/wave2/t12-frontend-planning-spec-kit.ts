@@ -31,7 +31,7 @@ export const topic34FrontendPlanningHtml = `
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>وثيقة متطلبات المنتج (docs/PRD.md):</strong> المرجع التشريعي للوظائف، وقواعد العمل، وصلاحيات الأدوار.</li>
       <li><strong>جرد الشاشات (docs/SCREEN_INVENTORY.md):</strong> القائمة الحصرية لكافة الشاشات وحالاتها المستهدفة في النسخة التجريبية الأولى (MVP).</li>
-      <li><strong>نظام التصميم (docs/DESIGN.md ومراجع Stitch):</strong> المرجع البصري المعتمد لتوكنز الألوان والخطوط ومقاسات التباعد.</li>
+      <li><strong>نظام التصميم (DESIGN.md ومراجع Stitch):</strong> المرجع البصري المعتمد لتوكنز الألوان والخطوط ومقاسات التباعد.</li>
       <li><strong>مخطط الكيانات (docs/ERD.md):</strong> الهيكل المفاهيمي للبيانات الذي ستشتق منه عقود الواجهة.</li>
     </ul>
 
@@ -171,16 +171,32 @@ export const topic34FrontendPlanningHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. عقود بيانات الفرونت إند والأنواع الصارمة (TypeScript Data Contracts)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      قبل بناء أي واجهة، تُكتب عقود البيانات في ملفات <code>src/types/</code> لتعريف هياكل الكائنات بدقة متناهية، بحيث تشتق مباشرة من مخطط قاعدة البيانات (<code>docs/ERD.md</code>). هذا يضمن أن استبدال البيانات التمثيلية (Mock Data) بطلبات API حقيقية لاحقاً لن يتطلب تعديل حرف واحد في مكونات الواجهة!
+      استخدم عقود الموضوع 30 في <code>src/types/project.ts</code> كمصدر موحد للأنواع. المثال المختصر أدناه يشرح View Model توضيحيًا خاصًا بالواجهة، وليس بديلًا لتلك العقود أو لمخطط ERD المعتمد.
     </p>
+
+    <div class="callout warning my-4">
+      <div class="callout-header">
+        <span class="callout-icon">⚠️</span>
+        <span>تنبيه اتساق المصدر وقواعد BorrowHub التسع</span>
+      </div>
+      <p class="leading-7 text-xs sm:text-sm">
+        قواعد العمل المعتمدة في BorrowHub محددة بدقة: <strong>عشرة أيام تقويمية</strong> كحد أقصى للمدة، <strong>طلبان نشطان</strong> كحد أقصى للطالب، <strong>وحدة واحدة</strong> لكل طلب، <strong>سبب الاستعارة إلزامي</strong>، <strong>اعتماد يدوي</strong> لحساب الطالب، <strong>تأكيد مادي للاستلام والإرجاع بواسطة مسؤول المعمل (Staff)</strong>، <strong>مهلة استلام 48 ساعة</strong> تبدأ من تاريخ بداية الطلب خاضعة لتعريف PRD، و<strong>انعدام الغرامات المالية أو الحظر التلقائي</strong>.
+      </p>
+      <p class="leading-7 text-xs sm:text-sm mt-2">
+        عقود الموضوع 30 الأساسية تعتمد المعرّف <code>userId</code> وحالة <code>active</code>؛ بينما يستخدم نموذج العرض التوضيحي أدناه <code>studentId</code> وحالة <code>collected</code> كعينة لمتطلبات الواجهة المحلية، مما يتطلب مواءمتها عبر Adapter بدلاً من التعديل الصامت أو افتراض مدد متغيرة (مثل 7 أو 14 يوماً) غير معتمدة.
+      </p>
+    </div>
 
     <!-- Code Snippet: Frontend Data Contracts -->
     <div class="code-container my-4" dir="ltr">
       <div class="code-header">
-        <span class="code-lang">src/types/equipment.ts (Strict Data Contracts)</span>
+        <span class="code-lang">src/types/equipment.ts (Illustrative UI View Models)</span>
         <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ الكود';},2000);})" aria-label="نسخ الكود">نسخ الكود</button>
       </div>
-      <pre class="code-content"><code>export type EquipmentStatus = 'available' | 'reserved' | 'borrowed' | 'damaged' | 'maintenance';
+      <pre class="code-content"><code>// Illustrative view models only; canonical domain types remain in topic 30 (src/types/project.ts).
+// Note field naming difference: UI model uses studentId/collected; canonical domain uses userId/active.
+// BorrowHub loan duration rule is fixed at 10 calendar days max; do not invent arbitrary 7/14 day rules.
+export type EquipmentStatus = 'available' | 'reserved' | 'borrowed' | 'damaged' | 'maintenance';
 
 export interface Category {
   id: string;
@@ -189,7 +205,7 @@ export interface Category {
   iconName?: string;
 }
 
-export interface Equipment {
+export interface EquipmentViewModel {
   id: string;
   name: string;
   serialNumber: string;
@@ -204,10 +220,10 @@ export interface Equipment {
   maxBorrowDays: number;
 }
 
-export interface LoanRequest {
+export interface LoanRequestViewModel {
   id: string;
   equipmentId: string;
-  equipment?: Equipment;
+  equipment?: EquipmentViewModel;
   studentId: string;
   studentName: string;
   studentEmail: string;
@@ -252,7 +268,7 @@ export interface LoanRequest {
           <tr>
             <td><strong>المدخلات المرجعية (Inputs)</strong></td>
             <td>المستندات والتصميمات التي يقرأ منها الوكيل</td>
-            <td><code>docs/DESIGN.md</code>، ومرجع Stitch لشاشة الكتالوج، و<code>src/types/equipment.ts</code></td>
+            <td><code>DESIGN.md</code>، ومرجع Stitch لشاشة الكتالوج، و<code>src/types/equipment.ts</code></td>
           </tr>
           <tr>
             <td><strong>المخرج المتوقع (Output)</strong></td>
@@ -288,7 +304,7 @@ export interface LoanRequest {
           <text x="100" y="70" fill="#60a5fa" font-size="13" font-weight="bold" text-anchor="middle">المراجع المعتمدة</text>
           <text x="100" y="110" fill="#94a3b8" font-size="11" text-anchor="middle">docs/PRD.md</text>
           <text x="100" y="145" fill="#94a3b8" font-size="11" text-anchor="middle">docs/SCREEN_INVENTORY.md</text>
-          <text x="100" y="180" fill="#94a3b8" font-size="11" text-anchor="middle">docs/DESIGN.md</text>
+          <text x="100" y="180" fill="#94a3b8" font-size="11" text-anchor="middle">DESIGN.md</text>
           <text x="100" y="215" fill="#94a3b8" font-size="11" text-anchor="middle">مراجع Stitch</text>
           <text x="100" y="250" fill="#94a3b8" font-size="11" text-anchor="middle">docs/ERD.md</text>
 
@@ -541,6 +557,7 @@ accessibility and interaction patterns.
 Do not replace approved identity or modify files yet.</code></pre>
     </div>
 
+    <p class="leading-7 text-[var(--text-muted)]">الجدول التالي نموذج تعليمي لكتابة الملاحظات؛ حالات PASS وFIXED فيه أمثلة لا نتائج فحص فعلية لمشروع الطالب. ابدأ تقريرك بـ Not Run، ثم سجل دليل القياس ونتيجة فحصك. استعمال المهارة مشروط بتوفرها في وكيلك؛ يمكن إجراء المراجعة يدويًا بالقائمة نفسها.</p>
     <!-- Practical Audit Example -->
     <div class="table-container my-4">
       <h4 class="font-bold text-[var(--text-main)] mb-2">نموذج تقرير مراجعة مكون بطاقة المعدة (docs/UI_UX_PRO_MAX_AUDIT.md)</h4>
@@ -664,7 +681,7 @@ uv tool install specify-cli
 # 2. التأكد من إصدار الأداة وتثبيتها بنجاح
 specify version
 
-# 3. تهيئة الأداة داخل مجلد المشروع الحالي
+# 3. مثال تكامل Antigravity؛ تحقق من specify init --help ودليل الإصدار أولًا
 specify init --here --integration agy
 
 # لمستخدمي Windows PowerShell يمكن إضافة خيار السكربت:
@@ -921,17 +938,17 @@ export const topic37FrontendImplementationHtml = `
         <span class="code-lang">src/data/mock/equipmentMock.ts (Explicit Typed Mock Data)</span>
         <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ الكود';},2000);})" aria-label="نسخ الكود">نسخ الكود</button>
       </div>
-      <pre class="code-content"><code>import { Equipment, Category } from '@/src/types/equipment';
+       <pre class="code-content"><code>import { Equipment, Category } from '@/src/types/project';
 
 export const MOCK_CATEGORIES: Category[] = [
-  { id: 'cat-01', name: 'الكاميرات والتصوير', slug: 'cameras', iconName: 'Camera' },
-  { id: 'cat-02', name: 'أجهزة القياس والمعامل', slug: 'lab-tools', iconName: 'Cpu' },
-  { id: 'cat-03', name: 'الحواسيب المتخصصة', slug: 'workstations', iconName: 'Laptop' },
+  { id: 'cat-01', name: 'الكاميرات والتصوير', slug: 'cameras', description: 'بيانات عرض تجريبية', iconName: 'Camera' },
+  { id: 'cat-02', name: 'أجهزة القياس والمعامل', slug: 'lab-tools', description: 'بيانات عرض تجريبية', iconName: 'Cpu' },
+  { id: 'cat-03', name: 'الحواسيب المتخصصة', slug: 'workstations', description: 'بيانات عرض تجريبية', iconName: 'Laptop' },
 ];
 
 /**
  * بيانات تمثيلية صريحة (Mock Data Placeholder)
- * تمثل عينة مطابقة لـ docs/ERD.md لمشروع BorrowHub
+ * عينة واجهة وفق Equipment من الموضوع 30؛ ليست سجلًا حقيقيًا أو ERD منفذًا
  * تُستخدم لاختبار الواجهة قبل بناء الخادم وقاعدة البيانات
  */
 export const MOCK_EQUIPMENT: Equipment[] = [
@@ -944,9 +961,9 @@ export const MOCK_EQUIPMENT: Equipment[] = [
     description: 'كاميرا سينمائية كاملة الإطار مخصصة لمشاريع التخرج والإنتاج الإعلامي.',
     specifications: { 'الدقة': '4K 120fps', 'الحساس': 'Full Frame BSI-CMOS', 'الوزن': '715g' },
     imageUrl: '/images/mock/fx3.jpg',
-    location: 'معمل الإنتاج الرقمي - خزانة A2',
-    requiresSupervisorApproval: true,
-    maxBorrowDays: 3,
+    model: 'Sony FX3',
+    totalQuantity: 1,
+    availableQuantity: 1,
   },
   {
     id: 'eq-102',
@@ -957,9 +974,9 @@ export const MOCK_EQUIPMENT: Equipment[] = [
     description: 'جهاز راسم إشارة 4 قنوات لقياس وتصحيح الدوائر الإلكترونية المتقدمة.',
     specifications: { 'النطاق الترددي': '50 MHz', 'القنوات': '4 Channels', 'معدل العينة': '1 GSa/s' },
     imageUrl: '/images/mock/oscilloscope.jpg',
-    location: 'معمل الإلكترونيات - طاولة 4',
-    requiresSupervisorApproval: false,
-    maxBorrowDays: 7,
+    model: 'Rigol DS1054Z',
+    totalQuantity: 1,
+    availableQuantity: 0,
   },
   {
     id: 'eq-103',
@@ -970,15 +987,16 @@ export const MOCK_EQUIPMENT: Equipment[] = [
     description: 'حاسوب محمول بمعالج Xeon وذاكرة 64GB مخصص لمحاكاة الذكاء الاصطناعي.',
     specifications: { 'المعالج': 'Intel Xeon W-11955M', 'الرام': '64GB ECC', 'الكرت': 'RTX A5000' },
     imageUrl: '/images/mock/precision.jpg',
-    location: 'مستودع الصيانة المركزي',
-    requiresSupervisorApproval: true,
-    maxBorrowDays: 14,
+    model: 'Dell Precision 7760',
+    totalQuantity: 1,
+    availableQuantity: 0,
   },
 ];</code></pre>
     </div>
   </div>
 
-  <!-- 3. Four Mandatory UI States -->
+    <p class="leading-7 text-[var(--text-muted)]">البيانات السابقة أمثلة عرض محلية وفق عقد Equipment في الموضوع 30 وليست قاعدة بيانات منفذة. الصور والمسارات مثال ويجب توفير ملفاتها الفعلية أو بديل ظاهر؛ لا تدّع توفرها. لم نضف موافقة مشرف أو مدة مختلفة لكل معدة. في BorrowHub مدة الاستعارة المعتمدة عشرة أيام؛ طابق أي سلوك مع PRD قبل التنفيذ.</p>
+    <!-- 3. Four Mandatory UI States -->
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. حالات الواجهة الأربع الإلزامية (The Four Mandatory UI States)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
@@ -1052,7 +1070,7 @@ export const MOCK_EQUIPMENT: Equipment[] = [
           </tr>
           <tr>
             <td><strong>2. الرجوع للمتطلبات والتصميم (Return to Specs)</strong></td>
-            <td>مقارنة المخرج الناتج مع <code>docs/PRD.md</code> للتأكد من الوظيفة، ومع <code>docs/DESIGN.md</code> ومراجع Stitch للتأكد من الهوية البصرية وعدم تجاوز النطاق</td>
+            <td>مقارنة المخرج الناتج مع <code>docs/PRD.md</code> للتأكد من الوظيفة، ومع <code>DESIGN.md</code> ومراجع Stitch للتأكد من الهوية البصرية وعدم تجاوز النطاق</td>
             <td>مطابقة بصرية ووظيفية صارمة مع وثائق المشروع المعتمدة</td>
           </tr>
           <tr>
@@ -1178,7 +1196,7 @@ export const t12Entries: TopicItem[] = [
     goal: 'إعداد خطة معمارية شاملة للواجهة الأمامية لمشروع الطالب تحدد شجرة المسارات، وهرمية المكونات، وعقود البيانات، وتقسم العمل إلى مهام برمجية صغيرة ومستقلة قابلة للتحقق الفوري مع عزل نطاق الواجهة بالكامل.',
     prerequisites: [
       'وثيقة متطلبات المنتج المعتمدة docs/PRD.md (الموضوع 03)',
-      'نظام التصميم docs/DESIGN.md ومراجع شاشات Stitch (الموضوعان 22 و29)',
+      'نظام التصميم DESIGN.md ومراجع شاشات Stitch (الموضوعان 22 و29)',
       'جرد الشاشات docs/SCREEN_INVENTORY.md والنموذج التفاعلي (الموضوعان 20 و23)',
       'أساسيات Next.js وTypeScript وTailwind CSS (المواضيع 30-33)'
     ],
@@ -1235,7 +1253,7 @@ export const t12Entries: TopicItem[] = [
     goal: 'إجراء تدقيق احترافي شامل لخطة وتصميم مكونات الواجهة باستخدام UI/UX Pro Max من مصدرها الرسمي، وتوثيق ملاحظات التصميم وإمكانية الوصول والتجاوب في تقرير docs/UI_UX_PRO_MAX_AUDIT.md لتوجيه مرحلة التنفيذ.',
     prerequisites: [
       'خطة الفرونت إند وجدول المهام (الموضوع 34)',
-      'نظام التصميم المعتمد docs/DESIGN.md (الموضوع 22)',
+      'نظام التصميم المعتمد DESIGN.md (الموضوع 29)',
       'مراجع شاشات Stitch المعتمدة (الموضوع 29)',
       'مهارات الوكيل وكيفية استدعاء المهارات (الموضوع 26)'
     ],
