@@ -10,6 +10,7 @@ import {
   getAllTopicSlugs,
   LEGACY_ROUTE_DESTINATIONS,
 } from '@/src/lib/topicRegistry';
+import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
 
 export function generateStaticParams() {
   return getAllTopicSlugs().map((slug) => ({ slug }));
@@ -32,6 +33,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
   const position = allTopics.findIndex((item) => item.slug === topic.slug || item.id === topic.id);
   const previous = position > 0 ? allTopics[position - 1] : undefined;
   const next = position >= 0 && position < allTopics.length - 1 ? allTopics[position + 1] : undefined;
+  const status = getTopicImprovementStatus(topic.slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
@@ -53,15 +55,15 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             {topic.stageTag}
           </span>
-          {topic.publicationStatus === 'unified-complete' ? (
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
-              محتوى منشور
-            </span>
-          ) : (
-            <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
-              المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال
-            </span>
-          )}
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
+            حالة التوفر: {status.availabilityLabel}
+          </span>
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
+            حالة التحسين: {status.improvementLabel}
+          </span>
+          <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-800 dark:border-indigo-900 dark:bg-indigo-950/40 dark:text-indigo-300">
+            {status.groupProposalLabel}
+          </span>
         </div>
 
         <h1 className="text-3xl font-black tracking-tight text-[var(--text-main)] sm:text-5xl">{topic.title}</h1>
@@ -114,7 +116,10 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           {/* Prerequisites */}
           {topic.prerequisites && topic.prerequisites.length > 0 && (
             <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4 sm:p-5">
-              <h3 className="text-sm font-bold text-[var(--text-main)] mb-2">المتطلبات السابقة</h3>
+              <h3 className="text-sm font-bold text-[var(--text-main)] mb-1">المتطلبات السابقة (إرشادات استرشادية)</h3>
+              <p className="text-xs text-emerald-800 dark:text-emerald-300 font-medium mb-3">
+                إرشاد تعليمي: هذه المتطلبات للتوجيه والاسترشاد فقط؛ جميع المواضيع متاحة ويمكنك دراسة أي موضوع مباشرة دون اشتراط إكمال ما قبله.
+              </p>
               <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-[var(--text-muted)]">
                 {topic.prerequisites.map((req, idx) => (
                   <li key={idx}>{req}</li>

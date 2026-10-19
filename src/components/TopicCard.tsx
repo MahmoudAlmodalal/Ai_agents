@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Clock, BarChart3, MessageSquare, Code2, CheckSquare, Headphones, Volume2, Printer } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, formatReadingTime } from '@/src/utils/searchUtils.ts';
+import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
 
 interface TopicCardProps {
   topic: TopicItem;
@@ -56,6 +57,8 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   isBookmarked,
   onToggleBookmark,
 }) => {
+  const status = getTopicImprovementStatus(topic.slug);
+
   return (
     <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
       {/* Top Header Row */}
@@ -177,6 +180,26 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         <p className="text-xs text-[var(--brand-primary)] font-medium mb-2 truncate">
           <HighlightedText text={topic.subtitle} query={searchQuery} />
         </p>
+
+        {/* Improvement & Content Availability Status */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800" title="حالة توفر المحتوى">
+            {status.availabilityLabel}
+          </span>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800" title="حالة المراجعة التعليمية والاعتماد">
+            {status.improvementLabel}
+          </span>
+          {status.group && (
+            <span
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              title={status.groupProposalLabel}
+            >
+              {status.isFirstGroupProposal
+                ? 'المجموعة الأولى (مقترحة)'
+                : `المجموعة ${status.group.number} (حدود مقترحة)`}
+            </span>
+          )}
+        </div>
 
         {/* Summary */}
         <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-2">

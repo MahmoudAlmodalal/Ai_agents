@@ -7,6 +7,7 @@ import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
+import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
 
 
 interface TopicDetailModalProps {
@@ -44,6 +45,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   const closeButtonRef = React.useRef<HTMLButtonElement>(null);
   const [readingProgress, setReadingProgress] = React.useState<number>(0);
   const [showDiagram, setShowDiagram] = React.useState<boolean>(topic.diagramCount > 0);
+  const status = getTopicImprovementStatus(topic.slug);
 
   React.useEffect(() => setShowDiagram(topic.diagramCount > 0), [topic.slug, topic.diagramCount]);
 
@@ -363,12 +365,20 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           ref={contentContainerRef}
           className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 bg-[var(--bg-body)] content-area modal-content-area space-y-6"
         >
-          <section className="space-y-2" aria-label="ملخص الموضوع">
+          <section className="space-y-3" aria-label="ملخص الموضوع">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/40 px-2.5 py-0.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                حالة التوفر: {status.availabilityLabel}
+              </span>
+              <span className="rounded-full border border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/40 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-300">
+                حالة التحسين: {status.improvementLabel}
+              </span>
+              <span className="rounded-full border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-2.5 py-0.5 text-xs font-medium text-slate-700 dark:text-slate-300">
+                {status.groupProposalLabel}
+              </span>
+            </div>
             <p className="text-sm font-bold text-[var(--brand-primary)]">{topic.subtitle}</p>
             <p className="text-sm leading-7 text-[var(--text-muted)]">{topic.summary}</p>
-            <p className="text-xs font-medium text-[var(--text-muted)]">
-              {topic.publicationStatus === 'unified-complete' ? 'محتوى منشور' : 'المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال'}
-            </p>
           </section>
           {/* Unified Project Contract Section (Wave 1) */}
           {(topic.goal || topic.steps.length > 0 || topic.outputs.length > 0) && (
