@@ -25,6 +25,11 @@ import { t12Entries } from '@/src/data/topics/wave2/t12-frontend-planning-spec-k
 import { t10Entries } from '@/src/data/topics/wave2/t10-stitch-mcp-design-md.ts';
 import { t13Entries } from '@/src/data/topics/wave2/t13-python-postgres-api.ts';
 import { t14Entries } from '@/src/data/topics/wave2/t14-backend-frameworks-services.ts';
+import { t15Entries } from '@/src/data/topics/wave3/t15-frontend-api-testing.ts';
+import { t16Entries } from '@/src/data/topics/wave3/t16-performance-redis-qa.ts';
+import { t17Entries } from '@/src/data/topics/wave3/t17-docker-linux.ts';
+import { t18Entries } from '@/src/data/topics/wave3/t18-cloud-deployment.ts';
+import { t19Entries } from '@/src/data/topics/wave3/t19-operations-delivery.ts';
 
 /**
  * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
@@ -361,22 +366,22 @@ const LEGACY_TOPICS: TopicItem[] = [
     id: 'topic-11',
     number: '11',
     slug: 'prompt-library',
-    title: 'مكتبة البرومبتات — PROMPT 01–30',
-    subtitle: 'برومبتات حقيقية قابلة للبحث والنسخ من وثيقة الدورة',
-    category: 'qa',
-    categoryName: 'الجودة والتحقق الهندسي',
-    stageTag: 'مصفوفة الفحص وضمان الجودة',
-    summary: 'الفحوصات الهندسية الخمسة الشاملة: التجاوب عبر 5 نقاط توقف (Mobile, Tablet, Laptop, Desktop, 4K)، انعدام الطفحان الأفقي (Zero Overflow)، سهولة الوصول WCAG AA، التباين، والتحقق عبر أوامر الطرفية.',
-    tags: ['QA Matrix', 'Responsive', 'Breakpoints', 'Zero Overflow', 'A11y', 'Contrast', 'Automated Verification', 'Lighthouse'],
-    contentTypes: ['checklist', 'code'],
+    title: 'مكتبة البرومبتات',
+    subtitle: 'نصوص كاملة قابلة للبحث والنسخ حسب المهمة والمرحلة',
+    category: 'reference',
+    categoryName: 'المراجع والقاموس التقني',
+    stageTag: 'مكتبة البرومبتات والمواد القابلة للنسخ',
+    summary: 'ابحث وصفِّ النصوص الكاملة لمكتبة البرومبتات حسب المرحلة ونوع المهمة والمصدر. راجع المدخلات والمخرجات والتنبيهات والموضوعات المرتبطة قبل نسخ النص واعتماد مخرجه.',
+    tags: ['Prompt Library', 'AI Prompts', 'Copyable Prompts', 'Course Content', 'Product Discovery', 'Frontend', 'Backend'],
+    contentTypes: ['prompt'],
     diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 4,
-    checklistCount: 7,
+    promptCount: 41,
+    codeSnippetCount: 0,
+    checklistCount: 0,
     readingTimeMinutes: calculateReadingTime(topic11Html),
     htmlContent: topic11Html,
 
-    goal: 'استعراض ونسخ برومبتات المسار الكاملة وفحص معايير الجودة والتحقق.',
+    goal: 'البحث عن نصوص البرومبتات والقوالب المرتبطة بمراحل المسار وتصفيتها وقراءة مداخلها ومخرجاتها وتنبيهاتها ثم نسخ النص الكامل المناسب.',
     prerequisites: [],
     steps: [],
     promptRefs: [],
@@ -439,6 +444,17 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
 ];
 
 /**
+ * Wave-3 topic sources registry. Topics 45–58 continue the sequential project path.
+ */
+export const WAVE3_TOPIC_SOURCES: TopicItem[][] = [
+  t15Entries,
+  t16Entries,
+  t17Entries,
+  t18Entries,
+  t19Entries,
+];
+
+/**
  * Computes assembled topic sequence:
  * - Positioned topics (sequencePosition defined) come FIRST, sorted ascending by sequencePosition.
  * - Ties preserve insertion order.
@@ -446,7 +462,7 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
  * - Positioned topic-01 (sequencePosition: 1) stays at the front.
  */
 function assembleTopics(): TopicItem[] {
-  const all = [...LEGACY_TOPICS, ...WAVE2_TOPIC_SOURCES.flat()];
+  const all = [...LEGACY_TOPICS, ...WAVE2_TOPIC_SOURCES.flat(), ...WAVE3_TOPIC_SOURCES.flat()];
   const positioned = all
     .filter((t) => t.sequencePosition !== undefined)
     .sort((a, b) => a.sequencePosition! - b.sequencePosition!);

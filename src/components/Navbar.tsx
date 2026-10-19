@@ -41,7 +41,7 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-design-md', icon: Sparkles, badge: 'Design → Code', isPrimary: true },
   { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: '20 محاضرة', isPrimary: true },
   { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: true },
-  { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: '31 برومبت', isPrimary: true },
+  { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
   { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: true },
   { title: 'ورشة BorrowHub', href: '/borrowhub', icon: FolderGit2, badge: 'حالة عملية', isPrimary: true },
   { title: 'الأدوات والتثبيت', href: '/tools', icon: Wrench, badge: '13 وكيلا', isPrimary: true },

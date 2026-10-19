@@ -82,7 +82,7 @@
    - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يتبع الطالب مواضيع CI/CD والمراقبة والنسخ الاحتياطي، والتسليم، وDemo Day، وPortfolio لإنهاء مشروع قابل للتشغيل والمراجعة والعرض.
 
-20. [#24: مكتبة البرومبتات الـ33 المرتبطة بالمسار](https://github.com/MahmoudAlmodalal/Ai_agents/issues/24)
+20. [#24: مكتبة البرومبتات الكاملة المرتبطة بالمسار](https://github.com/MahmoudAlmodalal/Ai_agents/issues/24)
    - يعتمد على: [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
    - النتيجة: يبحث الطالب في البرومبتات ويصفّيها ويفتح تفاصيلها وينسخ النص الكامل ويرى أين يستخدمه في مسار مشروعه.
 
