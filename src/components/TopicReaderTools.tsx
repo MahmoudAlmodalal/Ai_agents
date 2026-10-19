@@ -1,17 +1,59 @@
 'use client';
 
 import React from 'react';
-import { Headphones, Heart, Pause, Play, Printer, Square } from 'lucide-react';
+import {
+  Headphones,
+  Heart,
+  Pause,
+  Play,
+  Printer,
+  Square,
+  Download,
+  CheckCircle2,
+  RefreshCw,
+  AlertCircle,
+  Loader2,
+} from 'lucide-react';
 import type { TopicItem } from '@/src/types/topic';
 import { readSavedBookmarks, writeSavedBookmarks, readSavedRecentlyViewed, writeSavedRecentlyViewed } from '@/src/lib/topicRegistry';
+import {
+  getTopicOfflineStatus,
+  saveTopicOffline,
+  removeTopicOffline,
+  TopicOfflineStatus,
+  OFFLINE_STORAGE_CHANGE_EVENT,
+} from '@/src/lib/offlineStorage';
 import { stripHtml } from '@/src/utils/searchUtils';
 import { useToast } from '@/src/components/Toast';
 
 export function TopicReaderTools({ topic }: { topic: TopicItem }) {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const [offlineStatus, setOfflineStatus] = React.useState<TopicOfflineStatus>('unsaved');
   const [audioState, setAudioState] = React.useState<'stopped' | 'playing' | 'paused'>('stopped');
   const [audioSupported, setAudioSupported] = React.useState(false);
   const { showToast } = useToast();
+
+  React.useEffect(() => {
+    let active = true;
+    const checkOffline = async () => {
+      const status = await getTopicOfflineStatus(topic.slug);
+      if (active) setOfflineStatus(status);
+    };
+    checkOffline();
+
+    const handleOfflineEvent = (e: Event) => {
+      const custom = e as CustomEvent;
+      if (!custom.detail || custom.detail.slug === topic.slug) {
+        checkOffline();
+      }
+    };
+    window.addEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
+
+    return () => {
+      active = false;
+      window.removeEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
+    };
+  }, [topic.slug]);
 
   React.useEffect(() => {
     const updateBookmark = () => setIsBookmarked(readSavedBookmarks().includes(topic.slug));
@@ -58,10 +100,127 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
     setAudioState('playing');
   };
 
-  const buttonClass = 'inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)]';
+  const handleSaveOffline = async () => {
+    setOfflineStatus('saving');
+    const res = await saveTopicOffline(topic);
+    if (res.success) {
+      setOfflineStatus('saved');
+      showToast('تم حفظ الموضوع بنجاح للمطالعة بدون إنترنت');
+    } else {
+      setOfflineStatus('failed');
+      showToast(res.error || 'تعذر إتمام حفظ الموضوع محلياً', 'error');
+    }
+  };
+
+  const handleRemoveOffline = async () => {
+    const res = await removeTopicOffline(topic.slug);
+    if (res.success) {
+      setOfflineStatus('unsaved');
+      showToast('تمت إزالة النسخة المحفوظة من المتصفح (سجلاتك محفوظة)');
+    } else {
+      showToast('تعذرت إزالة الموضوع', 'error');
+    }
+  };
+
+  const handleUpdateOffline = async () => {
+    setOfflineStatus('updating');
+    const res = await saveTopicOffline(topic, { isUpdate: true });
+    if (res.success) {
+      setOfflineStatus('saved');
+      showToast('تم تحديث محتوى الموضوع والمخططات بنجاح');
+    } else {
+      setOfflineStatus('failed');
+      showToast(res.error || 'تعذر تحديث النسخة المحفوظة؛ تم الإبقاء على النسخة السابقة', 'error');
+    }
+  };
+
+  const buttonClass = 'inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] transition-colors cursor-pointer';
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2 no-print" aria-label="أدوات قراءة الموضوع">
+      {/* Offline Reading Controls */}
+      {offlineStatus === 'unsaved' && (
+        <button
+          type="button"
+          onClick={handleSaveOffline}
+          className={buttonClass}
+          aria-label="حفظ للمطالعة بدون إنترنت"
+        >
+          <Download className="h-4 w-4 text-[var(--brand-primary)]" aria-hidden="true" />
+          <span>حفظ للمطالعة بدون إنترنت</span>
+        </button>
+      )}
+
+      {offlineStatus === 'saving' && (
+        <button
+          type="button"
+          disabled
+          className={`${buttonClass} opacity-80 cursor-wait`}
+          aria-label="جاري الحفظ بدون إنترنت"
+        >
+          <Loader2 className="h-4 w-4 animate-spin text-[var(--brand-primary)]" aria-hidden="true" />
+          <span>جاري الحفظ محلياً...</span>
+        </button>
+      )}
+
+      {offlineStatus === 'saved' && (
+        <>
+          <button
+            type="button"
+            onClick={handleRemoveOffline}
+            className={`${buttonClass} border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 bg-emerald-50/70 dark:bg-emerald-950/40`}
+            aria-label="إزالة النسخة المحفوظة بدون إنترنت"
+            title="إزالة من التخزين غير المتصل دون حذف المفضلة أو سجل القراءة"
+          >
+            <CheckCircle2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+            <span>محفوظ بدون إنترنت (إزالة)</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleUpdateOffline}
+            className={buttonClass}
+            aria-label="تحديث النسخة المحفوظة"
+            title="تحديث نص ومخططات الموضوع مع الحفاظ على النسخة السابقة في حال فشل التحديث"
+          >
+            <RefreshCw className="h-4 w-4" aria-hidden="true" />
+            <span>تحديث</span>
+          </button>
+        </>
+      )}
+
+      {offlineStatus === 'updating' && (
+        <button
+          type="button"
+          disabled
+          className={`${buttonClass} opacity-80 cursor-wait`}
+          aria-label="جاري تحديث النسخة المحفوظة"
+        >
+          <Loader2 className="h-4 w-4 animate-spin text-[var(--brand-primary)]" aria-hidden="true" />
+          <span>جاري التحديث...</span>
+        </button>
+      )}
+
+      {offlineStatus === 'failed' && (
+        <button
+          type="button"
+          onClick={handleSaveOffline}
+          className={`${buttonClass} border-rose-300 dark:border-rose-800 text-rose-700 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-950/30`}
+          aria-label="فشل الحفظ - انقر لإعادة المحاولة"
+        >
+          <AlertCircle className="h-4 w-4 text-rose-600" aria-hidden="true" />
+          <span>فشل الحفظ (إعادة المحاولة)</span>
+        </button>
+      )}
+
+      {offlineStatus === 'unsupported' && (
+        <span
+          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"
+          title="المتصفح الحالي لا يوفر دعم Service Worker أو Storage API"
+        >
+          الحفظ غير متاح في هذا المتصفح
+        </span>
+      )}
+
       <button type="button" onClick={toggleBookmark} aria-pressed={isBookmarked} className={buttonClass}>
         <Heart className={`h-4 w-4 ${isBookmarked ? 'fill-rose-500 text-rose-500' : ''}`} aria-hidden="true" />
         {isBookmarked ? 'إزالة من المفضلة' : 'حفظ في المفضلة'}

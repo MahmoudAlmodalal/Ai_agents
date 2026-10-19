@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 import { TopicReaderTools } from '@/src/components/TopicReaderTools';
+import { MermaidViewer } from '@/src/components/MermaidViewer';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowLeft, ArrowRight, FileText, Wrench, CheckSquare, ListOrdered } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, Wrench, CheckSquare, ListOrdered, BarChart3 } from 'lucide-react';
 import {
   getTopicBySlug,
   getAllTopics,
@@ -120,6 +121,24 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
                   <li key={idx}>{req}</li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {/* Interactive Mermaid Diagram Section */}
+          {topic.diagramCount > 0 && (
+            <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 sm:p-6 shadow-xs space-y-3" aria-label="المخطط الهندسي التفاعلي">
+              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-color)] pb-3">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-[var(--brand-primary)]" />
+                  <h2 className="text-base sm:text-lg font-black text-[var(--text-main)]">
+                    المخطط الهندسي التفاعلي (Mermaid.js)
+                  </h2>
+                </div>
+                <span className="rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  تصيير محلي
+                </span>
+              </div>
+              <MermaidViewer topic={topic} />
             </section>
           )}
 

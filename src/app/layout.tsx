@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/src/components/Navbar';
 import { Footer } from '@/src/components/Footer';
 import { ToastProvider } from '@/src/components/Toast';
+import { ServiceWorkerRegister } from '@/src/components/ServiceWorkerRegister';
 
 // Responsive Viewport Configuration (Next.js 15 Standard)
 export const viewport: Viewport = {
@@ -75,8 +76,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="ar" dir="rtl" className="scroll-smooth">
       <head>
         <meta charSet="utf-8" />
+        <link rel="manifest" href="/manifest.webmanifest" />
       </head>
       <body className="min-h-screen flex flex-col bg-[var(--bg-body)] text-[var(--text-main)] font-sans antialiased selection:bg-[#10b981] selection:text-white transition-colors">
+        <ServiceWorkerRegister />
         <ToastProvider>
           {/* Accessible Skip-to-Content Link for Screen Readers & Keyboard Navigation (WCAG AA) */}
           <a

@@ -6,6 +6,7 @@ import {
   DIAGRAM_PERSPECTIVES,
   getTopicMermaidDiagram,
 } from '@/src/utils/diagramEngine.ts';
+import { getSavedTopicOfflinePayload } from '@/src/lib/offlineStorage';
 
 interface MermaidViewerProps {
   topic: TopicItem;
@@ -75,6 +76,18 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
     setRenderError(null);
 
     const renderDiagram = async () => {
+      // 1. If an offline snapshot is available, load it immediately
+      const offline = getSavedTopicOfflinePayload(topic.slug);
+      if (offline?.diagramSnapshots?.[perspective]) {
+        if (!isCancelled) {
+          setSvgContent(offline.diagramSnapshots[perspective]);
+          setIsRendering(false);
+        }
+        if (typeof navigator !== 'undefined' && !navigator.onLine) {
+          return;
+        }
+      }
+
       try {
         const renderId = `mermaid-${topic.id}-${perspective}-${Date.now()}`;
         const { svg } = await mermaid.render(renderId, currentDiagramCode);
@@ -83,6 +96,11 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
           setIsRendering(false);
         }
       } catch (err: unknown) {
+        if (offline?.diagramSnapshots?.[perspective] && !isCancelled) {
+          setSvgContent(offline.diagramSnapshots[perspective]);
+          setIsRendering(false);
+          return;
+        }
         console.error('Mermaid render error:', err);
         if (!isCancelled) {
           setRenderError(err instanceof Error ? err.message : 'فشل في تصيير المخطط');
