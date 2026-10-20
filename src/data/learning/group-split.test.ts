@@ -162,24 +162,29 @@ test('buildTopic (Group A) supports per-Topic reviewState, approvals, evidence, 
   const defaultTopic = buildTopic(dummyDraft);
   assert.equal(defaultTopic.reviewState, 'draft');
   assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'approved');
-  assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'proposed');
+  assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'approved');
   assert.equal(defaultTopic.quiz.instructions, PENDING_QUIZ_INSTRUCTIONS);
   assert.equal(defaultTopic.quiz.scoringPolicy.summary, PENDING_QUIZ_SCORING_POLICY_SUMMARY);
-  assert.equal(defaultTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A);
+  assert.equal(defaultTopic.practicalAssessment.scale.summary, PENDING_RUBRIC_SCALE_SUMMARY);
   assert.equal(defaultTopic.reviewEvidence[0]?.outcome, 'not-run');
   assert.equal(defaultTopic.quiz.reviewEvidence[0]?.outcome, 'not-run');
   assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /Scoring policy is accepted/);
   assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /questions remains pending/);
   assert.equal(defaultTopic.practicalAssessment.reviewEvidence[0]?.outcome, 'not-run');
+  assert.match(defaultTopic.practicalAssessment.reviewEvidence[0]?.evidence ?? '', /Rubric policy is accepted/);
+  assert.match(defaultTopic.practicalAssessment.reviewEvidence[0]?.evidence ?? '', /criteria remains pending/);
 
   // 2. Draft override: unapproved policy shows draft wording
   const draftPolicyTopic = buildTopic({
     ...dummyDraft,
     quizScoringPolicyApproval: proposedApproval,
+    rubricScaleApproval: proposedApproval,
   });
   assert.equal(draftPolicyTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(draftPolicyTopic.practicalAssessment.scale.approval.state, 'proposed');
   assert.equal(draftPolicyTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_A);
   assert.equal(draftPolicyTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A);
+  assert.equal(draftPolicyTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A);
 
   // 3. Overrides with approved reviewState, approved policies, and custom passing evidence
   const approval = approvedPolicy(
@@ -272,22 +277,27 @@ test('buildTopicB (Group B) supports per-Topic reviewState, approvals, evidence,
   const defaultTopic = buildTopicB(dummyDraft, ['q1', 'q2']);
   assert.equal(defaultTopic.reviewState, 'review-ready');
   assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'approved');
-  assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'proposed');
+  assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'approved');
   assert.equal(defaultTopic.quiz.instructions, PENDING_QUIZ_INSTRUCTIONS);
   assert.equal(defaultTopic.quiz.scoringPolicy.summary, PENDING_QUIZ_SCORING_POLICY_SUMMARY);
-  assert.equal(defaultTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B);
+  assert.equal(defaultTopic.practicalAssessment.scale.summary, PENDING_RUBRIC_SCALE_SUMMARY);
   assert.equal(defaultTopic.reviewEvidence.length, 4);
   assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /سياسة التصحيح معتمدة/);
   assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /المراجعة التعليمية المستقلة.*معلقة/);
+  assert.match(defaultTopic.practicalAssessment.reviewEvidence[0]?.evidence ?? '', /سياسة التقييم العملي معتمدة/);
+  assert.match(defaultTopic.practicalAssessment.reviewEvidence[0]?.evidence ?? '', /المراجعة التعليمية المستقلة.*معلقة/);
 
   // 2. Draft override: unapproved policy shows draft wording
   const draftPolicyTopic = buildTopicB({
     ...dummyDraft,
     quizScoringPolicyApproval: proposedApproval,
+    rubricScaleApproval: proposedApproval,
   }, ['q1', 'q2']);
   assert.equal(draftPolicyTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(draftPolicyTopic.practicalAssessment.scale.approval.state, 'proposed');
   assert.equal(draftPolicyTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_B);
   assert.equal(draftPolicyTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_B);
+  assert.equal(draftPolicyTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B);
 
   // 3. Overrides with approved reviewState, approved policies, and custom passing evidence
   const approval = approvedPolicy(

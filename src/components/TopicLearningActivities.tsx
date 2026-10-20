@@ -224,15 +224,17 @@ export function TopicLearningActivities({ topic, content: authoredContent }: { t
           <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
             {content.reviewState === 'approved' ? 'محتوى تمت مراجعته' : content.reviewState === 'review-ready' ? 'محتوى بانتظار المراجعة' : 'مسودة تعليمية'}
           </span>
-          {!quizPolicyEnabled && (
+          {(!quizPolicyEnabled || !rubricPolicyEnabled) && (
             <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
-              {content.quiz.scoringPolicy.approval.state === 'approved' ? 'معاينة فحص ذاتي — لا تمثل إتقانًا' : 'معاينة مقترحة — لا تمثل إتقانًا'}
+              {content.quiz.scoringPolicy.approval.state === 'approved' && content.practicalAssessment.scale.approval.state === 'approved'
+                ? 'معاينة فحص ذاتي — لا تمثل إتقانًا'
+                : 'معاينة مقترحة — لا تمثل إتقانًا'}
             </span>
           )}
         </div>
         <h2 id={`${instanceId}-learning-title`} className="text-xl font-black text-[var(--text-main)]">محتوى تعلّمي وتقييم ذاتي</h2>
         <p className="text-sm leading-7 text-[var(--text-muted)]" dir="auto">
-          نتائج هذا الفحص مراجعة ذاتية لإجاباتك وفق سياسة التصحيح المعتمدة، والتقييم الذاتي هو تقدير المتعلم الخاص وليس تحققاً مستقلاً. لا تتحقق الواجهة من صحة مشروعك أو من إتقانه، ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.
+          نتائج هذا الفحص مراجعة ذاتية لإجاباتك وفق سياسة التصحيح المعتمدة، والتقييم الذاتي هو تقدير المتعلم الخاص وفق سلم التقييم المعتمد وليس تحققاً مستقلاً. لا تتحقق الواجهة من صحة مشروعك أو من إتقانه، ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.
         </p>
       </header>
 

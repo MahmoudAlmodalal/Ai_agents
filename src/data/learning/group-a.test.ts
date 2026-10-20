@@ -50,7 +50,10 @@ function assertDraftIsCoherent(slug: string) {
   assert.equal(content.quiz.scoringPolicy.approval.approvedBy, 'MahmoudAlmodalal (course owner)');
   assert.equal(content.quiz.scoringPolicy.approval.approvedAt, '2026-10-20');
   assert.equal(content.quiz.scoringPolicy.approval.decisionReference, 'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)');
-  assert.equal(content.practicalAssessment.scale.approval.state, 'proposed');
+  assert.equal(content.practicalAssessment.scale.approval.state, 'approved');
+  assert.equal(content.practicalAssessment.scale.approval.approvedBy, 'MahmoudAlmodalal (course owner)');
+  assert.equal(content.practicalAssessment.scale.approval.approvedAt, '2026-10-20');
+  assert.equal(content.practicalAssessment.scale.approval.decisionReference, 'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #43)');
   assert.equal(content.practicalAssessment.scale.completionRule, 'no-mastery-threshold');
   assert.deepEqual(content.practicalAssessment.scale.levels.map((level) => level.id), [
     'not-yet', 'in-progress', 'ready-for-review',

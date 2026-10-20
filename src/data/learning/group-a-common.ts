@@ -93,6 +93,12 @@ export const ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL: PolicyApproval = approvedPol
   'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)',
 );
 
+export const ACCEPTED_RUBRIC_SCALE_APPROVAL: PolicyApproval = approvedPolicy(
+  'MahmoudAlmodalal (course owner)',
+  '2026-10-20',
+  'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #43)',
+);
+
 export const DRAFT_QUIZ_INSTRUCTIONS_GROUP_A =
   'اختر الإجابة الأدق ثم اقرأ التفسير. هذه مسودة تدريبية وسياسة التقييم المقترحة لم تعتمد بعد.';
 
@@ -145,7 +151,7 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
   }));
 
   const quizScoringPolicyApproval = draft.quizScoringPolicyApproval ?? { ...ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL };
-  const rubricScaleApproval = draft.rubricScaleApproval ?? { ...proposedApproval };
+  const rubricScaleApproval = draft.rubricScaleApproval ?? { ...ACCEPTED_RUBRIC_SCALE_APPROVAL };
 
   const lessonEvidence = draft.lessonReviewEvidence ?? [
     notRunEvidence('lesson', 'Supplemental learning content is a draft. Independent educational review, template approval, and course-owner acceptance are pending.'),
@@ -156,7 +162,7 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
   ];
 
   const rubricReviewEvidence = draft.rubricReviewEvidence ?? [
-    notRunEvidence('rubric', 'Proposed descriptive self-assessment only; rubric policy has not been approved.'),
+    notRunEvidence('rubric', 'Rubric policy is accepted by the course owner (issue #43); independent educational review of this Topic\'s criteria remains pending.'),
   ];
 
   const reviewState = draft.reviewState ?? 'draft';

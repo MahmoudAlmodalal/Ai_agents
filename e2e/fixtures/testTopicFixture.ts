@@ -40,6 +40,11 @@ export function createApprovedTestTopic(slug = 'project-idea-mvp'): TopicLearnin
     '2026-10-20',
     'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)',
   );
+  const rubricApproval = approvedPolicy(
+    'MahmoudAlmodalal (course owner)',
+    '2026-10-20',
+    'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #43)',
+  );
 
   const draft: TopicDraft = {
     topicSlug: slug,
@@ -108,6 +113,7 @@ export function createApprovedTestTopic(slug = 'project-idea-mvp'): TopicLearnin
     quizReviewEvidence: passingQuizEvidence,
     rubricReviewEvidence: passingRubricEvidence,
     quizScoringPolicyApproval: approval,
+    rubricScaleApproval: rubricApproval,
   };
 
   return buildTopic(draft);
