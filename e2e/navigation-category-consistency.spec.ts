@@ -5,23 +5,29 @@ test.describe('Navigation and Category Consistency (#29/#30/#31)', () => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto('/');
 
-    const tagline = page.locator('header.site-header-main').getByText(/MET Academy/);
-    await expect(tagline).toBeVisible();
-    await expect(tagline).toContainText('من الفكرة إلى النشر والعرض');
-    await expect(page.locator('header.site-header-main')).not.toContainText('من الفكرة إلى الواجهات');
+    const header = page.locator('header.site-header-main');
+    const brandLink = header.getByRole('link', { name: 'Ai_agents — الصفحة الرئيسية' });
+    await expect(brandLink).toBeVisible();
+    await expect(header).toContainText('من الفكرة إلى النشر والعرض');
+    await expect(header).toContainText('Full-Stack');
+    await expect(header).not.toContainText('من الفكرة إلى الواجهات');
   });
 
-  test('Navbar primary links lead directly to canonical topics without redirecting to index', async ({ page }) => {
+  test('Navbar topic links lead directly to canonical topics without redirecting to index', async ({ page }) => {
     await page.setViewportSize({ width: 1366, height: 900 });
     await page.goto('/');
 
-    const reqLink = page.locator('nav[aria-label="شريط التنقل الرئيسي"]').getByRole('link', { name: 'المتطلبات' });
+    const moreButton = page.getByRole('banner').getByRole('button', { name: /عرض المزيد من أقسام Ai_agents/ });
+    await moreButton.click();
+    const reqLink = page.getByRole('banner').getByRole('link', { name: 'المتطلبات' });
     await expect(reqLink).toHaveAttribute('href', '/learn/discovery-grill-me');
     await reqLink.click();
     await expect(page).toHaveURL(/\/learn\/discovery-grill-me\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('استجواب الفكرة واستكشاف المتطلبات');
 
-    const stitchLink = page.locator('nav[aria-label="شريط التنقل الرئيسي"]').getByRole('link', { name: /Stitch MCP/ });
+    await page.goto('/');
+    await page.getByRole('banner').getByRole('button', { name: /عرض المزيد من أقسام Ai_agents/ }).click();
+    const stitchLink = page.getByRole('banner').getByRole('link', { name: /Stitch MCP/ });
     await expect(stitchLink).toHaveAttribute('href', '/learn/stitch-mcp-integration');
     await stitchLink.click();
     await expect(page).toHaveURL(/\/learn\/stitch-mcp-integration\/?$/);

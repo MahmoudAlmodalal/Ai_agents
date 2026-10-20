@@ -379,6 +379,9 @@ Ref: profile.user_id - users.id</code></pre>
     <p class="leading-8 text-[var(--text-muted)]">
       انسخ هذا الكود والصقه مباشرة في <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> لتوليد مخطط قاعدة بيانات تفاعلي واستخراج كود PostgreSQL DDL:
     </p>
+    <p class="leading-7 text-sm text-[var(--text-muted)] mt-2">
+      وجود هذا المثال في الدرس لا يثبت أنه عُرض أو صُدّر من الخدمة. يجب أن يأتي رابط المخطط وملف SQL من تشغيل فعلي ومراجعة المخرجات؛ إذا لم يتوفر التشغيل، سجّلهما <strong>Not Run</strong> واعتبر حزمة التسليم غير مكتملة، ولا تسمِّ ترجمة يدوية أنها تصدير من dbdiagram.io.
+    </p>
 
     <div class="code-container my-6" dir="ltr">
       <div class="code-header">
@@ -459,8 +462,8 @@ Ref: loan_action_logs.actor_id > users.id [delete: restrict]</code></pre>
       <li><strong>فتح المحرر:</strong> توجّه إلى <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> وانقر على زر "Go to App".</li>
       <li><strong>لصق الكود الخام:</strong> امسح النص التجريبي الافتراضي والصق كود DBML السابق. <em>تنبيه: لا تقم بتضمين علامات التنسيق <code>\`\`\`dbml</code></em>؛ الصق نص الكود مباشرة.</li>
       <li><strong>التنظيم البصري:</strong> قم بسحب الصناديق وضبط أماكن الجداول بما يحقق وضوح الأسهم وتجنب تقاطع الخطوط.</li>
-      <li><strong>تصدير كود DDL:</strong> من القائمة العلوية اختر <strong>Export &gt; Export to PostgreSQL</strong> أو MySQL للحصول على أوامر <code>CREATE TABLE</code> المعتمدة، واحفظ الملف باسم <code>docs/database.sql</code>.</li>
-      <li><strong>المشاركة والتوثيق:</strong> انقر على زر <strong>Share</strong> وانسخ الرابط التفاعلي لتوثيقه في ملف <code>docs/README.md</code> بمستودع مشروعك.</li>
+      <li><strong>تصدير كود DDL:</strong> من القائمة العلوية اختر <strong>Export &gt; Export to PostgreSQL</strong> أو MySQL للحصول على أوامر <code>CREATE TABLE</code>، واحفظ التصدير الفعلي باسم <code>docs/database.sql</code>. لا تسمِّ DDL مكتوباً أو منقولاً يدوياً تصديراً من الأداة.</li>
+      <li><strong>المشاركة والتوثيق:</strong> انقر على زر <strong>Share</strong> وانسخ الرابط التفاعلي بعد فتحه والتحقق من نطاق الوصول، ثم وثّقه في ملف <code>docs/README.md</code>. إذا لم تُنفذ خطوة التصدير أو المشاركة، اكتب <strong>Not Run</strong> واذكر أن هذا المخرج مطلوب لكنه غير مكتمل.</li>
     </ol>
   </div>
 </section>
@@ -1034,15 +1037,15 @@ export const t06Entries: TopicItem[] = [
     ],
     outputs: [
       'docs/database.dbml',
-      'رابط تفاعلي على dbdiagram.io',
-      'docs/database.sql'
+      'رابط dbdiagram.io بعد إنشاء المخطط والتحقق من نطاق الوصول؛ وإلا Not Run / غير مكتمل',
+      'docs/database.sql كتصدير فعلي من الأداة؛ وإلا Not Run / غير مكتمل، ولا تستبدله بترجمة يدوية'
     ],
     checklist: [
       'التفريق القاطع بين DBML وMermaid: DBML لا يعمل في Mermaid Live، وMermaid erDiagram ليس بديلاً عن dbdiagram.io.',
       'صحة صياغة كود DBML وخلوه من أخطاء الكتابة عند لصقه في dbdiagram.io.',
       'اشتمال كود DBML على جميع جداول وحقول وعلاقات مشروع الطالب (BorrowHub كمثال مرجعي).',
       'استخدام التوجيهات المتقدمة في DBML: التوثيق بالـ Note، القيود الافتراضية default، والمفاتيح المركبة.',
-      'تصدير كود SQL DDL النظيف وتوثيق رابط المخطط السحابي في ملفات المشروع.'
+      'توثيق رابط المخطط وSQL DDL بعد تنفيذ التصدير ومراجعته فعلياً؛ إذا لم يحدث ذلك فاكتب Not Run / غير مكتمل ولا تدّعِ وجود تصدير.'
     ],
     publicationStatus: 'unified-complete',
     sequencePosition: 15,

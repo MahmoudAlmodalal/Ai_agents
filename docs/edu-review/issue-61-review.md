@@ -114,6 +114,8 @@ Criteria:
 
 **Author finding:** راجع المؤلف الدرس الأصلي والمكمل معاً: الجدول والخطوة القديمة لم يعودا يوصيان بإخفاء تدفق الصفحة، بل بتحديد العنصر المسبب وإعادة فحصه؛ القص محلي ومقصود فقط. ربط الفئات بمصدر التصميم وعروض الفحص الفعلية موضحان.
 
+**Breakpoint correction:** مثال Tailwind يعرّف `--breakpoint-2xl: 90rem` في `@theme` ليطابق استخدام `2xl:` عند 1440px. يوضح الدرس أن Tailwind v4 الافتراضي هو 96rem/1536px، وأن استخدام `xl:` هو البديل إذا لم يُعرّف breakpoint مخصص.
+
 **External video candidate:** [Tailwind CSS: From Zero to Production](https://tailwindcss.com/blog/tailwindcss-from-zero-to-production) (`candidate`, approval `proposed`). مرشح من سلسلة Tailwind الرسمية ذات 8 أجزاء؛ الجزء الثالث responsive design والسابع تخصيص design system. السلسلة تعلم Tailwind v2.0، لذا تصلح للمبادئ فقط ويجب عدم نسخ صياغة الإعداد أو الفئات قبل التحقق من الإصدار.
 
 **Resource evidence:** صفحة Tailwind الرسمية تسرد 8 فيديوهات، ومنها Responsive Design وCustomizing Your Design System، وتذكر أنها لـ Tailwind CSS v2.0 (2021). تطابقها مع التجاوب والرموز مناسب بمحدودية النسخة. لم يُختبر تشغيل الفيديو أو captions أو الوصولية؛ موافقة المالك غير مسجلة. [Publisher/source page](https://tailwindcss.com/blog/tailwindcss-from-zero-to-production).

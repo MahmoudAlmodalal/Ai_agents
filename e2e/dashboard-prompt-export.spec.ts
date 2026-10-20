@@ -213,11 +213,12 @@ test.describe('Learner dashboard and export', () => {
     expect(manifest.recordStorageStatus.recentlyViewed).toBe('invalid');
     expect(manifest.recordStorageStatus.learningRecords).toBe('invalid');
     expect(manifest.recordStorageStatus.quizAttempts).toBe('invalid');
-    expect(manifest.recordStorageStatus.practicalAssessments).toBe('invalid');
+    expect(manifest.recordStorageStatus.practicalAssessments).toBe('available');
     expect(manifest.recordStorageStatus.checklists).toBe('invalid');
     expect(manifest.recordStorageStatus.promptCustomizations).toBe('invalid');
-    await expect(page.locator('[aria-label="ملخص محلي للأنشطة المسجلة"]').getByText('العدد غير مؤكد')).toHaveCount(5);
-    await expect(page.getByText(/نتيجة الشروط غير مؤكدة/)).toHaveCount(3);
+    await expect(page.locator('[aria-label="ملخص محلي للأنشطة المسجلة"]').getByText('العدد غير مؤكد')).toHaveCount(4);
+    await expect(page.getByText('لا توجد تقييمات ذاتية مسجلة.')).toBeVisible();
+    await expect(page.getByText(/نتيجة الشروط غير مؤكدة/)).toHaveCount(2);
   });
 
   test('frozen legacy HTML checklist fixture stays visible after a blocked write and same-tab dashboard transition', async ({ page }) => {
@@ -254,7 +255,9 @@ test.describe('Learner dashboard and export', () => {
 
     await page.getByRole('button', { name: /عرض المزيد من أقسام Ai_agents/ }).click();
     await page.getByRole('banner').getByRole('link', { name: /لوحة التقدم/ }).click();
-    const checklistCard = page.getByRole('heading', { level: 2, name: 'قوائم التحقق العملية' }).locator('xpath=..').locator('xpath=..');
+    const checklistCard = page.locator('section').filter({
+      has: page.getByRole('heading', { level: 2, name: 'قوائم التحقق العملية' }),
+    });
     await expect(checklistCard).toContainText('تغييرات جلسة غير مؤكدة الحفظ');
     await expect(checklistCard).toContainText(itemText);
     await expect(checklistCard).toContainText('الذاكرة فقط');

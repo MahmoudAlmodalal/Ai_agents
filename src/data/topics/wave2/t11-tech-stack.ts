@@ -526,6 +526,8 @@ export const topic32TailwindHtml = `
 /* Illustrative value only: replace from your approved DESIGN.md. */
 @theme {
   --color-brand: #059669;
+  /* Tailwind's default 2xl is 96rem; map this lesson's 1440px checkpoint explicitly. */
+  --breakpoint-2xl: 90rem;
 }
 
 /* bg-brand / text-brand now use the reviewed project token. */</code></pre>
@@ -551,6 +553,9 @@ export const topic32TailwindHtml = `
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. نقاط كسر التجاوب الرسمية للمسار (390، 768، 1024، 1366، 1440 بكسل)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
       افحص الواجهة عند خمسة عروض شاشة وسجّل النتيجة الفعلية لكل اتجاه. أصلح العنصر الذي يسبب التدفق الأفقي؛ إخفاء التدفق على الصفحة لا يثبت أن السبب عولج:
+    </p>
+    <p class="leading-7 text-[var(--text-muted)]">
+      يبدأ <code>2xl:</code> افتراضياً في Tailwind v4 عند <code>96rem</code> (1536px مع جذر 16px)، فلا ينطبق عند 1440px. يضبط مثال <code>@theme</code> أعلاه هذا الحد صراحةً إلى <code>90rem</code> (1440px مع الجذر الافتراضي). إذا لم تخصصه في مشروعك، استخدم <code>xl:</code> عند هذا العرض.
     </p>
 
     <div class="table-container my-4">

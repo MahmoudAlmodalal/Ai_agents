@@ -13,7 +13,7 @@ The current output-to-input traceability review for all Topics 30–58 is record
 
 ## `frontend-backend-integration`
 
-**Inputs and lesson walk-through:** العقد يربط الطرفين → مثال محلول: قائمة عناصر → برومبت ومصفوفة تكامل. Steps:
+**Inputs and lesson walk-through:** العقد يربط الطرفين → مثال محلول: قائمة عناصر → برومبت ومصفوفة تكامل. مدخلات الموضوع 45 المسماة تشمل `pg-setup`/`pg-check` من 39، و`api-contract`/`api-layers` من 40، ومخرجات Django من 41 أو FastAPI من 42، ثم نتائج authorization والخدمة من 43/44. Steps:
   - أنشئ دالة typed لطلب واحد وافحص status قبل تفسير body. → `العميل يميز response الناجح وHTTP error ورفض الشبكة.`
   - سجل origin المسموح وأسماء المتغيرات وحدد العام والسري. → `docs/INTEGRATION_CONFIG.md بأسماء فقط ومصادر إعدادها.`
   - اختبر نجاحاً وempty وunauthorized وnetwork failure باستخدام مصدر معلّم. → `جدول UI/HTTP يحدد لكل تجربة fixture أو خدمة فعلية.`

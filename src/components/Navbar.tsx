@@ -192,7 +192,7 @@ export const Navbar: React.FC = () => {
                     Ai_agents
                   </span>
                   <span className="hidden xl:block text-[10px] sm:text-[11px] font-medium text-[var(--text-muted)] tracking-tight">
-                    هندسة برمجيات بالذكاء الاصطناعي
+                    من الفكرة إلى النشر والعرض · Full-Stack
                   </span>
                 </div>
               </Link>

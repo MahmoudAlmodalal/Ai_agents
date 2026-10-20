@@ -366,6 +366,7 @@ export default function HomePage() {
                 </button>
               </div>
               <div className="home-hero-facts" aria-label="معلومات المسار">
+                <span className="home-hero-fact">المدة الرسمية للبرنامج: 40 ساعة.</span>
                 <span className="home-hero-fact"><strong dir="ltr">{TOPICS.length}</strong> موضوعًا متاحًا</span>
                 <span className="home-hero-fact"><strong dir="ltr">{proposedGroupCount}</strong> مجموعة مقترحة</span>
                 <span className="home-hero-fact"><Route className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" /> يمكنك فتح أي موضوع مباشرة</span>

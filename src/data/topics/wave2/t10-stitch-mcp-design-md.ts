@@ -369,7 +369,7 @@ export const topic29DesignMdHtml = `
 <section id="topic-29-design-md" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 29 · أنظمة وقواعد التصميم</span>
-    <span class="step-pill">صياغة وثيقة DESIGN.md القياسية واستخراج التوكنز</span>
+    <span class="step-pill">صياغة وثيقة DESIGN.md المقترحة واستخراج التوكنز</span>
   </div>
 
   <div class="step-header">
@@ -470,8 +470,10 @@ Use the connected Stitch MCP, or explicitly provided exports if MCP is unavailab
 Read the approved project and its screens. Extract REAL confirmed hex values,
 fonts, typography, spacing, radii, components, interaction patterns,
 responsive rules and accessibility notes.
-Create DESIGN.md using optional YAML tokens and Markdown design rationale,
-consistent with Google's DESIGN.md format. Do not invent values.
+Create DESIGN.md using the target tool's documented format. The course's
+YAML-frontmatter plus Markdown example is optional and is not a claim about a
+universal Google format or automatic token ingestion. Verify compatibility
+before connecting it to a build. Do not invent values.
 Create docs/STITCH_SCREEN_REFERENCES.md with screen identifiers and links.
 Report inaccessible properties. Do not modify Stitch screens.</code></pre>
     </div>
@@ -752,12 +754,12 @@ export const t10Entries: TopicItem[] = [
     number: '29',
     slug: 'design-md-spec',
     title: 'وثيقة التصميم DESIGN.md واستخراج القيم المعتمدة',
-    subtitle: 'صياغة وثيقة نظام التصميم القياسية واستخراج التوكنز الحقيقية دون اختراع هوية جديدة',
+    subtitle: 'صياغة تسليم مقترح لوثيقة نظام التصميم واستخراج التوكنز الحقيقية دون اختراع هوية جديدة',
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'أنظمة وقواعد التصميم',
     summary: 'صياغة ملف DESIGN.md وفق بنية التمرين (توكنز منظمة وشرح Markdown) واستخراج قيم التصميم ومصادرها من مراجع الشاشات. لا يفترض أن كل مشروع يحتاج YAML أو أن شبكة 8px ملزمة؛ يوثق القيم المؤكدة فقط، ويترك غير المتاح UNKNOWN، مع مراجعة التباين وRTL والحالات قبل التنفيذ.',
-    tags: ['DESIGN.md', 'Design Tokens', 'Google Design Spec', 'Color Palette', 'Typography', '8px Grid', 'PROMPT 23', 'WCAG AA', 'RTL Support'],
+    tags: ['DESIGN.md', 'Design Tokens', 'Exercise Handoff Format', 'Color Palette', 'Typography', '8px Grid', 'PROMPT 23', 'WCAG AA', 'RTL Support'],
     contentTypes: ['code', 'checklist', 'prompt'],
     diagramCount: 1,
     promptCount: 1,

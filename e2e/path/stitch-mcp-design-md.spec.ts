@@ -17,7 +17,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     // Verifies RTL directionality
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Positioned after approved design and basic MCP setup
     await expect(content).toContainText('التموضع الهندسي الصحيح: لماذا يأتي ربط Stitch MCP هنا تحديداً؟');
@@ -71,7 +71,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     await expect(copyButton).toContainText('تم النسخ');
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Practical steps and checklist
@@ -88,7 +88,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     await expect(nextLink).toHaveAttribute('href', '/learn/design-md-spec');
   });
 
-  test('Topic 29 (DESIGN.md): Grounded in real design values, YAML tokens, markdown rationale, and PROMPT 23', async ({ page }) => {
+  test('Topic 29 (DESIGN.md): Grounds token guidance in evidence and presents YAML as an exercise format', async ({ page }) => {
     await page.goto('/learn/design-md-spec');
 
     // Page metadata and headers
@@ -103,18 +103,21 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     // Verifies RTL directionality
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Core principle - Real confirmed values, no invented identity, no replaced requirements
     await expect(content).toContainText('المبدأ الهندسي الصارم: توثيق القيم المعتمدة فعلياً لا هوية متخيلة');
     await expect(content).toContainText('تعكس وثيقة التصميم القيم البصرية المعتمدة فعلياً');
     await expect(content).toContainText('ولا تخترع هوية بصرية جديدة من العدم أو تستبدل متطلبات PRD المعتمدة');
 
-    // Content: Standard Google DESIGN.md structure
-    await expect(content).toContainText('البنية القياسية لوثيقة DESIGN.md (توكنز YAML + شرح Markdown)');
+    // Content: Optional exercise structure, not a universal Google/tool format
+    await expect(content).toContainText('بنية تمرين DESIGN.md (توكنز YAML + شرح Markdown)');
+    await expect(content).toContainText('صيغة تسليم تعليمية مقترحة');
+    await expect(content).toContainText('تحقق من صيغة الأداة المستهدفة');
+    await expect(content).toContainText('لا تصف هذا المثال بأنه معيار عام');
     await expect(content).toContainText('رموز التصميم (Tokens)');
     await expect(content).toContainText('فلسفة التصميم (Rationale)');
-    await expect(content).toContainText('حالات الواجهة الست (UI States)');
+    await expect(content).toContainText('حالات الواجهة المناسبة للمهمة (UI States)');
 
     // Content: Verbatim PROMPT 23
     await expect(content).toContainText('برومبت استخراج DESIGN.md من Stitch (PROMPT 23)');
@@ -153,7 +156,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     await expect(copyButton).toContainText('تم النسخ');
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Navigation bounds: Prev -> Topic 28 (stitch-mcp-integration)

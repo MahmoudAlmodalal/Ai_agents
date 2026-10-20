@@ -50,7 +50,8 @@ The existing reader content remains available for every canonical Topic. This su
 
 ## Sample correction review — 2026-10-20
 
-- **Topic 22 (`design-system-rules`): Passed, static prompt coverage only.** `samples/group-08-stitch-design-prototype.md` now contains `docs/STITCH_SCREEN_PROMPTS.md` with one prompt for each of the two exercise-inventory screens. Both prompts use only evidence-backed tokens; primary color, font, and spacing remain `UNKNOWN` because there is no inspected reference screen. No Stitch screen was generated or inspected, no token is approved, and visual consistency is **Not Run**.
+- **Topic 21 (`stitch-reference-screen`): Partial, static prompt coverage only.** `docs/STITCH_MASTER_PROMPT.md` now targets one representative `participant-options` screen as an exercise choice and leaves unsupported values and permission rules open. No Stitch screen was generated or inspected; reference-screen review and token extraction are **Not Run**.
+- **Topic 22 (`design-system-rules`): Partial, static prompt coverage only.** `docs/STITCH_SCREEN_PROMPTS.md` contains one prompt for each of the four PRD candidate screens. All visual tokens remain `UNKNOWN` because no reference screen was generated or inspected. No token is approved and visual consistency is **Not Run**.
 
 This narrow result does not establish lesson acceptance, template approval, complete student handoff, or group release.
 

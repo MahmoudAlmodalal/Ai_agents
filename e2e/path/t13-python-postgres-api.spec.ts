@@ -22,7 +22,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Purpose and project level (no bloated academic course)
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('المستوى اللازم للمشروع: لماذا Python وما الذي نحتاجه فعلاً؟');
     await expect(content).toContainText('البيئة الافتراضية المعزولة وإدارة الاعتماديات');
     await expect(content).toContainText('إدارة الأسرار والمتغيرات البيئية');
@@ -79,7 +79,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     await expect(header).toContainText('docs/DATABASE_CONNECTION_SPEC.md');
     await expect(header).toContainText('docs/MIGRATION_STRATEGY.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Why PostgreSQL & 5 BorrowHub tables
     await expect(content).toContainText('لماذا PostgreSQL؟ ومطابقة نموذج بيانات المشروع (ERD)');
@@ -143,7 +143,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     await expect(header).toContainText('docs/API_CONTRACTS.md');
     await expect(header).toContainText('docs/PERMISSIONS_MATRIX.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Grounded in requirements, ERD, and frontend contracts
     await expect(content).toContainText('ارتكاز معمارية API على المتطلبات وERD وعقود الفرونت إند');

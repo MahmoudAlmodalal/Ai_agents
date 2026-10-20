@@ -23,7 +23,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Purpose and project level (no bloated academic course)
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('المستوى اللازم للمشروع: لماذا TypeScript وما الذي نحتاجه فعلاً؟');
     await expect(content).toContainText('عقود بيانات صلبة (Data Contracts)');
     await expect(content).toContainText('noImplicitAny');
@@ -70,7 +70,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     await expect(header).toContainText('src/components/common/StatusBadge.tsx');
     await expect(header).toContainText('docs/REACT_ARCHITECTURE.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Mental model UI = f(state)
     await expect(content).toContainText('UI = f(state)');
@@ -116,7 +116,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     await expect(header).toContainText('src/app/globals.css');
     await expect(header).toContainText('docs/TAILWIND_DESIGN_MAPPING.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Mapped to approved DESIGN.md values (not invented)
     await expect(content).toContainText('التنسيق المستند إلى نظام التصميم المعتمد لا إلى قيم عشوائية');
@@ -165,7 +165,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     await expect(header).toContainText('src/app/layout.tsx');
     await expect(header).toContainText('docs/NEXTJS_ROUTING_SPEC.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: App Router structure
     await expect(content).toContainText('Next.js 15 App Router');
@@ -233,7 +233,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
   // -------------------------------------------------------------------------
   test('Code copy button provides visual feedback on click', async ({ page }) => {
     await page.goto('/learn/typescript-types');
-    const copyButton = page.locator('article .copy-btn').first();
+    const copyButton = page.locator('article').first().locator('.copy-btn').first();
     await expect(copyButton).toBeVisible();
 
     // Click copy button

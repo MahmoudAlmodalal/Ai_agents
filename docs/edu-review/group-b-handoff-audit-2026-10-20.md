@@ -1,7 +1,7 @@
 # Curriculum B output-to-input traceability — 2026-10-20
 
 **Scope:** canonical Topics 30–58 (`src/data/learning/group-b.ts`), 29 topics across issues #61–#69.
-**Static author review:** Passed for declared output-to-next-input traceability after this correction pass. Independent re-review is pending.
+**Static review:** Source correction commit `5b0c8be2a2628b0d29a3debc044772e0a54254c8` passed Dashboard's independent static re-review. The review also found additional direct Topic 39/40/41/42 references in Topic 45/54 that the earlier audit omitted; this revision expands the table to 49 topic-to-topic handoff edges and names the relevant artifacts. The documentation update is being recorded separately from the source commit. This audit does not treat missing prior evidence as an access gate.
 **Execution status:** learner-project outputs, external tools, browser journeys, videos, and owner decisions were not executed or approved by this audit. Those remain Not Run or pending. This audit does not mark a group improved or make the preceding topic an access requirement.
 
 The table follows the output IDs declared by one topic to the input text of the next relevant topic. When an output is missing or a path is not selected, the learner records `Not Run`, `unknown`, or `not applicable` and can continue. Django and FastAPI are alternatives; Vercel and Netlify are host choices that may be compared, not simultaneous prerequisites.
@@ -17,10 +17,11 @@ The table follows the output IDs declared by one topic to the input text of the 
 | 36 → 37 | `feature-spec`, `feature-plan` | 37 takes the specification and scoped task plan as implementation inputs. |
 | 37 → 38 | `ui-slice`, `slice-evidence` | 38 uses the implemented slice and its evidence to identify whether backend work is needed. |
 | 38 → 39 | `python-env`, `config-template` | 39 uses the Python environment and secret-free configuration template for the development database setup. |
-| 39 → 40, 41, 42 | `pg-setup`, `pg-check` | 40 records database constraints and connection state while defining the API contract; 41/42 use the setup and check when configuring the selected ORM path. Migration remains deferred until that ORM and its models exist. |
-| 40 → 41, 42, 45 | `api-contract`, `api-layers` | 41/42 implement the selected framework against the contract and layer map; 45 uses them to connect the UI to the implemented service. |
-| 41 → 43 | `django-models`, `django-migration` | 43 uses the Django model/migration path when Django was selected. |
-| 42 → 43 | `api-schemas`, `alembic-record` | 43 uses the FastAPI schema/migration path when FastAPI was selected. |
+| 39 → 40, 41, 42, 45, 54 | `pg-setup`, `pg-check` | 40 records database constraints and connection state while defining the API contract; 41/42 use the setup and check when configuring the selected ORM path; 45/54 use the same named database setup/check outputs in their integration/deployment inputs. Migration remains deferred until that ORM and its models exist. |
+| 40 → 41, 42, 43, 44, 45 | `api-contract`, `api-layers` | 41/42 implement the selected framework against the contract and layer map; 43/44 use them as the API and service authorization context; 45 uses them to connect the UI to the implemented service. |
+| 40 → 54 | `api-contract` | 54 names the API contract as the deployment-planning input; it does not list `api-layers`. |
+| 41 → 43, 44, 45, 54 | `django-models`, `django-migration` | 43/44, 45, and 54 name the selected Django model/migration outputs when Django is the chosen path. |
+| 42 → 43, 44, 45, 54 | `api-schemas`, `alembic-record` | 43/44, 45, and 54 name the selected FastAPI schema/migration outputs when FastAPI is the chosen path. |
 | 43 → 44, 45 | `permission-matrix`, `auth-tests` | 44 places the authorization rules and test outcomes at service boundaries; 45 carries the same policy into client integration. |
 | 44 → 45 | `service-map`, `invariant-evidence` | 45 uses service boundaries and concurrency/invariant evidence with the implemented server state. |
 | 45 → 46 | `api-client`, `integration-config` | 46 writes journeys against the typed client and the declared fixture/service and public/server configuration. |
@@ -40,4 +41,4 @@ The table follows the output IDs declared by one topic to the input text of the 
 
 ## Review limits
 
-`Passed` here means the authored input/output references now trace across the stated topic sequence. It does not mean a learner created or validated any listed artifact. Actual command output, migrations, network/service behavior, test execution, responsive inspection, and media playback remain Not Run until recorded by the learner or release review. Policies, scoring, rubric scale, candidate video approval, and course-owner acceptance remain proposed or pending in the issue packets.
+`Passed` here means the authored input/output references trace across the stated topic sequence after static review. It does not mean a learner created or validated any listed artifact. Actual command output, migrations, network/service behavior, test execution, responsive inspection, and media playback remain Not Run until recorded by the learner or release review. Policies, scoring, rubric scale, candidate video approval, and course-owner acceptance remain proposed or pending in the issue packets.

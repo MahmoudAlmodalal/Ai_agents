@@ -37,7 +37,7 @@ The homepage introduces the learning outcome in one sentence, leads to topic 01,
 
 The shared navigation, topic index controls, footer, home and page metadata use the candidate wordmark and palette. Reader headers inherit the same surfaces and typography through the shared `learning-reader-header` class; global content styles keep Arabic prose, LTR technical values, focus indicators, and both themes legible.
 
-Hydrated screenshots cover 390, 768, and 1440 CSS pixels in light theme, plus 1440 in dark theme. At 1024, 1366, and 1440 pixels, the desktop navigation fits its five core destinations and More without horizontal clipping; keyboard Tab reaches all six controls in order, and Enter opens More to reveal `/dashboard`. The homepage and direct reader routes have no document-width overflow at those three desktop widths. Primary entry actions remain full-width at phone sizes, and navigation controls provide a 44-pixel touch target. The drawer and topic preview preserve their existing keyboard open, Escape close, and focus-return behavior.
+Visual evidence for the integrated candidate is pending. Screenshots and browser claims from the earlier checkpoint are not carried forward as evidence for this revision. The review will record hydrated views at 390, 768, 1024, 1366, and 1440 CSS pixels in both themes, including reader/quiz, dashboard, prompt editing, navigation, and preview states; RTL prose and LTR technical content; and keyboard focus and drawer behavior. Until that matrix is captured against the exact candidate build, responsive and interaction results remain **Not Run**. The source currently sets navigation and reader controls to a minimum 44-pixel target, which still requires rendered confirmation.
 
 ## Decisions for the course owner
 

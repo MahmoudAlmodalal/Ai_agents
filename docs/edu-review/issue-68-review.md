@@ -83,7 +83,7 @@ Criteria:
 
 ## `backend-database-deployment`
 
-**Inputs and lesson walk-through:** اربط عناصر النشر بالعقد → مثال محلول: ترحيل آمن → مهمة نشر ومخرج. Steps:
+**Inputs and lesson walk-through:** تخطيط نشر مرتبط بالأدلة السابقة → مثال محلول: ترحيل آمن → مهمة تخطيط ومخرج. مدخلات Topic 54 المسماة هي `pg-setup`/`pg-check` من 39، و`api-contract` من 40، ومخرجات المسار المختار (`django-models`/`django-migration` من 41 أو `api-schemas`/`alembic-record` من 42)، ونتيجة المضيف المختار من 52 أو 53. لا يصف التمرين إنشاء خدمة فعلية. Steps:
   - ارسم frontend → API → DB مع مالك الخدمة والشبكة ومصدر env لكل سهم. → `docs/BACKEND_DEPLOYMENT_PLAN.md يبين target لكل مكون أو خياراً غير محسوم.`
   - اكتب خطوة ترحيل staging وخطة تحقق وrollback/forward fix مناسبة لتوافق schema. → `خطة بأمر الإطار الفعلي الموثق؛ لا migration تنتج من المثال ولا وعد باستعادة غير مجربة.`
   - حدد health وauthentication وownership وDB checks ببيانات test وأوامر واضحة. → `جدول طلب/متوقع/فعلي/status؛ إذا لم تنفذ الخطوات كلها تبقى Not Run.`
@@ -94,7 +94,7 @@ Criteria:
 frontend→https://api.staging.example (عنوان توضيحي)→private DB. الأسرار تأتي من manager وقت التشغيل. migration ونسخ القاعدة ما زالت Not Run؛ العنوان illustrative ولا يوصف كخدمة حقيقية.
 ```
 
-**Handoff:** برومبت: «راجع الوثائق الرسمية لخدمات API وPostgreSQL المختارة. أنشئ مخططاً يبين الشبكة والسّر والنسخ والترحيل والفحص والرجوع. لا تنشئ خدمة ولا تنفذ migration إنتاجية». سلّم الـ endpoints ونتيجة الرحلة إلى runbook.
+**Handoff:** برومبت: «راجع الوثائق الرسمية لخدمات API وPostgreSQL المختارة. أنشئ مخططاً يبين الشبكة والسّر والنسخ والترحيل والفحص والرجوع. لا تنشئ خدمة ولا تنفذ migration إنتاجية». سلّم endpoints المخططة وحالة كل فحص إلى runbook مع فصل الموجود عن المخطط وغير المتحقق.
 
 **Objective quiz:** v1; stable question IDs `backend-database-deployment-runtime-secret-configuration`, `backend-database-deployment-health-vs-database-check`.
   - `backend-database-deployment-runtime-secret-configuration` (backend-database-deployment-objective-1): أين تضع كلمة مرور PostgreSQL المستخدمة في production؟ — مفتاح backend-database-deployment-runtime-secret-configuration-b; التعليل: الأسرار تخص بيئة الخادم ولا تصل للمستودع أو المتصفح.

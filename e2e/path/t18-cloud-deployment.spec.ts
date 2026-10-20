@@ -39,7 +39,7 @@ test.describe('Sequential Project Path - Ticket 18: Cloud Deployment', () => {
       await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
       await expect(page.locator('h1')).toContainText(topic.title);
 
-      const content = page.locator('article');
+      const content = page.locator('article').first();
       await expect(content).toContainText(topic.publicCheck);
 
       for (const slug of topic.skipSlugs) {

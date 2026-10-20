@@ -17,7 +17,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Positioned at start of frontend coding, earlier topics ran without agents
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('وضع وكيل البرمجة في مكانه الهندسي الصحيح');
     await expect(content).toContainText('دون اشتراط وجود أو تثبيت وكيل برمجي');
     await expect(content).toContainText('تنفيذ كود الفرونت إند');
@@ -53,7 +53,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(codeBlock).toHaveAttribute('dir', 'ltr');
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Practical steps and checklist
@@ -80,7 +80,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(header).toContainText('docs/AI_STUDIO_WORKFLOW.md');
     await expect(header).toContainText('src/data/mock-data.json');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Positioned alongside frontend execution tools, avoiding early requirements distraction
     await expect(content).toContainText('موضع Google AI Studio في مرحلة التنفيذ');
@@ -120,7 +120,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/PROJECT_AGENT_SKILLS.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Golden Rule
     await expect(content).toContainText('القاعدة الذهبية لمسار سلاح العصر');
@@ -160,7 +160,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/MCP_FOUNDATIONS.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Architecture and foundation before Stitch MCP
     await expect(content).toContainText('ما هو بروتوكول سياق النموذج (MCP) ولماذا ندرسه الآن؟');

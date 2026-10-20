@@ -60,9 +60,9 @@ The existing reader content remains available for every canonical Topic. This su
 
 ## Sample correction review — 2026-10-20
 
-- **Topic 12 (`activity-diagram`): Passed, static format/branch coverage only.** `samples/group-05-plantuml-behavior.md` now supplies the expected Mermaid `flowchart TD` in `activity-diagram.mmd`, with success and proposed invalid-choice recovery paths. The proposed behavior needs a project source before implementation; renderer and requirement trace are **Not Run**.
+- **Topic 12 (`activity-diagram`): Passed, static format/branch coverage only.** `samples/group-05-plantuml-behavior.md` now supplies the expected Mermaid `flowchart TD` in `activity-diagram.mmd`, with success and proposed invalid-choice recovery paths. The proposed behavior needs a project source before implementation; browser rendering and independent source-trace validation are **Not Run**.
 - **Topic 13 (`state-diagram`): Passed, static format/state scope only.** The sample now supplies `stateDiagram-v2` in `state-diagrams.mmd`; unresolved tie handling is a note rather than an invented self-transition. State-source validation and rendering remain **Not Run**.
-- Topic 11’s use-case diagram remains the PlantUML sample in this group. It was not part of this format correction and has not been rendered or independently verified here.
+- **Topic 11 (`use-case-diagram`): Partial, static source alignment only.** The sample leaves FR-004's selected-result use case without an actor association while Q-05 leaves the viewer role unresolved; the Organizer-to-result association was removed. PlantUML rendering and independent role/permission validation are **Not Run**.
 
 These narrow results do not establish lesson acceptance, template approval, complete student handoff, or group release.
 

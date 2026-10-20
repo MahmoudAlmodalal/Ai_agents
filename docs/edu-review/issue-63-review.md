@@ -59,7 +59,7 @@ Criteria:
 Environment=not-recorded; SELECT 1=Not Run; migration=Deferred until ORM/models are selected in topic 41 or 42. Production connectivity and restore drill=Not Run.
 ```
 
-**Handoff:** برومبت: «طابق تهيئة PostgreSQL مع ERD، وافصل حساب الإدارة عن التطبيق. استخدم أسماء متغيرات دون قيم، وسجل أمر الفحص. لا تنفذ إسقاطاً أو ترحيلاً إنتاجياً». سلّم مخرجي `pg-setup` و`pg-check` إلى موضوع 40 كي يراعي عقد API سياق قاعدة التطوير؛ موضوع 40 هو الذي ينتج `api-contract` و`api-layers` لموضوع 41 أو 42.
+**Handoff:** برومبت: «طابق تهيئة PostgreSQL مع ERD، وافصل حساب الإدارة عن التطبيق. استخدم أسماء متغيرات دون قيم، وسجل أمر الفحص. لا تنفذ إسقاطاً أو ترحيلاً إنتاجياً». موضوع 39 يخرج `pg-setup` و`pg-check` إلى الموضوعات 40 و41 و42 و45 و54؛ موضوع 40 يراعي سياق قاعدة التطوير وينتج `api-contract` و`api-layers` لمساري 41/42 وللموضوع 43/44/45، كما يستخدم `api-contract` في تخطيط الموضوع 54.
 
 **Objective quiz:** v1; stable question IDs `postgresql-database-setup-least-privilege-db-role`, `postgresql-database-setup-dev-connection-evidence`.
   - `postgresql-database-setup-least-privilege-db-role` (postgresql-database-setup-objective-1): أي حساب تستخدمه خدمة التطبيق عادة؟ — مفتاح postgresql-database-setup-least-privilege-db-role-b; التعليل: أقل صلاحية تحد أثر خطأ أو اختراق التطبيق.

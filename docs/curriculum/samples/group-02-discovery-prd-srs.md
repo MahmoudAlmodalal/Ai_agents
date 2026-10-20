@@ -20,9 +20,10 @@ Status: fictional exercise. No participant interviews have been conducted.
 | Q-02 | Who decides when preferences tie? | Open question | Ask the project owner | Unresolved |
 | Q-03 | What timezone and timestamp format should meeting options use? | Open question | Ask the project owner | Unresolved |
 | Q-04 | What should a participant see if storage is unavailable or a response races with another? | Open question | Ask the project owner | Unresolved |
+| Q-05 | Where is the organizer's selected option stored, and who may read the result? | Open question | Ask the project owner | Unresolved |
 ```
 
-**Handoff:** PRD may represent D-01/D-02 as clearly labeled exercise choices, but must retain A-01/Q-01–Q-04 as open rather than confirmed requirements.
+**Handoff:** PRD may represent D-01/D-02 as clearly labeled exercise choices, but must retain A-01/Q-01–Q-05 as open rather than confirmed requirements.
 
 ## `docs/PRD.md` and `docs/PRD_REVIEW.md` — Topic 03
 
@@ -129,7 +130,8 @@ The sample uses StudySession, TimeOption, and Preference records. An option
 belongs to one session; a preference refers to an option from that same
 session. A participant alias is illustrative. Timestamp format/timezone and
 identity scope remain open. See the later ERD exercise for its provisional
-schema.
+schema. The sample does not yet define where the organizer's selected option is
+stored or who can read it (Q-05).
 
 ## 17. Integrations
 None are required by the exercise. Calendar, identity, messaging, and hosting
@@ -194,6 +196,8 @@ not accepted future commitments.
 - No timezone convention means displayed times may be ambiguous.
 - Tie, editing, and outage responses are open.
 - A real implementation depends on product-owner decisions and privacy review.
+- The selected-option result needs a storage/access rule before it can be
+  implemented (Q-05); no schema field or authorization policy is implied here.
 
 ## 26. Open Questions
 - Q-01: Can a participant revise a submitted preference?
@@ -201,10 +205,13 @@ not accepted future commitments.
 - Q-03: What timezone and timestamp format should be used?
 - Q-04: What should the participant see after a storage outage or concurrent
   duplicate request?
+- Q-05: Where is the organizer's selected option stored, and who may read the
+  result? The current sample schema does not represent that decision.
 - A-01: Is a shared link and participant alias acceptable? Validate before use.
 
 ## 27. Recommended Development Phases
-1. Resolve identity, edit, tie, timezone, privacy, and error-response questions.
+1. Resolve identity, edit, tie, timezone, privacy, selected-result storage, and
+   error-response questions.
 2. Review the domain/requirements model against those answers.
 3. Prototype the exercise screens and their loading, empty, error, and success
    behavior.
@@ -222,6 +229,7 @@ These are sequencing suggestions, not approved delivery dates.
 | Tie resolution is unspecified. | High | Q-02; sections 13, 18, 26 | The result flow cannot choose a winner deterministically when counts tie. | Keep the branch open until decided. |
 | Timezone and stored time format are unspecified. | Medium | Q-03; section 16 | The same text can mean different local times. | Ask for timezone, display, and storage rules. |
 | Storage outage and concurrent-conflict response lack a user contract. | High | Q-04; sections 18, 19, 23 | The record invariant is stated, but retry/message behavior is not. | Define response behavior after owner review; preserve the invariant. |
+| The selected result has no storage or visibility rule. | High | FR-003/FR-004; Q-05; sections 16, 20, 26 | The exercise asks for a result view but the provisional schema has no selected-option field and access policy is unresolved. | Ask the owner where selection is stored and who can read it; do not invent a schema field or permission. |
 | No measurable product KPI or performance/privacy target is approved. | Medium | NFR-001; sections 12, 20–22 | The exercise has no evidence for a numeric service target or collection policy. | Keep metrics open; do not invent thresholds or analytics. |
 
 These are review findings on the sample draft, not approved corrections or owner
@@ -303,10 +311,11 @@ Then the selected option belongs to that session.
 Source: FR-003, exercise choice; tie handling remains open (Q-02).
 
 ## Scenario SRS-09 — Show the selected result
-Given the organizer has saved a selected option,
+Given a selected option is supplied to the result view,
 When the result view is opened,
-Then the view identifies that selected option.
-Source: FR-004, exercise choice; notification behavior is not implied.
+Then it identifies that option.
+Source: FR-004, exercise choice; where that option is stored and who may open
+the view remain Q-05. Notification behavior is not implied.
 
 ## Scenario SRS-10 — Storage unavailable
 Given preference storage is unavailable,
@@ -316,8 +325,9 @@ Source: sample safety behavior. Exact error text and retry policy remain Q-04.
 
 ## Unspecified behavior
 Identity verification, response visibility, edit semantics, tie handling,
-timezone, notifications, retention/deletion, and the response to a concurrent
-loser remain open. No acceptance outcome is assigned to those questions.
+timezone, selected-result storage, notifications, retention/deletion, and the
+response to a concurrent loser remain open. No acceptance outcome is assigned
+to those questions.
 ```
 
 `docs/SRS_TRACEABILITY.md`:
@@ -333,13 +343,14 @@ loser remain open. No acceptance outcome is assigned to those questions.
 | SRS-06: prevent duplicate alias/session record | BR-001 | Exercise-only; DB constraint appears in later sample, app response open |
 | SRS-07: concurrent duplicate invariant | BR-001 | Not executed; storage constraint is a design example only |
 | SRS-08: review and select an option | FR-003 | Exercise-only; no runtime behavior executed |
-| SRS-09: show selected result | FR-004 | Exercise-only; no runtime behavior executed |
+| SRS-09: show selected result | FR-004 | Exercise-only; result storage/access rule remains Q-05; no runtime behavior executed |
 | SRS-10: no false success during storage outage | Q-04 / sample safety behavior | Error wording and retry remain open; not executed |
 | Participant edit | Q-01 | Not specified; no acceptance rule |
 | Tie resolution | Q-02 | Not specified; no acceptance rule |
 | Timezone / timestamp format | Q-03 | Not specified; no acceptance rule |
+| Selected-option storage and result visibility | Q-05 | Not specified; no acceptance rule or schema field |
 ```
 
 **Review state:** These are worked sample artifacts only. They were not run through the learner UI, tested with users, or independently reviewed. Topic questions/rubrics remain draft and policy approval is pending.
 
-**Sample correction note:** The PRD now contains all 27 headings listed in the canonical Topic 03 prompt, source-labeled requirements with priorities, and a six-finding critical review. The SRS includes option creation/selection, valid and invalid input, duplicate, concurrent-invariant, and storage-unavailable cases with trace rows. These are static fictional examples, not user decisions or executed behavior.
+**Sample correction note:** The PRD now contains all 27 headings listed in the canonical Topic 03 prompt, source-labeled requirements with priorities, and a seven-finding critical review. The SRS includes option creation/selection, valid and invalid input, duplicate, concurrent-invariant, and storage-unavailable cases with trace rows. Selected-option storage/access remains Q-05. These are static fictional examples, not user decisions or executed behavior.

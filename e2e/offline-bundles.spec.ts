@@ -309,14 +309,31 @@ test.describe('production offline bundles', () => {
     expect(afterCommittedError?.pointer.bundleId).not.toBe(original!.pointer.bundleId);
     expect(afterCommittedError?.missingAssets).toEqual([]);
 
-    // Timeout just before the single-pointer commit; the worker finishes that
-    // atomic operation while processing cancellation and reports the result.
+    // The client timeout can land during graph preparation or near activation.
+    // The safe outcome is either the previous complete bundle plus retry state,
+    // or a fully committed new bundle plus saved state.
     await openTopic(page, '?offline-test-commit-delay=1500&offline-test-timeout=500');
     await page.getByRole('button', { name: 'تحديث النسخة المحفوظة', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toBeVisible({ timeout: 10000 });
-    const afterLateCommit = await activeBundle(page);
-    expect(afterLateCommit?.pointer.bundleId).not.toBe(afterCommittedError?.pointer.bundleId);
-    expect(afterLateCommit?.missingAssets).toEqual([]);
+    const savedStatus = page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true });
+    const failedStatus = page.getByRole('button', { name: 'فشل الحفظ - انقر لإعادة المحاولة', exact: true });
+    await expect.poll(
+      async () => await savedStatus.isVisible().catch(() => false) || await failedStatus.isVisible().catch(() => false),
+      { timeout: 15000 }
+    ).toBe(true);
+    const savedVisible = await savedStatus.isVisible().catch(() => false);
+    const failedVisible = await failedStatus.isVisible().catch(() => false);
+    expect(savedVisible).not.toBe(failedVisible);
+
+    const afterDelayedTimeout = await activeBundle(page);
+    expect(afterDelayedTimeout?.manifest.complete).toBe(true);
+    expect(afterDelayedTimeout?.missingAssets).toEqual([]);
+    if (failedVisible) {
+      expect(afterDelayedTimeout?.pointer.bundleId).toBe(afterCommittedError?.pointer.bundleId);
+      console.log('[offline] delayed timeout retained the previous complete bundle and showed retry state');
+    } else {
+      expect(afterDelayedTimeout?.pointer.bundleId).not.toBe(afterCommittedError?.pointer.bundleId);
+      console.log('[offline] delayed timeout completed the atomic pointer update and showed saved state');
+    }
   });
 
   test('evicted Cache Storage dependencies make the saved status and /saved entry disappear', async ({ page }) => {

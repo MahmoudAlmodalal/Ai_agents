@@ -83,7 +83,7 @@ Criteria:
 
 ## `auth-permissions`
 
-**Inputs and lesson walk-through:** المتطلب مصدر الإذن → مثال محلول: تعديل سجل → برومبت ومخرج أمني. يستخدم مخرجات المسار المختار من الموضوع 41 أو 42 (Django models/migration أو FastAPI schemas/Alembic) قبل بناء مصفوفة الصلاحية. Steps:
+**Inputs and lesson walk-through:** المتطلب مصدر الإذن → مثال محلول: تعديل سجل → برومبت ومخرج أمني. يستخدم `api-contract` و`api-layers` من الموضوع 40، مع `django-models` و`django-migration` من 41 أو `api-schemas` و`alembic-record` من 42 بحسب المسار المختار. وتستهلك الموضوعات 44 و45 و54 زوج المخرجات المختار؛ لا تجمع بين بدائل Django وFastAPI. Steps:
   - اربط كل endpoint بدور وشرط ملكية ونتيجة رفض من متطلبات المشروع. → `docs/AUTH_PERMISSIONS_SPEC.md يحدد route/role/owner/action ومراجع SRS.`
   - نفذ فحص هوية ثم تفويض على الخادم وفق الإطار المختار. → `endpoint يرفض العملية عند غياب الصلاحية؛ الواجهة ليست الحارس الوحيد.`
   - اكتب اختبار مجهول/مسجل بلا دور/مسموح وسجل HTTP status. → `نتائج تطابق العقد ولا تطبع اعتماداً أو سراً.`
@@ -94,7 +94,7 @@ Criteria:
 identity=valid; actor=user-3; owner=user-8; action=denied by server. قرار 403/404 يتبع العقد.
 ```
 
-**Handoff:** برومبت: «اشتق مصفوفة permission من SRS. اختبر anonymous وrole-missing وowner. لا تطبع token أو كلمة مرور». الناتج يضبط حدود طبقة الخدمة في الموضوع 44.
+**Handoff:** برومبت: «اشتق مصفوفة permission من SRS. اختبر anonymous وrole-missing وowner. لا تطبع token أو كلمة مرور». مخرجا `permission-matrix` و`auth-tests` يحددان حدود الخدمة في الموضوع 44، ومدخلات التكامل في 45.
 
 **Objective quiz:** v1; stable question IDs `auth-permissions-authenticated-identity-vs-authorization`, `auth-permissions-server-enforced-ownership`.
   - `auth-permissions-authenticated-identity-vs-authorization` (auth-permissions-objective-1): ما الفرق بين المصادقة والتفويض؟ — مفتاح auth-permissions-authenticated-identity-vs-authorization-a; التعليل: هما قراران مختلفان يجب أن يحمي الثاني كل endpoint.
@@ -118,7 +118,7 @@ Criteria:
 
 ## `services-selectors`
 
-**Inputs and lesson walk-through:** وزع المسؤولية → مثال محلول: حجز مورد → برومبت ومخرج. يستخدم `permission-matrix` و`auth-tests` من الموضوع 43 عند تصميم الخدمة وحد المعاملة. Steps:
+**Inputs and lesson walk-through:** وزع المسؤولية → مثال محلول: حجز مورد → برومبت ومخرج. يستخدم `api-contract` و`api-layers` من 40، ومخرجات مسار Django/FastAPI المختار من 41/42، و`permission-matrix` و`auth-tests` من 43 عند تصميم الخدمة وحد المعاملة. Steps:
   - اختر قراءة وكتابة وارسم مسؤولية endpoint/service/selector. → `مخطط يوضح أن selector read-only وأن service تملك حد transaction.`
   - حدد invariant من وثيقة المشروع واكتب اختباراً يعيد إنتاج التعارض. → `اختبار يثبت أن المحاولات لا تنتج حالة ممنوعة وأن الفشل يسبب rollback.`
   - سجل عدد الاستعلامات قبل التحسين ثم قارن بعده إذا ظهر دليل N+1. → `قبل/بعد أو Not Run؛ لا يذكر رقماً غير مقاس.`

@@ -12,7 +12,7 @@ test.describe('Sequential Project Path - Topic 17: Docker and Linux', () => {
     await expect(page.locator('header.rounded-3xl')).toContainText('موضوع 50');
     await expect(page.locator('header.rounded-3xl')).toContainText('docs/DOCKER_DECISION.md');
 
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('هل يحتاج مشروعك Docker؟');
     await expect(article).toContainText('FastAPI أو Django');
     await expect(article).toContainText('Next.js');
@@ -57,7 +57,7 @@ test.describe('Sequential Project Path - Topic 17: Docker and Linux', () => {
     await expect(page.locator('header.rounded-3xl')).toContainText('موضوع 51');
     await expect(page.locator('header.rounded-3xl')).toContainText('docs/LINUX_RUNTIME_NOTES.md');
 
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('متى تتعلم تشغيل Linux؟');
     await expect(article).toContainText('إذا كانت الاستضافة مُدارة');
     await expect(article).toContainText('ما يمكن للمالك والمجموعة والآخرين فعله');

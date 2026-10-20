@@ -50,8 +50,9 @@ The existing reader content remains available for every canonical Topic. This su
 
 ## Sample correction review — 2026-10-20
 
-- **Topic 19 (`ux-blueprint`): Passed, static artifact coverage only.** `samples/group-07-ui-ux.md` supplies `docs/UX_STATES_MATRIX.md` with loading, empty, error, and success UI-state rows plus separate responsive and accessibility cross-cutting checks. Responsive, keyboard, contrast, screen-reader, and direction checks are **Not Run**; no interface exists.
-- **Topic 20 (`screen-inventory`): Passed, static handoff/trace inspection only.** The inventory now includes path, role/permission, goal, components, data, actions/validation, error/state coverage, and requirement source. A bidirectional placeholder trace identifies unresolved privacy/authentication/notification gaps instead of inventing screens. IDs and routes are exercise placeholders, not approved PRD requirements or implemented routes.
+- **Topic 18 (`ui-ux-roles-navigation`): Partial, static handoff shape only.** The sample now includes role/task needs, a candidate navigation sequence, and a visibility/action/source matrix. The `Organizer` and `Participant` labels are exercise tasks, not authorization; participant link access remains assumption A-01, and the selected-result viewer remains unassigned under Q-05. Owner permission decisions and implementation checks are **Not Run**.
+- **Topic 19 (`ux-blueprint`): Partial, static artifact coverage only.** `samples/group-07-ui-ux.md` now lists all four PRD candidate screens and provides loading, empty, error, success, responsive, and accessibility planning with cross-cutting checks separated from UI states. This is a documentation sample, not a full lesson acceptance or design verification. Responsive, keyboard, contrast, screen-reader, and direction checks are **Not Run**; no interface exists.
+- **Topic 20 (`screen-inventory`): Partial, static handoff/trace inspection only.** The sample inventory now maps all four PRD candidate screens and FR-001 through FR-006 plus BR-001, with unresolved decisions called out. IDs and routes are exercise placeholders, not approved product requirements or implemented routes; no independent owner sign-off or browser validation was performed.
 
 These narrow results do not establish lesson acceptance, template approval, complete student handoff, or group release.
 
