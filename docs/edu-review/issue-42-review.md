@@ -9,29 +9,57 @@
 
 ## 1. Summary of changes
 
-In accordance with Course Owner Decision Package 70 (v2, 2026-10-20, Course-owner decisions section) and `docs/ASSESSMENT_POLICY_PROPOSAL.md`, the Topic objective quiz functionality was verified, hardened, and proven through observable browser behavior on representative existing Topic 01 (`project-idea-mvp`).
+In accordance with Course Owner Decision Package 70 (v2, 2026-10-20, Course-owner decisions section) and `docs/ASSESSMENT_POLICY_PROPOSAL.md`, the course owner's accepted quiz policy was formally applied in the product across all 58 canonical Topics. The learner-visible policy wording reflects honest truth across three distinct states, and product text describing the policy as proposed or candidate was updated.
 
 ### Key implementations and test coverage:
-- **Policy specification and owner acceptance (`docs/ASSESSMENT_POLICY_PROPOSAL.md`, `docs/edu-review/owner-decision-package-70.md`):**
-  - Confirmed and applied the approved quiz policy: 1 point per correct answer, 0 for incorrect or unanswered, unlimited retries, explanatory feedback after submit, and retention of all attempts with question, quiz, and policy versions.
-- **Representative Topic educationally reviewed questions (`src/data/learning/group-a.ts`):**
-  - Topic 01 (`project-idea-mvp`) includes two educationally reviewed objective questions (`idea-mvp-q-evidence` and `idea-mvp-q-journey`) with stable semantic IDs, answer keys, explanations, and narrow passing review evidence by reviewer `root` dated 2026-10-20.
-  - Existing content of all 58 canonical Topics is kept intact; content hashes remain byte-for-byte identical.
-- **Accessible controls and explanatory feedback (`src/components/TopicLearningActivities.tsx`):**
-  - Radio options use semantic `<fieldset>` and `<legend>`, `<label>` wrapping with minimum 44px touch targets (`min-h-11`), visible focus rings, and full keyboard navigation.
-  - Submission renders per-question explanatory feedback for correct, incorrect, and unanswered responses with `role="status"` and `aria-live="polite"`.
-  - Explanatory feedback and score banners explicitly include disclaimers stating that results represent self-check conceptual reviews and never imply practical correctness or project mastery.
-- **Result retention and question version lifecycle (`src/lib/learningRecords.ts`, `src/components/TopicLearningActivities.tsx`):**
-  - Quiz attempts are stored under `ai-agents-quiz-attempts-v1` with `attemptId`, `topicSlug`, `quizId`, `quizVersion`, `policyId`, `policyVersion`, and versioned `answers`.
-  - Defined and verified behavior when question content changes: older attempts remain in the browser's attempt history labeled as `نسخة سابقة` (previous version); new versions start with a fresh unselected form and do not inherit outdated scores.
-- **Multi-entry point restoration and storage failure handling:**
-  - Verified attempt restoration in both the full reader (`/learn/project-idea-mvp`) and the quick preview modal (`TopicDetailModal`).
-  - Verified honest status reporting on quota/storage failure: session-only result labeling ("آخر نتيجة في هذه الجلسة، وقد لا تبقى بعد إعادة التحميل") and storage warning ("تعذر حفظ السجل على هذا الجهاز"), with zero false restoration after page reload.
-- **Strict decoupling of quiz records (`e2e/learning-assessments.spec.ts`):**
-  - Quiz results are verified to be strictly distinct from reading recency (`engineering_guide_recently_viewed`), application checklist selections (`application-checklists-v1`), practical rubric ratings (`ai-agents-practical-assessments-v1`), and any course completion signal or badge.
-- **Comprehensive unit and Playwright browser test coverage (`src/lib/learningRecords.test.ts`, `e2e/learning-assessments.spec.ts`):**
-  - Added unit test coverage for grading and storing all-unanswered attempts according to policy.
-  - Expanded `e2e/learning-assessments.spec.ts` to 9 browser tests covering submission, scoring, unanswered grading, unlimited retry, reload restoration, reader vs preview entry points, profile isolation, question version changes, failed persistence, checklist/reading decoupling, and accessible keyboard/touch navigation.
+
+- **Accepted quiz policy applied in product (`src/data/learning/group-a-common.ts`, `src/data/learning/group-b-base.ts`):**
+  - Course owner MahmoudAlmodalal formally accepted the quiz policy on 2026-10-20: 1 point per correct answer, 0 for incorrect or unanswered, unlimited retries, explanatory feedback after submit, and retention of all attempts with question, quiz, and policy versions.
+  - Decision reference string:
+    `docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)`
+  - Applied as default `quizScoringPolicyApproval` across all 58 Topics in both shared builders using the existing `approvedPolicy` helper:
+    `approvedPolicy('MahmoudAlmodalal (course owner)', '2026-10-20', 'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)')`
+  - Per-topic override support is preserved: if any Topic provides its own `quizScoringPolicyApproval`, that approval takes precedence.
+  - Replaced the quiz-level `reviewEvidence` default text in both shared builders: updated from stating that scoring policy approval had not run to stating that the scoring policy is accepted while per-topic question educational review is tracked separately and remains pending.
+  - Rubric scale approval remains untouched (`proposed`), owned by issue #43.
+
+- **Unified policy wording mechanism with three honest states (`src/lib/learningPolicy.ts`, `src/data/learning/group-a-common.ts`, `src/data/learning/group-b-base.ts`):**
+  - Exported `resolvePolicyWordingState(reviewState, approval, evidenceGroups)` in `src/lib/learningPolicy.ts` returning `'approved' | 'pending' | 'draft'`.
+  - Stored records in both builders dynamically resolve quiz instructions, scoring policy summary, and rubric scale summary using this single mechanism:
+    1. **State 1 (`approved`):** Policy accepted AND Topic educational review complete (`reviewState === 'approved'` and passing dated evidence for lesson, questions, and rubric):
+       - **Quiz instructions:**
+         `اختر الإجابة الأدق ثم اقرأ التفسير. سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+       - **Quiz scoring policy summary:**
+         `سياسة معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+       - **Rubric scale summary:**
+         `مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان؛ لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+    2. **State 2 (`pending`):** Policy accepted AND Topic educational review still pending:
+       - **Quiz instructions:**
+         `اختر الإجابة الأدق ثم اقرأ التفسير. سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك تظهر النتيجة كمعاينة فحص ذاتي وليست نتيجة نهائية. الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+       - **Quiz scoring policy summary:**
+         `سياسة معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك تظهر النتيجة كمعاينة فحص ذاتي وليست نتيجة نهائية. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+       - **Rubric scale summary:**
+         `مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك يُعد التقييم معاينة فحص ذاتي وليس نتيجة نهائية. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.`
+    3. **State 3 (`draft`):** Policy not accepted:
+       - Preserves the existing draft text unchanged for Group A and Group B.
+
+- **Updated product wording describing policies (`src/components/DashboardExperience.tsx`, `src/components/TopicLearningActivities.tsx`):**
+  - Updated `DashboardExperience.tsx` and reader UI: removed descriptions calling scoring policies "candidate" or "proposed" (مقترح/مرشح).
+  - Quizzes and practical sections describe the accepted policy accurately while retaining honest boundaries: self-assessment is the learner's own judgment and not an independent verification, and no completion or mastery is inferred from a visit, a scroll, a quiz answer, or a checklist selection.
+
+- **E2E browser injection hook and test-only fixture (`src/components/TopicLearningActivities.tsx`, `e2e/fixtures/testTopicFixture.ts`):**
+  - `TopicLearningActivities.tsx` reads `window.__AI_AGENTS_E2E_TOPIC_CONTENT__`. Documented as an E2E-only injection point affecting only client rendering in the active test page, guarded strictly to execute only when the value is a plain object.
+  - Created test-only fixture helper `createApprovedTestTopic` in `e2e/fixtures/testTopicFixture.ts` with `reviewState: 'approved'` and dated passing lesson, quiz, and rubric evidence. No real Topic record is modified.
+
+- **Browser coverage for all three states (`e2e/learning-assessments.spec.ts`):**
+  - Verified pending review state on representative Topic 01 (`project-idea-mvp`): shows accepted policy wording + pending review sentence, and results are labeled as a self-check preview with `previewOnly: true`.
+  - Verified approved review state using the E2E fixture hook: shows final wording with no pending sentence, no preview badge, and results stored as a real record with `previewOnly: false`.
+  - Verified dashboard behavior: accurately describes accepted quiz policy and affirms self-assessment limits with no completion/mastery inference.
+
+- **Deliberate baseline updates (`learning-content-hashes.json`, `learning-content-review-summary.json`):**
+  - Regenerated manifests following the policy application.
+  - Verified that ONLY the intended fields moved: `quiz.scoringPolicy.approval`, `quiz.instructions`, `quiz.scoringPolicy.summary`, quiz-level `reviewEvidence`, and the question-review sentence in Group B lesson evidence.
+  - Zero educational content (lesson text, questions, options, answer keys, explanations, criteria, outputs, or topic identities) changed.
 
 ---
 
@@ -39,17 +67,45 @@ In accordance with Course Owner Decision Package 70 (v2, 2026-10-20, Course-owne
 
 | Acceptance criterion | Observable behavior and proof | Result |
 |---|---|---|
-| **1. Prepare a concrete scoring, retry, answer-feedback, and retained-result policy for course-owner approval before enabling the final quiz behavior.** | **Observed in documentation & decision record:** Concrete quiz policy is authored in `docs/ASSESSMENT_POLICY_PROPOSAL.md`. Formally accepted by course owner MahmoudAlmodalal on 2026-10-20 in `docs/edu-review/owner-decision-package-70.md` (v2, Course-owner decisions section): 1 point correct, 0 incorrect or unanswered, unlimited retries, feedback after submit, and all attempts retained with question and policy versions. | **Passed** |
-| **2. Provide educationally reviewed objective questions in a representative existing Topic; grade correct, incorrect, and unanswered responses according to the approved policy.** | **Observed in browser & code:** In representative Topic 01 (`project-idea-mvp`), two objective questions (`idea-mvp-q-evidence` and `idea-mvp-q-journey`) provide clear prompts, options, explanations, and passing narrow review evidence. Submitting 1 correct + 1 incorrect scores 1/2; submitting 1 correct + 1 unanswered scores 1/2; submitting 2 unanswered scores 0/2. Verified in `e2e/learning-assessments.spec.ts` and `src/lib/learningRecords.test.ts`. | **Passed** |
-| **3. Make quiz controls accessible and render explanatory feedback without implying practical correctness or mastery.** | **Observed in browser:** Keyboard Tab navigation reaches radio options, Space selects an option, Enter submits the form, and Tab reaches "إعادة المحاولة" (retry). Touch targets for labels and buttons measure >= 44px height. Explanatory feedback is rendered for correct ("إجابة صحيحة في هذا الفحص الذاتي"), incorrect ("الإجابة تحتاج إلى مراجعة"), and unanswered ("لم تُجب عن هذا السؤال") questions with `role="status"` and `aria-live="polite"`. Prominent disclaimer is rendered: "هذه النتيجة لا تثبت صحة التطبيق أو إتقان المشروع." Verified in `e2e/learning-assessments.spec.ts`. | **Passed** |
-| **4. Retain the approved result/attempt information against stable Topic and question identities; define behavior when question content changes.** | **Observed in browser & storage:** Stored records in `ai-agents-quiz-attempts-v1` record `attemptId`, `topicSlug`, `quizId`, `quizVersion`, `policyId`, `policyVersion`, and versioned question answers. When question content changes (`questionVersion` bumped), prior attempts remain preserved in collapsible history (`عرض سجل المحاولات`) labeled as `نسخة سابقة`; the updated question form starts clean without inheriting outdated selections, and notice explains: "توجد محاولات من اختبارات أو نسخ سابقة؛ تبقى محفوظة بهويتها وإصداراتها ولا تُحتسب كإجابات للنسخة الحالية." Verified in `e2e/learning-assessments.spec.ts`. | **Passed** |
-| **5. Restore results after reload and across supported reader entry points; show honest saving status on storage failure.** | **Observed in browser:** Latest quiz attempt is restored after full page reload at `/learn/project-idea-mvp` and inside the modal preview (`TopicDetailModal`). When `localStorage.setItem` fails, the UI displays "آخر نتيجة في هذه الجلسة، وقد لا تبقى بعد إعادة التحميل" and "تعذر حفظ السجل على هذا الجهاز"; after reload, no false result is restored. Verified in `e2e/learning-assessments.spec.ts`. | **Passed** |
-| **6. Keep quiz results distinct from reading, checklist selections, rubric assessment, and any completion signal.** | **Observed in browser & storage:** Submitting or retrying a quiz does not alter application checklist selections (`application-checklists-v1`), practical rubric ratings (`ai-agents-practical-assessments-v1`), reading recency (`engineering_guide_recently_viewed`), or badge award state (`ai-agents-badge-awards-v1`). Selecting checklist items or rubric ratings does not modify quiz records. No completion banner or mastery status is emitted. Verified in `e2e/learning-assessments.spec.ts`. | **Passed** |
-| **7. Verify submission, scoring, retry behavior, reload, profile isolation, version changes, and failed persistence through observable browser behavior.** | **Observed in browser:** The 9 end-to-end tests in `e2e/learning-assessments.spec.ts` pass cleanly against production Chrome, proving submission, scoring, retry, reload, cross-entry-point synchronization, browser profile isolation (`browser.newContext()` receives empty records), question version transitions, storage failure signaling, and decoupled checklist/rubric state. | **Passed** |
+| **1. Apply accepted quiz policy to every Topic** | **Observed in builders & manifests:** Shared builders default `quizScoringPolicyApproval` to `ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL` with owner name, date `2026-10-20`, and decision reference. `learning-content-review-summary.json` records all 58 Topics with `state: "approved"`. Rubric scale approval remains `proposed`. Per-topic override preserved. | **Passed** |
+| **2. One wording mechanism in three states** | **Observed in code & unit tests:** `resolvePolicyWordingState` in `src/lib/learningPolicy.ts` handles the 3 states (`approved`, `pending`, `draft`). Used uniformly in `group-a-common.ts` and `group-b-base.ts`. Unit tests in `src/lib/learningPolicy.test.ts` verify all resolution paths. | **Passed** |
+| **3. Fix product wording calling policy proposed** | **Observed in browser & code:** `DashboardExperience.tsx` and `TopicLearningActivities.tsx` updated to describe accepted policy; all references to candidate/proposed scoring policies removed while affirming honest self-assessment limits and no completion/mastery inference. | **Passed** |
+| **4. Cover three states at browser boundary** | **Observed in Playwright tests:** 3 dedicated browser tests in `e2e/learning-assessments.spec.ts` assert pending review behavior, fully approved behavior via `__AI_AGENTS_E2E_TOPIC_CONTENT__` fixture, and dashboard policy representation. | **Passed** |
+| **5. Update committed baselines deliberately** | **Observed in manifest diff:** Diff of `learning-content-review-summary.json` shows exactly 58 Topics updating `quizScoringPolicyApproval` (232 additions / 232 deletions). Zero changes to `reviewState`, `rubricScaleApproval`, lesson content, questions, options, answer keys, or criteria. | **Passed** |
+| **6. Evidence file updated with real counts** | **Observed in document:** `docs/edu-review/issue-42-review.md` updated with exact Arabic wording, verification logs, baseline diff proofs, and explicit statement on pending educational reviews. | **Passed** |
 
 ---
 
-## 3. Verification commands and exact results
+## 3. Baseline diff analysis and verification of moved fields
+
+Comparing the exported Topic records before and after this change confirms:
+
+### Fields that moved in `src/data/learning/learning-content-review-summary.json`:
+- Exactly 58/58 Topics moved `quizScoringPolicyApproval`:
+  - `state`: `"proposed"` -> `"approved"`
+  - `approvedBy`: `null` -> `"MahmoudAlmodalal (course owner)"`
+  - `approvedAt`: `null` -> `"2026-10-20"`
+  - `decisionReference`: `null` -> `"docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"`
+
+### Fields that moved in Topic content & `learning-content-hashes.json`:
+- `quiz.scoringPolicy.approval`: updated to accepted policy object across all 58 Topics.
+- `quiz.instructions`: updated to State 2 wording (`PENDING_QUIZ_INSTRUCTIONS`).
+- `quiz.scoringPolicy.summary`: updated to State 2 wording (`PENDING_QUIZ_SCORING_POLICY_SUMMARY`).
+- `quiz.reviewEvidence`: updated default text in both shared builders to state that scoring policy is accepted and question review is pending.
+- `lessonReviewEvidence`: updated question-review clause in Group B default text.
+
+### Fields verified completely unchanged (Proof of zero unintended drift):
+- `reviewState`: **0 moved** (all 58 remain `"draft"`).
+- `rubricScaleApproval`: **0 moved** (all 58 remain `"proposed"`).
+- Lesson content / activities: **0 moved**.
+- Quiz questions, option IDs, labels, correctness flags, answer keys: **0 moved**.
+- Question explanations: **0 moved**.
+- Rubric criteria, levels, descriptions: **0 moved**.
+- Topic identity, slugs, titles, descriptions, required outputs: **0 moved**.
+
+---
+
+## 4. Verification commands and exact results
 
 ### Gate 1: Typecheck and lint
 ```sh
@@ -61,87 +117,105 @@ npm run lint
 > tsc --noEmit
 ```
 
-### Gate 2: Unit tests
+### Gate 2: Lib unit tests
 ```sh
 npx tsx --test src/lib/*.test.ts
 ```
-**Outcome:** Passed 65/65 unit tests (exit code 0, duration: ~590ms).
+**Outcome:** Passed 66/66 unit tests (exit code 0, duration: ~550ms).
 ```
-✔ semantic identity survives reorder and whitespace/NFC edits; changed text has no inherited check (3.8ms)
-✔ topic identity isolates identical labels; readers share snapshots and unsubscribe cleanly (0.7ms)
-✔ read failures retain every local change and merge with previously saved choices after recovery (1.2ms)
-✔ write failures preserve multiple checks and clearing; errors do not leak into another topic (1.0ms)
-✔ malformed documents and malformed item arrays remain byte-for-byte intact (1.4ms)
-✔ existing exact semantic saves restore without writing; positional saves never imply a match (0.5ms)
-✔ refresh merges external topic updates and local pending choices without discarding either (0.8ms)
-✔ storage getter failures and prototype-like topic keys cannot crash or mutate another topic (0.6ms)
-✔ draft or incomplete owner approval never creates awarded or unearned badge states (3.5ms)
-✔ previewOnly attempts are excluded from approved award eligibility (1.3ms)
-✔ approved versioned awards persist across reload, revoke after evidence reversal, and can be earned again (2.5ms)
-✔ policy or rule version changes retire old awards and evaluate the newly approved version (0.9ms)
-✔ unavailable evidence suspends award reconciliation until the source recovers (1.3ms)
-✔ malformed award history is not overwritten and storage failures keep session events visible (0.9ms)
-✔ empty profile shows no matched draft conditions (1.1ms)
+✔ semantic identity survives reorder and whitespace/NFC edits; changed text has no inherited check (3.6ms)
+✔ topic identity isolates identical labels; readers share snapshots and unsubscribe cleanly (0.6ms)
+✔ read failures retain every local change and merge with previously saved choices after recovery (1.0ms)
+✔ write failures preserve multiple checks and clearing; errors do not leak into another topic (0.8ms)
+✔ malformed documents and malformed item arrays remain byte-for-byte intact (1.1ms)
+✔ existing exact semantic saves restore without writing; positional saves never imply a match (0.4ms)
+✔ refresh merges external topic updates and local pending choices without discarding either (0.6ms)
+✔ storage getter failures and prototype-like topic keys cannot crash or mutate another topic (0.5ms)
+✔ draft or incomplete owner approval never creates awarded or unearned badge states (2.8ms)
+✔ previewOnly attempts are excluded from approved award eligibility (1.0ms)
+✔ approved versioned awards persist across reload, revoke after evidence reversal, and can be earned again (2.1ms)
+✔ policy or rule version changes retire old awards and evaluate the newly approved version (0.7ms)
+✔ unavailable evidence suspends award reconciliation until the source recovers (1.1ms)
+✔ malformed award history is not overwritten and storage failures keep session events visible (0.7ms)
+✔ empty profile shows no matched draft conditions (0.9ms)
 ✔ reading proposal counts only the visible recent list and makes no completion claim (0.3ms)
-✔ previewOnly quiz attempts can match a clearly labeled draft preview but are excluded from award-eligible evidence (1.5ms)
-✔ rubric preview uses current ratings and does not resurrect cleared ratings from history (0.7ms)
+✔ previewOnly quiz attempts can match a clearly labeled draft preview but are excluded from award-eligible evidence (1.2ms)
+✔ rubric preview uses current ratings and does not resurrect cleared ratings from history (0.6ms)
 ✔ unavailable evidence is reported as unconfirmed instead of as an empty draft condition (0.3ms)
-✔ dashboard checklist status distinguishes invalid documents from blocked reads (1.6ms)
-✔ group split preserves exact byte-for-byte topic records across all 58 canonical topics (18.3ms)
-✔ export includes every application Mermaid perspective and a readable course summary (3.7ms)
-✔ readable learning summary includes versioned questions, scoring policy and self-assessment rubric (0.8ms)
-✔ export availability lists all expected topic outputs and labels unavailable record counts (4.1ms)
-✔ owner approval requires the full audit evidence before enabling policy or video links (5.2ms)
-✔ quiz attempts retain scoring detail, question versions, retries, and Topic isolation across reloads (18.5ms)
-✔ a revised rubric keeps retired ratings recoverable without applying them to a new criterion version (4.4ms)
-✔ a revised rubric scale archives old-scale judgments instead of interpreting them as current (0.6ms)
-✔ a replaced practical assessment archives its ratings even when criterion IDs overlap (0.9ms)
-✔ legacy rubric history without parent assessment identity remains readable (0.6ms)
-✔ blocked writes keep session records and honestly restore them when persistence recovers (1.7ms)
-✔ practical judgments stay isolated by stable Topic slug across reloads (0.7ms)
-✔ malformed nested records remain untouched and are reported as invalid (0.6ms)
-✔ list snapshots keep quiz and practical storage failures distinct (3.3ms)
-✔ shape-valid but impossible quiz records are rejected instead of restoring inaccurate scores (1.1ms)
-✔ grades and retains an all-unanswered quiz attempt with score zero according to policy (0.7ms)
-✔ only frozen topic and exact label recover positional saves, including after reorder (2.4ms)
-✔ stable HTML identity is collision safe and independent of structured criteria (0.5ms)
-✔ legacy blocked reads/writes keep multiple local choices; recovery saves them without changing old keys (1.9ms)
-✔ corrupt stable HTML data is preserved and does not fall back to a positional save (0.5ms)
-✔ bundle readiness requires the real HTML, payload, and every recorded asset (33.1ms)
-✔ bundle readiness requires a snapshot for every Mermaid perspective (3.6ms)
-✔ offline capability detection and legacy manifest reads survive blocked localStorage (0.4ms)
-✔ removing an offline bundle leaves learner records untouched (1.6ms)
-✔ legacy manifest data remains readable without making localStorage authoritative (0.4ms)
-✔ orphaned legacy localStorage entries without Cache Storage return unsaved and are cleaned up (0.6ms)
-✔ rollback restores a previously complete bundle pointer safely (25.7ms)
-✔ transient storage error does not purge index pointer or localStorage mirror and reports unverified (2.9ms)
-✔ getTopicRollbackCandidate identifies complete historical bundles and excludes active bundle (4.5ms)
-✔ several failed saves remain in the session snapshot and merge safely when storage recovers (4.8ms)
-✔ a failed removal remains visible and is applied after a later refresh (1.1ms)
-✔ blocked reads keep requested session edits until a later focus-style refresh succeeds (0.9ms)
-✔ malformed saved data stays byte-for-byte intact and is reported as invalid (0.7ms)
-✔ source revisions change when the original prompt text changes (0.5ms)
-✔ malformed bookmarks and recently viewed stay byte-for-byte intact when user saves new items (3.1ms)
-✔ read failure keeps session choices and merges safely when storage recovers (0.7ms)
-✔ write failure preserves session choices and persists when storage recovers (0.4ms)
-✔ ambiguous historical records remain preserved and unresolved, never assigned to unrelated topics (0.6ms)
-✔ reading activity and checklist selections remain strictly independent in storage (0.4ms)
-✔ remove during write failure does not resurrect on recovery (0.4ms)
+✔ dashboard checklist status distinguishes invalid documents from blocked reads (1.3ms)
+✔ group split preserves exact byte-for-byte topic records across all 58 canonical topics (15.5ms)
+✔ export includes every application Mermaid perspective and a readable course summary (3.2ms)
+✔ readable learning summary includes versioned questions, scoring policy and self-assessment rubric (0.7ms)
+✔ export availability lists all expected topic outputs and labels unavailable record counts (3.6ms)
+✔ owner approval requires the full audit evidence before enabling policy or video links (4.3ms)
+✔ resolvePolicyWordingState returns approved when reviewState is approved, policy is approved, and all evidence passes (0.6ms)
+✔ resolvePolicyWordingState returns pending when policy is approved but topic review is incomplete (0.3ms)
+✔ resolvePolicyWordingState returns draft when policy approval is proposed or missing (0.2ms)
+✔ quiz attempts retain scoring detail, question versions, retries, and Topic isolation across reloads (15.2ms)
+✔ a revised rubric keeps retired ratings recoverable without applying them to a new criterion version (3.7ms)
+✔ a revised rubric scale archives old-scale judgments instead of interpreting them as current (0.5ms)
+✔ a replaced practical assessment archives its ratings even when criterion IDs overlap (0.8ms)
+✔ legacy rubric history without parent assessment identity remains readable (0.5ms)
+✔ blocked writes keep session records and honestly restore them when persistence recovers (1.4ms)
+✔ practical judgments stay isolated by stable Topic slug across reloads (0.6ms)
+✔ malformed nested records remain untouched and are reported as invalid (0.5ms)
+✔ list snapshots keep quiz and practical storage failures distinct (2.8ms)
+✔ shape-valid but impossible quiz records are rejected instead of restoring inaccurate scores (0.9ms)
+✔ grades and retains an all-unanswered quiz attempt with score zero according to policy (0.6ms)
+✔ only frozen topic and exact label recover positional saves, including after reorder (2.0ms)
+✔ stable HTML identity is collision safe and independent of structured criteria (0.4ms)
+✔ legacy blocked reads/writes keep multiple local choices; recovery saves them without changing old keys (1.6ms)
+✔ corrupt stable HTML data is preserved and does not fall back to a positional save (0.4ms)
+✔ bundle readiness requires the real HTML, payload, and every recorded asset (28.3ms)
+✔ bundle readiness requires a snapshot for every Mermaid perspective (3.0ms)
+✔ offline capability detection and legacy manifest reads survive blocked localStorage (0.3ms)
+✔ removing an offline bundle leaves learner records untouched (1.3ms)
+✔ legacy manifest data remains readable without making localStorage authoritative (0.3ms)
+✔ orphaned legacy localStorage entries without Cache Storage return unsaved and are cleaned up (0.5ms)
+✔ rollback restores a previously complete bundle pointer safely (21.4ms)
+✔ transient storage error does not purge index pointer or localStorage mirror and reports unverified (2.4ms)
+✔ getTopicRollbackCandidate identifies complete historical bundles and excludes active bundle (3.7ms)
+✔ several failed saves remain in the session snapshot and merge safely when storage recovers (4.0ms)
+✔ a failed removal remains visible and is applied after a later refresh (0.9ms)
+✔ blocked reads keep requested session edits until a later focus-style refresh succeeds (0.7ms)
+✔ malformed saved data stays byte-for-byte intact and is reported as invalid (0.5ms)
+✔ source revisions change when the original prompt text changes (0.4ms)
+✔ malformed bookmarks and recently viewed stay byte-for-byte intact when user saves new items (2.6ms)
+✔ read failure keeps session choices and merges safely when storage recovers (0.6ms)
+✔ write failure preserves session choices and persists when storage recovers (0.3ms)
+✔ ambiguous historical records remain preserved and unresolved, never assigned to unrelated topics (0.5ms)
+✔ reading activity and checklist selections remain strictly independent in storage (0.3ms)
+✔ remove during write failure does not resurrect on recovery (0.3ms)
 ✔ read recovery on next write merges unread earlier records safely (0.3ms)
-✔ history recency puts new views first and explicit clear intent persists on recovery (0.7ms)
-✔ externally repaired malformed storage safely recovers and merges session changes (0.6ms)
-✔ creates a valid UTF-8 ZIP whose stored files can be opened and inspected (3.2ms)
-✔ rejects duplicate and traversal paths instead of producing an unsafe package (1.1ms)
-ℹ tests 65
+✔ history recency puts new views first and explicit clear intent persists on recovery (0.5ms)
+✔ externally repaired malformed storage safely recovers and merges session changes (0.5ms)
+✔ creates a valid UTF-8 ZIP whose stored files can be opened and inspected (2.6ms)
+✔ rejects duplicate and traversal paths instead of producing an unsafe package (0.9ms)
+ℹ tests 66
 ℹ suites 0
-ℹ pass 65
+ℹ pass 66
 ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
 ```
 
-### Gate 3: Production build
+### Gate 3: Learning data tests
+```sh
+npx tsx --test src/data/learning/group-split.test.ts src/data/learning/group-a.test.ts src/lib/groupSplit.test.ts
+```
+**Outcome:** Passed 6/6 tests (exit code 0, duration: ~350ms).
+```
+✔ group split preserves exact byte-for-byte topic records across all 58 canonical topics (18.6ms)
+✔ group a builder sets accepted quiz policy defaults and pending wording while preserving draft reviewState (17.5ms)
+✔ group a builder supports per-topic policy overrides and draft wording fallback (0.6ms)
+✔ group a builder supports fully approved review state and final wording (0.4ms)
+✔ group split preserves exact byte-for-byte topic records across all 58 canonical topics (15.7ms)
+✔ learning manifest review summary stays in sync with built topics (2.1ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+```
+
+### Gate 4: Production build
 ```sh
 npm run build
 ```
@@ -149,7 +223,7 @@ npm run build
 ```
    ▲ Next.js 15.5.28
    Creating an optimized production build ...
- ✓ Compiled successfully in 4.4s
+ ✓ Compiled successfully in 4.3s
    Linting and checking validity of types     ✓ Linting and checking validity of types 
    Collecting page data     ✓ Collecting page data 
  ✓ Generating static pages (182/182)
@@ -157,51 +231,40 @@ npm run build
    Finalizing page optimization     ✓ Finalizing page optimization 
 ```
 
-### Gate 4: Playwright E2E browser tests
+### Gate 5: Playwright E2E browser tests
 ```sh
-E2E_SERVER=production E2E_PORT=3250 E2E_BROWSER_CHANNEL=chrome npx playwright test e2e/learning-assessments.spec.ts e2e/learning-pilot-integration.spec.ts
+E2E_SERVER=production E2E_PORT=3250 E2E_BROWSER_CHANNEL=chrome npx playwright test e2e/learning-assessments.spec.ts
 ```
-**Outcome:** Passed 25/25 tests (exit code 0, duration: 54.5s).
+**Outcome:** Passed 12/12 tests (exit code 0, duration: 56.8s).
 ```
-Running 25 tests using 1 worker
+Running 12 tests using 1 worker
 
-[1/25] objective quiz and practical self-assessment › grades answers, keeps retries and restores the latest attempt and rubric choices
-[2/25] objective quiz and practical self-assessment › uses the same local quiz and rubric records in the full reader and quick preview, isolated by browser profile
-[3/25] objective quiz and practical self-assessment › keeps quiz attempts and rubric judgments attached to their Topic
-[4/25] objective quiz and practical self-assessment › shows retained prior-version history without presenting it as a current result or rating
-[5/25] objective quiz and practical self-assessment › labels a failed quiz write as session-only and does not restore it after reload
-[6/25] objective quiz and practical self-assessment › labels a failed rubric write and does not restore the session-only judgment after reload
-[7/25] objective quiz and practical self-assessment › keeps quiz results strictly distinct from reading activity, checklist selections, rubric assessment, and completion signals
-[8/25] objective quiz and practical self-assessment › retains historical attempt when a question version is updated and begins the new version unselected
-[9/25] objective quiz and practical self-assessment › supports accessible keyboard navigation, visible focus ring, ARIA status announcements, and touch target sizing
-[10/25] Learning pilot integration › search and filters still find the first topic and theme survives direct reading at 390px
-[11/25] Learning pilot integration › search and filters still find the first topic and theme survives direct reading at 768px
-[12/25] Learning pilot integration › search and filters still find the first topic and theme survives direct reading at 1024px
-[13/25] Learning pilot integration › search and filters still find the first topic and theme survives direct reading at 1366px
-[14/25] Learning pilot integration › search and filters still find the first topic and theme survives direct reading at 1440px
-[15/25] Learning pilot integration › dark utility colors follow the saved theme when OS preference differs
-[16/25] Learning pilot integration › full reader copies authored content and invokes print and speech controls at 390px
-[17/25] Learning pilot integration › full reader copies authored content and invokes print and speech controls at 768px
-[18/25] Learning pilot integration › full reader copies authored content and invokes print and speech controls at 1024px
-[19/25] Learning pilot integration › full reader copies authored content and invokes print and speech controls at 1366px
-[20/25] Learning pilot integration › full reader copies authored content and invokes print and speech controls at 1440px
-[21/25] Learning pilot integration › reading and preview remain usable at 390px
-[22/25] Learning pilot integration › reading and preview remain usable at 768px
-[23/25] Learning pilot integration › reading and preview remain usable at 1024px
-[24/25] Learning pilot integration › reading and preview remain usable at 1366px
-[25/25] Learning pilot integration › reading and preview remain usable at 1440px
-  25 passed (54.5s)
+[1/12] objective quiz and practical self-assessment › grades answers, keeps retries and restores the latest attempt and rubric choices
+[2/12] objective quiz and practical self-assessment › uses the same local quiz and rubric records in the full reader and quick preview, isolated by browser profile
+[3/12] objective quiz and practical self-assessment › keeps quiz attempts and rubric judgments attached to their Topic
+[4/12] objective quiz and practical self-assessment › shows retained prior-version history without presenting it as a current result or rating
+[5/12] objective quiz and practical self-assessment › labels a failed quiz write as session-only and does not restore it after reload
+[6/12] objective quiz and practical self-assessment › labels a failed rubric write and does not restore the session-only judgment after reload
+[7/12] objective quiz and practical self-assessment › keeps quiz results strictly distinct from reading activity, checklist selections, rubric assessment, and completion signals
+[8/12] objective quiz and practical self-assessment › retains historical attempt when a question version is updated and begins the new version unselected
+[9/12] objective quiz and practical self-assessment › supports accessible keyboard navigation, visible focus ring, ARIA status announcements, and touch target sizing
+[10/12] objective quiz and practical self-assessment › Topic with accepted quiz policy but pending educational review shows accepted policy and pending statement, presented as self-check preview
+[11/12] objective quiz and practical self-assessment › Topic with accepted policy, approved reviewState, and passing evidence shows final wording without preview marker and retains attempt as real record
+[12/12] objective quiz and practical self-assessment › Dashboard describes accepted quiz policy and affirms self-assessment limits with no completion inferred
+  12 passed (56.8s)
 ```
 
 ---
 
-## 4. Honest boundaries and limits
+## 5. Honest boundaries and limits
 
-1. **Course-owner policy vs individual topic review packages:**
-   The general quiz scoring, retry, retention, and feedback policy was accepted by the course owner on 2026-10-20 (decision package 70 v2). However, individual educational content reviews for other curriculum groups remain scoped to their respective review packages; this issue demonstrates the approved quiz behavior on the representative existing Topic 01 (`project-idea-mvp`).
-2. **Browser scope:**
-   In line with owner decisions, production Chromium is the accepted browser scope for MVP claims. Testing was conducted with Google Chrome (`E2E_BROWSER_CHANNEL=chrome`).
-3. **No mastery or accreditation claim:**
-   Quiz attempts and scores are local self-check mechanisms only. The application renders prominent disclaimers and never infers practical correctness, project completion, or course mastery from quiz results.
-4. **No backend or account synchronization:**
+1. **Per-Topic educational review remains pending for every group:**
+   While the quiz scoring, retry, feedback, and attempt-retention policy is accepted at the course-owner level, the per-Topic educational content review for every curriculum group (Group A, Group B, and all others) remains pending. No real Topic was marked as reviewed; `reviewState` remains `"draft"` across all 58 canonical Topics.
+2. **Test fixture isolation:**
+   The fully approved review state test uses a strictly test-only fixture (`createApprovedTestTopic` in `e2e/fixtures/testTopicFixture.ts`) injected via `window.__AI_AGENTS_E2E_TOPIC_CONTENT__`. No real Topic's review state or evidence was fabricated or changed.
+3. **Rubric scale approval scope:**
+   Rubric scale approval remains in `"proposed"` state across all 58 Topics; it is strictly owned by issue #43.
+4. **No mastery or accreditation claim:**
+   Quiz attempts and scores are local self-check mechanisms only. The application renders prominent disclaimers and never infers practical correctness, project completion, or course mastery from quiz results or checklist choices.
+5. **No backend or account synchronization:**
    All attempts remain browser-local in `localStorage`. Cross-device synchronization or account registration is not implemented by design.

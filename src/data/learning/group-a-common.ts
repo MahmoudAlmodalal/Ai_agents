@@ -7,6 +7,7 @@ import {
   TopicLearningContent,
 } from '@/src/types/learning.ts';
 import { getExternalVideoCandidates } from '@/src/data/externalVideoRegistry.ts';
+import { resolvePolicyWordingState } from '@/src/lib/learningPolicy.ts';
 
 export type QuestionDraft = {
   id: string;
@@ -86,6 +87,12 @@ export function approvedPolicy(
   };
 }
 
+export const ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL: PolicyApproval = approvedPolicy(
+  'MahmoudAlmodalal (course owner)',
+  '2026-10-20',
+  'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)',
+);
+
 export const DRAFT_QUIZ_INSTRUCTIONS_GROUP_A =
   'اختر الإجابة الأدق ثم اقرأ التفسير. هذه مسودة تدريبية وسياسة التقييم المقترحة لم تعتمد بعد.';
 
@@ -103,6 +110,15 @@ export const APPROVED_QUIZ_SCORING_POLICY_SUMMARY =
 
 export const APPROVED_RUBRIC_SCALE_SUMMARY =
   'مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان؛ لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
+
+export const PENDING_QUIZ_INSTRUCTIONS =
+  'اختر الإجابة الأدق ثم اقرأ التفسير. سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك تظهر النتيجة كمعاينة فحص ذاتي وليست نتيجة نهائية. الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
+
+export const PENDING_QUIZ_SCORING_POLICY_SUMMARY =
+  'سياسة معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك تظهر النتيجة كمعاينة فحص ذاتي وليست نتيجة نهائية. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
+
+export const PENDING_RUBRIC_SCALE_SUMMARY =
+  'مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان؛ المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك يُعد التقييم معاينة فحص ذاتي وليس نتيجة نهائية. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
 
 function notRunEvidence(area: ReviewEvidence['area'], evidence: string): ReviewEvidence {
   return { area, outcome: 'not-run', evidence };
@@ -128,35 +144,52 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
     ],
   }));
 
-  const quizScoringPolicyApproval = draft.quizScoringPolicyApproval ?? { ...proposedApproval };
+  const quizScoringPolicyApproval = draft.quizScoringPolicyApproval ?? { ...ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL };
   const rubricScaleApproval = draft.rubricScaleApproval ?? { ...proposedApproval };
-
-  const isQuizApproved = quizScoringPolicyApproval.state === 'approved';
-  const isRubricApproved = rubricScaleApproval.state === 'approved';
-
-  const quizInstructions = draft.quizInstructions ?? (
-    isQuizApproved ? APPROVED_QUIZ_INSTRUCTIONS : DRAFT_QUIZ_INSTRUCTIONS_GROUP_A
-  );
-
-  const quizScoringPolicySummary = draft.quizScoringPolicySummary ?? (
-    isQuizApproved ? APPROVED_QUIZ_SCORING_POLICY_SUMMARY : DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A
-  );
-
-  const rubricScaleSummary = draft.rubricScaleSummary ?? (
-    isRubricApproved ? APPROVED_RUBRIC_SCALE_SUMMARY : DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A
-  );
 
   const lessonEvidence = draft.lessonReviewEvidence ?? [
     notRunEvidence('lesson', 'Supplemental learning content is a draft. Independent educational review, template approval, and course-owner acceptance are pending.'),
   ];
 
   const quizReviewEvidence = draft.quizReviewEvidence ?? [
-    notRunEvidence('question', 'Draft questions are specific to this Topic; independent review and scoring-policy approval have not run.'),
+    notRunEvidence('question', 'Scoring policy is accepted by the course owner (issue #42); independent educational review of this Topic\'s questions remains pending.'),
   ];
 
   const rubricReviewEvidence = draft.rubricReviewEvidence ?? [
     notRunEvidence('rubric', 'Proposed descriptive self-assessment only; rubric policy has not been approved.'),
   ];
+
+  const reviewState = draft.reviewState ?? 'draft';
+
+  const quizWordingState = resolvePolicyWordingState(reviewState, quizScoringPolicyApproval, [
+    { area: 'lesson', evidence: lessonEvidence },
+    { area: 'question', evidence: quizReviewEvidence },
+    ...questions.map((question) => ({ area: 'question' as const, evidence: question.reviewEvidence })),
+  ]);
+
+  const rubricWordingState = resolvePolicyWordingState(reviewState, rubricScaleApproval, [
+    { area: 'lesson', evidence: lessonEvidence },
+    { area: 'rubric', evidence: rubricReviewEvidence },
+    ...draft.criteria.map((criterion) => ({ area: 'rubric' as const, evidence: criterion.reviewEvidence ?? [] })),
+  ]);
+
+  const quizInstructions = draft.quizInstructions ?? (
+    quizWordingState === 'approved' ? APPROVED_QUIZ_INSTRUCTIONS :
+    quizWordingState === 'pending' ? PENDING_QUIZ_INSTRUCTIONS :
+    DRAFT_QUIZ_INSTRUCTIONS_GROUP_A
+  );
+
+  const quizScoringPolicySummary = draft.quizScoringPolicySummary ?? (
+    quizWordingState === 'approved' ? APPROVED_QUIZ_SCORING_POLICY_SUMMARY :
+    quizWordingState === 'pending' ? PENDING_QUIZ_SCORING_POLICY_SUMMARY :
+    DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A
+  );
+
+  const rubricScaleSummary = draft.rubricScaleSummary ?? (
+    rubricWordingState === 'approved' ? APPROVED_RUBRIC_SCALE_SUMMARY :
+    rubricWordingState === 'pending' ? PENDING_RUBRIC_SCALE_SUMMARY :
+    DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A
+  );
 
   return {
     topicSlug,

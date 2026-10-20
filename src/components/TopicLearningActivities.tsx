@@ -51,7 +51,22 @@ function oldRubricRatings(record: PracticalAssessmentRecord | null, content: Top
   ];
 }
 
-export function TopicLearningActivities({ topic, content }: { topic: TopicItem; content: TopicLearningContent }) {
+export function TopicLearningActivities({ topic, content: authoredContent }: { topic: TopicItem; content: TopicLearningContent }) {
+  // E2E-only injection point that affects only what this browser renders
+  // (it never changes the server-rendered content, a saved record, or an award).
+  const content = React.useMemo(() => {
+    if (typeof window !== 'undefined') {
+      const e2eOverride = (window as unknown as { __AI_AGENTS_E2E_TOPIC_CONTENT__?: unknown }).__AI_AGENTS_E2E_TOPIC_CONTENT__;
+      if (e2eOverride && typeof e2eOverride === 'object' && !Array.isArray(e2eOverride) && Object.prototype.toString.call(e2eOverride) === '[object Object]') {
+        const topicOverride = (e2eOverride as Record<string, TopicLearningContent>)[topic.slug];
+        if (topicOverride && typeof topicOverride === 'object') {
+          return topicOverride;
+        }
+      }
+    }
+    return authoredContent;
+  }, [topic.slug, authoredContent]);
+
   const [ready, setReady] = React.useState(false);
   const [quizAttempts, setQuizAttempts] = React.useState<QuizAttemptRecord[]>([]);
   const [quizStorageStatus, setQuizStorageStatus] = React.useState<'loading' | 'available' | 'read-error' | 'write-error' | 'invalid'>('loading');
@@ -209,11 +224,15 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
           <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
             {content.reviewState === 'approved' ? 'محتوى تمت مراجعته' : content.reviewState === 'review-ready' ? 'محتوى بانتظار المراجعة' : 'مسودة تعليمية'}
           </span>
-          {!quizPolicyEnabled && <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">معاينة مقترحة — لا تمثل إتقانًا</span>}
+          {!quizPolicyEnabled && (
+            <span className="rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+              {content.quiz.scoringPolicy.approval.state === 'approved' ? 'معاينة فحص ذاتي — لا تمثل إتقانًا' : 'معاينة مقترحة — لا تمثل إتقانًا'}
+            </span>
+          )}
         </div>
         <h2 id={`${instanceId}-learning-title`} className="text-xl font-black text-[var(--text-main)]">محتوى تعلّمي وتقييم ذاتي</h2>
         <p className="text-sm leading-7 text-[var(--text-muted)]" dir="auto">
-          نتائج هذا الفحص مراجعة ذاتية لإجاباتك، ومعايير التطبيق مراجعة ذاتية لمخرجات مشروعك. لا تتحقق الواجهة من صحة مشروعك أو من إتقانه.
+          نتائج هذا الفحص مراجعة ذاتية لإجاباتك وفق سياسة التصحيح المعتمدة، والتقييم الذاتي هو تقدير المتعلم الخاص وليس تحققاً مستقلاً. لا تتحقق الواجهة من صحة مشروعك أو من إتقانه، ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.
         </p>
       </header>
 
@@ -310,7 +329,7 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
         </form>}
 
         {displayedAttempt && <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950/40" role="status" aria-live="polite">
-          <p className="font-black text-amber-950 dark:text-amber-100">{displayedAttempt.previewOnly ? 'نتيجة معاينة مقترحة' : 'نتيجة الفحص الذاتي'}: {displayedAttempt.score} / {displayedAttempt.maxScore}</p>
+          <p className="font-black text-amber-950 dark:text-amber-100">{displayedAttempt.previewOnly ? (content.quiz.scoringPolicy.approval.state === 'approved' ? 'نتيجة معاينة فحص ذاتي' : 'نتيجة معاينة مقترحة') : 'نتيجة الفحص الذاتي'}: {displayedAttempt.score} / {displayedAttempt.maxScore}</p>
           <p className="mt-1 text-sm leading-6 text-amber-900 dark:text-amber-200">صحيح: {displayedAttempt.correctCount} · غير صحيح: {displayedAttempt.incorrectCount} · بلا إجابة: {displayedAttempt.unansweredCount}. هذه النتيجة لا تثبت صحة التطبيق أو إتقان المشروع.</p>
         </div>}
 
@@ -341,7 +360,7 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
             <h3 id={`${instanceId}-rubric`} className="text-lg font-black text-[var(--text-main)]">{content.practicalAssessment.title}</h3>
             <span className="rounded-full border border-[var(--border-color)] px-2.5 py-1 text-xs font-semibold text-[var(--text-muted)]">تقييم ذاتي لمشروعك</span>
           </div>
-          <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]" dir="auto">{content.practicalAssessment.scale.summary} لا توجد عتبة إتقان أو شارة نتيجة هذا التقييم.</p>
+          <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]" dir="auto">{content.practicalAssessment.scale.summary} التقييم الذاتي هو تقدير المتعلم الخاص وليس تحققًا مستقلًا؛ لا توجد عتبة إتقان أو شارة نتيجة هذا التقييم، ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.</p>
         </div>
 
         <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4">

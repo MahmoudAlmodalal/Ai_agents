@@ -8,9 +8,13 @@ import { hashTopicRecord, generateReviewSummaries, TopicReviewAuditSummary } fro
 import {
   buildTopic,
   approvedPolicy,
+  proposedApproval,
   APPROVED_QUIZ_INSTRUCTIONS,
   APPROVED_QUIZ_SCORING_POLICY_SUMMARY,
   APPROVED_RUBRIC_SCALE_SUMMARY,
+  PENDING_QUIZ_INSTRUCTIONS,
+  PENDING_QUIZ_SCORING_POLICY_SUMMARY,
+  PENDING_RUBRIC_SCALE_SUMMARY,
   DRAFT_QUIZ_INSTRUCTIONS_GROUP_A,
   DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A,
   DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A,
@@ -154,19 +158,30 @@ test('buildTopic (Group A) supports per-Topic reviewState, approvals, evidence, 
     ],
   };
 
-  // 1. Default output with no overrides
+  // 1. Default output with no overrides: quiz scoring policy is accepted by default; review is pending
   const defaultTopic = buildTopic(dummyDraft);
   assert.equal(defaultTopic.reviewState, 'draft');
-  assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'approved');
   assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'proposed');
-  assert.equal(defaultTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_A);
-  assert.equal(defaultTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A);
+  assert.equal(defaultTopic.quiz.instructions, PENDING_QUIZ_INSTRUCTIONS);
+  assert.equal(defaultTopic.quiz.scoringPolicy.summary, PENDING_QUIZ_SCORING_POLICY_SUMMARY);
   assert.equal(defaultTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A);
   assert.equal(defaultTopic.reviewEvidence[0]?.outcome, 'not-run');
   assert.equal(defaultTopic.quiz.reviewEvidence[0]?.outcome, 'not-run');
+  assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /Scoring policy is accepted/);
+  assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /questions remains pending/);
   assert.equal(defaultTopic.practicalAssessment.reviewEvidence[0]?.outcome, 'not-run');
 
-  // 2. Overrides with approved policies and custom evidence
+  // 2. Draft override: unapproved policy shows draft wording
+  const draftPolicyTopic = buildTopic({
+    ...dummyDraft,
+    quizScoringPolicyApproval: proposedApproval,
+  });
+  assert.equal(draftPolicyTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(draftPolicyTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_A);
+  assert.equal(draftPolicyTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A);
+
+  // 3. Overrides with approved reviewState, approved policies, and custom passing evidence
   const approval = approvedPolicy(
     'Course Owner',
     '2026-10-21',
@@ -190,6 +205,14 @@ test('buildTopic (Group A) supports per-Topic reviewState, approvals, evidence, 
     rubricReviewEvidence: customRubricEvidence,
     quizScoringPolicyApproval: approval,
     rubricScaleApproval: approval,
+    questions: [
+      { ...dummyDraft.questions[0], reviewEvidence: customQuizEvidence },
+      { ...dummyDraft.questions[1], reviewEvidence: customQuizEvidence },
+    ],
+    criteria: [
+      { ...dummyDraft.criteria[0], reviewEvidence: customRubricEvidence },
+      { ...dummyDraft.criteria[1], reviewEvidence: customRubricEvidence },
+    ],
   });
 
   assert.equal(approvedTopic.reviewState, 'approved');
@@ -202,7 +225,7 @@ test('buildTopic (Group A) supports per-Topic reviewState, approvals, evidence, 
   assert.equal(approvedTopic.quiz.scoringPolicy.summary, APPROVED_QUIZ_SCORING_POLICY_SUMMARY);
   assert.equal(approvedTopic.practicalAssessment.scale.summary, APPROVED_RUBRIC_SCALE_SUMMARY);
 
-  // 3. Custom wording overrides take precedence
+  // 4. Custom wording overrides take precedence
   const customWordingTopic = buildTopic({
     ...dummyDraft,
     quizScoringPolicyApproval: approval,
@@ -245,17 +268,28 @@ test('buildTopicB (Group B) supports per-Topic reviewState, approvals, evidence,
     reviewNote: 'Author note for Group B',
   };
 
-  // 1. Default output with no overrides
+  // 1. Default output with no overrides: quiz scoring policy is accepted by default; review is pending
   const defaultTopic = buildTopicB(dummyDraft, ['q1', 'q2']);
   assert.equal(defaultTopic.reviewState, 'review-ready');
-  assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(defaultTopic.quiz.scoringPolicy.approval.state, 'approved');
   assert.equal(defaultTopic.practicalAssessment.scale.approval.state, 'proposed');
-  assert.equal(defaultTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_B);
-  assert.equal(defaultTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_B);
+  assert.equal(defaultTopic.quiz.instructions, PENDING_QUIZ_INSTRUCTIONS);
+  assert.equal(defaultTopic.quiz.scoringPolicy.summary, PENDING_QUIZ_SCORING_POLICY_SUMMARY);
   assert.equal(defaultTopic.practicalAssessment.scale.summary, DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B);
   assert.equal(defaultTopic.reviewEvidence.length, 4);
+  assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /سياسة التصحيح معتمدة/);
+  assert.match(defaultTopic.quiz.reviewEvidence[0]?.evidence ?? '', /المراجعة التعليمية المستقلة.*معلقة/);
 
-  // 2. Overrides with approved policies and custom evidence
+  // 2. Draft override: unapproved policy shows draft wording
+  const draftPolicyTopic = buildTopicB({
+    ...dummyDraft,
+    quizScoringPolicyApproval: proposedApproval,
+  }, ['q1', 'q2']);
+  assert.equal(draftPolicyTopic.quiz.scoringPolicy.approval.state, 'proposed');
+  assert.equal(draftPolicyTopic.quiz.instructions, DRAFT_QUIZ_INSTRUCTIONS_GROUP_B);
+  assert.equal(draftPolicyTopic.quiz.scoringPolicy.summary, DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_B);
+
+  // 3. Overrides with approved reviewState, approved policies, and custom passing evidence
   const approval = approvedPolicy(
     'Course Owner',
     '2026-10-21',
@@ -280,6 +314,14 @@ test('buildTopicB (Group B) supports per-Topic reviewState, approvals, evidence,
       rubricReviewEvidence: customRubricEvidence,
       quizScoringPolicyApproval: approval,
       rubricScaleApproval: approval,
+      questions: [
+        { ...dummyDraft.questions[0], reviewEvidence: customQuizEvidence },
+        { ...dummyDraft.questions[1], reviewEvidence: customQuizEvidence },
+      ],
+      criteria: [
+        { ...dummyDraft.criteria[0], reviewEvidence: customRubricEvidence },
+        { ...dummyDraft.criteria[1], reviewEvidence: customRubricEvidence },
+      ],
     },
     ['q1', 'q2']
   );
@@ -298,7 +340,7 @@ test('buildTopicB (Group B) supports per-Topic reviewState, approvals, evidence,
   assert.ok(approvedTopic.reviewEvidence.some((e) => e.evidence === 'Quiz verified.'));
   assert.ok(approvedTopic.reviewEvidence.some((e) => e.evidence === 'Rubric verified.'));
 
-  // 3. Custom wording overrides take precedence
+  // 4. Custom wording overrides take precedence
   const customWordingTopic = buildTopicB(
     {
       ...dummyDraft,
@@ -342,4 +384,17 @@ test('approved policy wording satisfies all domain requirements and makes no mas
   assert.ok(APPROVED_QUIZ_SCORING_POLICY_SUMMARY.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
   assert.ok(APPROVED_QUIZ_INSTRUCTIONS.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
   assert.ok(APPROVED_RUBRIC_SCALE_SUMMARY.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
+
+  // pending review wording must include accepted policy points, retries, versions, the pending review statement, and no mastery claims
+  assert.ok(PENDING_QUIZ_SCORING_POLICY_SUMMARY.includes('نقطة للإجابة الصحيحة'));
+  assert.ok(PENDING_QUIZ_INSTRUCTIONS.includes('نقطة للإجابة الصحيحة'));
+  assert.ok(PENDING_QUIZ_SCORING_POLICY_SUMMARY.includes('المراجعة التعليمية لهذا الموضوع ما زالت معلقة'));
+  assert.ok(PENDING_QUIZ_INSTRUCTIONS.includes('المراجعة التعليمية لهذا الموضوع ما زالت معلقة'));
+  assert.ok(PENDING_QUIZ_SCORING_POLICY_SUMMARY.includes('معاينة فحص ذاتي وليست نتيجة نهائية'));
+  assert.ok(PENDING_QUIZ_INSTRUCTIONS.includes('معاينة فحص ذاتي وليست نتيجة نهائية'));
+  assert.ok(PENDING_RUBRIC_SCALE_SUMMARY.includes('المراجعة التعليمية لهذا الموضوع ما زالت معلقة'));
+  assert.ok(PENDING_RUBRIC_SCALE_SUMMARY.includes('معاينة فحص ذاتي وليس نتيجة نهائية'));
+  assert.ok(PENDING_QUIZ_SCORING_POLICY_SUMMARY.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
+  assert.ok(PENDING_QUIZ_INSTRUCTIONS.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
+  assert.ok(PENDING_RUBRIC_SCALE_SUMMARY.includes('لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل'));
 });

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { createApprovedTestTopic } from './fixtures/testTopicFixture';
 
 const topicSlug = 'project-idea-mvp';
 const quizStorageKey = 'ai-agents-quiz-attempts-v1';
@@ -413,5 +414,141 @@ test.describe('objective quiz and practical self-assessment', () => {
     await expect(retryBtn).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(firstRadio).not.toBeChecked();
+  });
+
+  test('Topic with accepted quiz policy but pending educational review shows accepted policy and pending statement, presented as self-check preview', async ({ page }) => {
+    await page.goto(`/learn/${topicSlug}`);
+    const quiz = quizSection(page);
+
+    // 1. Instructions show accepted policy wording AND honest limits
+    await expect(quiz.getByText(/اختر الإجابة الأدق ثم اقرأ التفسير. سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة/)).toBeVisible();
+    await expect(quiz.getByText(/الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل/)).toBeVisible();
+
+    // 2. Both quiz instructions and scoring policy summary show the pending review statement
+    const pendingStatements = quiz.getByText(/المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك تظهر النتيجة كمعاينة فحص ذاتي وليست نتيجة نهائية/);
+    await expect(pendingStatements).toHaveCount(2);
+    await expect(pendingStatements.first()).toBeVisible();
+
+    // 3. Scoring policy summary shows accepted policy
+    await expect(quiz.getByText(/سياسة معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة/)).toBeVisible();
+
+    // 3. Header badge presents the preview marker
+    await expect(page.locator(activitySelector).getByText('معاينة فحص ذاتي — لا تمثل إتقانًا')).toBeVisible();
+
+    // 4. Submit an answer and verify result is presented as a self-check preview
+    const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
+    await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+
+    await expect(quiz.getByText(/نتيجة معاينة فحص ذاتي: 1 \/ 2/)).toBeVisible();
+    await expect(quiz.getByText('هذه النتيجة لا تثبت صحة التطبيق أو إتقان المشروع.')).toBeVisible();
+
+    // 5. Stored attempt retains previewOnly flag
+    const stored = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.[0];
+    }, { key: quizStorageKey, slug: topicSlug });
+    expect(stored.previewOnly).toBe(true);
+    expect(stored.selfCheck).toBe(true);
+  });
+
+  test('Topic with accepted policy, approved reviewState, and passing evidence shows final wording without preview marker and retains attempt as real record', async ({ page }) => {
+    const approvedTopic = createApprovedTestTopic(topicSlug);
+
+    // Inject via the e2e hook: window.__AI_AGENTS_E2E_TOPIC_CONTENT__
+    await page.addInitScript(({ slug, content }) => {
+      (window as unknown as { __AI_AGENTS_E2E_TOPIC_CONTENT__: Record<string, unknown> }).__AI_AGENTS_E2E_TOPIC_CONTENT__ = {
+        [slug]: content,
+      };
+    }, { slug: topicSlug, content: approvedTopic });
+
+    await page.goto(`/learn/${topicSlug}`);
+    const quiz = quizSection(page);
+
+    // 1. Instructions show final accepted policy wording with honest limits, but NO pending review sentence
+    await expect(quiz.getByText(/سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة/)).toBeVisible();
+    await expect(quiz.getByText(/الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل/)).toBeVisible();
+    await expect(quiz.getByText(/المراجعة التعليمية لهذا الموضوع ما زالت معلقة/)).toHaveCount(0);
+    await expect(quiz.getByText(/معاينة فحص ذاتي وليست نتيجة نهائية/)).toHaveCount(0);
+
+    // 2. No preview marker badge in the activity header
+    await expect(page.locator(activitySelector).getByText(/معاينة فحص ذاتي|معاينة مقترحة/)).toHaveCount(0);
+
+    // 3. Submit quiz and verify score is presented with no preview marker
+    const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
+    const journeyQuestion = quiz.getByRole('group', { name: /أي اقتراح يصف MVP/ });
+    await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
+    await journeyQuestion.getByRole('radio', { name: 'ثلاث شاشات جميلة بلا حجز مكتمل', exact: true }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+
+    // Result banner shows final title "نتيجة الفحص الذاتي" (not "نتيجة معاينة فحص ذاتي")
+    await expect(quiz.getByText(/نتيجة الفحص الذاتي: 1 \/ 2/)).toBeVisible();
+    await expect(quiz.getByText('نتيجة معاينة فحص ذاتي')).toHaveCount(0);
+    await expect(quiz.getByText('نتيجة معاينة مقترحة')).toHaveCount(0);
+
+    // 4. Stored attempt has previewOnly: false (retained as real record)
+    const stored = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.[0];
+    }, { key: quizStorageKey, slug: topicSlug });
+    expect(stored.previewOnly).toBe(false);
+    expect(stored.selfCheck).toBe(true);
+    expect(stored.score).toBe(1);
+    expect(stored.maxScore).toBe(2);
+  });
+
+  test('Dashboard describes accepted quiz policy and affirms self-assessment limits with no completion inferred', async ({ page }) => {
+    // Seed an attempt to inspect the attempt display on dashboard
+    const submittedAt = '2026-10-20T10:00:00.000Z';
+    await page.addInitScript(({ key, slug, stamp }) => {
+      localStorage.setItem(key, JSON.stringify({
+        schemaVersion: 1,
+        byTopic: {
+          [slug]: [{
+            attemptId: 'dashboard-verify-attempt',
+            topicSlug: slug,
+            quizId: `${slug}-objective-quiz`,
+            quizVersion: 1,
+            policyId: `${slug}-quiz-scoring-policy`,
+            policyVersion: 1,
+            answers: [
+              { questionId: 'idea-mvp-q-evidence', questionVersion: 1, selectedOptionId: 'idea-mvp-q-evidence-option-2', correctness: 'correct' },
+              { questionId: 'idea-mvp-q-journey', questionVersion: 1, selectedOptionId: 'idea-mvp-q-journey-option-1', correctness: 'incorrect' },
+            ],
+            correctCount: 1,
+            incorrectCount: 1,
+            unansweredCount: 0,
+            score: 1,
+            maxScore: 2,
+            submittedAt: stamp,
+            selfCheck: true,
+            previewOnly: true,
+          }],
+        },
+      }));
+    }, { key: quizStorageKey, slug: topicSlug, stamp: submittedAt });
+
+    await page.goto('/dashboard');
+
+    // 1. Quizzes section describes accepted scoring policy accurately
+    const quizSectionLocator = page.getByTestId('section-quizzes');
+    await expect(quizSectionLocator).toBeVisible();
+    await expect(quizSectionLocator.getByText(/الدرجة وصف لسياسة التصحيح المعتمدة/)).toBeVisible();
+
+    // 2. Quiz attempt card describes accepted policy and disclaims completion/mastery inference
+    const attemptRow = page.getByTestId('quiz-attempt-row').first();
+    await expect(attemptRow.getByText(/وفق سياسة التصحيح المعتمدة/)).toBeVisible();
+    await expect(attemptRow.getByText(/لا تعني هذه النتيجة إكمال العمل العملي أو إتقانه/)).toBeVisible();
+    await expect(attemptRow.getByText(/لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق/)).toBeVisible();
+
+    // 3. Practical assessment section describes self-assessment as learner's own judgment and not independent verification
+    const assessmentSection = page.getByTestId('section-assessments');
+    await expect(assessmentSection.getByText(/سلم التقييم المعتمد/)).toBeVisible();
+    await expect(assessmentSection.getByText(/التقييم الذاتي هو تقدير المتعلم الخاص وليس تقييمًا مستقلاً/)).toBeVisible();
+    await expect(assessmentSection.getByText(/لا يقيّم التطبيق مشروعك بصورة مستقلة/)).toBeVisible();
+
+    // 4. Storage section affirms that no completion or mastery is inferred
+    const storageSection = page.getByTestId('section-storage-status');
+    await expect(storageSection.getByText(/لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق/)).toBeVisible();
   });
 });

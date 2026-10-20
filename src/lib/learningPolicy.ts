@@ -51,6 +51,22 @@ export function isLearningPolicyEnabled(
       && group.evidence.every((item) => hasPassedReviewEvidence(item, group.area)));
 }
 
+export type LearningPolicyWordingState = 'approved' | 'pending' | 'draft';
+
+export function resolvePolicyWordingState(
+  reviewState: string,
+  approval: unknown,
+  evidenceGroups: readonly ReviewEvidenceGroup[] = [],
+): LearningPolicyWordingState {
+  if (!isPolicyApproved(approval)) {
+    return 'draft';
+  }
+  if (isLearningPolicyEnabled(reviewState, approval, evidenceGroups)) {
+    return 'approved';
+  }
+  return 'pending';
+}
+
 export function isExternalVideoApproved(video: { availability: string; approval: unknown }): boolean {
   return video.availability === 'available' && isPolicyApproved(video.approval);
 }
