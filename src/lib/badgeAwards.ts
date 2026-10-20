@@ -10,6 +10,8 @@ export type BadgeEvidence = {
   practicalAssessments: PracticalAssessmentRecord[];
   recentlyViewedStatus?: BadgeAwardStorageStatus;
   learningRecordsStatus?: BadgeAwardStorageStatus;
+  quizAttemptsStatus?: BadgeAwardStorageStatus;
+  practicalAssessmentsStatus?: BadgeAwardStorageStatus;
 };
 
 export interface BadgeAwardRule {
@@ -197,7 +199,9 @@ export function reconcileBadgeAwards(
     const evidenceKeys = evidenceKeysFor(rule, evidence);
     const evidenceStatus = rule.evidence === 'recent-topic-list'
       ? evidence.recentlyViewedStatus ?? 'available'
-      : evidence.learningRecordsStatus ?? 'available';
+      : rule.evidence === 'quiz-attempts'
+        ? evidence.quizAttemptsStatus ?? evidence.learningRecordsStatus ?? 'available'
+        : evidence.practicalAssessmentsStatus ?? evidence.learningRecordsStatus ?? 'available';
     const evidenceConfirmed = evidenceStatus === 'available';
     let active = currentEvent(events, policy.policyId, rule.id, policy.version, rule.version, approvalReference);
     if (!evidenceConfirmed) {

@@ -173,6 +173,16 @@ test('malformed nested records remain untouched and are reported as invalid', ()
   assert.equal(storage.map.get(PRACTICAL_ASSESSMENTS_STORAGE_KEY), '{broken');
 });
 
+test('list snapshots keep quiz and practical storage failures distinct', () => {
+  const storage = mockStorage({ [QUIZ_ATTEMPTS_STORAGE_KEY]: '{broken' });
+  const snapshot = createLearningRecordsStore(() => storage).listLearningRecords();
+  assert.equal(snapshot.quizStorageStatus, 'invalid');
+  assert.equal(snapshot.practicalAssessmentStorageStatus, 'available');
+  assert.equal(snapshot.storageStatus, 'invalid');
+  assert.deepEqual(snapshot.quizAttempts, []);
+  assert.deepEqual(snapshot.practicalAssessments, []);
+});
+
 test('shape-valid but impossible quiz records are rejected instead of restoring inaccurate scores', () => {
   const malformedRecords = [
     attempt({ correctCount: 2, score: 2 }),

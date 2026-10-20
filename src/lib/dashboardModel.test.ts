@@ -78,3 +78,22 @@ test('rubric preview uses current ratings and does not resurrect cleared ratings
   assert.equal(findPreview(evidence, 'reflect-on-practice').observedCount, 2);
   assert.equal(findPreview(evidence, 'reflect-on-practice').draftConditionMet, false);
 });
+
+test('unavailable evidence is reported as unconfirmed instead of as an empty draft condition', () => {
+  const evidence: BadgeDraftEvidence = {
+    recentlyViewedTopicSlugs: [],
+    quizAttempts: [],
+    practicalAssessments: [],
+    recentlyViewedStatus: 'read-error',
+    quizAttemptsStatus: 'invalid',
+    practicalAssessmentsStatus: 'available',
+  };
+  const previews = previewBadgeRules(evidence);
+  assert.equal(previews[0].evidenceConfirmed, false);
+  assert.equal(previews[0].evidenceStatus, 'read-error');
+  assert.match(previews[0].resultLabel, /غير مؤكدة/);
+  assert.equal(previews[1].evidenceConfirmed, false);
+  assert.equal(previews[1].resultLabel, 'تعذر تأكيد الأدلة المحلية؛ نتيجة الشروط غير مؤكدة');
+  assert.equal(previews[2].evidenceConfirmed, true);
+  assert.equal(previews[2].resultLabel, 'لم تتحقق شروط المسودة؛ لا توجد شارة ممنوحة');
+});
