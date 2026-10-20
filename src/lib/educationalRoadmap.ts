@@ -9,8 +9,9 @@ import {
 import { getAllTopics, getTopicBySlug } from '@/src/lib/topicRegistry.ts';
 
 /**
- * 19 proposed educational groups covering all 58 canonical topics exactly once.
- * Boundaries and templates are review proposals awaiting formal course-owner approval.
+ * 19 educational groups covering all 58 canonical topics exactly once.
+ * Boundaries and the lesson template were accepted in the 2026-10-20 course-owner
+ * decision package. Complete-group educational acceptance remains separate.
  */
 export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
   {
@@ -21,8 +22,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     descriptionAr: 'تحديد المشكلة والمستخدم والقيمة ونطاق النسخة الأولى وفصل الافتراضات والقرارات.',
     topicSlugs: ['project-idea-mvp'],
     isProposedFirstGroup: true,
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-02',
@@ -31,8 +32,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Discovery, PRD, and SRS',
     descriptionAr: 'استجواب الفكرة بمقابلة Grill Me وصياغة PRD ومواصفات سلوك النظام SRS.',
     topicSlugs: ['discovery-grill-me', 'prd-specification', 'srs'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-03',
@@ -41,8 +42,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Git and GitHub documentation',
     descriptionAr: 'هيكلة مجلد وثائق المشروع docs/ والتعاون الهندسي وإدارة الفروع.',
     topicSlugs: ['git-project-docs', 'github-docs-collaboration'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-04',
@@ -51,8 +52,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Mermaid, User Flow, and Domain Model',
     descriptionAr: 'صياغة مخططات Mermaid ومسارات المستخدم ونمذجة الكيانات المفاهيمية.',
     topicSlugs: ['mermaid-syntax', 'user-flow-modeling', 'conceptual-domain-model'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-05',
@@ -61,8 +62,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'PlantUML and behavior diagrams',
     descriptionAr: 'مخططات حالات الاستخدام والنشاط وتغير الحالات باستخدام PlantUML.',
     topicSlugs: ['plantuml', 'use-case-diagram', 'activity-diagram', 'state-diagram'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-06',
@@ -71,8 +72,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'ERD, DBML, Sequence, and Class diagrams',
     descriptionAr: 'مخططات الكيانات العلائقية ERD وتوصيف DBML ومخططات التسلسل وفئات النظام.',
     topicSlugs: ['relational-erd-design', 'dbml-dbdiagram-io', 'sequence-diagram-modeling', 'class-diagram-design'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-07',
@@ -81,8 +82,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'UI/UX planning',
     descriptionAr: 'أدوار المستخدمين وهيكل التنقل ومخطط التجربة وجرد الشاشات التفصيلي.',
     topicSlugs: ['ui-ux-roles-navigation', 'ux-blueprint', 'screen-inventory'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-08',
@@ -91,8 +92,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Stitch, design systems, and prototypes',
     descriptionAr: 'الشاشة المرجعية في Stitch وقواعد نظام التصميم والنماذج التفاعلية.',
     topicSlugs: ['stitch-reference-screen', 'design-system-rules', 'interactive-prototype'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-09',
@@ -101,8 +102,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'AI implementation tools, Skills, and MCP',
     descriptionAr: 'إعداد وكلاء البرمجة واستوديو الذكاء الاصطناعي والمهارات وبروتوكول MCP.',
     topicSlugs: ['ai-coding-agent', 'google-ai-studio', 'agent-skills', 'mcp-protocol'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-10',
@@ -111,8 +112,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Stitch MCP and design documentation',
     descriptionAr: 'ربط خادم Stitch MCP وتوثيق لغة ومواصفات التصميم في docs/DESIGN.md.',
     topicSlugs: ['stitch-mcp-integration', 'design-md-spec'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-11',
@@ -121,8 +122,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'TypeScript, React, Tailwind, and Next.js',
     descriptionAr: 'الأنواع الصارمة ومكونات وحالة React والتصميم المتجاوب وموجه Next.js.',
     topicSlugs: ['typescript-types', 'react-components-state', 'tailwind-css-responsive', 'nextjs-app-router'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-12',
@@ -131,8 +132,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Frontend planning and Spec Kit',
     descriptionAr: 'هندسة الواجهة الأمامية ومراجعة UI/UX ومنهجية Spec Kit والتنفيذ خطوة بخطوة.',
     topicSlugs: ['frontend-architecture-planning', 'ui-ux-pro-max-review', 'spec-kit-workflow', 'frontend-incremental-implementation'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-13',
@@ -141,8 +142,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Python, PostgreSQL, and API architecture',
     descriptionAr: 'أساسيات بايثون للخادم وإعداد PostgreSQL وتصميم عقود واجهات REST API.',
     topicSlugs: ['python-backend-foundation', 'postgresql-database-setup', 'backend-architecture-api-contracts'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-14',
@@ -151,8 +152,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Django, FastAPI, permissions, and services',
     descriptionAr: 'بناء الخوادم عبر Django وFastAPI وهندسة الصلاحيات وطبقة الخدمات والمنتقيات.',
     topicSlugs: ['django-backend', 'fastapi-backend', 'auth-permissions', 'services-selectors'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-15',
@@ -161,8 +162,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Frontend/API integration and journey testing',
     descriptionAr: 'تكامل الواجهة الأمامية مع API واختبار تدفقات العمل ورحلة المستخدم Full-Stack.',
     topicSlugs: ['frontend-backend-integration', 'full-stack-journey-testing'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-16',
@@ -171,8 +172,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Database performance, Redis, and QA',
     descriptionAr: 'تحسين استعلامات وفهارس البيانات والتخزين المؤقت الاختياري واختبارات الجودة الشاملة.',
     topicSlugs: ['database-performance-engineering', 'redis-optional-infrastructure', 'integrated-project-qa'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-17',
@@ -181,8 +182,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Docker and Linux operations',
     descriptionAr: 'بناء بيئات التطوير والتشغيل بالحاويات وإدارة خوادم لينكس الأساسية.',
     topicSlugs: ['docker-container-workflow', 'linux-server-operations'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-18',
@@ -191,8 +192,8 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Cloud deployment',
     descriptionAr: 'نشر واجهات Vercel وNetlify وإطلاق الخوادم وقواعد البيانات السحابية الإنتاجية.',
     topicSlugs: ['vercel-frontend-deployment', 'netlify-frontend-deployment', 'backend-database-deployment'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
   {
     id: 'group-19',
@@ -201,21 +202,22 @@ export const PROPOSED_EDUCATIONAL_GROUPS: ProposedGroupRecord[] = [
     titleEn: 'Operations, handoff, Demo Day, and portfolio',
     descriptionAr: 'دليل تشغيل وصيانة النظام وحزمة التسليم وعرض يوم التخرج وتوثيق ملف الإنجاز.',
     topicSlugs: ['project-operations-runbook', 'project-handoff-package', 'project-demo-day', 'project-portfolio-entry'],
-    groupBoundariesApproved: false,
-    templateApproved: false,
+    groupBoundariesApproved: true,
+    templateApproved: true,
   },
 ];
 
 /**
  * Honest baseline educational review records for all 58 topics.
- * No review has been approved or passed yet. No fabricated dates or reviewers.
+ * Complete-group acceptance remains pending; static author/agent reviews do not
+ * establish human video review or course-owner release acceptance.
  */
 export const TOPIC_EDUCATIONAL_REVIEWS: Record<string, EducationalReviewRecord> = Object.fromEntries(
   PROPOSED_EDUCATIONAL_GROUPS.flatMap((g) => g.topicSlugs).map((slug) => [
     slug,
     {
       verdict: 'pending',
-      evidenceNotes: 'المحتوى متاح ومنشور؛ المراجعة التعليمية للمجموعة وقالب الدرس قيد الإعداد وبانتظار اعتماد مالك المسار.',
+      evidenceNotes: 'المحتوى متاح ومنشور وحدود المجموعة وقالب الدرس معتمدان؛ اكتمال أدلة المراجعة التعليمية والفيديو وقبول إصدار المجموعة ما زال معلقًا.',
     },
   ])
 );
@@ -229,12 +231,12 @@ export const TOPIC_TEMPLATE_COMPLIANCE: Record<string, LessonTemplateCompliance>
     slug,
     {
       complete: false,
-      hasApprovedTemplate: false,
+      hasApprovedTemplate: true,
       hasRequiredSections: false,
       hasPracticalSteps: false,
       hasExpectedOutputs: false,
       hasChecklist: false,
-      evidenceNotes: 'قالب الدرس بانتظار اعتماد معايير التفتيش والمراجعة التعليمية الرسمية من مالك المسار.',
+      evidenceNotes: 'قالب الدرس معتمد بقرار مالك المساق بتاريخ 2026-10-20؛ اكتمال تطبيقه وأدلة المراجعة وقبول إصدار المجموعة ما زال معلقًا.',
     },
   ])
 );
@@ -319,11 +321,9 @@ export function getGroupStatusPresentation(
   compliance?: Record<string, LessonTemplateCompliance>
 ): GroupStatusPresentation {
   const isFirst = Boolean(group.isProposedFirstGroup);
-  const boundaryStatusLabel = isFirst
-    ? 'المجموعة الأولى المقترحة (مقترح بانتظار الاعتماد)'
-    : group.groupBoundariesApproved
-    ? 'حدود مجموعة معتمدة'
-    : 'حدود مقترحة بانتظار الاعتماد';
+  const boundaryStatusLabel = group.groupBoundariesApproved
+    ? (isFirst ? 'المجموعة الأولى — حدود معتمدة' : 'حدود مجموعة معتمدة')
+    : (isFirst ? 'المجموعة الأولى المقترحة (مقترح بانتظار الاعتماد)' : 'حدود مقترحة بانتظار الاعتماد');
 
   const improvementStatus = getGroupImprovementStatus(group, reviews, compliance);
   const improvementStatusLabel =
@@ -378,9 +378,7 @@ export function getTopicImprovementStatus(slug: string): TopicImprovementStatus 
     improvementLabel: groupPresentation.improvementStatusLabel,
     group,
     isFirstGroupProposal: groupPresentation.isFirstGroupProposal,
-    groupProposalLabel: groupPresentation.isFirstGroupProposal
-      ? `المجموعة الأولى المقترحة: ${group.titleEn} (مقترح بانتظار الاعتماد)`
-      : `المجموعة ${group.number}: ${group.titleEn} (حدود مقترحة بانتظار الاعتماد)`,
+    groupProposalLabel: `${groupPresentation.isFirstGroupProposal ? 'المجموعة الأولى' : `المجموعة ${group.number}`}: ${group.titleEn} (${groupPresentation.boundaryStatusLabel})`,
     boundariesApproved: group.groupBoundariesApproved,
     templateApproved: group.templateApproved,
     reviewVerdict: review.verdict,

@@ -98,7 +98,7 @@ test.describe('Issue #70 production-build learner journey', () => {
       await questions.nth(index).locator('input[type="radio"]').first().check();
     }
     await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
-    await expect(quiz).toContainText('نتيجة معاينة مقترحة');
+    await expect(quiz).toContainText('نتيجة معاينة فحص ذاتي');
     await expect(quiz).toContainText('لا تثبت صحة التطبيق أو إتقان المشروع');
 
     const rubricRatings = activities.getByLabel('اختيارك للتقييم الذاتي');
@@ -120,11 +120,11 @@ test.describe('Issue #70 production-build learner journey', () => {
     const rubricRecord = page.getByTestId('practical-assessment-row').filter({ hasText: 'Python: أساسيات الخادم' }).first();
     await expect(quizRecord).toContainText('نتيجة معاينة');
     await expect(rubricRecord).toContainText('تقييم ذاتي محفوظ كمعاينة');
-    const badgeSection = page.getByRole('heading', { name: 'معاينة قواعد الشارات المقترحة' }).locator('xpath=ancestor::section[1]');
-    await expect(badgeSection).toContainText('لا توجد شارات ممنوحة قبل موافقة صاحب المقرر');
-    await expect(badgeSection).toContainText('لا تثبت معاينة قواعد الشارات إتقانًا أو اعتمادًا');
+    const badgeSection = page.getByRole('heading', { name: 'شارات الإنجاز المحلية المعتمدة' }).locator('xpath=ancestor::section[1]');
+    await expect(badgeSection).toContainText('لا تدخل نتائج المعاينة ضمن أدلة الشارات');
+    await expect(badgeSection).toContainText('لا تدل على اعتماد رسمي أو شهادة أو تحقق خارجي');
     await expect(page.getByText('مؤشر الإكمال العام غير معروض')).toBeVisible();
-    console.log('Automated journey step passed: dashboard separates activity and explains that badge awards await course-owner approval.');
+    console.log('Automated journey step passed: dashboard separates activity and explains the approved local badge rules and ineligible preview records.');
 
     await page.getByRole('link', { name: /انتقل إلى مكتبة البرومبتات لتعديل نص واستخدامه/ }).click();
     await expect(page.getByRole('heading', { level: 1, name: 'مكتبة البرومبتات' })).toBeVisible();
@@ -218,7 +218,7 @@ test.describe('Issue #70 production-build learner journey', () => {
       await offlineQuestions.nth(index).locator('input[type="radio"]').last().check();
     }
     await offlineQuiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
-    await expect(offlineQuiz).toContainText('نتيجة معاينة مقترحة');
+    await expect(offlineQuiz).toContainText('نتيجة معاينة فحص ذاتي');
     await offlineActivities.getByLabel('اختيارك للتقييم الذاتي').last().selectOption('ready-for-review');
     await offlineTab.reload();
     const reloadedOfflineActivities = offlineTab.locator('.learning-activities');
