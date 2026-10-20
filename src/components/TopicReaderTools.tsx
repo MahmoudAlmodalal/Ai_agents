@@ -49,10 +49,12 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
 
   React.useEffect(() => {
     let active = true;
+    let statusRevision = 0;
     const checkOffline = async () => {
+      const revision = statusRevision;
       const status = await getTopicOfflineStatus(topic.slug);
       const payload = status === 'saved' ? await getSavedTopicOfflinePayload(topic.slug) : null;
-      if (active) {
+      if (active && revision === statusRevision) {
         setOfflineStatus(status);
         setOfflineContentVersion(payload?.contentVersion ?? null);
         setOfflineQuizSaved(!!payload?.learningContent?.quiz);
@@ -62,9 +64,16 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
 
     const handleOfflineEvent = (e: Event) => {
       const custom = e as CustomEvent;
-      if (!custom.detail || custom.detail.slug === topic.slug) {
-        checkOffline();
+      if (custom.detail && custom.detail.slug !== topic.slug) return;
+      statusRevision += 1;
+      const operationStatus = custom.detail?.status as TopicOfflineStatus | undefined;
+      if (operationStatus === 'saving' || operationStatus === 'updating' || operationStatus === 'failed') {
+        // These events describe the operation in progress/result. Reading the
+        // prior active bundle here would hide a failed replacement as "saved".
+        setOfflineStatus(operationStatus);
+        return;
       }
+      checkOffline();
     };
     window.addEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
 
