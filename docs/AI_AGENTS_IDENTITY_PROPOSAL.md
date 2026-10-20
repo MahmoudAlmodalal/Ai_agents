@@ -1,6 +1,6 @@
 # Ai_agents identity proposal
 
-**Status: APPROVED by the course owner on 2026-10-20** (recorded in [`docs/edu-review/owner-decision-package-70.md`](edu-review/owner-decision-package-70.md) v2). The direction below is the approved Ai_agents identity for the landing page, the shared navigation, and the Topic reader, per DEC-50. Decision 5 (self-hosting the font files) remains deferred to the offline follow-up and is not part of this approval.
+**Status: APPROVED by the course owner on 2026-10-20** (MahmoudAlmodalal; DEC-50 / owner decision package v2, Course-owner decisions section - [`docs/edu-review/owner-decision-package-70.md`](edu-review/owner-decision-package-70.md)). The visual direction, vector mark, color palette, typography, and entry/reader treatment below are confirmed as the final Ai_agents identity for the landing page, the shared navigation, and the Topic reader. Decision 5 (self-hosting the font files) remains deferred to the offline follow-up and is not part of this approval.
 
 ## Direction
 
@@ -39,14 +39,13 @@ The shared navigation, topic index controls, footer, home and page metadata use 
 
 Visual evidence for the integrated candidate is pending. Screenshots and browser claims from the earlier checkpoint are not carried forward as evidence for this revision. The review will record hydrated views at 390, 768, 1024, 1366, and 1440 CSS pixels in both themes, including reader/quiz, dashboard, prompt editing, navigation, and preview states; RTL prose and LTR technical content; and keyboard focus and drawer behavior. Until that matrix is captured against the exact candidate build, responsive and interaction results remain **Not Run**. The source currently sets navigation and reader controls to a minimum 44-pixel target, which still requires rendered confirmation.
 
-## Course-owner decisions
+## Course-owner decisions record (2026-10-20, package 70)
 
-Recorded on 2026-10-20 (course owner: MahmoudAlmodalal):
+1. **Approved:** The three-node A mark `public/ai-agents-mark.svg` as the platform symbol and favicon.
+2. **Approved:** The ink (`#17231F`), porcelain (`#F5F5F0`), indigo (`#5547D8`), and lime (`#C7F36B`) palette, including dark canvas (`#101613`) and dark surface (`#151D19`) token mappings.
+3. **Approved:** IBM Plex Sans Arabic for Arabic prose, Manrope for Latin Ai_agents wordmark and labels, and JetBrains Mono for code and technical identifiers.
+4. **Approved:** The Arabic positioning line **“فكّر بوضوح. ابنِ بثقة.”** and the topic-first homepage hierarchy.
+5. **Deferred:** Deciding whether font files should be self-hosted is deferred to the offline follow-up. The remote Google Fonts stylesheet and font binaries are cross-origin and are not covered by the same-origin service-worker cache, so offline reading relies on the system fallback stack.
 
-1. **Approved** - the three-node A mark (`public/ai-agents-mark.svg`).
-2. **Approved** - the ink, porcelain, indigo, and lime palette, including its dark-theme mapping.
-3. **Approved** - IBM Plex Sans Arabic, Manrope, and JetBrains Mono for Arabic, Latin, and code.
-4. **Approved** - the Arabic positioning line **"فكّر بوضوح. ابنِ بثقة."** and the topic-first homepage hierarchy.
-5. **Deferred** - self-hosting the font files stays a follow-up decision for the offline pass. It is not required by the accepted offline contract, and remote fonts remain a stated limitation.
+Per DEC-50 and Course Owner Decision Package 70 (v2, 2026-10-20, Course-owner decisions section), this identity supersedes the prior MET Academy branding and colors across all surfaces, navigation, reader tools, and metadata.
 
-The visual matrix below is the acceptance evidence this identity still owes: hydrated views at 390, 768, 1024, 1366, and 1440 CSS pixels in both themes, including reader/quiz, dashboard, prompt editing, navigation, and preview states; RTL prose and LTR technical content; and keyboard focus and drawer behavior. Until that matrix is captured against the exact candidate build, responsive and interaction results remain **Not Run**. The source currently sets navigation and reader controls to a minimum 44-pixel target, which still requires rendered confirmation.

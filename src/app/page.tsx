@@ -491,7 +491,7 @@ export default function HomePage() {
       <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-surface)] py-3 px-3 text-center text-xs text-[var(--text-muted)] no-print">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
           <p>
-            الدليل الهندسي الشامل: بناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي · معمارية Next.js App Router © {new Date().getFullYear()}
+            Ai_agents — الدليل الهندسي لبناء وبرمجة المشاريع ونمذجة الأنظمة بالذكاء الاصطناعي · فكّر بوضوح. ابنِ بثقة. © {new Date().getFullYear()}
           </p>
           <div className="flex items-center gap-2 text-[10px] text-[var(--text-faint)]">
             <span>البحث: <kbd className="font-mono bg-[var(--border-color)] px-1 rounded">/</kbd></span>
