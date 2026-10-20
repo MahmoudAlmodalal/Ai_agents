@@ -210,7 +210,7 @@ export const Navbar: React.FC = () => {
                     key={item.href}
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`relative px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
+                    className={`relative min-h-11 px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                       active
                         ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                         : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -233,7 +233,7 @@ export const Navbar: React.FC = () => {
                   aria-expanded={isMoreDropdownOpen}
                   aria-haspopup="true"
                   aria-label="عرض المزيد من أقسام Ai_agents"
-                  className={`px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
+                  className={`min-h-11 px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                     isMoreActive || isMoreDropdownOpen
                       ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                       : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -264,7 +264,7 @@ export const Navbar: React.FC = () => {
                           key={item.href}
                           href={item.href}
                           aria-current={active ? 'page' : undefined}
-                          className={`flex items-start gap-3 p-2.5 rounded-xl transition-all ${
+                          className={`flex min-h-11 items-start gap-3 p-2.5 rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                             active
                               ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                               : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -307,7 +307,7 @@ export const Navbar: React.FC = () => {
               {/* Quick CTA Button (Desktop only) */}
               <Link
                 href="/start"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] shadow-xs transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                className="hidden sm:inline-flex min-h-11 items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] shadow-xs transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               >
                 <Rocket className="w-3.5 h-3.5" />
                 <span>ابدأ الآن</span>
@@ -409,7 +409,7 @@ export const Navbar: React.FC = () => {
                       href={item.href}
                       onClick={() => setIsDrawerOpen(false)}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                      className={`flex min-h-11 items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                         active
                           ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -448,7 +448,7 @@ export const Navbar: React.FC = () => {
                       href={item.href}
                       onClick={() => setIsDrawerOpen(false)}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                      className={`flex min-h-11 items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                         active
                           ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -487,7 +487,7 @@ export const Navbar: React.FC = () => {
                       href={item.href}
                       onClick={() => setIsDrawerOpen(false)}
                       aria-current={active ? 'page' : undefined}
-                      className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                      className={`flex min-h-11 items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                         active
                           ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
@@ -523,7 +523,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="/start"
               onClick={() => setIsDrawerOpen(false)}
-              className="w-full py-2.5 rounded-xl text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] flex items-center justify-center gap-2 shadow-xs transition-colors"
+              className="w-full min-h-11 py-2.5 rounded-xl text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] flex items-center justify-center gap-2 shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
             >
               <Rocket className="w-4 h-4" />
               <span>ابدأ رحلة التعلم</span>
