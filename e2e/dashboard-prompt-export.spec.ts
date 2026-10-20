@@ -118,7 +118,12 @@ test.describe('Learner dashboard and export', () => {
     await expect(assessmentCard).toContainText('نسخة التقييم 1');
     await expect(assessmentCard).toContainText('نسخة سلم التقدير 1');
     await expect(assessmentCard).toContainText('حكم محفوظ');
-    await expect(assessmentCard).toContainText('تقييم ذاتي محفوظ كمعاينة');
+    await expect(assessmentCard).toContainText('تقييم ذاتي محفوظ كمعاينة وفق سلم التقييم المعتمد');
+    const assessmentSection = page.getByTestId('section-assessments');
+    await expect(assessmentSection).toContainText('وفق سلم التقييم المعتمد');
+    await expect(assessmentSection).toContainText('التقييم الذاتي هو تقدير المتعلم الخاص وليس تقييمًا مستقلاً');
+    await expect(assessmentSection).not.toContainText('مرشح');
+    await expect(assessmentSection).not.toContainText('مقترح');
     await assessmentCard.getByText(/أحكام محفوظة لإصدارات أقدم/).click();
     await expect(assessmentCard.locator('details')).toContainText('scope-rubric-v0');
     await expect(assessmentCard.locator('details')).toContainText('archived-scale-v0');

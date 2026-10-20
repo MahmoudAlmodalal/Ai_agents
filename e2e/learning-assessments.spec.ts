@@ -10,6 +10,10 @@ function quizSection(page: import('@playwright/test').Page) {
   return page.locator(activitySelector).getByRole('heading', { name: 'فحص ذاتي للمفاهيم' }).locator('xpath=ancestor::section[1]');
 }
 
+function practicalSection(page: import('@playwright/test').Page) {
+  return page.locator(activitySelector).getByRole('heading', { name: 'مراجعة ذاتية لمخرجات التمرين' }).locator('xpath=ancestor::section[1]');
+}
+
 test.describe('objective quiz and practical self-assessment', () => {
   test.describe.configure({ timeout: 90_000 });
 
@@ -452,7 +456,7 @@ test.describe('objective quiz and practical self-assessment', () => {
     expect(stored.selfCheck).toBe(true);
   });
 
-  test('Topic with accepted policy, approved reviewState, and passing evidence shows final wording without preview marker and retains attempt as real record', async ({ page }) => {
+  test('Topic with accepted policy, approved reviewState, and passing evidence shows final wording without preview marker and retains attempt and rubric as real records', async ({ page }) => {
     const approvedTopic = createApprovedTestTopic(topicSlug);
 
     // Inject via the e2e hook: window.__AI_AGENTS_E2E_TOPIC_CONTENT__
@@ -464,17 +468,25 @@ test.describe('objective quiz and practical self-assessment', () => {
 
     await page.goto(`/learn/${topicSlug}`);
     const quiz = quizSection(page);
+    const activity = page.locator(activitySelector);
 
-    // 1. Instructions show final accepted policy wording with honest limits, but NO pending review sentence
+    // 1. Quiz instructions show final accepted policy wording with honest limits, but NO pending review sentence
     await expect(quiz.getByText(/سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة/)).toBeVisible();
     await expect(quiz.getByText(/الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل/)).toBeVisible();
     await expect(quiz.getByText(/المراجعة التعليمية لهذا الموضوع ما زالت معلقة/)).toHaveCount(0);
     await expect(quiz.getByText(/معاينة فحص ذاتي وليست نتيجة نهائية/)).toHaveCount(0);
 
-    // 2. No preview marker badge in the activity header
-    await expect(page.locator(activitySelector).getByText(/معاينة فحص ذاتي|معاينة مقترحة/)).toHaveCount(0);
+    // 2. Rubric summary shows final accepted policy wording with honest limits, but NO pending review sentence
+    const practical = practicalSection(page);
+    await expect(practical.getByText(/مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان/)).toBeVisible();
+    await expect(practical.getByText(/لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل/)).toBeVisible();
+    await expect(practical.getByText(/المراجعة التعليمية لهذا الموضوع ما زالت معلقة/)).toHaveCount(0);
+    await expect(practical.getByText(/معاينة فحص ذاتي/)).toHaveCount(0);
 
-    // 3. Submit quiz and verify score is presented with no preview marker
+    // 3. No preview marker badge in the activity header
+    await expect(activity.getByText(/معاينة فحص ذاتي|معاينة مقترحة/)).toHaveCount(0);
+
+    // 4. Submit quiz and verify score is presented with no preview marker
     const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
     const journeyQuestion = quiz.getByRole('group', { name: /أي اقتراح يصف MVP/ });
     await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
@@ -486,7 +498,7 @@ test.describe('objective quiz and practical self-assessment', () => {
     await expect(quiz.getByText('نتيجة معاينة فحص ذاتي')).toHaveCount(0);
     await expect(quiz.getByText('نتيجة معاينة مقترحة')).toHaveCount(0);
 
-    // 4. Stored attempt has previewOnly: false (retained as real record)
+    // 5. Stored quiz attempt has previewOnly: false (retained as real record)
     const stored = await page.evaluate(({ key, slug }) => {
       const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
       return doc.byTopic?.[slug]?.[0];
@@ -495,13 +507,135 @@ test.describe('objective quiz and practical self-assessment', () => {
     expect(stored.selfCheck).toBe(true);
     expect(stored.score).toBe(1);
     expect(stored.maxScore).toBe(2);
+
+    // 6. Select a rubric criterion and verify stored record has previewOnly: false
+    const problemCriterion = activity.getByRole('group', { name: 'صياغة المشكلة ودليلها' });
+    await problemCriterion.getByLabel('اختيارك للتقييم الذاتي').selectOption('ready-for-review');
+    const storedRubric = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug];
+    }, { key: practicalStorageKey, slug: topicSlug });
+    expect(storedRubric.selfAssessment).toBe(true);
+    expect(storedRubric.previewOnly).toBe(false);
+    expect(storedRubric.ratings[0].ratingId).toBe('ready-for-review');
   });
 
-  test('Dashboard describes accepted quiz policy and affirms self-assessment limits with no completion inferred', async ({ page }) => {
-    // Seed an attempt to inspect the attempt display on dashboard
+  test('Topic whose rubric policy is accepted but educational review is pending shows accepted wording and pending sentence, with judgments stored as self-assessment', async ({ page }) => {
+    await page.goto(`/learn/${topicSlug}`);
+    const activity = page.locator(activitySelector);
+    const practical = practicalSection(page);
+
+    // 1. Practical assessment shows accepted-policy wording AND explicit pending-review sentence
+    await expect(practical.getByText(/مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان/)).toBeVisible();
+    await expect(practical.getByText(/المراجعة التعليمية لهذا الموضوع ما زالت معلقة، لذلك يُعد التقييم معاينة فحص ذاتي وليس نتيجة نهائية/)).toBeVisible();
+    await expect(practical.getByText(/لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل/)).toBeVisible();
+
+    // 2. Clear statement that self-assessment is the learner's own judgment and not an independent verification
+    await expect(activity.getByText(/التقييم الذاتي هو تقدير المتعلم الخاص وفق سلم التقييم المعتمد وليس تحققاً مستقلاً/)).toBeVisible();
+    await expect(practical.getByText(/لا توجد عتبة إتقان أو شارة نتيجة هذا التقييم/)).toBeVisible();
+    await expect(practical.getByText(/BorrowHub مثال اختياري؛ استخدم مشروعك أنت في هذا التقييم/)).toBeVisible();
+    await expect(practical.getByText(/لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق/)).toBeVisible();
+
+    // 3. Select a judgment and verify stored under stable criterion identity as learner's own self-assessment
+    const problemCriterion = activity.getByRole('group', { name: 'صياغة المشكلة ودليلها' });
+    await problemCriterion.getByLabel('اختيارك للتقييم الذاتي').selectOption('ready-for-review');
+
+    const storedPending = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug];
+    }, { key: practicalStorageKey, slug: topicSlug });
+
+    expect(storedPending.selfAssessment).toBe(true);
+    expect(storedPending.previewOnly).toBe(true);
+    expect(storedPending.ratings).toHaveLength(1);
+    expect(storedPending.ratings[0].criterionId).toBe('idea-mvp-r-problem');
+    expect(storedPending.ratings[0].criterionVersion).toBe(1);
+    expect(storedPending.ratings[0].ratingId).toBe('ready-for-review');
+
+    // 4. Judgments can be revised or cleared at any time
+    await problemCriterion.getByLabel('اختيارك للتقييم الذاتي').selectOption('in-progress');
+    const revisedDoc = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug];
+    }, { key: practicalStorageKey, slug: topicSlug });
+    expect(revisedDoc.ratings[0].ratingId).toBe('in-progress');
+
+    await problemCriterion.getByLabel('اختيارك للتقييم الذاتي').selectOption('');
+    const clearedDoc = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug];
+    }, { key: practicalStorageKey, slug: topicSlug });
+    expect(clearedDoc.ratings).toHaveLength(0);
+  });
+
+  test('checklist and rubric are strictly independent: checklist item selection or quiz answers never select a criterion, and dashboard keeps them apart', async ({ page }) => {
+    await page.goto(`/learn/${topicSlug}`);
+    const activity = page.locator(activitySelector);
+
+    // 1. Select a checklist item
+    const checklist = page.locator('div[role="group"][aria-label="قائمة تحقق التطبيق"]');
+    const firstCheckbox = checklist.locator('input[type="checkbox"]').first();
+    await firstCheckbox.check();
+    await expect(firstCheckbox).toBeChecked();
+
+    // Verify all rubric criteria remain unselected
+    const rubricSelects = activity.getByLabel('اختيارك للتقييم الذاتي');
+    const rubricCount = await rubricSelects.count();
+    expect(rubricCount).toBeGreaterThan(0);
+    for (let i = 0; i < rubricCount; i++) {
+      await expect(rubricSelects.nth(i)).toHaveValue('');
+    }
+
+    // Practical assessment storage does not have ratings
+    const practicalBefore = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.ratings?.length ?? 0;
+    }, { key: practicalStorageKey, slug: topicSlug });
+    expect(practicalBefore).toBe(0);
+
+    // 2. Answer a quiz question and submit
+    const quiz = quizSection(page);
+    const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
+    await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+    await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
+
+    // Verify rubric criteria STILL remain unselected
+    for (let i = 0; i < rubricCount; i++) {
+      await expect(rubricSelects.nth(i)).toHaveValue('');
+    }
+
+    // 3. Now select a rubric criterion
+    await rubricSelects.first().selectOption('ready-for-review');
+    await expect(rubricSelects.first()).toHaveValue('ready-for-review');
+
+    // Checklist item remains checked and quiz attempt remains intact
+    await expect(firstCheckbox).toBeChecked();
+    await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
+
+    // 4. Navigate to dashboard and verify checklist and rubric are kept apart
+    await page.goto('/dashboard');
+    await expect(page.getByTestId('metric-checklists')).toContainText('1');
+    await expect(page.getByTestId('metric-quizzes')).toContainText('1');
+    await expect(page.getByTestId('metric-assessments')).toContainText('1');
+
+    const checklistSection = page.getByTestId('section-checklists');
+    await expect(checklistSection.getByText('قائمة الموضوع الحالية')).toBeVisible();
+
+    const quizSectionLocator = page.getByTestId('section-quizzes');
+    await expect(quizSectionLocator.getByTestId('quiz-attempt-row')).toBeVisible();
+
+    const assessmentSection = page.getByTestId('section-assessments');
+    await expect(assessmentSection.getByTestId('practical-assessment-row')).toBeVisible();
+    await expect(assessmentSection).toContainText('صياغة المشكلة ودليلها');
+    await expect(assessmentSection).toContainText('جاهز للمراجعة');
+  });
+
+  test('Dashboard describes accepted quiz and rubric policies and affirms self-assessment limits with no completion inferred', async ({ page }) => {
+    // Seed an attempt and practical assessment to inspect display on dashboard
     const submittedAt = '2026-10-20T10:00:00.000Z';
-    await page.addInitScript(({ key, slug, stamp }) => {
-      localStorage.setItem(key, JSON.stringify({
+    await page.addInitScript(({ quizKey, rubricKey, slug, stamp }) => {
+      localStorage.setItem(quizKey, JSON.stringify({
         schemaVersion: 1,
         byTopic: {
           [slug]: [{
@@ -526,7 +660,30 @@ test.describe('objective quiz and practical self-assessment', () => {
           }],
         },
       }));
-    }, { key: quizStorageKey, slug: topicSlug, stamp: submittedAt });
+      localStorage.setItem(rubricKey, JSON.stringify({
+        schemaVersion: 1,
+        byTopic: {
+          [slug]: {
+            topicSlug: slug,
+            assessmentId: `${slug}-practical-assessment`,
+            assessmentVersion: 1,
+            scaleId: `${slug}-rubric-scale`,
+            scaleVersion: 1,
+            criteria: [
+              { criterionId: 'idea-mvp-r-problem', criterionVersion: 1 },
+              { criterionId: 'idea-mvp-r-scope', criterionVersion: 1 },
+            ],
+            ratings: [
+              { criterionId: 'idea-mvp-r-problem', criterionVersion: 1, scaleId: `${slug}-rubric-scale`, scaleVersion: 1, ratingId: 'ready-for-review', ratedAt: stamp },
+            ],
+            history: [],
+            updatedAt: stamp,
+            selfAssessment: true,
+            previewOnly: true,
+          },
+        },
+      }));
+    }, { quizKey: quizStorageKey, rubricKey: practicalStorageKey, slug: topicSlug, stamp: submittedAt });
 
     await page.goto('/dashboard');
 
@@ -543,11 +700,19 @@ test.describe('objective quiz and practical self-assessment', () => {
 
     // 3. Practical assessment section describes self-assessment as learner's own judgment and not independent verification
     const assessmentSection = page.getByTestId('section-assessments');
-    await expect(assessmentSection.getByText(/سلم التقييم المعتمد/)).toBeVisible();
+    await expect(assessmentSection.getByText(/سلم التقييم المعتمد/).first()).toBeVisible();
     await expect(assessmentSection.getByText(/التقييم الذاتي هو تقدير المتعلم الخاص وليس تقييمًا مستقلاً/)).toBeVisible();
     await expect(assessmentSection.getByText(/لا يقيّم التطبيق مشروعك بصورة مستقلة/)).toBeVisible();
+    await expect(assessmentSection.getByText(/لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق/)).toBeVisible();
 
-    // 4. Storage section affirms that no completion or mastery is inferred
+    // 4. Practical assessment row does not present scale as proposed or candidate
+    const assessmentRow = page.getByTestId('practical-assessment-row').first();
+    await expect(assessmentRow.getByText(/وفق سلم التقييم المعتمد/)).toBeVisible();
+    await expect(assessmentRow.getByText(/التقييم الذاتي هو تقدير المتعلم الخاص وليس تحققًا مستقلًا/)).toBeVisible();
+    await expect(assessmentRow.getByText(/مقترح/)).toHaveCount(0);
+    await expect(assessmentRow.getByText(/مرشح/)).toHaveCount(0);
+
+    // 5. Storage section affirms that no completion or mastery is inferred
     const storageSection = page.getByTestId('section-storage-status');
     await expect(storageSection.getByText(/لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق/)).toBeVisible();
   });

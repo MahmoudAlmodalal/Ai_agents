@@ -6,6 +6,7 @@ import type {
 } from '@/src/types/learning.ts';
 import {
   ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL,
+  ACCEPTED_RUBRIC_SCALE_APPROVAL,
   APPROVED_QUIZ_INSTRUCTIONS,
   APPROVED_QUIZ_SCORING_POLICY_SUMMARY,
   APPROVED_RUBRIC_SCALE_SUMMARY,
@@ -80,6 +81,7 @@ export const DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B =
 
 export {
   ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL,
+  ACCEPTED_RUBRIC_SCALE_APPROVAL,
   APPROVED_QUIZ_INSTRUCTIONS,
   APPROVED_QUIZ_SCORING_POLICY_SUMMARY,
   APPROVED_RUBRIC_SCALE_SUMMARY,
@@ -137,7 +139,7 @@ export function buildTopicB(
   const defaultRubricEvidence: ReviewEvidence = {
     area: 'rubric' as const, outcome: 'passed' as const,
     reviewer: 'Curriculum B author review', reviewedAt: REVIEWED_AT,
-    evidence: 'راجَع المؤلف صلة المعيارين بمخرجات قابلة للفحص؛ التقييم وصفي ذاتي وليس إثباتاً مستقلاً للصحة.',
+    evidence: 'راجَع المؤلف صلة المعيارين بمخرجات قابلة للفحص؛ سياسة التقييم العملي معتمدة بقرار مالك المساق (issue #43)؛ المراجعة التعليمية المستقلة لمعايير هذا الموضوع ما زالت معلقة. التقييم وصفي ذاتي وليس إثباتاً مستقلاً للصحة.',
   };
 
   const lessonEvidence = d.lessonReviewEvidence ?? [defaultLessonEvidence];
@@ -154,7 +156,7 @@ export function buildTopicB(
   };
 
   const quizScoringPolicyApproval = d.quizScoringPolicyApproval ?? { ...ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL };
-  const rubricScaleApproval = d.rubricScaleApproval ?? proposedApproval();
+  const rubricScaleApproval = d.rubricScaleApproval ?? { ...ACCEPTED_RUBRIC_SCALE_APPROVAL };
 
   const reviewState = d.reviewState ?? 'review-ready';
 
