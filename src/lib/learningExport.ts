@@ -98,6 +98,26 @@ export function summarizeTopicLearning(topic: TopicItem, content?: TopicLearning
     listMarkdown(topic.checklist, 'لا توجد قائمة تحقق للموضوع.'),
   ];
 
+  if (topic.diagramCount > 0) {
+    lines.push(
+      '',
+      '### المخططات التوضيحية',
+      '',
+      '- يحتوي هذا الموضوع على مخططات Mermaid لثلاث زوايا متوفرة في مجلد `diagrams/`:',
+      '  - بنية المكونات: `diagrams/architecture.mmd`',
+      '  - مسار التدفق: `diagrams/flow.mmd`',
+      '  - تتابع العمليات: `diagrams/sequence.mmd`',
+      '- نصوص Mermaid مضمنة كمصدر نصي قابل للقراءة والتحرير والمعاينة؛ ولا يتم توليد رسوم SVG داخل الحزمة.',
+    );
+  } else {
+    lines.push(
+      '',
+      '### المخططات التوضيحية',
+      '',
+      '- لا يعرض هذا الموضوع مخططات توضيحية داخل صفحة الدرس.',
+    );
+  }
+
   if (!content) {
     lines.push('', '## محتوى التعلم والتقييم بإصدارات محددة', '', 'لا يوجد حاليًا اختبار أو تعريف معايير تقييم بإصدار محدد لهذا الموضوع داخل التطبيق.');
     return `${lines.join('\n')}\n`;
