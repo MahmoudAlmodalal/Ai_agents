@@ -1,5 +1,6 @@
 import {
   CandidateExternalVideo,
+  LearningReviewState,
   PolicyApproval,
   QuizQuestion,
   ReviewEvidence,
@@ -36,14 +37,72 @@ export type TopicDraft = {
   questions: [QuestionDraft, QuestionDraft];
   criteria: [CriterionDraft, CriterionDraft];
   candidateVideos?: CandidateExternalVideo[];
+
+  /** Per-Topic review state override; defaults to 'draft' in Group A. */
+  reviewState?: LearningReviewState;
+  /** Per-Topic lesson-level review evidence (one or more entries). */
+  lessonReviewEvidence?: ReviewEvidence[];
+  /** Per-Topic quiz-level review evidence. */
+  quizReviewEvidence?: ReviewEvidence[];
+  /** Per-Topic rubric-level review evidence. */
+  rubricReviewEvidence?: ReviewEvidence[];
+  /** Per-Topic quiz scoring policy approval. */
+  quizScoringPolicyApproval?: PolicyApproval;
+  /** Per-Topic rubric scale approval. */
+  rubricScaleApproval?: PolicyApproval;
+
+  /** Learner-visible quiz instructions override. */
+  quizInstructions?: string;
+  /** Learner-visible quiz scoring policy summary override. */
+  quizScoringPolicySummary?: string;
+  /** Learner-visible rubric scale summary override. */
+  rubricScaleSummary?: string;
 };
 
-const proposedApproval: PolicyApproval = {
+export const proposedApproval: PolicyApproval = {
   state: 'proposed',
   approvedBy: null,
   approvedAt: null,
   decisionReference: null,
 };
+
+/**
+ * Creates an approved PolicyApproval record.
+ * @param approvedBy Name of the reviewer / course owner
+ * @param approvedAt ISO date string (YYYY-MM-DD)
+ * @param decisionReference Centralized owner decision package plus group issue, e.g.:
+ *   'docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #52)'
+ */
+export function approvedPolicy(
+  approvedBy: string,
+  approvedAt: string,
+  decisionReference: string,
+): PolicyApproval {
+  return {
+    state: 'approved',
+    approvedBy,
+    approvedAt,
+    decisionReference,
+  };
+}
+
+export const DRAFT_QUIZ_INSTRUCTIONS_GROUP_A =
+  'اختر الإجابة الأدق ثم اقرأ التفسير. هذه مسودة تدريبية وسياسة التقييم المقترحة لم تعتمد بعد.';
+
+export const DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A =
+  'مقترح للمراجعة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إظهار التفسير بعد الإرسال والاحتفاظ بالمحاولات. لا يمثل إتقاناً أو نجاحاً رسمياً.';
+
+export const DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A =
+  'مقياس وصفي مقترح للتأمل الذاتي فقط؛ لا يحسب إتقاناً ولا يفرض حداً للإكمال.';
+
+export const APPROVED_QUIZ_INSTRUCTIONS =
+  'اختر الإجابة الأدق ثم اقرأ التفسير. سياسة تقييم معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات؛ الفحص لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
+
+export const APPROVED_QUIZ_SCORING_POLICY_SUMMARY =
+  'سياسة معتمدة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إتاحة إعادة المحاولة غير المحدودة وإظهار التفسير بعد الإرسال والاحتفاظ بكافة المحاولات ذات الإصدارات. لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
+
+export const APPROVED_RUBRIC_SCALE_SUMMARY =
+  'مقياس وصفي معتمد للتأمل الذاتي بمستوياته الثلاثة بلا حد إتقان؛ لا يمثل إتقاناً أو اعتماداً أو نتيجة موثقة بشكل مستقل.';
 
 function notRunEvidence(area: ReviewEvidence['area'], evidence: string): ReviewEvidence {
   return { area, outcome: 'not-run', evidence };
@@ -69,10 +128,40 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
     ],
   }));
 
+  const quizScoringPolicyApproval = draft.quizScoringPolicyApproval ?? { ...proposedApproval };
+  const rubricScaleApproval = draft.rubricScaleApproval ?? { ...proposedApproval };
+
+  const isQuizApproved = quizScoringPolicyApproval.state === 'approved';
+  const isRubricApproved = rubricScaleApproval.state === 'approved';
+
+  const quizInstructions = draft.quizInstructions ?? (
+    isQuizApproved ? APPROVED_QUIZ_INSTRUCTIONS : DRAFT_QUIZ_INSTRUCTIONS_GROUP_A
+  );
+
+  const quizScoringPolicySummary = draft.quizScoringPolicySummary ?? (
+    isQuizApproved ? APPROVED_QUIZ_SCORING_POLICY_SUMMARY : DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_A
+  );
+
+  const rubricScaleSummary = draft.rubricScaleSummary ?? (
+    isRubricApproved ? APPROVED_RUBRIC_SCALE_SUMMARY : DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_A
+  );
+
+  const lessonEvidence = draft.lessonReviewEvidence ?? [
+    notRunEvidence('lesson', 'Supplemental learning content is a draft. Independent educational review, template approval, and course-owner acceptance are pending.'),
+  ];
+
+  const quizReviewEvidence = draft.quizReviewEvidence ?? [
+    notRunEvidence('question', 'Draft questions are specific to this Topic; independent review and scoring-policy approval have not run.'),
+  ];
+
+  const rubricReviewEvidence = draft.rubricReviewEvidence ?? [
+    notRunEvidence('rubric', 'Proposed descriptive self-assessment only; rubric policy has not been approved.'),
+  ];
+
   return {
     topicSlug,
     contentVersion: 1,
-    reviewState: 'draft',
+    reviewState: draft.reviewState ?? 'draft',
     objectives: draft.objectives,
     sections: draft.sections.map((section, index) => ({
       id: `${topicSlug}-section-${index + 1}`,
@@ -88,7 +177,7 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
       id: `${topicSlug}-objective-quiz`,
       version: 1,
       title: 'فحص ذاتي للمفاهيم',
-      instructions: 'اختر الإجابة الأدق ثم اقرأ التفسير. هذه مسودة تدريبية وسياسة التقييم المقترحة لم تعتمد بعد.',
+      instructions: quizInstructions,
       questions,
       scoringPolicy: {
         id: `${topicSlug}-quiz-scoring-policy`,
@@ -99,12 +188,10 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
         retryPolicy: 'unlimited',
         feedbackTiming: 'after-submit',
         retainedAttempts: 'all',
-        summary: 'مقترح للمراجعة: نقطة للإجابة الصحيحة وصفر للإجابة الخاطئة أو غير المجابة، مع إظهار التفسير بعد الإرسال والاحتفاظ بالمحاولات. لا يمثل إتقاناً أو نجاحاً رسمياً.',
-        approval: { ...proposedApproval },
+        summary: quizScoringPolicySummary,
+        approval: { ...quizScoringPolicyApproval },
       },
-      reviewEvidence: [
-        notRunEvidence('question', 'Draft questions are specific to this Topic; independent review and scoring-policy approval have not run.'),
-      ],
+      reviewEvidence: quizReviewEvidence,
     },
     practicalAssessment: {
       id: `${topicSlug}-practical-assessment`,
@@ -120,8 +207,8 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
           { id: 'ready-for-review', label: 'جاهز للمراجعة', description: 'يستطيع المتعلم الإشارة إلى دليل محدد داخل المخرج ليطلب مراجعته؛ لا يعني أن الدليل صحيح أو معتمد.' },
         ],
         completionRule: 'no-mastery-threshold',
-        summary: 'مقياس وصفي مقترح للتأمل الذاتي فقط؛ لا يحسب إتقاناً ولا يفرض حداً للإكمال.',
-        approval: { ...proposedApproval },
+        summary: rubricScaleSummary,
+        approval: { ...rubricScaleApproval },
       },
       criteria: draft.criteria.map((criterion) => {
         if (!outputIds.has(criterion.outputId)) {
@@ -139,13 +226,9 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
           ],
         };
       }),
-      reviewEvidence: [
-        notRunEvidence('rubric', 'Proposed descriptive self-assessment only; rubric policy has not been approved.'),
-      ],
+      reviewEvidence: rubricReviewEvidence,
     },
-    reviewEvidence: [
-      notRunEvidence('lesson', 'Supplemental learning content is a draft. Independent educational review, template approval, and course-owner acceptance are pending.'),
-    ],
+    reviewEvidence: lessonEvidence,
   };
 }
 
@@ -170,11 +253,11 @@ export function buildReviewedTopic(draft: TopicDraft): TopicLearningContent {
     ...draft,
     questions: draft.questions.map((question) => ({
       ...question,
-      reviewEvidence: [rootQuestionReview(question.id)],
+      reviewEvidence: question.reviewEvidence ?? [rootQuestionReview(question.id)],
     })) as TopicDraft['questions'],
     criteria: draft.criteria.map((criterion) => ({
       ...criterion,
-      reviewEvidence: [rootCriterionReview(criterion.id, criterion.outputId)],
+      reviewEvidence: criterion.reviewEvidence ?? [rootCriterionReview(criterion.id, criterion.outputId)],
     })) as TopicDraft['criteria'],
   };
   return buildTopic(reviewedDraft);
