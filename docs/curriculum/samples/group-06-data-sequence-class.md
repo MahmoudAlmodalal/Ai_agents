@@ -43,6 +43,35 @@ translating or generating a physical schema. The minimum number of options is
 zero in this draft. No parser or renderer checked this Mermaid ERD.
 ````
 
+## `docs/database-review.md` — Topic 14
+
+```markdown
+# Database review — fictional scheduling exercise
+
+Status: static design review of the sample only. No production requirements
+or database engine have been approved.
+
+| Scenario / constraint | What the draft protects | Remaining risk or question |
+|---|---|---|
+| Preference references an option from the same session | The composite `(session_id, option_id)` foreign key prevents a cross-session reference when translated to a database that enforces it. | DBML syntax and generated DDL still need a parser/export check for the selected tool. |
+| Same alias submits twice for one session | `UNIQUE(session_id, participant_alias)` allows at most one stored preference for that sample alias/session pair. | An alias is not a verified person. Edit, conflict response, and retry behavior remain open. |
+| Two duplicate submissions race | The unique constraint should preserve the one-row invariant in the target database. | The losing request's response and retry behavior are application decisions; no concurrent application test was run. |
+| Two options receive the same number of preferences | No schema constraint selects a winner. | Tie handling remains an owner question and must not be inferred from this model. |
+| Meeting time is stored as text | The column can hold the exercise value. | Format, timezone, normalization, and display rules are unresolved. |
+
+## Probe evidence and limits
+
+Root reported a separate in-memory SQLite probe against manually translated DDL:
+same-session preference accepted, cross-session option rejected by the foreign
+key, duplicate alias/session preference rejected by the unique constraint.
+This is evidence for those constraints in that translated SQLite schema only.
+It does not validate this DBML, a diagram-service export, PostgreSQL, a live
+application race, or user-facing error behavior.
+```
+
+This is a written review artifact. No concurrency test or production database
+was run by this sample packet.
+
 ## `docs/database.dbml` — Topic 15
 
 ```dbml
@@ -82,25 +111,66 @@ The unique preference index encodes the exercise choice that each participant su
 
 **Independent narrow probe — root, 2026-10-20:** Using one-off in-memory SQLite DDL manually translated from this sample, a same-session preference was accepted, a cross-session option was rejected by the foreign key, and a duplicate participant/session preference was rejected by the unique constraint. This verifies those relational semantics only for the manually translated DDL. DBML parsing, generated-DDL equivalence, PostgreSQL execution, and repository-level tests remain **Not Run**.
 
+## `docs/database.sql` — Topic 15 (hand-transcribed preview)
+
+The following is an illustrative SQL translation of the DBML above so a learner
+can compare tables and constraints. It was **not** exported by dbdiagram.io or
+another diagram service and was not executed as part of this packet. Replace it
+with the selected tool's actual export before calling the learner output
+complete.
+
+```sql
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE study_session (
+  id INTEGER PRIMARY KEY,
+  title VARCHAR NOT NULL,
+  organizer_alias VARCHAR NOT NULL
+);
+
+CREATE TABLE time_option (
+  id INTEGER PRIMARY KEY,
+  session_id INTEGER NOT NULL,
+  starts_at VARCHAR NOT NULL,
+  UNIQUE (session_id, id),
+  FOREIGN KEY (session_id) REFERENCES study_session(id)
+);
+
+CREATE TABLE preference (
+  id INTEGER PRIMARY KEY,
+  session_id INTEGER NOT NULL,
+  option_id INTEGER NOT NULL,
+  participant_alias VARCHAR NOT NULL,
+  UNIQUE (session_id, participant_alias),
+  FOREIGN KEY (session_id) REFERENCES study_session(id),
+  FOREIGN KEY (session_id, option_id)
+    REFERENCES time_option(session_id, id)
+);
+```
+
+The `PRAGMA` is SQLite-specific and is included only to make SQLite foreign-key
+enforcement explicit in this illustrative translation. DDL generation, engine
+compatibility, and equivalence with a real export remain **Not Run**.
+
 ## Sequence and class excerpts — Topics 16–17
 
 ```mermaid
 sequenceDiagram
-  actor Participant
+  actor ParticipantUser
   participant App
   participant PreferenceService
   participant OptionRepository
-  Participant->>App: choose one listed option
+  ParticipantUser->>App: choose one listed option
   App->>PreferenceService: recordPreference(sessionId, optionId, alias)
   PreferenceService->>OptionRepository: belongsToSession(optionId, sessionId)
   alt option belongs to this session
     OptionRepository-->>PreferenceService: true
     PreferenceService-->>App: accepted result (exercise only)
-    App-->>Participant: confirmation
+    App-->>ParticipantUser: confirmation
   else option is missing or belongs to another session
     OptionRepository-->>PreferenceService: false
     PreferenceService-->>App: reject without recording
-    App-->>Participant: explain mismatch and return to choices
+    App-->>ParticipantUser: explain mismatch and return to choices
   end
   Note over App,PreferenceService: identity, edits, transaction handling, and persistence are not specified
 ```

@@ -35,7 +35,7 @@ export const topic21StitchHtml = `
         <span>لماذا شاشة واحدة أولاً؟</span>
       </div>
       <p class="leading-7">
-        الشاشة المرجعية تُعد بمثابة «المختبر الحقيقي» لنظامك البصري. عند اعتمادها، تصبح قرارات الخطوط، والمسافات (8px Grid)، ونسب الألوان (60-30-10)، وأشكال البطاقات والأزرار، مرجعاً بصرياً ملزماً (Visual Anchor) يسهل نسخه وتعميمه بدقة متناهية على بقية شاشات جرد MVP في المواضيع اللاحقة.
+      الشاشة المرجعية دليل على القرارات المرئية التي يمكن فحصها في ذلك التصميم، وليست دليلاً على قاعدة عامة لكل مشروع. وثّق الخطوط والمسافات والألوان وأشكال المكونات التي تظهر فعلاً، وميّزها عن المقترحات. يمكن تجربة قاعدة 60-30-10 أو مقياس مسافات 8px كاتفاق اختياري للمشروع، لكن لا تعتبرهما متطلبين عالميين ولا تفرضهما إذا خالفا المرجع أو احتياج المستخدم.
       </p>
     </div>
   </div>
@@ -243,7 +243,7 @@ export const topic22DesignSystemHtml = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. القواعد الهندسية لنظام التصميم (Design System Rules)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      نظام التصميم ليس مجرد لوحة ألوان زخرفية؛ إنه <strong>العقد البصري الملزم (Visual Contract)</strong> الذي يضمن توحيد تجربة المستخدم وسرعة التطوير. بعد اعتماد الشاشة المرجعية في الموضوع السابق، نستخرج منها القواعد السبع الإلزامية التي تحكم كافة واجهات المشروع:
+      نظام التصميم يوثق القرارات المرئية التي اختارها المشروع ومصادرها، ثم يساعد الفريق على تطبيقها باتساق. بعد مراجعة الشاشة المرجعية في الموضوع السابق، استخرج القواعد التي يدعمها الدليل فقط، وسجل القيم غير المؤكدة على أنها <code>UNKNOWN</code>. الأمثلة التالية وسائل اختيارية للنقاش، وليست قواعد إلزامية لكل واجهة:
     </p>
 
     <div class="grid-3col my-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
@@ -251,7 +251,7 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #3b82f6; margin-bottom: 0.5rem; font-weight: bold;">🎨 قاعدة الألوان 60-30-10</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          <strong>60%</strong> لون محايد مهيمن للخلفيات والأسطح، <strong>30%</strong> لون هيكلي ثانوي للبطاقات والحدود والقوائم، و<strong>10%</strong> لون وظيفي بارز مخصص حصراً لأزرار الإجراء الرئيسي (CTA) ومؤشرات التفاعل.
+          قاعدة 60-30-10 اقتراح بصري اختياري لتجربة توزيع الألوان، وليست نسبة نجاح عامة. إذا جرّبها المشروع، راجعها مقابل الشاشة المرجعية واحتياجات القراءة والتباين؛ قد تحتاج الواجهات إلى توزيع آخر، ولا يقتصر اللون البارز بالضرورة على أزرار الإجراء.
         </p>
       </div>
 
@@ -259,7 +259,7 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #10b981; margin-bottom: 0.5rem; font-weight: bold;">📐 مقياس التايبوجرافي المتزن</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          اعتماد ثنائية خطوط واضحة (Cairo للعربية وInter للإنجليزية)، مع مقياس نسبي ثابت: H1 (32px), H2 (24px), H3 (20px), Body (16px), Small (14px)، مع ارتفاع سطر (line-height) لا يقل عن 1.6 للنصوص العربية.
+          يمكن أن تكون Cairo وInter أو أحجام H1/H2/Body أمثلة أولية فقط. اختر الخطوط والأحجام وارتفاع السطر من متطلبات المشروع ومراجعة القراءة الفعلية؛ لا توجد عائلة خط أو قيمة واحدة تناسب جميع اللغات والشاشات.
         </p>
       </div>
 
@@ -267,20 +267,20 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #a855f7; margin-bottom: 0.5rem; font-weight: bold;">📏 شبكة المسافات القياسية (8px Grid)</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          كافة الهوامش والمسافات البينية (Padding & Margin) وأبعاد المكونات تتبع مضاعفات شبكة الـ 8 بكسل (4px, 8px, 16px, 24px, 32px, 48px) لمنع الفوضى العشوائية في التنسيق.
+          يمكن تجربة شبكة 8px أو مقياس آخر لتنظيم المسافات، بشرط أن يتوافق مع المرجع واحتياجات التخطيط. سجل القيم التي اعتمدها المشروع فقط، واترك غير المقاس أو غير المحسوم كـ <code>UNKNOWN</code>.
         </p>
       </div>
     </div>
 
-    <!-- The 6 Mandatory UI States -->
+    <!-- Common UI states to consider -->
     <div class="table-container my-6">
-      <h4 class="font-bold text-[var(--text-main)] mb-3">الحالات التفاعلية الست الإلزامية لكل شاشة ومكون (The 6 UI States)</h4>
+      <h4 class="font-bold text-[var(--text-main)] mb-3">حالات واجهة شائعة تُراجع عند انطباقها (UI States to Consider)</h4>
       <table class="data-table">
         <thead>
           <tr>
             <th>الحالة التفاعلية</th>
             <th>الظهور السلوكي في الواجهة</th>
-            <th>القاعدة التصميمية الإلزامية</th>
+            <th>توجيه عند الحاجة</th>
           </tr>
         </thead>
         <tbody>
@@ -292,27 +292,27 @@ export const topic22DesignSystemHtml = `
           <tr>
             <td><strong>2. حالة التحميل (Loading / Skeleton)</strong></td>
             <td>انتظار جلب البيانات من الخادم</td>
-            <td>استخدام هياكل عظمية رمادية نابضة (Skeleton Placeholders) تطابق شكل البطاقات لمنع ارتعاش التخطيط (Layout Shift).</td>
+            <td>أظهر تقدماً مناسباً عند انتظار عملية؛ اختر Skeleton أو مؤشراً آخر بما يلائم السياق، ولا توحِ بأن البيانات جاهزة.</td>
           </tr>
           <tr>
             <td><strong>3. الحالة الفارغة (Empty State)</strong></td>
             <td>انعدام النتائج أو خلو السجل (مثل نتيجة بحث منعدمة)</td>
-            <td>عرض رسم توضيحي هادف، ورسالة لطيفة تشرح السبب، وزر إجراء بديل (مثلاً: "إعادة ضبط الفلاتر").</td>
+            <td>اشرح عدم وجود النتائج وأظهر خطوة تالية مفيدة إذا كان ذلك مدعوماً بالمهمة.</td>
           </tr>
           <tr>
             <td><strong>4. حالة الخطأ (Error State)</strong></td>
             <td>فشل الاتصال أو رفض العملية من قواعد العمل</td>
-            <td>رسالة واضحة بلون دلالي محذر (Muted Red/Amber)، توضح سبب الخطأ وإمكانية المحاولة مجدداً دون إرباك المستخدم.</td>
+            <td>اشرح المشكلة والخطوة التالية؛ لا تعتمد على اللون وحده ولا تعرض إعادة المحاولة إن لم تكن مناسبة.</td>
           </tr>
           <tr>
             <td><strong>5. الحالة المعطلة (Disabled State)</strong></td>
             <td>عنصر أو زر غير متاح حالياً</td>
-            <td>شفافية منخفضة ومؤشر حظر، مع توضيح سبب التعطيل عند التحويم (Tooltip) مثل: "تم الوصول للحد الأقصى".</td>
+            <td>بيّن أن الإجراء غير متاح ووفّر السبب بطريقة قابلة للإدراك بلوحة المفاتيح وقارئ الشاشة عند انطباقه؛ لا تعتمد على التحويم وحده.</td>
           </tr>
           <tr>
             <td><strong>6. حالة حظر الصلاحية (Permission Denied)</strong></td>
-            <td>محاولة وصول إلى شاشة أو إجراء غير مصرح للدور</td>
-            <td>شاشة واضحة تشرح الحاجة لاعتماد الحساب أو الترقية، وتوفر رابطاً للعودة للرئيسية.</td>
+            <td>محاولة وصول ممنوعة وفق قاعدة صلاحيات موثقة</td>
+            <td>أظهر رسالة أو مساراً مناسباً فقط إذا حددت المتطلبات قاعدة الصلاحية والسلوك.</td>
           </tr>
         </tbody>
       </table>
@@ -325,8 +325,8 @@ export const topic22DesignSystemHtml = `
         <span>إمكانية الوصول وتباين الألوان ودعم RTL</span>
       </div>
       <p class="leading-7">
-        - <strong>تباين الألوان (WCAG 2.1 AA):</strong> يجب ألا تقل نسبة تباين النصوص العادية مع الخلفية عن 4.5:1 (و3:1 للعناصر الكبيرة وأزرار CTA).<br/>
-        - <strong>مساحات اللمس (Touch Targets):</strong> لا يقل حجم أي عنصر قابل للنقر عن 44×44 بكسل للهواتف الذكية.<br/>
+        - <strong>تباين الألوان:</strong> افحص النص وفق حجمه ووزنه (4.5:1 للنص العادي، و3:1 للنص الكبير)، وافحص حدود وأجزاء التحكم غير النصية وفق معيارها المناسب. لا تدّعِ النجاح دون قياس.<br/>
+        - <strong>مساحات التفاعل:</strong> اختر مساحة الهدف وفق معيار الوصول والمنصة المستهدفين وافحصها؛ 44×44 CSS px قيمة إرشادية شائعة للراحة وليست شرطاً عاماً من WCAG AA لكل عنصر.<br/>
         - <strong>دعم الاتجاه (RTL First):</strong> تدفق القوائم، محاذاة العناوين، وسلاسل البطاقات تبدأ من اليمين، مع انعكاس اتجاه أيقونات الأسهم والتنقل.
       </p>
     </div>
@@ -351,7 +351,12 @@ define colors, type scale, spacing, radii, shadows, grids, icons,
 buttons, inputs, cards, tables, dialogs, navigation, semantic states,
 breakpoints, keyboard/focus/contrast rules and RTL guidance if applicable.
 Do not invent a different brand. Preserve requirements.
-Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
+Use only values supported by the approved reference; write UNKNOWN when
+the reference does not establish a value. Treat 60-30-10 color allocation
+and an 8px spacing grid as optional proposals, not universal rules.
+Check contrast against the applicable WCAG criterion and do not claim a pass
+without a measurement. Do not invent a different brand. Preserve requirements.
+Apply the reviewed shared rules consistently to subsequent Stitch screens.</code></pre>
     </div>
   </div>
 
@@ -363,7 +368,7 @@ Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>حماية ميزانية السياق (Context Window):</strong> تركيز نموذج الذكاء الاصطناعي على متطلبات وتفاعلات شاشة واحدة بكل حالاتها.</li>
-      <li><strong>دقة الحالات الست:</strong> إلزام البرومبت بتعريف حالات Loading وEmpty وError الخاصة بتلك الشاشة حصراً.</li>
+      <li><strong>حالات الواجهة:</strong> حدد الحالات الملائمة للمصدر مثل Default وLoading وEmpty وError وDisabled؛ اطلب Permission Denied فقط إذا كان PRD يحدد قاعدة صلاحية. الاستجابة وإمكانية الوصول فحوص عابرة للحالات.</li>
       <li><strong>تسهيل المراجعة والتعديل:</strong> إذا احتاجت نافذة تأكيد الحجز (Modal) إلى تحسين، نعدل برومبتها فقط دون التأثير على بقية الشاشات.</li>
     </ul>
 
@@ -377,8 +382,13 @@ Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
 Read approved PRD, SCREEN_INVENTORY.md and the approved Design System.
 Create a COMPLETE, individually copyable Stitch prompt for EVERY MVP screen.
 For each include ID, title, role, purpose, hierarchy, content, data,
-components, CTA, validation, navigation, loading/empty/error/success states,
-responsive behavior and accessibility. Preserve shared visual rules.
+components, CTA, validation, navigation, default/loading/empty/error/disabled
+states as relevant. Include a permission-denied state only when the PRD defines
+the rule; otherwise preserve it as an open question. Add success feedback when
+a source requirement defines it. Check responsive behavior, keyboard/focus,
+contrast and RTL across states; these are review dimensions, not UI-state
+variants. Use source-backed values and write UNKNOWN for unobserved tokens.
+Preserve the reviewed shared visual rules.
 Sort screens in user-flow order. Do not omit any or add new MVP features.
 Save docs/STITCH_SCREEN_PROMPTS.md.
 Do not generate frontend code.</code></pre>
@@ -680,7 +690,7 @@ export const t08Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'النظم البصرية وتوليد الشاشات',
-    summary: 'صياغة وتوثيق قواعد نظام التصميم (Design System) المنبثق من الشاشة المرجعية: توزيع الألوان بقاعدة 60-30-10، تدرج التايبوجرافي، شبكة المسافات 8px، حالات المكونات الست (Default, Loading, Empty, Error, Disabled, Permission Denied)، وإرشادات إمكانية الوصول وRTL. ثم تطبيق هذه القواعد الصارمة عبر برومبتات منفصلة ومستقلة لكل شاشة في جرد الشاشات وتوثيقها في docs/STITCH_SCREEN_PROMPTS.md دون كتابة أي كود برمجي.',
+    summary: 'صياغة وتوثيق قواعد نظام التصميم من قيم الشاشة المرجعية التي يمكن فحصها، مع إبقاء 60-30-10 وشبكة 8px أمثلة اختيارية لا متطلبات عامة. يتضمن العمل حالات المكونات وإرشادات إمكانية الوصول وRTL، ثم يكتب برومبتاً مستقلاً لكل شاشة في جرد الشاشات داخل docs/STITCH_SCREEN_PROMPTS.md دون كود.',
     tags: ['Design System', 'Color Tokens', 'Typography', '8px Grid', 'UI States', 'PROMPT 17', 'PROMPT 18', 'A11y'],
     contentTypes: ['prompt', 'code', 'checklist'],
     diagramCount: 0,
@@ -700,10 +710,10 @@ export const t08Entries: TopicItem[] = [
     steps: [
       '1. حلّل عناصر الشاشة المرجعية المعتمدة لاستخراج لغة التصميم المشتركة (الألوان، التايبوجرافي، المسافات، الحواف، والظلال).',
       '2. استخدم برومبت نظام التصميم (PROMPT 17: Stitch Design System) لتحديد قواعد النظام البصري دون اختراع هوية متخيلة أو تغيير متطلبات PRD.',
-      '3. وثّق توزيع الألوان بقاعدة (60% للسطوح والخلفيات، 30% للهياكل والبطاقات، 10% للتأكيد والـ CTA)، وحسابات التباين WCAG 2.1 AA، وشبكة الـ 8px للمسافات.',
+      '3. وثّق قيم الألوان ومصادرها، وافحص التباين مقابل معيار WCAG المناسب لحجم النص ووزنه؛ يمكن تجربة 60-30-10 أو شبكة 8px كاتفاق اختياري، ولا تسجلها كقاعدة للمشروع قبل قبولها.',
       '4. حدّد الحالات التفاعلية القياسية لكل مكون: (الحالة الافتراضية Default، التحميل Skeleton/Loading، الحالة الفارغة Empty State، وحالة الخطأ والرفض Error/Denied).',
       '5. استخدم برومبت توليد برومبت منفصل لكل شاشة (PROMPT 18: Generate One Prompt per Screen) لقراءة SCREEN_INVENTORY.md وصياغة برومبت مستقل كامل لكل شاشة من شاشات MVP.',
-      '6. تأكد أن كل برومبت شاشة يتضمن: المعرف الرقمي، العنوان، الدور المستهدف، التسلسل الهرمي، المكونات، الحالات الست، والالتزام الصارم بقواعد نظام التصميم المشتركة.',
+      '6. تأكد أن كل برومبت شاشة يتضمن: المعرف الرقمي، العنوان، الدور المستهدف، التسلسل الهرمي، المكونات، حالات الواجهة المطلوبة، والالتزام بالقواعد التي لها مصدر فقط؛ أبق القيم المجهولة واضحة.',
       '7. احفظ جميع برومبتات الشاشات مرتبة حسب تدفق المستخدم (User Flow Order) في ملف docs/STITCH_SCREEN_PROMPTS.md.',
       '8. قف هنا وتأكد من عدم توليد أي كود برمجي (Frontend/React/Next.js) في هذه المرحلة؛ العمل ينحصر في تجهيز الشاشات في أداة التصميم.'
     ],
@@ -717,9 +727,9 @@ export const t08Entries: TopicItem[] = [
     ],
     checklist: [
       'استخراج وتوثيق رموز التصميم (الألوان، الخطوط، المسافات، الحواف) من الشاشة المرجعية المعتمدة.',
-      'تطبيق قاعدة الألوان 60-30-10 وتأكيد نسب التباين وفق WCAG 2.1 AA (4.5:1 للنصوص).',
+      'مراجعة التباين وفق معيار WCAG المناسب؛ نسبة 4.5:1 تنطبق على النص العادي، وتحتاج الأحجام أو الأوزان الأخرى إلى معيارها المناسب. لا تسجل نجاحاً قبل القياس.',
       'صياغة برومبت مستقل ومنفصل لكل شاشة من شاشات جرد MVP دون تجميع عشوائي.',
-      'تضمين الحالات الست الإلزامية (Default, Loading, Empty, Error, Disabled, Permission Denied) في كل برومبت شاشة.',
+      'تحديد حالات الواجهة التي يقتضيها كل تدفق؛ لا تضف Permission Denied إلا إذا عرّفت المتطلبات صلاحية وسلوكاً لها، وسجّل الاستجابة وإمكانية الوصول كفحوص عابرة.',
       'حفظ جميع البرومبتات في docs/STITCH_SCREEN_PROMPTS.md مرتبة بمسار تدفق المستخدم.',
       'الالتزام التام بعدم كتابة أو توليد كود برمجي في هذه المرحلة.'
     ],

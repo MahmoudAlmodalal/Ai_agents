@@ -34,8 +34,12 @@ Design one participant options screen for the fictional scheduling exercise.
 Show the session heading, listed candidate options, one selection action, and
 clear status space. Preserve Arabic RTL prose and LTR identifiers/times. Reuse
 only evidence-backed design tokens; current primary color, font, and spacing
-scale are UNKNOWN. Represent loading, empty, error, success, responsive, and
-keyboard/accessibility states as variants. Do not invent authentication,
+scale are UNKNOWN. Plan default, loading, empty, error, and disabled variants
+when supported by the source. Permission-denied behavior is unresolved because
+the exercise has no approved access policy; keep it UNKNOWN rather than
+inventing a role rule. Add success feedback only where a requirement supports
+it. Review responsive and keyboard/accessibility requirements across states.
+Do not invent authentication,
 editing, privacy, notification, or tie behavior. Do not generate code.
 
 ### organizer-review — `/sessions/:sessionId/review`
@@ -45,8 +49,11 @@ Design one organizer review screen for the fictional scheduling exercise.
 Show response summaries and a selection action without assuming tie policy.
 Preserve Arabic RTL prose and LTR identifiers/times. Reuse only
 evidence-backed design tokens; current primary color, font, and spacing scale
-are UNKNOWN. Represent loading, empty, error, success, responsive, and
-keyboard/accessibility states as variants. Do not invent authentication,
+are UNKNOWN. Plan default, loading, empty, error, and disabled variants when
+supported by the source. Permission-denied behavior is unresolved because the
+exercise has no approved access policy; keep it UNKNOWN rather than inventing a
+role rule. Add success feedback only where a requirement supports it. Review
+responsive and keyboard/accessibility requirements across states. Do not invent authentication,
 notifications, or other product rules. Do not generate code.
 ```
 
