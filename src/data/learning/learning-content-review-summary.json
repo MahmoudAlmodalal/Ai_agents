@@ -1,0 +1,5338 @@
+{
+  "activity-diagram": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "activity-q-guard",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "activity-q-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "activity-r-paths",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "activity-r-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "activity-diagram-lucid-activity",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "agent-skills": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "skills-q-scope",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "skills-q-test",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "skills-r-trigger",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "skills-r-output",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "agent-skills-anthropic-agent-skills-webinar",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "ai-coding-agent": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "agent-q-secret",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "agent-q-scope",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "agent-r-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "agent-r-secret",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "ai-coding-agent-openai-codex-for-beginners",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "auth-permissions": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "auth-permissions-authenticated-identity-vs-authorization",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "auth-permissions-server-enforced-ownership",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "auth-permissions-role-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "auth-permissions-server-check",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "auth-permissions-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "backend-architecture-api-contracts": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "backend-architecture-api-contracts-contract-fields-before-route",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "backend-architecture-api-contracts-borrowhub-optional-rule",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "backend-architecture-api-contracts-contract-shape",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "backend-architecture-api-contracts-rule-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "backend-architecture-api-contracts-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "backend-database-deployment": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "backend-database-deployment-runtime-secret-configuration",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "backend-database-deployment-health-vs-database-check",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "backend-database-deployment-network-secrets",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "backend-database-deployment-smoke-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "backend-database-deployment-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "class-diagram-design": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "class-q-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "class-q-responsibility",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "class-r-structure",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "class-r-alignment",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "class-diagram-design-lucid-class",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "conceptual-domain-model": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "domain-q-level",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "domain-q-relationship",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "domain-r-definitions",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "domain-r-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "conceptual-domain-model-nptel-conceptual-design",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "database-performance-engineering": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "database-performance-engineering-measure-before-index",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "database-performance-engineering-plan-vs-latency-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "database-performance-engineering-measurement-context",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "database-performance-engineering-tradeoff",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "database-performance-engineering-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dbml-dbdiagram-io": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "dbml-q-language",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "dbml-q-export",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "dbml-r-fidelity",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "dbml-r-export",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "dbml-dbdiagram-io-fazt-dbml",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "design-md-spec": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "designmd-q-unknown",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "designmd-q-role",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "designmd-r-token",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "designmd-r-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "design-md-spec-google-design-md-video",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "design-system-rules": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "designrules-q-token",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "designrules-q-prompts",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "designrules-r-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "designrules-r-consistency",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "design-system-rules-figma-design-systems-lesson-1",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "discovery-grill-me": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "discovery-q-one-at-time",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "discovery-q-decision-log",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "discovery-r-trace",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "discovery-r-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "discovery-grill-me-atlassian-product-discovery",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "django-backend": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "django-backend-database-constraint-vs-ui-check",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "django-backend-migration-risk-review",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "django-backend-erd-match",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "django-backend-migration-review",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "django-backend-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "docker-container-workflow": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "docker-container-workflow-container-needed-decision",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "docker-container-workflow-runtime-secret-injection",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "docker-container-workflow-container-need",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "docker-container-workflow-container-safety",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "docker-container-workflow-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "fastapi-backend": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "fastapi-backend-request-schema-validation",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "fastapi-backend-migration-generated-diff-review",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "fastapi-backend-schema-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "fastapi-backend-migration-context",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "fastapi-backend-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "frontend-architecture-planning": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "frontend-architecture-planning-requirement-conflict-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-architecture-planning-reviewable-task-boundary",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "frontend-architecture-planning-map-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-architecture-planning-slice-acceptance",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "frontend-architecture-planning-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "frontend-backend-integration": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "frontend-backend-integration-successful-empty-response-state",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-backend-integration-browser-public-env-vs-secret",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "frontend-backend-integration-contract-errors",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-backend-integration-secret-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "frontend-backend-integration-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "frontend-incremental-implementation": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "frontend-incremental-implementation-vertical-slice-choice",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-incremental-implementation-mocked-service-boundary",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "frontend-incremental-implementation-acceptance",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "frontend-incremental-implementation-test-result",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "frontend-incremental-implementation-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "full-stack-journey-testing": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "full-stack-journey-testing-test-layer-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "full-stack-journey-testing-reproducible-e2e-fixture",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "full-stack-journey-testing-reproducible",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "full-stack-journey-testing-test-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "full-stack-journey-testing-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "git-project-docs": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "gitdocs-q-ignore",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "gitdocs-q-commit",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "gitdocs-r-ignore",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "gitdocs-r-history",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "git-project-docs-github-git-basics",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "github-docs-collaboration": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "githubdocs-q-pr",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "githubdocs-q-remote",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "githubdocs-r-remote",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "githubdocs-r-review",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "github-docs-collaboration-exampro-pull-requests",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "google-ai-studio": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "aistudio-q-data",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "aistudio-q-key",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "aistudio-r-repro",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "aistudio-r-schema",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "google-ai-studio-google-ai-studio-developers",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "integrated-project-qa": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "integrated-project-qa-build-vs-accessibility-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "integrated-project-qa-test-reproduction-context",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "integrated-project-qa-traceability",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "integrated-project-qa-blocker",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "integrated-project-qa-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "interactive-prototype": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "prototype-q-functional",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "prototype-q-audit",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "prototype-r-interaction",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "prototype-r-audit",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "interactive-prototype-figma-prototype-fundamentals",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "linux-server-operations": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "linux-server-operations-managed-host-boundary",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "linux-server-operations-least-privilege-file-access",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "linux-server-operations-host-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "linux-server-operations-least-privilege",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "linux-server-operations-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "mcp-protocol": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "mcp-q-roles",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "mcp-q-scope",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "mcp-r-roles",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "mcp-r-permissions",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "mcp-protocol-anthropic-mcp-origin",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "mermaid-syntax": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "mermaid-q-type",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "mermaid-q-meaning",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "mermaid-r-valid",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "mermaid-r-doc",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "mermaid-syntax-gitlab-mermaid-editor",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "netlify-frontend-deployment": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "netlify-frontend-deployment-current-framework-support",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "netlify-frontend-deployment-preview-mock",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "netlify-frontend-deployment-current-support",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "netlify-frontend-deployment-separated-services",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "netlify-frontend-deployment-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "nextjs-app-router": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "nextjs-app-router-layout-route-mapping",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "nextjs-app-router-fixture-vs-api",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "nextjs-app-router-screen-trace",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "nextjs-app-router-source-label",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "nextjs-app-router-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "plantuml": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "plantuml-q-boundary",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "plantuml-q-render",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "plantuml-r-render",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "plantuml-r-guide",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "plantuml-yasenstar-plantuml-quickstart",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "postgresql-database-setup": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "postgresql-database-setup-least-privilege-db-role",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "postgresql-database-setup-dev-connection-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "postgresql-database-setup-db-role",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "postgresql-database-setup-env-result",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "postgresql-database-setup-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "prd-specification": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "prd-q-open-rule",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "prd-q-traceable",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "prd-r-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "prd-r-review",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "prd-specification-atlassian-prd-blueprint",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project-demo-day": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "project-demo-day-reproducible-demo-flow",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-demo-day-live-vs-recorded-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "project-demo-day-claim-evidence",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-demo-day-fallback-label",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "project-demo-day-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project-handoff-package": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "project-handoff-package-missing-resource-traceability",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-handoff-package-test-commit-provenance",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "project-handoff-package-link-integrity",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-handoff-package-test-provenance",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "project-handoff-package-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project-idea-mvp": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "idea-mvp-q-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "idea-mvp-q-journey",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "idea-mvp-r-problem",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "idea-mvp-r-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "project-idea-mvp-yc-mvp-2023",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project-operations-runbook": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "project-operations-runbook-backup-vs-restore-drill",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-operations-runbook-application-rollback-vs-schema",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "project-operations-runbook-capability-evidence",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-operations-runbook-data-application-separation",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "project-operations-runbook-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project-portfolio-entry": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "project-portfolio-entry-individual-contribution-attribution",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-portfolio-entry-measured-impact-claim",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "project-portfolio-entry-contribution-accuracy",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "project-portfolio-entry-impact-method",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "project-portfolio-entry-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "python-backend-foundation": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "python-backend-foundation-venv-vs-secret-storage",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "python-backend-foundation-runtime-input-validation-vs-type-hints",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "python-backend-foundation-reproducible",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "python-backend-foundation-secret-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "python-backend-foundation-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "react-components-state": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "react-components-state-shared-state-owner",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "react-components-state-server-client-boundary",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "react-components-state-state-owner",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "react-components-state-state-coverage",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "react-components-state-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "redis-optional-infrastructure": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "redis-optional-infrastructure-cache-need-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "redis-optional-infrastructure-cache-invalidation-after-update",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "redis-optional-infrastructure-choice-evidence",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "redis-optional-infrastructure-consistency",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "redis-optional-infrastructure-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "relational-erd-design": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "erd-q-fk",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "erd-q-concurrency",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "erd-r-integrity",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "erd-r-concurrency",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "relational-erd-design-lucid-erd",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "screen-inventory": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "inventory-q-coverage",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "inventory-q-fields",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "inventory-r-detail",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "inventory-r-trace",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "screen-inventory-nng-wireflows-101",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sequence-diagram-modeling": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "sequence-q-order",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "sequence-q-alt",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "sequence-r-order",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "sequence-r-branches",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "sequence-diagram-modeling-hamburg-sequence",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "services-selectors": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "services-selectors-selector-read-side-effects",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "services-selectors-service-invariant-ownership",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "services-selectors-tx-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "services-selectors-measured-rule",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "services-selectors-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "spec-kit-workflow": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "spec-kit-workflow-scope-expansion-control",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "spec-kit-workflow-spec-plan-task-trace",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "spec-kit-workflow-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "spec-kit-workflow-tasks",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "spec-kit-workflow-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "srs": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "srs-q-trace-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "srs-q-gwt",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "srs-r-scenario",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "srs-r-trace",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "srs-uw-waterloo-srs",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "state-diagram": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "state-q-event",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "state-q-unknown",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "state-r-lifecycle",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "state-r-unknown",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "state-diagram-hamburg-state-machine",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "stitch-mcp-integration": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "stitchmcp-q-scope",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "stitchmcp-q-fallback",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "stitchmcp-r-readonly",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "stitchmcp-r-fallback",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "stitch-mcp-integration-alex-hitt-stitch-mcp",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "stitch-reference-screen": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "stitchref-q-unknown",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "stitchref-q-reference",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "stitchref-r-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "stitchref-r-evidence",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "stitch-reference-screen-google-stitch-intro",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "tailwind-css-responsive": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "tailwind-css-responsive-design-token-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "tailwind-css-responsive-logical-spacing-rtl",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "tailwind-css-responsive-token-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "tailwind-css-responsive-direction-check",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "tailwind-css-responsive-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "typescript-types": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "typescript-types-typed-status-union",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "typescript-types-runtime-json-validation",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "typescript-types-contract-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "typescript-types-runtime-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "typescript-types-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "ui-ux-pro-max-review": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "ui-ux-pro-max-review-suggestion-vs-approved-system",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "ui-ux-pro-max-review-actionable-critique-evidence",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "ui-ux-pro-max-review-review-context",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "ui-ux-pro-max-review-decision-record",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "ui-ux-pro-max-review-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "ui-ux-roles-navigation": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "uiux-q-role",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "uiux-q-navigation",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "uiux-r-permission",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "uiux-r-navigation",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "ui-ux-roles-navigation-nng-information-architecture",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "use-case-diagram": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "usecase-q-actor",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "usecase-q-extend",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "usecase-r-boundary",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "usecase-r-relations",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "use-case-diagram-lucid-use-case",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "user-flow-modeling": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "userflow-q-actor",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "userflow-q-source",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "userflow-r-coverage",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "userflow-r-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "user-flow-modeling-nng-user-flows",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "ux-blueprint": {
+    "reviewState": "draft",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "not-run"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "uxbp-q-empty",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "uxbp-q-a11y",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "not-run"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "uxbp-r-states",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "uxbp-r-journey",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "ux-blueprint-nng-service-blueprint",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "vercel-frontend-deployment": {
+    "reviewState": "review-ready",
+    "quizScoringPolicyApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "rubricScaleApproval": {
+      "state": "proposed",
+      "approvedBy": null,
+      "approvedAt": null,
+      "decisionReference": null
+    },
+    "evidenceSummary": {
+      "topicReviewEvidence": [
+        {
+          "area": "lesson",
+          "outcome": "passed"
+        },
+        {
+          "area": "question",
+          "outcome": "passed"
+        },
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        },
+        {
+          "area": "video",
+          "outcome": "not-run"
+        }
+      ],
+      "quizReviewEvidence": [
+        {
+          "area": "question",
+          "outcome": "passed"
+        }
+      ],
+      "questionReviewEvidence": [
+        {
+          "id": "vercel-frontend-deployment-public-vs-runtime-env",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "vercel-frontend-deployment-preview-scope",
+          "evidence": [
+            {
+              "area": "question",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "rubricReviewEvidence": [
+        {
+          "area": "rubric",
+          "outcome": "passed"
+        }
+      ],
+      "criterionReviewEvidence": [
+        {
+          "id": "vercel-frontend-deployment-deploy-source",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        },
+        {
+          "id": "vercel-frontend-deployment-preview-scope",
+          "evidence": [
+            {
+              "area": "rubric",
+              "outcome": "passed"
+            }
+          ]
+        }
+      ],
+      "videoReviewEvidence": [
+        {
+          "id": "vercel-frontend-deployment-video-candidate",
+          "evidence": [
+            {
+              "area": "video",
+              "outcome": "not-run"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
