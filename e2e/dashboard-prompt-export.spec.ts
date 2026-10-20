@@ -308,4 +308,182 @@ test.describe('Learner dashboard and export', () => {
     await expect(stalePage.getByText('تغير النص الأصلي منذ حفظ هذا التخصيص.')).toBeVisible();
     await stalePage.close();
   });
+
+  test('browser journey from Topic activity through reload to dashboard and back preserves distinct records without inventing untouched activity', async ({ page }) => {
+    test.setTimeout(90000);
+    // 1. Visit Topic 01
+    await page.goto('/learn/project-idea-mvp');
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('اختيار فكرة المشروع وتحديد MVP');
+
+    // 2. Bookmark Topic
+    const bookmarkBtn = page.getByRole('button', { name: 'حفظ في المفضلة' });
+    await expect(bookmarkBtn).toBeVisible();
+    await bookmarkBtn.click();
+    await expect(page.getByRole('button', { name: 'إزالة من المفضلة' })).toBeVisible();
+
+    // 3. Check an item in Application Checklist
+    const checklistGroup = page.getByRole('group', { name: 'قائمة تحقق التطبيق' });
+    const firstCheckbox = checklistGroup.getByRole('checkbox').first();
+    await expect(firstCheckbox).toBeVisible();
+    await firstCheckbox.check();
+    await expect(firstCheckbox).toBeChecked();
+
+    // 4. Complete Quiz
+    await page.getByLabel('افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله').check();
+    await page.getByLabel('رحلة حجز واحدة من اختيار وقت إلى تأكيد واضح، مع تأجيل التوصيات').check();
+    await page.getByRole('button', { name: 'إرسال الإجابات' }).click();
+    await expect(page.getByText('آخر نتيجة محفوظة في هذا المتصفح: 2 / 2')).toBeVisible();
+
+    // 5. Select practical assessment rating
+    const ratingSelect = page.getByLabel('اختيارك للتقييم الذاتي').first();
+    await ratingSelect.selectOption('in-progress');
+    await expect(page.getByText('تُحفظ اختيارات التقييم الذاتي في هذا المتصفح على هذا الجهاز فقط.')).toBeVisible();
+
+    // 6. Reload topic page to verify persistence on topic side
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'إزالة من المفضلة' })).toBeVisible();
+    await expect(page.getByText('آخر نتيجة محفوظة في هذا المتصفح: 2 / 2')).toBeVisible();
+    await expect(page.getByLabel('اختيارك للتقييم الذاتي').first()).toHaveValue('in-progress');
+
+    // 7. Navigate to dashboard
+    await page.getByRole('banner').getByRole('button', { name: /عرض المزيد من أقسام Ai_agents/ }).click();
+    await page.getByRole('banner').getByRole('link', { name: /لوحة التقدم/ }).click();
+    await expect(page.getByRole('heading', { level: 1, name: 'لوحة تعلّمي' })).toBeVisible();
+
+    // 8. Verify dashboard labels, local scope pill, and owner decision
+    await expect(page.getByText('سجلات هذا المتصفح فقط')).toBeVisible();
+    await expect(page.getByText('مؤشر الإكمال العام غير معروض')).toBeVisible();
+    await expect(page.getByTestId('section-storage-status').getByText(/قرار صاحب المقرر المعتمد/)).toBeVisible();
+    await expect(page.getByText(/لا يتضمن التطبيق مؤشر إكمال عام/)).toBeVisible();
+
+    // 9. Verify each record category is distinguishable
+    // Recent views
+    const recentSection = page.getByTestId('section-recent-views');
+    await expect(recentSection).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(recentSection).toContainText('زيارة محفوظة');
+    await expect(recentSection).toContainText('وفق قرار صاحب المقرر، فتح الموضوع يسجل زيارة حديثة فقط ولا يسجل إكماله.');
+
+    // Bookmarks
+    const bookmarkSection = page.getByTestId('section-bookmarks');
+    await expect(bookmarkSection).toContainText('اختيار فكرة المشروع وتحديد MVP');
+
+    // Quiz attempts
+    const quizSection = page.getByTestId('section-quizzes');
+    const quizRow = quizSection.getByTestId('quiz-attempt-row');
+    await expect(quizRow).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(quizRow).toContainText('2 / 2');
+    await expect(quizRow).toContainText('صحيح: 2 · غير صحيح: 0 · بلا إجابة: 0');
+
+    // Checklists
+    const checklistCard = page.getByTestId('section-checklists');
+    await expect(checklistCard).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(checklistCard).toContainText('قائمة الموضوع الحالية');
+
+    // Practical self-assessment
+    const practicalSection = page.getByTestId('section-assessments');
+    const practicalRow = practicalSection.getByTestId('practical-assessment-row');
+    await expect(practicalRow).toContainText('اختيار فكرة المشروع وتحديد MVP');
+    await expect(practicalRow).toContainText('قيد العمل');
+
+    // Metric counters: exactly 1 recorded per category, labeled local
+    await expect(page.getByTestId('metric-recent-views').locator('strong')).toHaveText('1');
+    await expect(page.getByTestId('metric-bookmarks').locator('strong')).toHaveText('1');
+    await expect(page.getByTestId('metric-quizzes').locator('strong')).toHaveText('1');
+    await expect(page.getByTestId('metric-assessments').locator('strong')).toHaveText('1');
+    await expect(page.getByTestId('metric-checklists').locator('strong')).toHaveText('1');
+
+    // Untouched topics: no activity invented for untouched topics
+    await expect(page.locator('main').getByRole('link', { name: 'مقابلة استكشاف المنتج Grill Me' })).toHaveCount(0);
+
+    // 10. Reload dashboard and verify all records survive
+    await page.reload();
+    await expect(page.getByTestId('metric-quizzes').locator('strong')).toHaveText('1');
+    await expect(quizRow).toContainText('2 / 2');
+    await expect(bookmarkSection).toContainText('اختيار فكرة المشروع وتحديد MVP');
+
+    // 11. Support navigation back to the relevant Topic
+    await quizRow.getByRole('link', { name: 'اختيار فكرة المشروع وتحديد MVP' }).click();
+    await expect(page).toHaveURL(/\/learn\/project-idea-mvp$/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('اختيار فكرة المشروع وتحديد MVP');
+  });
+
+  test('empty profile accurately displays zero activity, labels local scope, and navigates to topic exploration', async ({ page }) => {
+    await page.goto('/dashboard');
+    await expect(page.getByRole('heading', { level: 1, name: 'لوحة تعلّمي' })).toBeVisible();
+    await expect(page.getByTestId('empty-dashboard-notice')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'لا توجد أنشطة مسجلة بعد' })).toBeVisible();
+    await expect(page.getByText('ستظهر هنا السجلات التي تسجلها فقط؛ لا تُنشأ سجلات للموضوعات التي لم تفتحها.')).toBeVisible();
+
+    // Verify all 6 metric counters show 0 and label local scope
+    for (const testId of ['metric-recent-views', 'metric-bookmarks', 'metric-quizzes', 'metric-assessments', 'metric-checklists', 'metric-prompts']) {
+      const card = page.getByTestId(testId);
+      await expect(card.locator('strong')).toHaveText('0');
+      await expect(card).toContainText('محلي فقط');
+    }
+
+    // Verify empty messages across all sections
+    await expect(page.getByText('لا توجد زيارات حديثة محفوظة.')).toBeVisible();
+    await expect(page.getByText('لا توجد موضوعات مفضلة محفوظة.')).toBeVisible();
+    await expect(page.getByText('لا توجد محاولات اختبار مسجلة.')).toBeVisible();
+    await expect(page.getByText('لا توجد اختيارات قائمة تحقق مسجلة.')).toBeVisible();
+    await expect(page.getByText('لا توجد تقييمات ذاتية مسجلة.')).toBeVisible();
+
+    // Verify local storage scope disclaimer
+    await expect(page.getByText('لا تعرض اللوحة إحصاءات منصة أو نتائج متعلمين آخرين أو مزامنة بين الأجهزة.')).toBeVisible();
+
+    // Navigate to topic exploration
+    await page.getByRole('link', { name: 'استعراض الموضوعات' }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test('dashboard provides visible keyboard focus and interactive navigation via keyboard', async ({ page }) => {
+    await page.goto('/dashboard');
+    await expect(page.getByRole('heading', { level: 1, name: 'لوحة تعلّمي' })).toBeVisible();
+
+    // Press Tab to reach first focusable element
+    await page.keyboard.press('Tab');
+    const focusedTag = await page.evaluate(() => document.activeElement?.tagName);
+    expect(['A', 'BUTTON']).toContain(focusedTag);
+
+    // Verify that the prompt library link can be focused and activated via keyboard
+    const promptsLink = page.getByRole('link', { name: /انتقل إلى مكتبة البرومبتات/ });
+    await promptsLink.focus();
+    await expect(promptsLink).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/prompts$/);
+    await expect(page.getByRole('heading', { level: 1, name: 'مكتبة البرومبتات' })).toBeVisible();
+  });
+
+  test('dashboard renders responsive mobile layout with RTL direction and no horizontal overflow', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/dashboard');
+    await expect(page.getByRole('heading', { level: 1, name: 'لوحة تعلّمي' })).toBeVisible();
+
+    // Verify RTL direction
+    const containerDir = await page.locator('[dir="rtl"]').first().getAttribute('dir');
+    expect(containerDir).toBe('rtl');
+
+    // Verify no horizontal overflow at 390px
+    const hasHorizontalOverflow = await page.evaluate(() => {
+      const doc = document.documentElement;
+      const body = document.body;
+      return doc.scrollWidth > doc.clientWidth || body.scrollWidth > body.clientWidth;
+    });
+    expect(hasHorizontalOverflow).toBe(false);
+
+    // Verify touch target dimensions for interactive action buttons (min-height >= 44px)
+    const exportBtn = page.getByTestId('learning-export');
+    const box = await exportBtn.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+
+    // Verify all key sections remain visible
+    await expect(page.getByTestId('section-recent-views')).toBeVisible();
+    await expect(page.getByTestId('section-bookmarks')).toBeVisible();
+    await expect(page.getByTestId('section-quizzes')).toBeVisible();
+    await expect(page.getByTestId('section-checklists')).toBeVisible();
+    await expect(page.getByTestId('section-assessments')).toBeVisible();
+    await expect(page.getByTestId('section-badges')).toBeVisible();
+    await expect(page.getByTestId('section-storage-status')).toBeVisible();
+  });
 });
