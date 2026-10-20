@@ -5,11 +5,16 @@ import type {
   PolicyApproval,
 } from '@/src/types/learning.ts';
 import {
+  ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL,
   APPROVED_QUIZ_INSTRUCTIONS,
   APPROVED_QUIZ_SCORING_POLICY_SUMMARY,
   APPROVED_RUBRIC_SCALE_SUMMARY,
+  PENDING_QUIZ_INSTRUCTIONS,
+  PENDING_QUIZ_SCORING_POLICY_SUMMARY,
+  PENDING_RUBRIC_SCALE_SUMMARY,
   approvedPolicy,
 } from '@/src/data/learning/group-a-common.ts';
+import { resolvePolicyWordingState } from '@/src/lib/learningPolicy.ts';
 
 export type QuestionDraft = {
   objective: 1 | 2;
@@ -74,9 +79,13 @@ export const DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B =
   'مقياس وصفي ذاتي بلا حد إتقان أو تحقق مستقل.';
 
 export {
+  ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL,
   APPROVED_QUIZ_INSTRUCTIONS,
   APPROVED_QUIZ_SCORING_POLICY_SUMMARY,
   APPROVED_RUBRIC_SCALE_SUMMARY,
+  PENDING_QUIZ_INSTRUCTIONS,
+  PENDING_QUIZ_SCORING_POLICY_SUMMARY,
+  PENDING_RUBRIC_SCALE_SUMMARY,
   approvedPolicy,
 };
 
@@ -123,7 +132,7 @@ export function buildTopicB(
   const defaultQuestionEvidence: ReviewEvidence = {
     area: 'question' as const, outcome: 'passed' as const,
     reviewer: 'Curriculum B author review', reviewedAt: REVIEWED_AT,
-    evidence: 'راجَع المؤلف مفتاحي الإجابة وتعليل كل سؤال ومطابقتهما للهدف. اعتماد السياسة وقبول المالك لم يُسجلا.',
+    evidence: 'راجَع المؤلف مفتاحي الإجابة وتعليل كل سؤال ومطابقتهما للهدف. سياسة التصحيح معتمدة بقرار مالك المساق (issue #42)؛ المراجعة التعليمية المستقلة لأسئلة هذا الموضوع ما زالت معلقة.',
   };
   const defaultRubricEvidence: ReviewEvidence = {
     area: 'rubric' as const, outcome: 'passed' as const,
@@ -144,22 +153,39 @@ export function buildTopicB(
     ...(video?.reviewEvidence[0]?.sourceUrl ? { sourceUrl: video.reviewEvidence[0].sourceUrl } : {}),
   };
 
-  const quizScoringPolicyApproval = d.quizScoringPolicyApproval ?? proposedApproval();
+  const quizScoringPolicyApproval = d.quizScoringPolicyApproval ?? { ...ACCEPTED_QUIZ_SCORING_POLICY_APPROVAL };
   const rubricScaleApproval = d.rubricScaleApproval ?? proposedApproval();
 
-  const isQuizApproved = quizScoringPolicyApproval.state === 'approved';
-  const isRubricApproved = rubricScaleApproval.state === 'approved';
+  const reviewState = d.reviewState ?? 'review-ready';
+
+  const quizWordingState = resolvePolicyWordingState(reviewState, quizScoringPolicyApproval, [
+    { area: 'lesson', evidence: lessonEvidence },
+    { area: 'question', evidence: quizEvidence },
+    ...questions.map((question) => ({ area: 'question' as const, evidence: question.reviewEvidence })),
+  ]);
+
+  const rubricWordingState = resolvePolicyWordingState(reviewState, rubricScaleApproval, [
+    { area: 'lesson', evidence: lessonEvidence },
+    { area: 'rubric', evidence: rubricEvidence },
+    ...criteria.map((criterion) => ({ area: 'rubric' as const, evidence: criterion.reviewEvidence })),
+  ]);
 
   const quizInstructions = d.quizInstructions ?? (
-    isQuizApproved ? APPROVED_QUIZ_INSTRUCTIONS : DRAFT_QUIZ_INSTRUCTIONS_GROUP_B
+    quizWordingState === 'approved' ? APPROVED_QUIZ_INSTRUCTIONS :
+    quizWordingState === 'pending' ? PENDING_QUIZ_INSTRUCTIONS :
+    DRAFT_QUIZ_INSTRUCTIONS_GROUP_B
   );
 
   const quizScoringPolicySummary = d.quizScoringPolicySummary ?? (
-    isQuizApproved ? APPROVED_QUIZ_SCORING_POLICY_SUMMARY : DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_B
+    quizWordingState === 'approved' ? APPROVED_QUIZ_SCORING_POLICY_SUMMARY :
+    quizWordingState === 'pending' ? PENDING_QUIZ_SCORING_POLICY_SUMMARY :
+    DRAFT_QUIZ_SCORING_POLICY_SUMMARY_GROUP_B
   );
 
   const rubricScaleSummary = d.rubricScaleSummary ?? (
-    isRubricApproved ? APPROVED_RUBRIC_SCALE_SUMMARY : DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B
+    rubricWordingState === 'approved' ? APPROVED_RUBRIC_SCALE_SUMMARY :
+    rubricWordingState === 'pending' ? PENDING_RUBRIC_SCALE_SUMMARY :
+    DRAFT_RUBRIC_SCALE_SUMMARY_GROUP_B
   );
 
   const rootEvidence = [

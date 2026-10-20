@@ -354,7 +354,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         {unresolvedBookmarks.length > 0 && <div className="mt-3 rounded-xl border border-amber-300 p-3 text-xs leading-6 text-amber-900 dark:border-amber-800 dark:text-amber-200"><strong>معرّفات تاريخية لم تُحل:</strong> {unresolvedBookmarks.join('، ')}.</div>}
       </ActivitySection>
 
-      <ActivitySection testId="section-quizzes" title="نتائج الاختبارات" icon={HelpCircle} description="محاولات منفصلة بإصدارات الأسئلة والنتائج المسجلة. الدرجة وصف لسياسة التصحيح المقترحة، وليست إثباتًا للإتقان.">
+      <ActivitySection testId="section-quizzes" title="نتائج الاختبارات" icon={HelpCircle} description="محاولات منفصلة بإصدارات الأسئلة والنتائج المسجلة. الدرجة وصف لسياسة التصحيح المعتمدة، وليست إثباتًا للإتقان أو التحقق المستقل.">
         {sortedAttempts.length ? <ol className="space-y-3">{sortedAttempts.map((attempt) => {
           const topic = topicBySlug.get(attempt.topicSlug);
           const currentQuiz = learningContentBySlug.get(attempt.topicSlug)?.quiz;
@@ -372,7 +372,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
           return <li key={`${attempt.topicSlug}-${attempt.quizId}-${attempt.attemptId}`} data-testid="quiz-attempt-row" className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-start justify-between gap-2"><div><TopicLink topic={topic} prefix={topic ? '' : attempt.topicSlug} /><p className="mt-1 text-xs text-[var(--text-muted)]">{quizTitle} · نسخة الاختبار {attempt.quizVersion}</p></div><strong className="text-lg font-black" dir="ltr">{attempt.score} / {attempt.maxScore}</strong></div>
             <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">صحيح: {attempt.correctCount} · غير صحيح: {attempt.incorrectCount} · بلا إجابة: {attempt.unansweredCount} · {formatDate(attempt.submittedAt)}</p>
-            <p className="mt-2 rounded-lg border border-[var(--border-color)] px-3 py-2 text-xs leading-6">{attempt.previewOnly ? 'نتيجة معاينة لفحصك الذاتي وفق قاعدة تصحيح مقترحة.' : 'نتيجة محفوظة لفحصك الذاتي.'} لا تعني هذه النتيجة إكمال العمل العملي أو إتقانه.</p>
+            <p className="mt-2 rounded-lg border border-[var(--border-color)] px-3 py-2 text-xs leading-6">{attempt.previewOnly ? 'نتيجة معاينة لفحصك الذاتي وفق سياسة التصحيح المعتمدة، وبانتظار المراجعة التعليمية للموضوع.' : 'نتيجة فحص ذاتي معتمدة ومحفوظة.'} لا تعني هذه النتيجة إكمال العمل العملي أو إتقانه، والتقييم الذاتي هو تقدير المتعلم الخاص وليس تحققًا مستقلًا؛ لا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.</p>
           </li>;
         })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.quizStatus === 'available' ? 'لا توجد محاولات اختبار مسجلة.' : 'تعذرت قراءة نتائج الاختبارات كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.quizStatus)}.</p>
@@ -389,7 +389,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.checklist.storageStatus)}.</p>
       </ActivitySection>
 
-      <ActivitySection testId="section-assessments" title="التقييم العملي الذاتي" icon={ShieldCheck} description="يعرض أحكامك الحالية على المعايير مع تواريخها وإصداراتها. لا يقيّم التطبيق مشروعك بصورة مستقلة.">
+      <ActivitySection testId="section-assessments" title="التقييم العملي الذاتي" icon={ShieldCheck} description="يعرض أحكامك الحالية على المعايير وفق سلم التقييم المعتمد مع تواريخها وإصداراتها. التقييم الذاتي هو تقدير المتعلم الخاص وليس تقييمًا مستقلاً؛ لا يقيّم التطبيق مشروعك بصورة مستقلة، ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق.">
         {sortedAssessments.length ? <ol className="space-y-3">{sortedAssessments.map((record) => {
           const topic = topicBySlug.get(record.topicSlug);
           const content = learningContentBySlug.get(record.topicSlug);
@@ -413,7 +413,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
               const sourceAssessmentVersion = 'assessmentVersion' in rating && typeof rating.assessmentVersion === 'number' ? rating.assessmentVersion : null;
               return <li key={`${rating.criterionId}-${rating.criterionVersion}-${rating.scaleId}-${rating.scaleVersion}-${index}`}>معيار محفوظ · <span dir="ltr">{rating.criterionId}</span> · حكم <span dir="ltr">{rating.ratingId}</span> · سلم <span dir="ltr">{rating.scaleId}</span> v{rating.scaleVersion} · إصدار المعيار {rating.criterionVersion}{sourceAssessmentId ? <> · تقييم <span dir="ltr">{sourceAssessmentId}</span>{sourceAssessmentVersion !== null ? ` v${sourceAssessmentVersion}` : ''}</> : null} · {formatDate(rating.ratedAt)}</li>;
             })}</ul></details>}
-            <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">{record.previewOnly ? 'تقييم ذاتي محفوظ كمعاينة؛ لم تعتمد قواعد التقييم بعد.' : 'تقييم ذاتي كما سُجل. لا يثبت صحة العمل.'}</p>
+            <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">{record.previewOnly ? 'تقييم ذاتي محفوظ كمعاينة وفق سلم التقييم المعتمد؛ التقييم الذاتي هو تقدير المتعلم الخاص وليس تحققًا مستقلًا، ولا يثبت إتقانًا أو إكمالاً.' : 'تقييم ذاتي كما سُجل، وهو تقدير المتعلم الخاص وليس تحققًا مستقلًا؛ لا يثبت صحة العمل أو إتقانه.'}</p>
           </li>;
         })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.practicalStatus === 'available' ? 'لا توجد تقييمات ذاتية مسجلة.' : 'تعذرت قراءة التقييمات العملية كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.practicalStatus)}.</p>

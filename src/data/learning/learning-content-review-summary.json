@@ -2,10 +2,10 @@
   "activity-diagram": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -88,10 +88,10 @@
   "agent-skills": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -174,10 +174,10 @@
   "ai-coding-agent": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -260,10 +260,10 @@
   "auth-permissions": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -358,10 +358,10 @@
   "backend-architecture-api-contracts": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -456,10 +456,10 @@
   "backend-database-deployment": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -554,10 +554,10 @@
   "class-diagram-design": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -640,10 +640,10 @@
   "conceptual-domain-model": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -726,10 +726,10 @@
   "database-performance-engineering": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -824,10 +824,10 @@
   "dbml-dbdiagram-io": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -910,10 +910,10 @@
   "design-md-spec": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -996,10 +996,10 @@
   "design-system-rules": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1082,10 +1082,10 @@
   "discovery-grill-me": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1168,10 +1168,10 @@
   "django-backend": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1266,10 +1266,10 @@
   "docker-container-workflow": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1364,10 +1364,10 @@
   "fastapi-backend": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1462,10 +1462,10 @@
   "frontend-architecture-planning": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1560,10 +1560,10 @@
   "frontend-backend-integration": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1658,10 +1658,10 @@
   "frontend-incremental-implementation": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1756,10 +1756,10 @@
   "full-stack-journey-testing": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1854,10 +1854,10 @@
   "git-project-docs": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -1940,10 +1940,10 @@
   "github-docs-collaboration": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2026,10 +2026,10 @@
   "google-ai-studio": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2112,10 +2112,10 @@
   "integrated-project-qa": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2210,10 +2210,10 @@
   "interactive-prototype": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2296,10 +2296,10 @@
   "linux-server-operations": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2394,10 +2394,10 @@
   "mcp-protocol": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2480,10 +2480,10 @@
   "mermaid-syntax": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2566,10 +2566,10 @@
   "netlify-frontend-deployment": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2664,10 +2664,10 @@
   "nextjs-app-router": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2762,10 +2762,10 @@
   "plantuml": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2848,10 +2848,10 @@
   "postgresql-database-setup": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -2946,10 +2946,10 @@
   "prd-specification": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3032,10 +3032,10 @@
   "project-demo-day": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3130,10 +3130,10 @@
   "project-handoff-package": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3228,10 +3228,10 @@
   "project-idea-mvp": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3314,10 +3314,10 @@
   "project-operations-runbook": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3412,10 +3412,10 @@
   "project-portfolio-entry": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3510,10 +3510,10 @@
   "python-backend-foundation": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3608,10 +3608,10 @@
   "react-components-state": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3706,10 +3706,10 @@
   "redis-optional-infrastructure": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3804,10 +3804,10 @@
   "relational-erd-design": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3890,10 +3890,10 @@
   "screen-inventory": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -3976,10 +3976,10 @@
   "sequence-diagram-modeling": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4062,10 +4062,10 @@
   "services-selectors": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4160,10 +4160,10 @@
   "spec-kit-workflow": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4258,10 +4258,10 @@
   "srs": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4344,10 +4344,10 @@
   "state-diagram": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4430,10 +4430,10 @@
   "stitch-mcp-integration": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4516,10 +4516,10 @@
   "stitch-reference-screen": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4602,10 +4602,10 @@
   "tailwind-css-responsive": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4700,10 +4700,10 @@
   "typescript-types": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4798,10 +4798,10 @@
   "ui-ux-pro-max-review": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4896,10 +4896,10 @@
   "ui-ux-roles-navigation": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -4982,10 +4982,10 @@
   "use-case-diagram": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -5068,10 +5068,10 @@
   "user-flow-modeling": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -5154,10 +5154,10 @@
   "ux-blueprint": {
     "reviewState": "draft",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",
@@ -5240,10 +5240,10 @@
   "vercel-frontend-deployment": {
     "reviewState": "review-ready",
     "quizScoringPolicyApproval": {
-      "state": "proposed",
-      "approvedBy": null,
-      "approvedAt": null,
-      "decisionReference": null
+      "state": "approved",
+      "approvedBy": "MahmoudAlmodalal (course owner)",
+      "approvedAt": "2026-10-20",
+      "decisionReference": "docs/edu-review/owner-decision-package-70.md#course-owner-decisions (issue #42)"
     },
     "rubricScaleApproval": {
       "state": "proposed",

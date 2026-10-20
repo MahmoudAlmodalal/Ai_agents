@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { isExternalVideoApproved, isLearningPolicyEnabled, isPolicyApproved } from './learningPolicy';
+import { isExternalVideoApproved, isLearningPolicyEnabled, isPolicyApproved, resolvePolicyWordingState } from './learningPolicy';
 
 const validApproval = {
   state: 'approved',
@@ -47,4 +47,31 @@ test('owner approval requires the full audit evidence before enabling policy or 
   ]), false);
   assert.equal(isExternalVideoApproved({ availability: 'candidate', approval: validApproval }), false);
   assert.equal(isExternalVideoApproved({ availability: 'available', approval: validApproval }), true);
+});
+
+test('resolvePolicyWordingState resolves to approved, pending, or draft accurately', () => {
+  const passingGroups = [
+    { area: 'lesson' as const, evidence: passingLessonReview },
+    { area: 'question' as const, evidence: passingReview },
+    { area: 'question' as const, evidence: passingReview },
+  ];
+
+  // 1. Policy not approved -> 'draft'
+  assert.equal(resolvePolicyWordingState('draft', { state: 'proposed' }), 'draft');
+  assert.equal(resolvePolicyWordingState('approved', { state: 'proposed' }, passingGroups), 'draft');
+
+  // 2. Policy approved but reviewState not approved -> 'pending'
+  assert.equal(resolvePolicyWordingState('draft', validApproval), 'pending');
+  assert.equal(resolvePolicyWordingState('review-ready', validApproval, passingGroups), 'pending');
+
+  // 3. Policy approved, reviewState approved, but missing/not-run evidence -> 'pending'
+  assert.equal(resolvePolicyWordingState('approved', validApproval, []), 'pending');
+  assert.equal(resolvePolicyWordingState('approved', validApproval, [
+    { area: 'lesson' as const, evidence: passingLessonReview },
+    { area: 'question' as const, evidence: [{ ...passingReview[0], outcome: 'not-run' }] },
+    { area: 'question' as const, evidence: passingReview },
+  ]), 'pending');
+
+  // 4. Policy approved, reviewState approved, and all evidence passed -> 'approved'
+  assert.equal(resolvePolicyWordingState('approved', validApproval, passingGroups), 'approved');
 });
