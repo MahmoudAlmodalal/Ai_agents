@@ -83,7 +83,11 @@ test.describe('Learner dashboard and export', () => {
             scaleId: 'descriptive-three-level', scaleVersion: 1,
             criteria: [{ criterionId: 'problem-statement', criterionVersion: 1 }],
             ratings: [{ criterionId: 'problem-statement', criterionVersion: 1, scaleId: 'descriptive-three-level', scaleVersion: 1, ratingId: 'in-progress', ratedAt: submittedAt }],
-            history: [], updatedAt: submittedAt, selfAssessment: true, previewOnly: true,
+            history: [{
+              criterionId: 'problem-statement-v0', criterionVersion: 0,
+              scaleId: 'archived-scale-v0', scaleVersion: 0, ratingId: 'legacy-ready',
+              assessmentId: 'scope-rubric-v0', assessmentVersion: 0, ratedAt: submittedAt,
+            }], updatedAt: submittedAt, selfAssessment: true, previewOnly: true,
           },
         },
       }));
@@ -113,10 +117,13 @@ test.describe('Learner dashboard and export', () => {
     await expect(assessmentCard).toContainText('نسخة سلم التقدير 1');
     await expect(assessmentCard).toContainText('حكم محفوظ');
     await expect(assessmentCard).toContainText('تقييم ذاتي محفوظ كمعاينة');
+    await assessmentCard.getByText(/أحكام محفوظة لإصدارات أقدم/).click();
+    await expect(assessmentCard.locator('details')).toContainText('scope-rubric-v0');
+    await expect(assessmentCard.locator('details')).toContainText('archived-scale-v0');
     await expect(quizCard.getByRole('link', { name: 'اختيار فكرة المشروع وتحديد MVP' })).toBeVisible();
     await expect(page.getByText('previewOnly', { exact: false })).toHaveCount(0);
     await expect(page.getByText('e2e-attempt-1', { exact: false })).toHaveCount(0);
-    await expect(page.getByText('scope-check', { exact: false })).toHaveCount(0);
+    await expect(quizCard).toContainText('scope-check');
     await expect(page.getByText('in-progress', { exact: false })).toHaveCount(0);
     await page.reload();
     await expect(page.getByTestId('quiz-attempt-row')).toContainText('نسخة الاختبار 2');
