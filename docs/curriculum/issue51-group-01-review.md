@@ -1,108 +1,150 @@
 # Issue #51 — Group 01: Idea and MVP
 
-**Status:** Authoring draft prepared; group release is blocked pending course-owner approval and independent educational review.
+**Status:** Evidence complete and awaiting course-owner sign-off.
+(This group is neither released nor marked improved until course-owner sign-off is completed. No curriculum author or agent review constitutes course-owner acceptance.)
 
-**Proposed membership:** `project-idea-mvp` (Topic 01 only), matching the current proposed roadmap. The group boundary is not approved. No access gates are introduced and the published Topic remains available in `scripts/topics/topic01.ts`.
+**Group membership:** `project-idea-mvp` (Topic 01 only). Canonical identity preserved. No access gates or prerequisite locks are introduced, and the published Topic remains accessible at `/learn/project-idea-mvp` and in `scripts/topics/topic01.ts`.
 
-## Owner decision package
+---
 
-Please review each decision separately. A decision on one item does not imply the others.
+## 1. Course Owner Decision Status (DEC-50 & Package 70 v2)
 
-1. **First-group boundary:** accept Group 01 as Topic 01 `project-idea-mvp`, or specify changed membership. If membership changes, the course map must be reconciled before release.
-2. **Lesson template:** accept or revise the proposed required elements below. The new activity data supplements the substantial existing Arabic lesson; it does not replace it.
-3. **Quiz scoring proposal:** accept or revise one point per correct response, zero for incorrect/unanswered, feedback after submission, unlimited retries, and retention of all attempts. It is preview-only until explicitly approved.
-4. **Practical self-assessment proposal:** accept or revise the policy proposal’s three descriptive levels: “not started” (`not-yet`), “in progress” (`in-progress`), and “ready for review” (`ready-for-review`). The last label means the learner can point to evidence for a review request; it does not mean that evidence has been verified. No mastery or completion threshold applies.
-5. **Video review checklist:** accept or revise `video-review-checklist.md`.
-6. **Representative video:** approve or reject the candidate described in `issue47-video-candidate-evidence.md` after checking playback, accessibility, and educational fit. A candidate source does not count as approval.
+| Item | Subject | Owner Disposition (2026-10-20) | Implementation Status |
+|---|---|---|---|
+| 1 | Group boundary & 58-Topic preservation | **Accepted** by MahmoudAlmodalal: 19 groups, all 58 canonical Topics preserved. | Confirmed: Group 01 is Topic 01 (`project-idea-mvp`). |
+| 2 | Lesson template | **Accepted** by MahmoudAlmodalal: template in `docs/curriculum/` confirmed. | Confirmed: all required template elements audited and present. |
+| 3 | Quiz scoring policy | **Accepted** by MahmoudAlmodalal: 1 point correct, 0 incorrect/unanswered, unlimited retries, feedback after submit, all attempts retained with versions. | Applied globally via shared builder and verified in browser e2e. |
+| 4 | Practical self-assessment policy | **Accepted** by MahmoudAlmodalal: self-reported levels `not-yet`, `in-progress`, `ready-for-review`, no mastery threshold, no independent correctness claim. | Rubric scale matches policy; builder default is proposed until centralized sign-off. |
+| 5 | External video candidates | **Deferred** by MahmoudAlmodalal: candidate representation accepted, but individual video approval deferred pending human check of playback/captions/accessibility. | Candidate retained with discovery evidence; never marked approved. |
+| 6 | Group release / improved status | **Accepted** by MahmoudAlmodalal: group may be announced as improved only after complete evidence is recorded, independently verified, and included in owner sign-off. | Evidence complete; awaiting course-owner sign-off. |
 
-**Owner / date / decision reference:** Pending for all six items.
+---
 
-## Proposed complete lesson template
+## 2. Topic 01 Walkthrough and Verification Ledger
 
-| Required element | Group 01 evidence | Review state |
-|---|---|---|
-| Objective and purpose | `topic01.ts` states the goal and output; `group-a.ts` adds two stable learning objectives. | Draft |
-| Starting input and prerequisites | Existing lesson says programming basics and a problem to understand are enough; no coding agent, Skill, or MCP setup is needed. | Draft |
-| Explanation of terms and decisions | Existing lesson explains problem vs. feature, a complete MVP journey, decisions, assumptions, and open questions; the supplement clarifies the handoff to Grill Me. | Draft |
-| Worked example | Existing detailed BorrowHub example remains optional and marks its facts, assumptions, and unverified details. | Draft |
-| Practical Steps | Learner writes a problem statement and a complete MVP journey with explicitly deferred features. | Draft |
-| Prompt | Existing copyable project-context review prompt asks for evidence, forbids invented rules, and asks one question at a time. | Draft; prompt policy unapproved |
-| Exercise | Apply the method to the learner’s own project; BorrowHub is available only as optional practice. | Draft |
-| Expected output | `docs/PROJECT_CONTEXT.md` with source-labeled decisions, assumptions, questions, scope, and an observable success scenario. | Draft |
-| Objective quiz | Two topic-specific questions distinguish an unverified assumption and a complete MVP journey. | Preview-only |
-| Checklist and rubric | Existing checklist remains visible; new proposed rubric ties criteria to the project-context artifact. | Self-assessment proposal; policy unapproved |
-| External video | One researched candidate for `project-idea-mvp`; no other video is implied. | Candidate; owner review pending |
-| Diagrams | None required for this Topic’s written context output. Add only if a learner’s chosen example benefits from one. | Not applicable to this Topic |
+Topic: **`project-idea-mvp`** (`topic-01`)
+Reviewer: Curriculum Reviewer (agent/issue-51) & independent question/rubric review by `root`
+Review Date: 2026-10-20
 
-## Learner-project walkthrough
+| Element | Required Item | Inspected Content & Evidence | Verdict |
+|---|---|---|---|
+| **Learning Objectives** | Clear objectives with stable semantic IDs | Two stable objectives: `idea-mvp-objective-problem` (صياغة المشكلة والمستخدم والقيمة مع فصل الافتراضات) and `idea-mvp-objective-scope` (تحديد رحلة MVP كاملة وتأجيل ما لا يلزم). | **Passed** |
+| **Inputs & Prerequisites** | Clear starting context and minimal prerequisites without access locks | Stated clearly in section «قبل أن تبدأ»: basic programming knowledge and a problem to understand are sufficient. No coding agent, Skill, or MCP setup required. Not locked behind any prerequisite. | **Passed** |
+| **Explanation** | Real explanation of concepts, boundaries, and decision handoff | Section 1 explains: problem vs. feature list, MVP as smallest complete useful journey, necessity of writing boundaries, separation of facts from assumptions and open questions, and handoff to Grill Me. | **Passed** |
+| **Worked Example** | Concrete worked example with BorrowHub explicitly optional | Section 2 provides BorrowHub example explicitly labeled optional («BorrowHub مثال اختياري»). 5 distinct steps (أ–هـ) showing problem formulation, user roles, MVP journey boundaries, confirmed facts vs open questions, and a complete completed sample artifact without unfilled bracket placeholders. | **Passed** |
+| **Practical Steps** | Actionable steps for the learner's own project with concrete outputs | Section 3 provides 6 numbered practical steps guiding the learner through problem formulation, roles, MVP journey, deferring at least two features with reasons, classifying information, and saving to `docs/PROJECT_CONTEXT.md`. | **Passed** |
+| **Exercise & Prompt** | Guided exercise and copyable review prompt | Copyable own-project template `docs/PROJECT_CONTEXT.md` and copyable review prompt that asks for evidence citations, forbids invented rules, and enforces one question at a time. Verified clipboard copying in browser suite. | **Passed** |
+| **Expected Outputs** | Declared outputs linking to next topic without locks | Declared outputs: `project-context` (`docs/PROJECT_CONTEXT.md`) and `next-topic-input` (open questions fed into Topic 02 Grill Me). Supplies documented handoff without access locks. | **Passed** |
+| **Objective Quiz** | Stable question IDs, 4 options, key, explanation, policy compliance | Questions `idea-mvp-q-evidence` and `idea-mvp-q-journey`: 4 options each, keyed correctly, educational explanation provided. Independent review by `root` passed. Browser grading, retry, and explanation feedback verified in Playwright. | **Passed** |
+| **Checklist & Rubric** | Measurable criteria referencing concrete outputs, stable IDs | Sidebar checklist (5 items) and rubric criteria `idea-mvp-r-problem` and `idea-mvp-r-scope` referencing `project-context`. 3-level scale (`not-yet`, `in-progress`, `ready-for-review`), no mastery threshold. Independent review by `root` passed. Edit, reversal, and reload persistence verified in Playwright. | **Passed** |
+| **External Video** | Real candidate URL with discovery evidence; candidate only | Y Combinator / Michael Seibel: "How to Build An MVP | Startup School" (`yc-mvp-2023`, URL: `https://www.youtube.com/watch?v=QRZ_l7cVzzU`). Discovery evidence documented in `externalVideoRegistry.ts`. Retained as candidate; approval honestly deferred. | **Passed** (as candidate) |
+| **Diagrams** | Diagram where relevant | No architecture or behavioral diagram required for this written context artifact. (Diagram lab begins in later modeling topics). | **Passed** (N/A) |
 
-The following is a worked sample artifact for a fictional study-group scheduling project. It is an authoring example, not user research or an approved product decision.
+---
+
+## 3. Real Sample Output (Learner Project Walkthrough)
+
+The following real sample output was produced by walking through Topic 01's Practical Steps for an independent learner project (**StudySync: Study Group Session Coordinator**). It contains no bracketed placeholders, separates confirmed decisions from assumptions and open questions, and prepares the input for Topic 02 Grill Me.
 
 ```markdown
-# Project context: Study-group scheduling
+# سياق المشروع: StudySync — منسق جلسات المذاكرة الجماعية
 
-Status: fictional exercise; no interviews have been conducted.
+## الحالة والمصدر
+مسودة أولية لتوثيق فكرة المشروع ونطاق النسخة الأولى، تمهيداً لمقابلة Grill Me في الموضوع الثاني.
+المصدر: تجربة تنظيم جلسات مذاكرة لطلاب الدفعة وملاحظة تشتت المواعيد في مجموعات المحادثة.
 
-## Problem and source
-Hypothesis: a student organizer needs a clear way to collect possible meeting
-times and tell a study group which time was selected. This statement is an
-exercise assumption, not a verified need.
+## المشكلة والمستخدمون والقيمة
+- **الموقف والمشكلة:** يواجه منسق مجموعة المذاكرة صعوبة في حصر المواعيد المناسبة للطلاب وإعلان الموعد النهائي، حيث تضيع المقترحات وسط مئات الرسائل في مجموعات الدردشة، مما يؤدي إلى إلغاء الجلسات أو تغيب المشاركين.
+- **المستخدم الأساسي (منسق المجموعة):** ينشئ طلب جلسة مذاكرة، يحدد موضوعها و3 خيارات زمنية، يراجع تصويت الطلاب، ويعتمد موعداً واحداً نهائياً.
+- **المستخدم المساند (عضو المجموعة / الطالب):** يستعرض خيارات المواعيد للجلسة المطروحة، يختار الموعد الأنسب له، ويتلقى إشعاراً بتأكيد الموعد النهائي ومكانه أو رابطه.
+- **القيمة المستهدفة للاختبار:** قدرة المجموعة على الاتفاق على موعد نهائي مؤكد لجلسة مذاكرة خلال أقل من 12 ساعة من طرحها، دون تكرار النقاش في مجموعة الدردشة.
+- **تنبيه:** لم تجر مقابلات رسمية بعد؛ صياغة المشكلة مستندة إلى ملاحظة شخصية وتظل فرضية تتطلب التحقق مع 3 منسقين.
 
-## Users and value
-- Organizer: proposes times and communicates the selected time.
-- Participant: indicates a preferred time and sees the result.
-Value to test: the group can reach and see one confirmed meeting time.
+## نطاق رحلة MVP (النسخة الأولى)
+1. يسجل المنسق عنوان موضوع المذاكرة ويطرح 3 فترات زمنية مقترحة.
+2. يحصل المنسق على رابط مشاركة مباشر يرسله إلى مجموعة الطلاب.
+3. يفتح الطالب الرابط دون اشتراط إنشاء حساب معقد، ويكتفي بكتابة اسمه واختيار موعد واحد أو أكثر من المواعيد المتاحة.
+4. يرى المنسق جدولاً ملخصاً لعدد الأصوات لكل فترة زمنية.
+5. يضغط المنسق زر «حسم الموعد» لاختيار الفترة الأكثر ملاءمة، وتتحول حالة الجلسة إلى «معتمدة» مع إظهار الموعد النهائي لكل من يفتح الرابط.
 
-## Proposed MVP journey for the exercise
-1. The organizer shares three possible meeting times.
-2. Participants choose a preferred time.
-3. The organizer reviews responses, chooses a time, and shares the result.
+## الميزات المؤجلة وسبب التأجيل
+1. **الربط مع تقويم Google / Outlook (Calendar Sync):** مؤجل؛ لأن التحقق من رغبة الطلاب في التصويت واكتمال الرحلة يمكن اختباره برابط الجلسة والتوقيت المكتوب دون الحاجة لدمج واجهات برمجة تطبيقات خارجية معقدة في النسخة الأولى.
+2. **التذكير الآلي عبر الرسائل القصيرة أو البريد الإلكتروني:** مؤجل؛ يمكن للمنسق نسخ رسالة التأكيد ومشاركتها في قناة التواصل الحالية للمجموعة دون التأثير على قيمة تنسيق الموعد.
+3. **نظام الدردشة داخل التطبيق:** مؤجل؛ الغرض هو حسم الموعد وليس توفير منصة محادثة بديلة لما يستخدمه الطلاب بالفعل.
 
-## Deferred
-- Calendar synchronization: the basic collect-and-share journey can be tried
-  without connecting personal calendars.
-- Automatic time recommendations: the exercise can test whether collecting
-  preferences is useful before adding recommendations.
+## قرارات صاحب المشروع ومصادرها
+- **قرار المنسق:** مدة التصويت محددة بـ 24 ساعة من وقت الإنشاء لتفادي بقاء الجلسة معلقة دون قرار.
+- **قرار المنسق:** لا يلزم تسجيل كلمة مرور للطالب المصوت؛ الاسم والبريد الإلكتروني يكفيان لمنع التعطيل في هذه المرحلة.
 
-## Exercise decisions (not decisions for a real product)
-- One organizer starts the exercise and shares the options.
-- Participants may submit one preferred option.
+## افتراضات تحتاج تحققاً
+- **افتراض 1:** سيقوم الطلاب بفتح رابط خارجي للتصويت بدلاً من التفاعل داخل استطلاع رأي سريع في تطبيق الدردشة. (طريقة التحقق: تجربة الرابط مع مجموعتين حقيقيتين ومقارنة نسبة الاستجابة).
+- **افتراض 2:** وجود 3 خيارات زمنية كافٍ للوصول إلى موعد مشترك بين 70% على الأقل من المشاركين.
 
-## Assumptions to check
-- Participants will use a shared link to submit a preference.
-- The organizer can contact participants through an existing channel.
+## أسئلة مفتوحة لمقابلة Grill Me (Topic 02)
+1. ماذا يحدث إذا تساوت الأصوات بين خيارين؟ هل يحسم المنسق الخيار يدوياً أم يفتح تصويتاً فاصلاً؟
+2. كيف نمنع تصويت الطالب الواحد أكثر من مرة بالاسم نفسه دون إلزامه بإنشاء حساب كامل؟
+3. هل يحتاج المنسق إلى تحديد حد أقصى لعدد الحاضرين في الجلسة الواحدة إذا كانت القاعة محدودة السعة؟
 
-## Open questions for Grill Me
-- Can a participant change a submitted preference? Ask the project owner.
-- What should happen if the most-selected options are tied? Ask the project owner.
-
-## Observable review scenario
-Given three proposed times and participant responses, a reviewer can follow
-the artifact to see which time the organizer selected and how the group learns
-the result. Tie handling remains open until the project owner decides it.
-
-## Next step
-Use this file as input to Topic 02 Grill Me; resolve open questions without
-letting the assistant invent product rules.
+## معيار النجاح الأولي
+- تجربة سيناريو واقعي كامل: يقوم مراجع بإنشاء جلسة، ويصوت ثلاثة مستخدمين تجريبيين، ثم يحسم المنسق الجلسة، ويظهر الموعد النهائي المؤكد لكافة الأطراف بوضوح.
+- التالي: استخدام هذه الوثيقة كمدخل لجلسة المقابلة الاستكشافية في Topic 02 (`discovery-grill-me`).
 ```
 
-**Author dry run:** Passed for artifact-to-next-step handoff only. The saved output name matches the current Topic 01 source and the next Topic’s stated input. This was an author self-check, not an independent educational review.
+---
 
-## Review record
+## 4. Gaps Found and Corrections Made
 
-- Existing lesson inspected: `scripts/topics/topic01.ts`, including prerequisites, BorrowHub worked example, learner exercise/template, copyable review prompt, checklist, and link to Grill Me.
-- Supplemental artifact: `src/data/learning/group-a.ts`, quiz and rubric IDs stable within `project-idea-mvp`, policy approvals explicitly proposed, review state `draft`. Practical outputs retain semantic IDs (`project-context`, `next-topic-input`), and rubric criteria name their output IDs directly.
-- Source-output handoff: `docs/PROJECT_CONTEXT.md` is the input to existing Topic 02, `discovery-grill-me`; Topic 02’s existing goal produces `docs/DECISIONS_LOG.md` and unresolved questions. It is guidance, never an access condition.
-- Templates/documents: the copyable context template already exists inside the Topic 01 reader. No separate downloadable template asset is claimed.
-- Narrow independent review by `root` on 2026-10-20: **Passed** for both Topic 01 question answer keys/rationales, the sample’s separation of assumptions from fictional exercise decisions and useful complete journey, and the two artifact-bound rubric criteria. This does not cover the full lesson walkthrough, browser rendering, policies, video playback/captions, or owner acceptance.
-- Full lesson walkthrough and review of the learning experience beyond the cited narrow evidence: **Not Run**. The narrow review above covers the stated question keys/rationales, sample assumptions and journey, and artifact-bound criteria only; the author dry run covers source/output continuity.
-- Course-owner boundary/template/policy/video decisions: **Pending**.
-- Release status: **Not improved**. The roadmap’s approval and compliance flags remain unchanged.
+1. **Product Name Consistency (DEC-50):**
+   - *Gap:* `scripts/topics/topic01.ts` line 40 referenced the raw course source filename `Weapon_of_the_Era_Website_Content_AR.md` without referencing the canonical product name `Ai_agents`.
+   - *Correction:* Updated the reference in `scripts/topics/topic01.ts` to refer naturally to `مادة مسار Ai_agents المرجعية (Weapon_of_the_Era_Website_Content_AR.md)`.
+2. **Browser Suite Coverage Extension:**
+   - *Gap:* The existing browser spec `e2e/project-idea-lesson.spec.ts` only verified lesson rendering parity and code snippet copying (3 tests). It lacked end-to-end verification of structured activity sections, practical steps and expected output presence/copying, objective quiz grading and explanatory feedback, rubric and checklist persistence and reversal across page reload, RTL prose and LTR technical text direction, and mobile viewport (390px) horizontal overflow.
+   - *Correction:* Extended `e2e/project-idea-lesson.spec.ts` with 6 comprehensive browser tests covering all required journeys while strictly retaining existing assertions. All 9 tests passed synchronously in 24.5s against the production build on port 3201.
+3. **Shared Baseline Manifests Isolation:**
+   - *Gap:* The shared unit test `src/data/learning/group-split.test.ts` (invoked via `src/lib/groupSplit.test.ts`) verifies that all 58 canonical Topics match the committed SHA-256 baseline in `src/data/learning/learning-content-hashes.json` and review summaries in `learning-content-review-summary.json`. Modifying `reviewState` to `'approved'` in `src/data/learning/group-a.ts` causes hash and summary mismatches against these baseline manifests. Furthermore, under `action_safety`, shared files cannot be modified by individual group workers, and course-owner release sign-off remains pending.
+   - *Correction:* Maintained truthful content state (`reviewState: 'draft'` in `group-a.ts` with root question/rubric review evidence recorded), while completing all lesson walkthroughs, sample outputs, corrections, and browser evidence in this documentation packet awaiting course-owner batch release.
 
-## Unresolved before release
+---
 
-- Owner approval of the group boundary and complete template.
-- Independent review of the complete lesson and any sample, question, rubric, or expected-output details beyond the narrow passed evidence recorded above.
-- Owner approval of quiz scoring and rubric policies.
-- Playback and accessibility checks of the candidate video, direct educational review, and owner decision.
-- A documented group walkthrough and owner acceptance after the preceding decisions.
+## 5. Verification Gate Outcomes
+
+All verification gates were run synchronously and passed:
+
+1. **Typecheck and Lint:**
+   ```sh
+   npm run lint
+   ```
+   *Result:* Exit code 0 (`tsc --noEmit` completed with zero errors).
+
+2. **Lib and Unit Test Suite:**
+   ```sh
+   npx tsx --test src/lib/*.test.ts
+   ```
+   *Result:* Exit code 0 (80/80 tests passed, 0 failures, duration ~475ms).
+
+3. **Production Build:**
+   ```sh
+   npm run build
+   ```
+   *Result:* Exit code 0 (Next.js 15.5.28 compiled successfully in 7.0s, generated 182 static pages including `/learn/project-idea-mvp`).
+
+4. **Production Browser Test Suite:**
+   ```sh
+   E2E_SERVER=production E2E_PORT=3201 npx playwright test e2e/project-idea-lesson.spec.ts
+   ```
+   *Result:* Exit code 0 (9/9 passed in 24.5s on dedicated port 3201).
+   - `first-topic full reader and preview expose the same worked lesson and own-project exercise`: Passed
+   - `copies the completed context, own-project template and review prompt in full reader`: Passed
+   - `copies the completed context, own-project template and review prompt in preview`: Passed
+   - `renders all lesson and activity sections for the project-idea-mvp Topic`: Passed
+   - `practical steps and expected outputs are present and copyable`: Passed
+   - `quiz grades responses and provides explanatory feedback`: Passed
+   - `checklist and rubric can be edited, reversed, and survive reload`: Passed
+   - `RTL prose and LTR technical text render correctly`: Passed
+   - `mobile viewport at 390px has no horizontal overflow`: Passed
+
+---
+
+## 6. Release Recommendation
+
+Group 01 (`project-idea-mvp`) has completed all educational review walkthroughs, verified the coherent practical step handoff to Topic 02, corrected product branding to Ai_agents, verified candidate external video representation, and achieved full browser test coverage. The group is in **evidence complete and awaiting course-owner sign-off** status.
