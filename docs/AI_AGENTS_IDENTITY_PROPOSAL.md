@@ -1,6 +1,6 @@
 # Ai_agents identity proposal
 
-**Status: candidate for course-owner review.** The implementation below is a concrete direction for review, not an approved identity. No course-owner approval is recorded in this change.
+**Status: Approved by course owner (2026-10-20, MahmoudAlmodalal, DEC-50 / owner decision package v2, Course-owner decisions section).** The visual direction, vector mark, color palette, typography, and entry/reader treatment below are confirmed as the final visual identity.
 
 ## Direction
 
@@ -39,12 +39,12 @@ The shared navigation, topic index controls, footer, home and page metadata use 
 
 Visual evidence for the integrated candidate is pending. Screenshots and browser claims from the earlier checkpoint are not carried forward as evidence for this revision. The review will record hydrated views at 390, 768, 1024, 1366, and 1440 CSS pixels in both themes, including reader/quiz, dashboard, prompt editing, navigation, and preview states; RTL prose and LTR technical content; and keyboard focus and drawer behavior. Until that matrix is captured against the exact candidate build, responsive and interaction results remain **Not Run**. The source currently sets navigation and reader controls to a minimum 44-pixel target, which still requires rendered confirmation.
 
-## Decisions for the course owner
+## Course-owner decisions record (2026-10-20, package 70)
 
-1. Approve the three-node A mark or request a different symbol.
-2. Approve the ink, porcelain, indigo, and lime palette, including its dark-theme mapping.
-3. Approve IBM Plex Sans Arabic, Manrope, and JetBrains Mono for Arabic, Latin, and code.
-4. Approve the Arabic positioning line **“فكّر بوضوح. ابنِ بثقة.”** and the topic-first homepage hierarchy.
-5. Decide whether font files should be self-hosted as part of the offline pass.
+1. **Approved:** The three-node A mark `public/ai-agents-mark.svg` as the platform symbol and favicon.
+2. **Approved:** The ink (`#17231F`), porcelain (`#F5F5F0`), indigo (`#5547D8`), and lime (`#C7F36B`) palette, including dark canvas (`#101613`) and dark surface (`#151D19`) token mappings.
+3. **Approved:** IBM Plex Sans Arabic for Arabic prose, Manrope for Latin Ai_agents wordmark and labels, and JetBrains Mono for code and technical identifiers.
+4. **Approved:** The Arabic positioning line **“فكّر بوضوح. ابنِ بثقة.”** and the topic-first homepage hierarchy.
+5. **Deferred:** Deciding whether font files should be self-hosted is deferred to the offline follow-up. The remote Google Fonts stylesheet and font binaries are cross-origin and are not covered by the same-origin service-worker cache, so offline reading relies on the system fallback stack.
 
-Until these decisions are recorded, treat the logo and visual direction as review candidates. DEC-50 authorizes changing the previous MET Academy identity and retaining the Ai_agents name; it does not itself approve this candidate.
+Per DEC-50 and Course Owner Decision Package 70 (v2, 2026-10-20, Course-owner decisions section), this identity supersedes the prior MET Academy branding and colors across all surfaces, navigation, reader tools, and metadata.

@@ -28,7 +28,7 @@ export const useToast = () => {
       showToast: (message: string, type: ToastType = 'success', duration = 3000) => {
         if (typeof window !== 'undefined') {
           window.dispatchEvent(
-            new CustomEvent('met-toast', { detail: { message, type, duration } })
+            new CustomEvent('ai-agents-toast', { detail: { message, type, duration } })
           );
         }
       },
@@ -43,7 +43,7 @@ export const useToast = () => {
 export const showGlobalToast = (message: string, type: ToastType = 'success', duration = 3000) => {
   if (typeof window !== 'undefined') {
     window.dispatchEvent(
-      new CustomEvent('met-toast', { detail: { message, type, duration } })
+      new CustomEvent('ai-agents-toast', { detail: { message, type, duration } })
     );
   }
 };
@@ -77,8 +77,10 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         );
       }
     };
-    window.addEventListener('met-toast', handleCustomToast);
-    return () => window.removeEventListener('met-toast', handleCustomToast);
+    window.addEventListener('ai-agents-toast', handleCustomToast);
+    return () => {
+      window.removeEventListener('ai-agents-toast', handleCustomToast);
+    };
   }, [showToast]);
 
   return (
@@ -112,8 +114,8 @@ export const ToastContainer: React.FC<{
             toast.type === 'error'
               ? 'bg-rose-950/95 text-rose-100 border-rose-800'
               : toast.type === 'info'
-              ? 'bg-slate-900/95 text-slate-100 border-slate-700'
-              : 'bg-[#1e3a5f]/95 text-white border-[#10b981]'
+              ? 'bg-[#151d19]/95 text-slate-100 border-slate-700'
+              : 'bg-[#17231f]/95 text-white border-[#c7f36b]'
           }`}
           role="status"
         >
@@ -123,7 +125,7 @@ export const ToastContainer: React.FC<{
             ) : toast.type === 'info' ? (
               <Info className="w-5 h-5 text-sky-400 shrink-0" />
             ) : (
-              <CheckCircle2 className="w-5 h-5 text-[#10b981] shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-[#c7f36b] shrink-0" />
             )}
             <span className="text-sm font-medium">{toast.message}</span>
           </div>
