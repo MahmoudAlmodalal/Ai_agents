@@ -1,58 +1,53 @@
 import type { PracticalAssessmentRecord, QuizAttemptRecord } from '@/src/types/learning';
-import type { BadgePolicy } from '@/src/lib/badgeAwards';
+import type { BadgeAwardRule, BadgeEvidenceType, BadgePolicy } from '@/src/lib/badgeAwards';
 import type { LearningRecordStorageStatus } from '@/src/types/learning';
 import type { TopicStorageStatus } from '@/src/lib/topicStorage';
 
-export interface DraftBadgeRule {
-  id: string;
-  version: 'proposal-1';
-  title: string;
-  explanation: string;
-  threshold: number;
-  evidence: 'recent-topic-list' | 'quiz-attempts' | 'current-self-assessments';
-}
-
-/** Candidate rules are deliberately activity based. They are previews only until approved. */
-export const BADGE_RULE_PROPOSALS: DraftBadgeRule[] = [
+export const BADGE_RULES: BadgeAwardRule[] = [
   {
     id: 'explore-topics',
-    version: 'proposal-1',
+    version: 1,
     title: 'استكشاف موضوعات',
-    explanation: 'ثلاثة موضوعات مختلفة على الأقل ضمن قائمة الموضوعات التي زرتها مؤخرًا. القائمة الحالية تحفظ آخر خمسة فقط ولا تمثل سجلًا كاملًا.',
     threshold: 3,
     evidence: 'recent-topic-list',
+    conditionDescription: 'زيارة 3 موضوعات مختلفة على الأقل في هذا المتصفح.',
+    evidenceDescription: 'سجل الزيارات الأخيرة المحفوظ محليًا (يحفظ آخر 5 موضوعات زرتها دون توقيت أو مدة قراءة).',
+    distinctionNotice: 'نشاط استكشاف وتصفح أخير؛ لا يقيس إتمام القراءة ولا يعتمد مدة زمنية ولا يمنح اعتمادًا أو شهادة.',
   },
   {
     id: 'practice-quizzes',
-    version: 'proposal-1',
+    version: 1,
     title: 'تجربة الاختبارات',
-    explanation: 'ثلاث محاولات اختبار محفوظة على الأقل، بصرف النظر عن الدرجة. هذا يقيس الممارسة المسجلة ولا يثبت الإتقان.',
     threshold: 3,
     evidence: 'quiz-attempts',
+    conditionDescription: 'تسجيل 3 محاولات فحص ذاتي موضوعية محفوظة على الأقل.',
+    evidenceDescription: 'سجلات محاولات الفحص الذاتي المحفوظة محليًا على هذا الجهاز (المحاولات المكتملة بصرف النظر عن درجتها).',
+    distinctionNotice: 'نشاط ممارسة وتدريب ذاتي بصرف النظر عن النتيجة؛ لا يثبت إتقان المادة ولا يمنح اعتمادًا رسميًا.',
   },
   {
     id: 'reflect-on-practice',
-    version: 'proposal-1',
+    version: 1,
     title: 'مراجعة عملية ذاتية',
-    explanation: 'تقييم ذاتي حالي محفوظ لثلاثة موضوعات مختلفة على الأقل. هذه أحكام المتعلم على عمله وليست تحققًا مستقلًا.',
     threshold: 3,
     evidence: 'current-self-assessments',
+    conditionDescription: 'تسجيل تقييم ذاتي حالي مكتمل بواقع حكم واحد على الأقل لثلاثة موضوعات مختلفة.',
+    evidenceDescription: 'سجلات التقييم العملي الذاتي الحالية المحفوظة محليًا في هذا المتصفح.',
+    distinctionNotice: 'أحكام ذاتية يصف بها المتعلم مخرجات مشروعه بنفسه؛ لا تمثل تدقيقًا مستقلًا أو اعتمادًا لصحة المخرج.',
   },
 ];
 
-/** The shipping policy remains closed until the course owner records an audited approval. */
-export const BADGE_AWARD_POLICY_PROPOSAL: BadgePolicy = {
+/** Owner-approved badge award policy accepted 2026-10-20 (docs/edu-review/owner-decision-package-70.md). */
+export const BADGE_AWARD_POLICY: BadgePolicy = {
   policyId: 'learner-activity-badges',
   version: 1,
-  reviewState: 'draft',
-  approval: { state: 'proposed', approvedBy: null, approvedAt: null, decisionReference: null },
-  rules: BADGE_RULE_PROPOSALS.map((rule) => ({
-    id: rule.id,
-    version: 1,
-    title: rule.title,
-    threshold: rule.threshold,
-    evidence: rule.evidence,
-  })),
+  reviewState: 'approved',
+  approval: {
+    state: 'approved',
+    approvedBy: 'MahmoudAlmodalal (course owner)',
+    approvedAt: '2026-10-20T00:00:00.000Z',
+    decisionReference: 'docs/edu-review/owner-decision-package-70.md',
+  },
+  rules: BADGE_RULES,
 };
 
 export interface BadgeDraftEvidence {
@@ -65,7 +60,7 @@ export interface BadgeDraftEvidence {
 }
 
 export interface BadgeDraftPreview {
-  rule: DraftBadgeRule;
+  rule: BadgeAwardRule;
   observedCount: number;
   draftConditionMet: boolean;
   evidenceConfirmed: boolean;
@@ -85,7 +80,7 @@ export function previewBadgeRules(evidence: BadgeDraftEvidence): BadgeDraftPrevi
       .filter((record) => record.selfAssessment && record.ratings.length > 0)
       .map((record) => record.topicSlug),
   );
-  const counts: Record<DraftBadgeRule['evidence'], { draft: number; nonPreview: number }> = {
+  const counts: Record<BadgeEvidenceType, { draft: number; nonPreview: number }> = {
     'recent-topic-list': {
       draft: new Set(evidence.recentlyViewedTopicSlugs).size,
       // Reading records have no owner-approved completion policy; none is an award record.
@@ -103,13 +98,13 @@ export function previewBadgeRules(evidence: BadgeDraftEvidence): BadgeDraftPrevi
     },
   };
 
-  const statuses: Record<DraftBadgeRule['evidence'], TopicStorageStatus | LearningRecordStorageStatus> = {
+  const statuses: Record<BadgeEvidenceType, TopicStorageStatus | LearningRecordStorageStatus> = {
     'recent-topic-list': evidence.recentlyViewedStatus ?? 'available',
     'quiz-attempts': evidence.quizAttemptsStatus ?? 'available',
     'current-self-assessments': evidence.practicalAssessmentsStatus ?? 'available',
   };
 
-  return BADGE_RULE_PROPOSALS.map((rule) => {
+  return BADGE_RULES.map((rule) => {
     const { draft, nonPreview } = counts[rule.evidence];
     const draftConditionMet = draft >= rule.threshold;
     const evidenceStatus = statuses[rule.evidence];

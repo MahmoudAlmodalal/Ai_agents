@@ -19,7 +19,7 @@ import { getAllTopicLearningContent } from '@/src/lib/learningContent';
 import { listLearningRecords, subscribeLearningRecords } from '@/src/lib/learningRecords';
 import { getBrowserPromptCustomizationStore, type PromptCustomizationSnapshot } from '@/src/lib/promptCustomization';
 import { readDashboardChecklistSnapshot, type DashboardChecklistSnapshot } from '@/src/lib/dashboardRecords';
-import { BADGE_AWARD_POLICY_PROPOSAL, BADGE_RULE_PROPOSALS, previewBadgeRules } from '@/src/lib/dashboardModel';
+import { BADGE_AWARD_POLICY, BADGE_RULES, previewBadgeRules } from '@/src/lib/dashboardModel';
 import { getBrowserBadgeAwardStore, type BadgeAwardSnapshot } from '@/src/lib/badgeAwards';
 import { createLearningExportArchive, type LearningExportSnapshot } from '@/src/lib/learningExport';
 import type { PromptLibraryRecord } from '@/src/lib/promptLibrary';
@@ -75,7 +75,7 @@ function storageStatusLabel(status: string) {
 }
 
 function badgeRuleTitle(id: string) {
-  return BADGE_RULE_PROPOSALS.find((rule) => rule.id === id)?.title ?? 'شارة سابقة';
+  return BADGE_RULES.find((rule) => rule.id === id)?.title ?? 'شارة سابقة';
 }
 
 function badgeEventStatusLabel(status: string) {
@@ -84,6 +84,15 @@ function badgeEventStatusLabel(status: string) {
     case 'revoked': return 'أُلغيت بعد تغير الأدلة';
     case 'retired': return 'أُحيلت إلى سجل الإصدارات السابقة';
     default: return 'حالة غير معروفة';
+  }
+}
+
+function badgeEndReasonLabel(reason?: string) {
+  switch (reason) {
+    case 'evidence-below-threshold': return 'انخفاض الأدلة دون الحد المطلوب';
+    case 'policy-or-rule-version-changed': return 'تغير إصدار السياسة أو القاعدة';
+    case 'approval-decision-changed': return 'تغير قرار الاعتماد';
+    default: return '';
   }
 }
 
@@ -120,7 +129,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
   const collect = useCallback((customizationSnapshot?: PromptCustomizationSnapshot) => {
     const learning = listLearningRecords();
     const recentlyViewed = readSavedRecentlyViewed();
-    const badgeAwards = getBrowserBadgeAwardStore().refresh(BADGE_AWARD_POLICY_PROPOSAL, {
+    const badgeAwards = getBrowserBadgeAwardStore().refresh(BADGE_AWARD_POLICY, {
       recentlyViewedTopicSlugs: recentlyViewed,
       recentlyViewedStatus: getSavedRecentlyViewedStatus(),
       quizAttempts: learning.quizAttempts,
@@ -225,7 +234,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       const latestBookmarks = readSavedBookmarks();
       let latestChecklist = EMPTY_CHECKLIST;
       try { latestChecklist = readDashboardChecklistSnapshot(topics); } catch { /* Keep export available */ }
-      const latestBadgeAwards = getBrowserBadgeAwardStore().refresh(BADGE_AWARD_POLICY_PROPOSAL, {
+      const latestBadgeAwards = getBrowserBadgeAwardStore().refresh(BADGE_AWARD_POLICY, {
         recentlyViewedTopicSlugs: recentlyViewed,
         recentlyViewedStatus: getSavedRecentlyViewedStatus(),
         quizAttempts: learning.quizAttempts,
@@ -410,20 +419,74 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.practicalStatus)}.</p>
       </ActivitySection>
 
-      <ActivitySection testId="section-badges" title={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'حالة الشارات المعتمدة' : 'معاينة قواعد الشارات المقترحة'} icon={Sparkles} description={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'تُحسب الحالة من دليل محلي مؤهل، ويُحفظ سجل إصدار الشارة وإبطالها على هذا الجهاز.' : 'هذه قواعد مرشحة للمراجعة فقط. حالة المعاينة تُعاد حسابها من السجلات الحالية؛ لا توجد شارات ممنوحة قبل موافقة صاحب المقرر.'}>
+      <ActivitySection
+        testId="section-badges"
+        title={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'شارات الإنجاز المحلية المعتمدة' : 'معاينة قواعد الشارات المقترحة'}
+        icon={Sparkles}
+        description={snapshot.badgeAwards.evaluationStatus === 'enabled'
+          ? 'شارات قابلة للتفسير تُقيَّم آليًا من سجلاتك المحلية المعتمدة بقرار صاحب المقرر (2026-10-20). لا تمثل اعتمادًا أو شهادة أو تقييمًا مستقلًا للمشروع.'
+          : 'هذه قواعد مرشحة للمراجعة فقط. حالة المعاينة تُعاد حسابها من السجلات الحالية؛ لا توجد شارات ممنوحة قبل موافقة صاحب المقرر.'}
+      >
         {snapshot.badgeAwards.evaluationStatus === 'enabled' ? <>
-          <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-xs leading-6 text-[var(--text-muted)]">التقييم مفعّل بقرار موثق؛ لا تدخل نتائج المعاينة ضمن أدلة الشارات.</div>
-          <ul className="mt-3 space-y-3">{snapshot.badgeAwards.rules.map((result) => <li key={result.rule.id} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
-            <div className="flex flex-wrap items-center justify-between gap-2"><strong>{result.rule.title}</strong><span className="rounded-full border border-[var(--border-color)] px-2 py-1 text-[10px]">{result.state === 'awarded' ? 'ممنوحة' : result.state === 'unconfirmed' ? 'غير مؤكدة حاليًا' : 'لم تُمنح'} · v{result.rule.version}</span></div>
+          <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-xs leading-6 text-[var(--text-muted)]">
+            التقييم مفعّل بقرار موثق؛ لا تدخل نتائج المعاينة ضمن أدلة الشارات. الشارات تسجل نشاط التصفح والممارسة والتقييم الذاتي في هذا المتصفح فقط، ولا تدل على اعتماد رسمي أو شهادة أو تحقق خارجي من جودة المشروع.
+          </div>
+          <ul className="mt-3 space-y-3">{snapshot.badgeAwards.rules.map((result) => <li key={result.rule.id} data-testid={`badge-card-${result.rule.id}`} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <strong className="text-base font-bold">{result.rule.title}</strong>
+              <span data-testid={`badge-state-${result.rule.id}`} className={`rounded-full border px-2.5 py-1 text-xs font-bold ${
+                result.state === 'awarded'
+                  ? 'border-emerald-500 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
+                  : result.state === 'unconfirmed'
+                    ? 'border-amber-500 bg-amber-50 text-amber-800 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-300'
+                    : 'border-[var(--border-color)] text-[var(--text-muted)]'
+              }`}>
+                {result.state === 'awarded' ? 'ممنوحة' : result.state === 'unconfirmed' ? 'غير مؤكدة حاليًا' : 'لم تُمنح'} · v{result.rule.version}
+              </span>
+            </div>
+            <p data-testid={`badge-progress-${result.rule.id}`} className="mt-2 text-xs font-bold leading-6">
+              <strong>حالة المعيار:</strong> {result.state === 'unconfirmed' ? 'غير مؤكدة حاليًا' : `${result.observedCount} / ${result.rule.threshold} ${result.state === 'awarded' ? '(مكتملة وممنوحة)' : '(غير مكتملة)'}`}
+            </p>
+            {result.rule.conditionDescription && (
+              <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">
+                <strong>الشرط المنشور:</strong> {result.rule.conditionDescription}
+              </p>
+            )}
+            {result.rule.evidenceDescription && (
+              <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">
+                <strong>مصدر الأدلة:</strong> {result.rule.evidenceDescription}
+              </p>
+            )}
+            {result.rule.distinctionNotice && (
+              <p className="mt-1 text-xs leading-6 text-[var(--text-faint)]">
+                <strong>طبيعة الشارة:</strong> {result.rule.distinctionNotice}
+              </p>
+            )}
             <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]">{result.explanation}</p>
-            {result.activeAward && <p className="mt-1 text-xs text-[var(--text-muted)]">تاريخ التسجيل: {formatDate(result.activeAward.awardedAt)} · {result.activeAward.evidenceKeys.length} أدلة.</p>}
+            {result.activeAward && (
+              <p className="mt-2 text-xs text-[var(--text-muted)]">
+                تاريخ التسجيل: {formatDate(result.activeAward.awardedAt)} · {result.activeAward.evidenceKeys.length} أدلة مؤهلة مسجلة · مرجع القرار: <span dir="ltr">{result.activeAward.approvalDecisionReference}</span>.
+              </p>
+            )}
           </li>)}</ul>
-          {snapshot.badgeAwards.events.some((event) => event.status !== 'awarded') && <details className="mt-3 rounded-xl border border-[var(--border-color)] p-3"><summary className="cursor-pointer text-xs font-bold">سجل تغييرات الشارات السابقة</summary><ul className="mt-2 space-y-1 text-xs">{snapshot.badgeAwards.events.filter((event) => event.status !== 'awarded').map((event) => <li key={event.awardId}>{badgeRuleTitle(event.badgeId)} · {badgeEventStatusLabel(event.status)} · إصدار القاعدة {event.ruleVersion} · {event.endedAt ? formatDate(event.endedAt) : ''}</li>)}</ul></details>}
+          {snapshot.badgeAwards.events.some((event) => event.status !== 'awarded') && <details className="mt-3 rounded-xl border border-[var(--border-color)] p-3">
+            <summary className="cursor-pointer text-xs font-bold">سجل تغييرات الشارات السابقة ({snapshot.badgeAwards.events.filter((event) => event.status !== 'awarded').length})</summary>
+            <ul className="mt-2 space-y-1 text-xs">
+              {snapshot.badgeAwards.events.filter((event) => event.status !== 'awarded').map((event) => {
+                const reason = badgeEndReasonLabel(event.endReason);
+                return (
+                  <li key={event.awardId}>
+                    {badgeRuleTitle(event.badgeId)} · {badgeEventStatusLabel(event.status)}{reason ? ` (${reason})` : ''} · إصدار القاعدة {event.ruleVersion} · {event.endedAt ? formatDate(event.endedAt) : ''}
+                  </li>
+                );
+              })}
+            </ul>
+          </details>}
         </> : <>
           <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs leading-6 text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-200">لا تثبت معاينة قواعد الشارات إتقانًا أو اعتمادًا. نتائج الفحص الذاتي التجريبية ليست دليلًا مؤهلًا لأي شارة مستقبلية، ولم تُعتمد سياسة ترحيلها.</div>
           <ul className="mt-3 space-y-3">{draftBadges.map((preview) => <li key={preview.rule.id} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-center justify-between gap-2"><strong>{preview.rule.title}</strong><span className="rounded-full border border-[var(--border-color)] px-2 py-1 text-[10px]">مسودة {preview.rule.version}</span></div>
-            <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]">{preview.rule.explanation}</p>
+            <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]">{preview.rule.conditionDescription}</p>
             <p className="mt-2 text-xs leading-6"><strong>المعاينة الحالية:</strong> {preview.evidenceConfirmed ? `${preview.observedCount} / ${preview.rule.threshold}` : 'غير مؤكدة'} · {preview.resultLabel}</p>
             {preview.evidenceConfirmed && <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">سجلات فحص ذاتي محفوظة خارج المعاينة: {preview.nonPreviewEvidenceCount}. لا تمنح هذه الصفحة شارات اعتمادًا على أي من العدّين.</p>}
           </li>)}</ul>

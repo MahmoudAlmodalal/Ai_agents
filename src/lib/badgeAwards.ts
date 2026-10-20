@@ -1,6 +1,5 @@
 import { isPolicyApproved } from '@/src/lib/learningPolicy';
 import type { PolicyApproval, PracticalAssessmentRecord, QuizAttemptRecord } from '@/src/types/learning';
-import type { DraftBadgeRule } from '@/src/lib/dashboardModel';
 
 export const BADGE_AWARDS_STORAGE_KEY = 'ai-agents-badge-awards-v1';
 
@@ -14,12 +13,17 @@ export type BadgeEvidence = {
   practicalAssessmentsStatus?: BadgeAwardStorageStatus;
 };
 
+export type BadgeEvidenceType = 'recent-topic-list' | 'quiz-attempts' | 'current-self-assessments';
+
 export interface BadgeAwardRule {
   id: string;
   version: number;
   title: string;
   threshold: number;
-  evidence: DraftBadgeRule['evidence'];
+  evidence: BadgeEvidenceType;
+  conditionDescription?: string;
+  evidenceDescription?: string;
+  distinctionNotice?: string;
 }
 
 export interface BadgePolicy {
@@ -210,7 +214,7 @@ export function reconcileBadgeAwards(
         observedCount: evidenceKeys.length,
         threshold: rule.threshold,
         state: 'unconfirmed',
-        explanation: `مصدر الأدلة ${evidenceStatusLabel(evidenceStatus)}؛ عُلّقت إعادة التقييم ولم يتغير سجل الشارة.`,
+        explanation: `تعذر تأكيد الأدلة المحلية؛ نتيجة الشروط غير مؤكدة. مصدر الأدلة ${evidenceStatusLabel(evidenceStatus)}؛ عُلّقت إعادة التقييم ولم يتغير سجل الشارة.`,
         activeAward: active?.status === 'awarded' ? active : undefined,
       });
       continue;
