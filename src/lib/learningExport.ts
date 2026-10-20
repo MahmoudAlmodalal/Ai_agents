@@ -17,6 +17,8 @@ export interface LearningExportSnapshot {
     recentlyViewed: string;
     checklists: string;
     learningRecords: string;
+    quizAttempts: string;
+    practicalAssessments: string;
     badgeAwards: BadgeAwardStorageStatus;
     promptCustomizations: PromptCustomizationStorageStatus;
   };
@@ -204,13 +206,13 @@ export function summarizeLearningExport(snapshot: LearningExportSnapshot) {
     '',
     '## السجلات المتاحة',
     '',
-    `- قائمة الموضوعات التي زرتها مؤخرًا: ${snapshot.recentlyViewed.length} معرّفًا. القائمة تحتفظ بآخر خمسة موضوعات فقط ولا تحتوي على وقت أو مدة قراءة.`,
-    `- الموضوعات المفضلة: ${snapshot.bookmarks.length} معرّفًا.`,
-    `- محاولات الاختبار المسجلة: ${snapshot.quizAttempts.length}. نتائج الفحص الذاتي التي تسبق اعتماد السياسة تظهر كمعاينة.`,
-    `- تقييمات عملية ذاتية: ${snapshot.practicalAssessments.length}. أحكام المتعلم منفصلة عن التحقق المستقل.`,
-    `- أحداث الشارات المحفوظة: ${snapshot.badgeAwardEvents.length}. تعرضها اللوحة فقط عند وجود سياسة معتمدة بقرار موثق.`,
-    `- مجموعات قوائم التحقق التي تحتوي على اختيارات: ${snapshot.checklistActivity.entries.length}. الاختيارات لا تثبت صحة مخرج المشروع.`,
-    `- تخصيصات البرومبتات المحفوظة في اللقطة: ${Object.keys(snapshot.promptCustomizations).length}.`,
+    `- قائمة الموضوعات التي زرتها مؤخرًا: ${activityCount(snapshot.recentlyViewed.length, snapshot.storageStatus.recentlyViewed)} معرّفًا. القائمة تحتفظ بآخر خمسة موضوعات معروفة ولا تحتوي على وقت أو مدة قراءة.`,
+    `- الموضوعات المفضلة: ${activityCount(snapshot.bookmarks.length, snapshot.storageStatus.bookmarks)} معرّفًا.`,
+    `- محاولات الاختبار المسجلة: ${activityCount(snapshot.quizAttempts.length, snapshot.storageStatus.quizAttempts ?? snapshot.storageStatus.learningRecords)}. نتائج الفحص الذاتي التي تسبق اعتماد السياسة تظهر كمعاينة.`,
+    `- تقييمات عملية ذاتية: ${activityCount(snapshot.practicalAssessments.length, snapshot.storageStatus.practicalAssessments ?? snapshot.storageStatus.learningRecords)}. أحكام المتعلم منفصلة عن التحقق المستقل.`,
+    `- أحداث الشارات المحفوظة: ${activityCount(snapshot.badgeAwardEvents.length, snapshot.storageStatus.badgeAwards)}. تعرضها اللوحة فقط عند وجود سياسة معتمدة بقرار موثق.`,
+    `- مجموعات قوائم التحقق التي تحتوي على اختيارات: ${activityCount(snapshot.checklistActivity.entries.length, snapshot.storageStatus.checklists)}. الاختيارات لا تثبت صحة مخرج المشروع.`,
+    `- تخصيصات البرومبتات المحفوظة في اللقطة: ${activityCount(Object.keys(snapshot.promptCustomizations).length, snapshot.storageStatus.promptCustomizations)}.`,
     '',
     '## حالة التخزين المحلي وقت إنشاء الحزمة',
     '',
@@ -232,21 +234,34 @@ export function summarizeLearningExport(snapshot: LearningExportSnapshot) {
   ].join('\n');
 }
 
-function uniqueUnavailablePromptOutputs(prompts: PromptLibraryRecord[]) {
-  const byName = new Map<string, string[]>();
-  for (const prompt of prompts) {
-    for (const name of prompt.outputFiles) {
-      const sources = byName.get(name) ?? [];
-      sources.push(prompt.slug);
+function uniqueUnavailableLearnerOutputs(topics: TopicItem[], prompts: PromptLibraryRecord[]) {
+  const byName = new Map<string, { topicSlugs: Set<string>; promptSlugs: Set<string> }>();
+  for (const topic of topics) {
+    for (const name of topic.outputs) {
+      const sources = byName.get(name) ?? { topicSlugs: new Set<string>(), promptSlugs: new Set<string>() };
+      sources.topicSlugs.add(topic.slug);
       byName.set(name, sources);
     }
   }
-  return [...byName.entries()].map(([name, sourcePromptSlugs]) => ({
+  for (const prompt of prompts) {
+    for (const name of prompt.outputFiles) {
+      const sources = byName.get(name) ?? { topicSlugs: new Set<string>(), promptSlugs: new Set<string>() };
+      sources.promptSlugs.add(prompt.slug);
+      byName.set(name, sources);
+    }
+  }
+  return [...byName.entries()].map(([name, sources]) => ({
     name,
-    sourcePromptSlugs: [...new Set(sourcePromptSlugs)],
+    sourceTopicSlugs: [...sources.topicSlugs],
+    sourcePromptSlugs: [...sources.promptSlugs],
     status: 'not-included',
     reason: 'مخرج متوقع لمشروع المتعلم؛ التطبيق لا يملك ملفًا صادرًا من مشروع المتعلم لإدراجه.',
   }));
+}
+
+function activityCount(count: number, status: string) {
+  if (status === 'available') return String(count);
+  return `${count} في اللقطة الحالية؛ غير مؤكدة (${status})`;
 }
 
 export function buildLearningExportFiles(
@@ -394,7 +409,7 @@ export function buildLearningExportFiles(
       })),
       includedLearningContent: learningContents.map((content) => ({ topicSlug: content.topicSlug, path: `course/learning-content/${content.topicSlug}.json` })),
       referenceTemplates: templateAvailability,
-      learnerProjectOutputsNotIncluded: uniqueUnavailablePromptOutputs(prompts),
+      learnerProjectOutputsNotIncluded: uniqueUnavailableLearnerOutputs(topics, prompts),
       savedCustomizationsWithUnavailableSource: unmatchedCustomizations.map(([slug, customization]) => ({
         promptSlug: slug,
         sourceRevision: customization.sourceRevision,

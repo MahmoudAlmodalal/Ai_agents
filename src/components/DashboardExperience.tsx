@@ -37,6 +37,8 @@ type DashboardSnapshot = {
   checklist: DashboardChecklistSnapshot;
   quizAttempts: QuizAttemptRecord[];
   practicalAssessments: PracticalAssessmentRecord[];
+  quizStatus: LearningRecordStorageStatus;
+  practicalStatus: LearningRecordStorageStatus;
   learningStatus: LearningRecordStorageStatus;
   badgeAwards: BadgeAwardSnapshot;
   customizations: PromptCustomizationSnapshot;
@@ -54,6 +56,8 @@ const EMPTY_DASHBOARD: DashboardSnapshot = {
   checklist: EMPTY_CHECKLIST,
   quizAttempts: [],
   practicalAssessments: [],
+  quizStatus: 'loading',
+  practicalStatus: 'loading',
   learningStatus: 'loading',
   badgeAwards: EMPTY_BADGE_AWARDS,
   customizations: EMPTY_CUSTOMIZATIONS,
@@ -121,6 +125,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       recentlyViewedStatus: getSavedRecentlyViewedStatus(),
       quizAttempts: learning.quizAttempts,
       practicalAssessments: learning.practicalAssessments,
+      quizAttemptsStatus: learning.quizStorageStatus,
+      practicalAssessmentsStatus: learning.practicalAssessmentStorageStatus,
       learningRecordsStatus: learning.storageStatus,
     });
     let checklist = EMPTY_CHECKLIST;
@@ -134,6 +140,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       checklist,
       quizAttempts: learning.quizAttempts,
       practicalAssessments: learning.practicalAssessments,
+      quizStatus: learning.quizStorageStatus,
+      practicalStatus: learning.practicalAssessmentStorageStatus,
       learningStatus: learning.storageStatus,
       badgeAwards,
       customizations: customizationSnapshot ?? EMPTY_CUSTOMIZATIONS,
@@ -171,6 +179,9 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
     recentlyViewedTopicSlugs: validRecent.map((topic) => topic.slug),
     quizAttempts: snapshot.quizAttempts.filter((attempt) => attempt.selfCheck),
     practicalAssessments: snapshot.practicalAssessments.filter((record) => record.selfAssessment),
+    recentlyViewedStatus: snapshot.recentStatus,
+    quizAttemptsStatus: snapshot.quizStatus,
+    practicalAssessmentsStatus: snapshot.practicalStatus,
   });
 
   const persistSnapshot = useCallback((generatedAt: string): LearningExportSnapshot => ({
@@ -182,6 +193,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       recentlyViewed: snapshot.recentStatus,
       checklists: snapshot.checklist.storageStatus,
       learningRecords: snapshot.learningStatus,
+      quizAttempts: snapshot.quizStatus,
+      practicalAssessments: snapshot.practicalStatus,
       badgeAwards: snapshot.badgeAwards.storageStatus,
       promptCustomizations: snapshot.customizations.status,
     },
@@ -235,7 +248,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
     ['المفضلة', snapshot.bookmarkStatus],
     ['المواضيع التي زرتها مؤخرًا', snapshot.recentStatus],
     ['قوائم التحقق', snapshot.checklist.storageStatus],
-    ['الاختبارات والتقييم الذاتي', snapshot.learningStatus],
+    ['نتائج الاختبارات', snapshot.quizStatus],
+    ['التقييمات العملية', snapshot.practicalStatus],
     ['سجلات الشارات', snapshot.badgeAwards.storageStatus],
     ['تخصيصات البرومبتات', snapshot.customizations.status],
   ] as const;
@@ -255,13 +269,13 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       {snapshot.loaded && anyStorageIssue && <div role="status" className="mt-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-7 text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-200"><p className="font-bold">قد لا تعرض هذه اللوحة كل السجلات المحلية.</p><p>حالة التخزين موضحة لكل نوع أدناه. عند تعذر القراءة أو الحفظ، لا يعني الفراغ أن السجلات السابقة غير موجودة.</p></div>}
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6" aria-label="ملخص محلي للأنشطة المسجلة">
         {[
-          ['زيارات حديثة', snapshot.recentlyViewed.length],
-          ['مفضلة', snapshot.bookmarks.length],
-          ['محاولات اختبار', snapshot.quizAttempts.length],
-          ['تقييمات عملية', snapshot.practicalAssessments.length],
-          ['قوائم تحقق', snapshot.checklist.entries.length],
-          ['تخصيصات برومبت', Object.keys(snapshot.customizations.records).length],
-        ].map(([label, value]) => <div key={label} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="block text-xs text-[var(--text-muted)]">{label}</span><strong className="mt-1 block text-2xl font-black text-[var(--text-main)]">{snapshot.loaded ? value : '—'}</strong><span className="mt-1 block text-[10px] text-[var(--text-faint)]">محلي فقط</span></div>)}
+          ['زيارات حديثة', snapshot.recentlyViewed.length, snapshot.recentStatus],
+          ['مفضلة', snapshot.bookmarks.length, snapshot.bookmarkStatus],
+          ['محاولات اختبار', snapshot.quizAttempts.length, snapshot.quizStatus],
+          ['تقييمات عملية', snapshot.practicalAssessments.length, snapshot.practicalStatus],
+          ['قوائم تحقق', snapshot.checklist.entries.length, snapshot.checklist.storageStatus],
+          ['تخصيصات برومبت', Object.keys(snapshot.customizations.records).length, snapshot.customizations.status],
+        ].map(([label, value, status]) => <div key={label} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="block text-xs text-[var(--text-muted)]">{label}</span><strong className="mt-1 block text-2xl font-black text-[var(--text-main)]">{snapshot.loaded && status === 'available' ? value : '—'}</strong><span className="mt-1 block text-[10px] text-[var(--text-faint)]">{status === 'available' ? 'محلي فقط' : 'العدد غير مؤكد'}</span></div>)}
       </div>
     </header>
 
@@ -288,14 +302,16 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       <ActivitySection title="نتائج الاختبارات" icon={HelpCircle} description="محاولات منفصلة بإصدارات الأسئلة والنتائج المسجلة. الدرجة وصف لسياسة التصحيح المقترحة، وليست إثباتًا للإتقان.">
         {sortedAttempts.length ? <ol className="space-y-3">{sortedAttempts.map((attempt) => {
           const topic = topicBySlug.get(attempt.topicSlug);
-          const quizTitle = learningContentBySlug.get(attempt.topicSlug)?.quiz.title ?? 'اختبار قصير';
+          const currentQuiz = learningContentBySlug.get(attempt.topicSlug)?.quiz;
+          const quizMatchesCurrent = Boolean(currentQuiz && currentQuiz.id === attempt.quizId && currentQuiz.version === attempt.quizVersion);
+          const quizTitle = quizMatchesCurrent ? currentQuiz!.title : 'اختبار محفوظ لإصدار سابق';
           return <li key={`${attempt.topicSlug}-${attempt.quizId}-${attempt.attemptId}`} data-testid="quiz-attempt-row" className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-start justify-between gap-2"><div><TopicLink topic={topic} prefix={topic ? '' : attempt.topicSlug} /><p className="mt-1 text-xs text-[var(--text-muted)]">{quizTitle} · نسخة الاختبار {attempt.quizVersion}</p></div><strong className="text-lg font-black" dir="ltr">{attempt.score} / {attempt.maxScore}</strong></div>
             <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">صحيح: {attempt.correctCount} · غير صحيح: {attempt.incorrectCount} · بلا إجابة: {attempt.unansweredCount} · {formatDate(attempt.submittedAt)}</p>
             <p className="mt-2 rounded-lg border border-[var(--border-color)] px-3 py-2 text-xs leading-6">{attempt.previewOnly ? 'نتيجة معاينة لفحصك الذاتي وفق قاعدة تصحيح مقترحة.' : 'نتيجة محفوظة لفحصك الذاتي.'} لا تعني هذه النتيجة إكمال العمل العملي أو إتقانه.</p>
           </li>;
-        })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.learningStatus === 'available' ? 'لا توجد محاولات اختبار مسجلة.' : 'تعذرت قراءة نتائج الاختبارات كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
-        <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.learningStatus)}.</p>
+        })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.quizStatus === 'available' ? 'لا توجد محاولات اختبار مسجلة.' : 'تعذرت قراءة نتائج الاختبارات كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
+        <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.quizStatus)}.</p>
       </ActivitySection>
 
       <ActivitySection title="قوائم التحقق العملية" icon={CheckSquare} description="هذه اختيارات ذاتية محفوظة. عرض الاختيار لا يعني أن المخرج تحقق أو أنه مكتمل.">
@@ -313,17 +329,26 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         {sortedAssessments.length ? <ol className="space-y-3">{sortedAssessments.map((record) => {
           const topic = topicBySlug.get(record.topicSlug);
           const content = learningContentBySlug.get(record.topicSlug);
-          const criterionNames = new Map(content?.practicalAssessment.criteria.map((criterion) => [criterion.id, criterion.name]) ?? []);
-          const assessmentTitle = content?.practicalAssessment.title ?? 'التقييم العملي';
-          const ratingLabel = (ratingId: string) => content?.practicalAssessment.scale.levels.find((level) => level.id === ratingId)?.label ?? 'حكم محفوظ';
+          const currentAssessment = content?.practicalAssessment;
+          const assessmentMatchesCurrent = Boolean(currentAssessment && record.assessmentId === currentAssessment.id
+            && record.assessmentVersion === currentAssessment.version && record.scaleId === currentAssessment.scale.id
+            && record.scaleVersion === currentAssessment.scale.version);
+          const criteriaMatchCurrent = new Map(assessmentMatchesCurrent
+            ? currentAssessment!.criteria.map((criterion) => [`${criterion.id}:${criterion.version}`, criterion.name])
+            : []);
+          const assessmentTitle = assessmentMatchesCurrent ? currentAssessment!.title : 'تقييم محفوظ لإصدار سابق';
+          const ratingLabel = (rating: PracticalAssessmentRecord['ratings'][number]) => assessmentMatchesCurrent && currentAssessment
+            && rating.scaleId === currentAssessment.scale.id && rating.scaleVersion === currentAssessment.scale.version
+            ? currentAssessment.scale.levels.find((level) => level.id === rating.ratingId)?.label ?? 'حكم محفوظ'
+            : 'حكم محفوظ لإصدار سابق';
           return <li key={`${record.topicSlug}-${record.assessmentId}`} data-testid="practical-assessment-row" className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-start justify-between gap-2"><div><TopicLink topic={topic} prefix={topic ? '' : record.topicSlug} /><p className="mt-1 text-xs text-[var(--text-muted)]">{assessmentTitle} · نسخة التقييم {record.assessmentVersion} · نسخة سلم التقدير {record.scaleVersion}</p></div><span className="text-xs text-[var(--text-muted)]">{formatDate(record.updatedAt)}</span></div>
-            {record.ratings.length ? <ul className="mt-3 space-y-2">{record.ratings.map((rating) => <li key={`${rating.criterionId}-${rating.criterionVersion}-${rating.scaleId}-${rating.scaleVersion}`} className="rounded-lg border border-[var(--border-color)] p-3"><strong className="text-sm">{criterionNames.get(rating.criterionId) ?? 'معيار محفوظ'}</strong><span className="ms-2 text-xs text-[var(--text-muted)]">{ratingLabel(rating.ratingId)}</span><p className="mt-1 text-[10px] text-[var(--text-faint)]">إصدار المعيار {rating.criterionVersion} · إصدار سلم التقدير {rating.scaleVersion} · {formatDate(rating.ratedAt)}</p></li>)}</ul> : <p className="mt-3 text-sm text-[var(--text-muted)]">لا توجد أحكام حالية على المعايير.</p>}
-            {record.history.length > 0 && <details className="mt-3 rounded-lg border border-[var(--border-color)] p-3"><summary className="cursor-pointer text-xs font-bold">أحكام محفوظة لإصدارات أقدم ({record.history.length})</summary><ul className="mt-2 space-y-1 text-xs">{record.history.map((rating, index) => <li key={`${rating.criterionId}-${rating.criterionVersion}-${rating.scaleId}-${rating.scaleVersion}-${index}`}>معيار محفوظ · {ratingLabel(rating.ratingId)} · إصدار المعيار {rating.criterionVersion} · إصدار سلم التقدير {rating.scaleVersion} · {formatDate(rating.ratedAt)}</li>)}</ul></details>}
+            {record.ratings.length ? <ul className="mt-3 space-y-2">{record.ratings.map((rating) => <li key={`${rating.criterionId}-${rating.criterionVersion}-${rating.scaleId}-${rating.scaleVersion}`} className="rounded-lg border border-[var(--border-color)] p-3"><strong className="text-sm">{criteriaMatchCurrent.get(`${rating.criterionId}:${rating.criterionVersion}`) ?? 'معيار محفوظ لإصدار سابق'}</strong><span className="ms-2 text-xs text-[var(--text-muted)]">{ratingLabel(rating)}</span><p className="mt-1 text-[10px] text-[var(--text-faint)]">إصدار المعيار {rating.criterionVersion} · إصدار سلم التقدير {rating.scaleVersion} · {formatDate(rating.ratedAt)}</p></li>)}</ul> : <p className="mt-3 text-sm text-[var(--text-muted)]">لا توجد أحكام حالية على المعايير.</p>}
+            {record.history.length > 0 && <details className="mt-3 rounded-lg border border-[var(--border-color)] p-3"><summary className="cursor-pointer text-xs font-bold">أحكام محفوظة لإصدارات أقدم ({record.history.length})</summary><ul className="mt-2 space-y-1 text-xs">{record.history.map((rating, index) => <li key={`${rating.criterionId}-${rating.criterionVersion}-${rating.scaleId}-${rating.scaleVersion}-${index}`}>معيار محفوظ · {ratingLabel(rating)} · إصدار المعيار {rating.criterionVersion} · إصدار سلم التقدير {rating.scaleVersion} · {formatDate(rating.ratedAt)}</li>)}</ul></details>}
             <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">{record.previewOnly ? 'تقييم ذاتي محفوظ كمعاينة؛ لم تعتمد قواعد التقييم بعد.' : 'تقييم ذاتي كما سُجل. لا يثبت صحة العمل.'}</p>
           </li>;
-        })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.learningStatus === 'available' ? 'لا توجد تقييمات ذاتية مسجلة.' : 'تعذرت قراءة التقييمات العملية كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
-        <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.learningStatus)}.</p>
+        })}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.practicalStatus === 'available' ? 'لا توجد تقييمات ذاتية مسجلة.' : 'تعذرت قراءة التقييمات العملية كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
+        <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.practicalStatus)}.</p>
       </ActivitySection>
 
       <ActivitySection title={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'حالة الشارات المعتمدة' : 'معاينة قواعد الشارات المقترحة'} icon={Sparkles} description={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'تُحسب الحالة من دليل محلي مؤهل، ويُحفظ سجل إصدار الشارة وإبطالها على هذا الجهاز.' : 'هذه قواعد مرشحة للمراجعة فقط. حالة المعاينة تُعاد حسابها من السجلات الحالية؛ لا توجد شارات ممنوحة قبل موافقة صاحب المقرر.'}>
@@ -340,8 +365,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
           <ul className="mt-3 space-y-3">{draftBadges.map((preview) => <li key={preview.rule.id} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-center justify-between gap-2"><strong>{preview.rule.title}</strong><span className="rounded-full border border-[var(--border-color)] px-2 py-1 text-[10px]">مسودة {preview.rule.version}</span></div>
             <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]">{preview.rule.explanation}</p>
-            <p className="mt-2 text-xs leading-6"><strong>المعاينة الحالية:</strong> {preview.observedCount} / {preview.rule.threshold}. {preview.resultLabel}</p>
-            <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">سجلات فحص ذاتي محفوظة خارج المعاينة: {preview.nonPreviewEvidenceCount}. لا تمنح هذه الصفحة شارات اعتمادًا على أي من العدّين.</p>
+            <p className="mt-2 text-xs leading-6"><strong>المعاينة الحالية:</strong> {preview.evidenceConfirmed ? `${preview.observedCount} / ${preview.rule.threshold}` : 'غير مؤكدة'} · {preview.resultLabel}</p>
+            {preview.evidenceConfirmed && <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">سجلات فحص ذاتي محفوظة خارج المعاينة: {preview.nonPreviewEvidenceCount}. لا تمنح هذه الصفحة شارات اعتمادًا على أي من العدّين.</p>}
           </li>)}</ul>
           <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">تغيير الأدلة يغيّر نتيجة المعاينة مباشرة. لا يجري حفظ حالة شارة ثابتة أو إصدار جوائز. قواعد الإصدار والتغييرات تحتاج قرارًا موثقًا.</p>
         </>}

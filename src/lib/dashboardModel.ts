@@ -1,5 +1,7 @@
 import type { PracticalAssessmentRecord, QuizAttemptRecord } from '@/src/types/learning';
 import type { BadgePolicy } from '@/src/lib/badgeAwards';
+import type { LearningRecordStorageStatus } from '@/src/types/learning';
+import type { TopicStorageStatus } from '@/src/lib/topicStorage';
 
 export interface DraftBadgeRule {
   id: string;
@@ -57,12 +59,17 @@ export interface BadgeDraftEvidence {
   recentlyViewedTopicSlugs: string[];
   quizAttempts: QuizAttemptRecord[];
   practicalAssessments: PracticalAssessmentRecord[];
+  recentlyViewedStatus?: TopicStorageStatus;
+  quizAttemptsStatus?: LearningRecordStorageStatus;
+  practicalAssessmentsStatus?: LearningRecordStorageStatus;
 }
 
 export interface BadgeDraftPreview {
   rule: DraftBadgeRule;
   observedCount: number;
   draftConditionMet: boolean;
+  evidenceConfirmed: boolean;
+  evidenceStatus: TopicStorageStatus | LearningRecordStorageStatus;
   nonPreviewEvidenceCount: number;
   resultLabel: string;
 }
@@ -96,15 +103,27 @@ export function previewBadgeRules(evidence: BadgeDraftEvidence): BadgeDraftPrevi
     },
   };
 
+  const statuses: Record<DraftBadgeRule['evidence'], TopicStorageStatus | LearningRecordStorageStatus> = {
+    'recent-topic-list': evidence.recentlyViewedStatus ?? 'available',
+    'quiz-attempts': evidence.quizAttemptsStatus ?? 'available',
+    'current-self-assessments': evidence.practicalAssessmentsStatus ?? 'available',
+  };
+
   return BADGE_RULE_PROPOSALS.map((rule) => {
     const { draft, nonPreview } = counts[rule.evidence];
     const draftConditionMet = draft >= rule.threshold;
+    const evidenceStatus = statuses[rule.evidence];
+    const evidenceConfirmed = evidenceStatus === 'available';
     return {
       rule,
       observedCount: draft,
       draftConditionMet,
+      evidenceConfirmed,
+      evidenceStatus,
       nonPreviewEvidenceCount: nonPreview,
-      resultLabel: draftConditionMet ? 'تتحقق شروط المسودة؛ لا توجد شارة ممنوحة' : 'لم تتحقق شروط المسودة؛ لا توجد شارة ممنوحة',
+      resultLabel: !evidenceConfirmed
+        ? 'تعذر تأكيد الأدلة المحلية؛ نتيجة الشروط غير مؤكدة'
+        : draftConditionMet ? 'تتحقق شروط المسودة؛ لا توجد شارة ممنوحة' : 'لم تتحقق شروط المسودة؛ لا توجد شارة ممنوحة',
     };
   });
 }

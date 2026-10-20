@@ -151,8 +151,12 @@ test.describe('Learner dashboard and export', () => {
     expect(manifest.recordsStatus).toBe('partial-or-unconfirmed');
     expect(manifest.recordStorageStatus.recentlyViewed).toBe('invalid');
     expect(manifest.recordStorageStatus.learningRecords).toBe('invalid');
+    expect(manifest.recordStorageStatus.quizAttempts).toBe('invalid');
+    expect(manifest.recordStorageStatus.practicalAssessments).toBe('invalid');
     expect(manifest.recordStorageStatus.checklists).toBe('invalid');
     expect(manifest.recordStorageStatus.promptCustomizations).toBe('invalid');
+    await expect(page.locator('[aria-label="ملخص محلي للأنشطة المسجلة"]').getByText('العدد غير مؤكد')).toHaveCount(5);
+    await expect(page.getByText(/نتيجة الشروط غير مؤكدة/)).toHaveCount(3);
   });
 
   test('frozen legacy HTML checklist fixture stays visible after a blocked write and same-tab dashboard transition', async ({ page }) => {

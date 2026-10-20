@@ -26,6 +26,8 @@ export interface PracticalAssessmentSnapshot {
 export interface LearningRecordsSnapshot {
   quizAttempts: QuizAttemptRecord[];
   practicalAssessments: PracticalAssessmentRecord[];
+  quizStorageStatus: LearningRecordStorageStatus;
+  practicalAssessmentStorageStatus: LearningRecordStorageStatus;
   storageStatus: LearningRecordStorageStatus;
 }
 
@@ -332,6 +334,8 @@ export function createLearningRecordsStore(getStorage: () => RecordStorage) {
     return {
       quizAttempts: Object.values(quizzes.document.byTopic).flat(),
       practicalAssessments: Object.values(practical.document.byTopic),
+      quizStorageStatus: quizzes.status,
+      practicalAssessmentStorageStatus: practical.status,
       storageStatus,
     };
   }

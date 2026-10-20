@@ -3,6 +3,7 @@ import test from 'node:test';
 import { getAllTopics } from '@/src/lib/topicRegistry';
 import { buildLearningExportFiles, summarizeTopicLearning, type LearningExportSnapshot } from './learningExport';
 import type { TopicLearningContent } from '@/src/types/learning';
+import { PROMPT_LIBRARY } from './promptLibrary';
 
 const topic = getAllTopics().find((item) => item.slug === 'user-flow-modeling')!;
 
@@ -13,6 +14,7 @@ function snapshot(): LearningExportSnapshot {
     scope: 'this-browser-and-device',
     storageStatus: {
       bookmarks: 'available', recentlyViewed: 'available', checklists: 'available', learningRecords: 'available',
+      quizAttempts: 'available', practicalAssessments: 'available',
       badgeAwards: 'available', promptCustomizations: 'available',
     },
     bookmarks: [], recentlyViewed: [], unresolvedBookmarks: [], unresolvedRecentlyViewed: [],
@@ -98,4 +100,17 @@ test('readable learning summary includes versioned questions, scoring policy and
   assert.match(summary, /سلم التقدير: three-level · الإصدار 2/);
   assert.match(summary, /Failure paths/);
   assert.match(summary, /لا يمثل مراجعة مستقلة/);
+});
+
+test('export availability lists all expected topic outputs and labels unavailable record counts', () => {
+  const files = buildLearningExportFiles({
+    ...snapshot(),
+    storageStatus: { ...snapshot().storageStatus, recentlyViewed: 'read-error', quizAttempts: 'invalid' },
+  }, [topic], [], PROMPT_LIBRARY, []);
+  const availability = JSON.parse(readTextFile(files, 'resources/availability-manifest.json'));
+  assert.ok(availability.learnerProjectOutputsNotIncluded.some((entry: { name: string; sourceTopicSlugs: string[] }) =>
+    entry.name === topic.outputs[0] && entry.sourceTopicSlugs.includes(topic.slug)));
+  const activity = readTextFile(files, 'learner-data/activity-summary.md');
+  assert.match(activity, /غير مؤكدة \(read-error\)/);
+  assert.match(activity, /غير مؤكدة \(invalid\)/);
 });
