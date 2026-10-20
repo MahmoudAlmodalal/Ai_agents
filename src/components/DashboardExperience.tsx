@@ -98,8 +98,8 @@ function TopicLink({ topic, prefix = '' }: { topic?: TopicItem; prefix?: string 
   return <Link href={`/learn/${topic.slug}`} className="font-bold text-[var(--primary)] underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500" dir="auto">{prefix}{topic.title}</Link>;
 }
 
-function ActivitySection({ title, icon: Icon, children, description }: { title: string; icon: LucideIcon; children: React.ReactNode; description: string }) {
-  return <section className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 shadow-sm sm:p-6">
+function ActivitySection({ title, icon: Icon, children, description, testId }: { title: string; icon: LucideIcon; children: React.ReactNode; description: string; testId?: string }) {
+  return <section data-testid={testId} className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 shadow-sm sm:p-6">
     <div className="flex items-start gap-3">
       <span className="rounded-xl bg-[var(--bg-card-subtle)] p-2 text-[var(--primary)]"><Icon className="h-5 w-5" aria-hidden="true" /></span>
       <div className="min-w-0 flex-1"><h2 className="text-lg font-black text-[var(--text-main)]">{title}</h2><p className="mt-1 text-sm leading-6 text-[var(--text-muted)]">{description}</p></div>
@@ -159,6 +159,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
     window.addEventListener('storage', refreshAll);
     window.addEventListener('focus', refreshAll);
     window.addEventListener('pageshow', refreshAll);
+    window.addEventListener('popstate', refreshAll);
+    document.addEventListener('visibilitychange', refreshAll);
     return () => {
       unsubscribeTopics();
       unsubscribeLearning();
@@ -166,6 +168,8 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       window.removeEventListener('storage', refreshAll);
       window.removeEventListener('focus', refreshAll);
       window.removeEventListener('pageshow', refreshAll);
+      window.removeEventListener('popstate', refreshAll);
+      document.removeEventListener('visibilitychange', refreshAll);
     };
   }, [collect]);
 
@@ -214,8 +218,50 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
     setExportMessage('');
     try {
       const generatedAt = new Date().toISOString();
+      const customizationStore = getBrowserPromptCustomizationStore();
+      const latestCustomizations = customizationStore.refresh();
+      const learning = listLearningRecords();
+      const recentlyViewed = readSavedRecentlyViewed();
+      const latestBookmarks = readSavedBookmarks();
+      let latestChecklist = EMPTY_CHECKLIST;
+      try { latestChecklist = readDashboardChecklistSnapshot(topics); } catch { /* Keep export available */ }
+      const latestBadgeAwards = getBrowserBadgeAwardStore().refresh(BADGE_AWARD_POLICY_PROPOSAL, {
+        recentlyViewedTopicSlugs: recentlyViewed,
+        recentlyViewedStatus: getSavedRecentlyViewedStatus(),
+        quizAttempts: learning.quizAttempts,
+        practicalAssessments: learning.practicalAssessments,
+        quizAttemptsStatus: learning.quizStorageStatus,
+        practicalAssessmentsStatus: learning.practicalAssessmentStorageStatus,
+        learningRecordsStatus: learning.storageStatus,
+      });
+
+      const currentExportSnapshot: LearningExportSnapshot = {
+        schemaVersion: 1,
+        generatedAt,
+        scope: 'this-browser-and-device',
+        storageStatus: {
+          bookmarks: getSavedBookmarksStatus(),
+          recentlyViewed: getSavedRecentlyViewedStatus(),
+          checklists: latestChecklist.storageStatus,
+          learningRecords: learning.storageStatus,
+          quizAttempts: learning.quizStorageStatus,
+          practicalAssessments: learning.practicalAssessmentStorageStatus,
+          badgeAwards: latestBadgeAwards.storageStatus,
+          promptCustomizations: latestCustomizations.status,
+        },
+        bookmarks: latestBookmarks,
+        recentlyViewed,
+        unresolvedBookmarks: latestBookmarks.filter((slug) => !topicBySlug.has(slug)),
+        unresolvedRecentlyViewed: recentlyViewed.filter((slug) => !topicBySlug.has(slug)),
+        checklistActivity: latestChecklist,
+        quizAttempts: learning.quizAttempts,
+        practicalAssessments: learning.practicalAssessments,
+        badgeAwardEvents: latestBadgeAwards.events,
+        promptCustomizations: latestCustomizations.records,
+      };
+
       const archive = createLearningExportArchive(
-        persistSnapshot(generatedAt),
+        currentExportSnapshot,
         topics,
         learningContents,
         prompts,
@@ -233,7 +279,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       link.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 3000);
       setExportState('success');
-      setExportMessage(Object.values(persistSnapshot(generatedAt).storageStatus).some((status) => status !== 'available')
+      setExportMessage(Object.values(currentExportSnapshot.storageStatus).some((status) => status !== 'available')
         ? 'بدأ تنزيل الحزمة. تتضمن ملف السجلات حالة التخزين، وقد تكون بعض البيانات غير متاحة.'
         : 'بدأ تنزيل ملف ZIP؛ افتح README.md وقائمة توفر الموارد داخل الحزمة.');
     } catch {
@@ -261,7 +307,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <div className="max-w-3xl">
           <p className="inline-flex items-center gap-2 rounded-full bg-[var(--bg-card-subtle)] px-3 py-1 text-xs font-bold text-[var(--primary)]"><BookOpen className="h-4 w-4" aria-hidden="true" /> سجلات هذا المتصفح فقط</p>
           <h1 className="mt-4 text-3xl font-black text-[var(--text-main)] sm:text-5xl">لوحة تعلّمي</h1>
-          <p className="mt-4 text-sm leading-8 text-[var(--text-muted)] sm:text-base">تعرض هذه الصفحة زيارات المواضيع ونتائج الاختبارات والتقييمات الذاتية والمفضلة كأنواع مستقلة من النشاط. لا تقيس إتقانًا ولا تقييمًا مستقلًا للمشروع، ولا تنتقل سجلاتها إلى جهاز آخر.</p>
+          <p className="mt-4 text-sm leading-8 text-[var(--text-muted)] sm:text-base">تعرض هذه الصفحة زيارات المواضيع ونتائج الاختبارات والتقييمات الذاتية والمفضلة كأنواع مستقلة من النشاط وفق قرار صاحب المقرر المعتمد (2026-10-20). لا تقيس إتقانًا ولا تقييمًا مستقلًا للمشروع، ولا تنتقل سجلاتها إلى جهاز آخر.</p>
         </div>
         <button data-testid="learning-export" type="button" onClick={downloadExport} disabled={!snapshot.loaded || exportState === 'working'} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--action-bg)] px-5 py-3 text-sm font-black text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] disabled:cursor-wait disabled:opacity-60"><Download className="h-4 w-4" aria-hidden="true" />{exportState === 'working' ? 'جارٍ تجهيز التنزيل…' : 'تنزيل حزمة التعلّم'}</button>
       </div>
@@ -269,17 +315,17 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       {snapshot.loaded && anyStorageIssue && <div role="status" className="mt-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-7 text-amber-900 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-200"><p className="font-bold">قد لا تعرض هذه اللوحة كل السجلات المحلية.</p><p>حالة التخزين موضحة لكل نوع أدناه. عند تعذر القراءة أو الحفظ، لا يعني الفراغ أن السجلات السابقة غير موجودة.</p></div>}
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6" aria-label="ملخص محلي للأنشطة المسجلة">
         {[
-          ['زيارات حديثة', snapshot.recentlyViewed.length, snapshot.recentStatus],
-          ['مفضلة', snapshot.bookmarks.length, snapshot.bookmarkStatus],
-          ['محاولات اختبار', snapshot.quizAttempts.length, snapshot.quizStatus],
-          ['تقييمات عملية', snapshot.practicalAssessments.length, snapshot.practicalStatus],
-          ['قوائم تحقق', snapshot.checklist.entries.length, snapshot.checklist.storageStatus],
-          ['تخصيصات برومبت', Object.keys(snapshot.customizations.records).length, snapshot.customizations.status],
-        ].map(([label, value, status]) => <div key={label} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="block text-xs text-[var(--text-muted)]">{label}</span><strong className="mt-1 block text-2xl font-black text-[var(--text-main)]">{snapshot.loaded && status === 'available' ? value : '—'}</strong><span className="mt-1 block text-[10px] text-[var(--text-faint)]">{status === 'available' ? 'محلي فقط' : 'العدد غير مؤكد'}</span></div>)}
+          ['زيارات حديثة', snapshot.recentlyViewed.length, snapshot.recentStatus, 'metric-recent-views'],
+          ['مفضلة', snapshot.bookmarks.length, snapshot.bookmarkStatus, 'metric-bookmarks'],
+          ['محاولات اختبار', snapshot.quizAttempts.length, snapshot.quizStatus, 'metric-quizzes'],
+          ['تقييمات عملية', snapshot.practicalAssessments.length, snapshot.practicalStatus, 'metric-assessments'],
+          ['قوائم تحقق', snapshot.checklist.entries.length, snapshot.checklist.storageStatus, 'metric-checklists'],
+          ['تخصيصات برومبت', Object.keys(snapshot.customizations.records).length, snapshot.customizations.status, 'metric-prompts'],
+        ].map(([label, value, status, testId]) => <div key={label} data-testid={testId} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="block text-xs text-[var(--text-muted)]">{label}</span><strong className="mt-1 block text-2xl font-black text-[var(--text-main)]">{snapshot.loaded && status === 'available' ? value : '—'}</strong><span className="mt-1 block text-[10px] text-[var(--text-faint)]">{status === 'available' ? 'محلي فقط' : 'العدد غير مؤكد'}</span></div>)}
       </div>
     </header>
 
-    {snapshot.loaded && !savedActivityExists && !anyStorageIssue && <div className="mt-6 rounded-3xl border border-dashed border-[var(--border-color)] bg-[var(--bg-surface)] p-7 text-center">
+    {snapshot.loaded && !savedActivityExists && !anyStorageIssue && <div data-testid="empty-dashboard-notice" className="mt-6 rounded-3xl border border-dashed border-[var(--border-color)] bg-[var(--bg-surface)] p-7 text-center">
       <BookOpen className="mx-auto h-8 w-8 text-[var(--primary)]" aria-hidden="true" />
       <h2 className="mt-3 text-xl font-black">لا توجد أنشطة مسجلة بعد</h2>
       <p className="mx-auto mt-2 max-w-2xl text-sm leading-7 text-[var(--text-muted)]">افتح موضوعًا لتسجيل زيارة، واحفظ المفضلة أو أجب عن اختبار أو استخدم قائمة التحقق. ستظهر هنا السجلات التي تسجلها فقط؛ لا تُنشأ سجلات للموضوعات التي لم تفتحها.</p>
@@ -287,19 +333,19 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
     </div>}
 
     <div className="mt-6 grid gap-5 lg:grid-cols-2">
-      <ActivitySection title="زيارات المواضيع الأخيرة" icon={Clock3} description="يعرض السجل الموجود حاليًا: آخر خمسة موضوعات فقط، من دون تاريخ أو مدة قراءة. فتح الموضوع يسجل زيارة ولا يسجل إكماله.">
+      <ActivitySection testId="section-recent-views" title="زيارات المواضيع الأخيرة" icon={Clock3} description="وفق قرار صاحب المقرر، فتح الموضوع يسجل زيارة حديثة فقط ولا يسجل إكماله. يعرض هذا السجل آخر خمسة موضوعات فقط دون تاريخ أو مدة قراءة أو مؤشر إنجاز.">
         {validRecent.length ? <ol className="space-y-2">{validRecent.map((topic, index) => <li key={`${topic.slug}-${index}`} className="flex items-center justify-between gap-3 rounded-xl bg-[var(--bg-card-subtle)] p-3"><span className="text-xs text-[var(--text-muted)]">{index + 1}</span><TopicLink topic={topic} /><span className="text-xs text-[var(--text-faint)]">زيارة محفوظة</span></li>)}</ol> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.recentStatus === 'available' ? 'لا توجد زيارات حديثة محفوظة.' : 'تعذرت قراءة قائمة الزيارات كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة السجل: {storageStatusLabel(snapshot.recentStatus)}.</p>
         {unresolvedRecent.length > 0 && <div className="mt-3 rounded-xl border border-amber-300 p-3 text-xs leading-6 text-amber-900 dark:border-amber-800 dark:text-amber-200"><strong>معرّفات تاريخية لم تُحل:</strong> {unresolvedRecent.join('، ')}. حُفظت كما هي ولم تُنسب إلى موضوع مختلف.</div>}
       </ActivitySection>
 
-      <ActivitySection title="المفضلة" icon={Heart} description="الموضوعات التي وضعتها في المفضلة، مستقلة عن الزيارات والاختبارات والتقييم العملي.">
+      <ActivitySection testId="section-bookmarks" title="المفضلة" icon={Heart} description="الموضوعات التي وضعتها في المفضلة، مستقلة عن الزيارات والاختبارات والتقييم العملي.">
         {validBookmarks.length ? <ul className="space-y-2">{validBookmarks.map((topic) => <li key={topic.slug} className="flex items-center gap-2 rounded-xl bg-[var(--bg-card-subtle)] p-3"><Heart className="h-4 w-4 shrink-0 text-rose-500" aria-hidden="true" /><TopicLink topic={topic} /></li>)}</ul> : <p className="rounded-xl bg-[var(--bg-card-subtle)] p-4 text-sm leading-6 text-[var(--text-muted)]">{snapshot.bookmarkStatus === 'available' ? 'لا توجد موضوعات مفضلة محفوظة.' : 'تعذرت قراءة قائمة المفضلة كاملة؛ لا يمكن تأكيد عدم وجود سجل.'}</p>}
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة السجل: {storageStatusLabel(snapshot.bookmarkStatus)}.</p>
         {unresolvedBookmarks.length > 0 && <div className="mt-3 rounded-xl border border-amber-300 p-3 text-xs leading-6 text-amber-900 dark:border-amber-800 dark:text-amber-200"><strong>معرّفات تاريخية لم تُحل:</strong> {unresolvedBookmarks.join('، ')}.</div>}
       </ActivitySection>
 
-      <ActivitySection title="نتائج الاختبارات" icon={HelpCircle} description="محاولات منفصلة بإصدارات الأسئلة والنتائج المسجلة. الدرجة وصف لسياسة التصحيح المقترحة، وليست إثباتًا للإتقان.">
+      <ActivitySection testId="section-quizzes" title="نتائج الاختبارات" icon={HelpCircle} description="محاولات منفصلة بإصدارات الأسئلة والنتائج المسجلة. الدرجة وصف لسياسة التصحيح المقترحة، وليست إثباتًا للإتقان.">
         {sortedAttempts.length ? <ol className="space-y-3">{sortedAttempts.map((attempt) => {
           const topic = topicBySlug.get(attempt.topicSlug);
           const currentQuiz = learningContentBySlug.get(attempt.topicSlug)?.quiz;
@@ -323,7 +369,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.quizStatus)}.</p>
       </ActivitySection>
 
-      <ActivitySection title="قوائم التحقق العملية" icon={CheckSquare} description="هذه اختيارات ذاتية محفوظة. عرض الاختيار لا يعني أن المخرج تحقق أو أنه مكتمل.">
+      <ActivitySection testId="section-checklists" title="قوائم التحقق العملية" icon={CheckSquare} description="هذه اختيارات ذاتية محفوظة. عرض الاختيار لا يعني أن المخرج تحقق أو أنه مكتمل.">
         {snapshot.checklist.entries.length ? <ul className="space-y-3">{snapshot.checklist.entries.map((entry, index) => <li key={`${entry.kind}-${entry.topicSlug}-${index}`} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
           <div className="flex flex-wrap items-center justify-between gap-2"><TopicLink topic={topicBySlug.get(entry.topicSlug)} prefix={topicBySlug.has(entry.topicSlug) ? '' : entry.topicSlug} /><span className="rounded-full border border-[var(--border-color)] px-2 py-1 text-[10px] text-[var(--text-muted)]">{entry.kind === 'application-checklist' ? 'قائمة الموضوع الحالية' : 'قائمة محفوظة قديمة'}</span></div>
           {entry.kind === 'application-checklist' ? <ul className="mt-3 space-y-1 text-sm leading-6">{entry.selectedItems.map((item) => <li key={item} className="flex gap-2"><span aria-hidden="true">✓</span><span>{item}</span></li>)}</ul> : <ul className="mt-3 space-y-1 text-sm leading-6">{entry.historicalStates?.map((item) => <li key={item.item} className="flex gap-2"><span aria-hidden="true">{item.selected ? '✓' : '○'}</span><span>{item.item}</span></li>)}</ul>}
@@ -334,7 +380,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.checklist.storageStatus)}.</p>
       </ActivitySection>
 
-      <ActivitySection title="التقييم العملي الذاتي" icon={ShieldCheck} description="يعرض أحكامك الحالية على المعايير مع تواريخها وإصداراتها. لا يقيّم التطبيق مشروعك بصورة مستقلة.">
+      <ActivitySection testId="section-assessments" title="التقييم العملي الذاتي" icon={ShieldCheck} description="يعرض أحكامك الحالية على المعايير مع تواريخها وإصداراتها. لا يقيّم التطبيق مشروعك بصورة مستقلة.">
         {sortedAssessments.length ? <ol className="space-y-3">{sortedAssessments.map((record) => {
           const topic = topicBySlug.get(record.topicSlug);
           const content = learningContentBySlug.get(record.topicSlug);
@@ -364,7 +410,7 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">حالة التخزين: {storageStatusLabel(snapshot.practicalStatus)}.</p>
       </ActivitySection>
 
-      <ActivitySection title={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'حالة الشارات المعتمدة' : 'معاينة قواعد الشارات المقترحة'} icon={Sparkles} description={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'تُحسب الحالة من دليل محلي مؤهل، ويُحفظ سجل إصدار الشارة وإبطالها على هذا الجهاز.' : 'هذه قواعد مرشحة للمراجعة فقط. حالة المعاينة تُعاد حسابها من السجلات الحالية؛ لا توجد شارات ممنوحة قبل موافقة صاحب المقرر.'}>
+      <ActivitySection testId="section-badges" title={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'حالة الشارات المعتمدة' : 'معاينة قواعد الشارات المقترحة'} icon={Sparkles} description={snapshot.badgeAwards.evaluationStatus === 'enabled' ? 'تُحسب الحالة من دليل محلي مؤهل، ويُحفظ سجل إصدار الشارة وإبطالها على هذا الجهاز.' : 'هذه قواعد مرشحة للمراجعة فقط. حالة المعاينة تُعاد حسابها من السجلات الحالية؛ لا توجد شارات ممنوحة قبل موافقة صاحب المقرر.'}>
         {snapshot.badgeAwards.evaluationStatus === 'enabled' ? <>
           <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-3 text-xs leading-6 text-[var(--text-muted)]">التقييم مفعّل بقرار موثق؛ لا تدخل نتائج المعاينة ضمن أدلة الشارات.</div>
           <ul className="mt-3 space-y-3">{snapshot.badgeAwards.rules.map((result) => <li key={result.rule.id} className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
@@ -387,12 +433,12 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
       </ActivitySection>
     </div>
 
-    <section className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6">
+    <section data-testid="section-storage-status" className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6">
       <h2 className="text-lg font-black">حالة السجلات المحلية</h2>
       <p className="mt-1 text-sm leading-6 text-[var(--text-muted)]">المصدر هو التخزين المحلي في المتصفح الحالي. عند تعذر القراءة، تُعرض لقطة الجلسة المتاحة مع توضيح أنها قد تكون ناقصة.</p>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{statusEntries.map(([label, status]) => <li key={label} className="rounded-xl bg-[var(--bg-card-subtle)] p-3"><span className="block text-xs text-[var(--text-muted)]">{label}</span><strong className="mt-1 block text-xs">{storageStatusLabel(status)}</strong></li>)}</ul>
-      <p className="mt-4 rounded-xl border border-[var(--border-color)] p-3 text-sm leading-6">مؤشر الإكمال العام غير معروض؛ قواعد الإكمال والعتبات ما زالت بانتظار اعتماد صاحب المقرر.</p>
-      <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">لا تعرض اللوحة إحصاءات منصة أو نتائج متعلمين آخرين أو مزامنة بين الأجهزة. <Link href="/prompts" className="font-bold text-[var(--primary)] underline">انتقل إلى مكتبة البرومبتات لتعديل نص واستخدامه</Link>.</p>
+      <p className="mt-4 rounded-xl border border-[var(--border-color)] p-3 text-sm leading-6">مؤشر الإكمال العام غير معروض؛ بقرار صاحب المقرر المعتمد (2026-10-20)، لا يتضمن التطبيق مؤشر إكمال عام أو إشارة إكمال قراءة: فتح الموضوع يسجل زيارة حديثة فقط ولا يُستنتج الإكمال أو الإتقان من الزيارات أو التمرير أو إجابات الاختبارات أو اختيارات قوائم التحقق. تُحسب وتُعرض كل فئة نشاط كسجل محلي مستقل دون دمجها في مقياس موحد.</p>
+      <p className="mt-3 text-xs leading-6 text-[var(--text-muted)]">لا تعرض اللوحة إحصاءات منصة أو نتائج متعلمين آخرين أو مزامنة بين الأجهزة. <Link href="/prompts" className="font-bold text-[var(--primary)] underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">انتقل إلى مكتبة البرومبتات لتعديل نص واستخدامه</Link>.</p>
     </section>
 
     <div className="sr-only" aria-live="polite">{snapshot.loaded ? `تم تحميل سجلات محلية: ${snapshot.quizAttempts.length} محاولة اختبار و${snapshot.practicalAssessments.length} تقييم ذاتي.` : 'جارٍ تحميل السجلات المحلية.'}</div>
