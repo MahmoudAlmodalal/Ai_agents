@@ -59,3 +59,8 @@ export const LEARNING_CONTENT_GROUP_A: Record<string, import('@/src/types/learni
     ...Object.entries(LEARNING_CONTENT_GROUP_A_REST),
   ],
 );
+
+// Refresh saved snapshots when the supplement or its underlying lesson changes.
+for (const slug of ['project-idea-mvp', 'srs', 'git-project-docs', 'github-docs-collaboration', 'plantuml', 'state-diagram']) {
+  LEARNING_CONTENT_GROUP_A[slug].contentVersion = 2;
+}

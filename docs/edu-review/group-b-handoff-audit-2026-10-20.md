@@ -1,5 +1,7 @@
 # Curriculum B output-to-input traceability — 2026-10-20
 
+> Historical review record. References below to proposed or pending shared policies describe the earlier baseline. The [course-owner package](owner-decision-package-70.md#course-owner-decisions) records their accepted dispositions and the per-video human-review deferral. Current candidate checks and limits are recorded in [the remaining-issues verification](remaining-issues-verification-2026-10-20.md); historical test results are not transferred to that candidate.
+
 **Scope:** canonical Topics 30–58 (`src/data/learning/group-b.ts`), 29 topics across issues #61–#69.
 **Static review:** Source correction commit `5b0c8be2a2628b0d29a3debc044772e0a54254c8` passed Dashboard's independent static re-review. The review also found additional direct Topic 39/40/41/42 references in Topic 45/54 that the earlier audit omitted; this revision expands the table to 49 topic-to-topic handoff edges and names the relevant artifacts. The documentation update is being recorded separately from the source commit. This audit does not treat missing prior evidence as an access gate.
 **Execution status:** learner-project outputs, external tools, browser journeys, videos, and owner decisions were not executed or approved by this audit. Those remain Not Run or pending. This audit does not mark a group improved or make the preceding topic an access requirement.

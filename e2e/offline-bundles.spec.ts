@@ -374,12 +374,12 @@ test.describe('production offline bundles', () => {
     await openTopic(page);
     await expect(page.locator('.learning-activities')).toHaveAttribute('data-offline-content-version', '1');
     await waitForController(page);
-    await expect(page.locator('.learning-activities').getByText('معاينة مقترحة — لا تمثل إتقانًا')).toBeVisible();
+    await expect(page.locator('.learning-activities').getByText('معاينة فحص ذاتي — لا تمثل إتقانًا')).toBeVisible();
     await saveCurrentTopic(page);
 
     const saved = await activeBundle(page);
     expect(saved?.payload.learningContent.quiz.questions.length).toBeGreaterThan(0);
-    expect(saved?.payload.metadata.quiz?.approvalState).toBe('proposed');
+    expect(saved?.payload.metadata.quiz?.approvalState).toBe('approved');
     expect(saved?.payload.learningContent.quiz.scoringPolicy.approval.state).toBe('proposed');
 
     await page.close();
@@ -393,13 +393,13 @@ test.describe('production offline bundles', () => {
     await expect(fresh).toHaveURL(new RegExp(`${TOPIC}$`));
     const activity = fresh.locator('.learning-activities');
     await expect(activity).toHaveAttribute('data-offline-content-version', '1');
-    await expect(activity.getByText('معاينة مقترحة — لا تمثل إتقانًا')).toBeVisible();
+    await expect(activity.getByText('معاينة فحص ذاتي — لا تمثل إتقانًا')).toBeVisible();
     const quizSection = activity.getByRole('heading', { name: 'فحص ذاتي للمفاهيم' }).locator('xpath=ancestor::section[1]');
     const actorQuestion = quizSection.getByRole('group', { name: /في رحلة طلب يوافق عليه مسؤول/ });
     await actorQuestion.getByRole('radio', { name: 'الطالب يغير الحالة بنفسه دائماً', exact: true }).check();
     await quizSection.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
     await expect(quizSection.getByText(/صحيح: 0 · غير صحيح: 1 · بلا إجابة: 1/)).toBeVisible();
-    await expect(quizSection.getByText('نتيجة معاينة مقترحة')).toBeVisible();
+    await expect(quizSection.getByText('نتيجة معاينة فحص ذاتي')).toBeVisible();
 
     await quizSection.getByRole('button', { name: 'إعادة المحاولة', exact: true }).click();
     await actorQuestion.getByRole('radio', { name: 'المسؤول يسجل التسليم؛ وتظهر النتيجة للطالب', exact: true }).check();

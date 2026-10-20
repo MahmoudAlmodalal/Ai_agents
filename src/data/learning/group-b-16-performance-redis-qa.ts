@@ -132,4 +132,7 @@ export const LEARNING_CONTENT_GROUP_B_16: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_16, QUESTION_IDS_GROUP_B_16, VIDEO_CANDIDATES_GROUP_B_16);
 
 // Topic 47's corrected worked-example environment requires fresh offline copies.
-LEARNING_CONTENT_GROUP_B_16['database-performance-engineering'].contentVersion = 2;
+
+
+// Review evidence is part of the saved content snapshot; refresh older offline copies.
+for (const content of Object.values(LEARNING_CONTENT_GROUP_B_16)) content.contentVersion = 2;

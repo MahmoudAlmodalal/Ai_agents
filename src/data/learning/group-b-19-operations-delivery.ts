@@ -165,3 +165,6 @@ recordIndependentTopicReview(TOPIC_DRAFTS_GROUP_B_19, INDEPENDENT_REVIEW_NOTES_G
 
 export const LEARNING_CONTENT_GROUP_B_19: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_19, QUESTION_IDS_GROUP_B_19, VIDEO_CANDIDATES_GROUP_B_19);
+
+// Review evidence is part of the saved content snapshot; refresh older offline copies.
+for (const content of Object.values(LEARNING_CONTENT_GROUP_B_19)) content.contentVersion = 2;

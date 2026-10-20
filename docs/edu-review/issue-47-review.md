@@ -1,5 +1,7 @@
 # Issue #47 review: Open reviewed external video resources from a Topic
 
+> Historical review record. References below to proposed or pending shared policies describe the earlier baseline. The [course-owner package](owner-decision-package-70.md#course-owner-decisions) records their accepted dispositions and the per-video human-review deferral. Current candidate checks and limits are recorded in [the remaining-issues verification](remaining-issues-verification-2026-10-20.md); historical test results are not transferred to that candidate.
+
 **Parent issue:** [MahmoudAlmodalal/Ai_agents#38](https://github.com/MahmoudAlmodalal/Ai_agents/issues/38)  
 **Task reference:** [MVP #38: 09] Open reviewed external video resources from a Topic  
 **Date:** 2026-10-20  
