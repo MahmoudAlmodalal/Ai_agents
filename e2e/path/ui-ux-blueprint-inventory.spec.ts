@@ -51,7 +51,7 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     await expect(copyBtn).toHaveText(/تم النسخ/);
   });
 
-  test('Topic 19 (UX Blueprint): Renders Sitemap, complete 6 essential states, and PROMPT 15', async ({ page }) => {
+  test('Topic 19 (UX Blueprint): Renders Sitemap, four UI states and cross-cutting checks, and PROMPT 15', async ({ page }) => {
     await page.goto('/learn/ux-blueprint');
 
     // Header & metadata
@@ -69,18 +69,19 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     expect(sitemapText).toContain('/dashboard/loans');
     expect(sitemapText).toContain('/staff/requests');
 
-    // The 6 Essential States verification
+    // Four UI states; responsive and accessibility are cross-cutting checks.
     await expect(page.locator('text=1. التحميل (Loading)')).toBeVisible();
     await expect(page.locator('text=2. الفراغ (Empty)')).toBeVisible();
     await expect(page.locator('text=3. الخطأ والتعافي (Error)')).toBeVisible();
     await expect(page.locator('text=4. النجاح (Success)')).toBeVisible();
-    await expect(page.locator('text=5. التجاوب (Responsive)')).toBeVisible();
-    await expect(page.locator('text=6. إمكانية الوصول (Accessibility)')).toBeVisible();
+    await expect(page.locator('text=فحص عابر: الاستجابة (Responsive)')).toBeVisible();
+    await expect(page.locator('text=فحص عابر: إمكانية الوصول (Accessibility)')).toBeVisible();
 
-    // Skeletons, WCAG AA, Touch targets mentioned
-    await expect(page.locator('article')).toContainText('Skeleton Screens');
-    await expect(page.locator('article')).toContainText('WCAG AA');
-    await expect(page.locator('article')).toContainText('44px');
+    // Skeletons, WCAG AA and target-size guidance
+    const article = page.locator('article').first();
+    await expect(article).toContainText('Skeleton Screens');
+    await expect(article).toContainText('WCAG AA');
+    await expect(article).toContainText('44 CSS px قيمة راحة اختيارية وليست شرطاً عاماً لكل عنصر');
 
     // PROMPT 15 section
     const prompt15Block = page.locator('.code-container').filter({ hasText: 'PROMPT 15 — UX Blueprint + Screen Inventory' });

@@ -45,10 +45,10 @@ test.describe('Sequential Project Path — Ticket 19: Operations and delivery', 
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(lesson.title);
 
       const header = page.locator('header.rounded-3xl');
-      await expect(header).toContainText('محتوى منشور');
+      await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
       await expect(header).toContainText(lesson.output);
 
-      const content = page.locator('article');
+      const content = page.locator('article').first();
       for (const phrase of lesson.expected) await expect(content).toContainText(phrase);
       await expect(content.locator('.code-container')).toBeVisible();
       const copyButton = content.locator('.copy-btn').first();
@@ -85,7 +85,7 @@ test.describe('Sequential Project Path — Ticket 19: Operations and delivery', 
 
   test('references resolve to the existing prompt library and templates pages', async ({ page }) => {
     await page.goto('/learn/project-handoff-package');
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article.getByRole('link', { name: 'الملفات والقوالب' })).toHaveAttribute('href', '/templates');
     const promptLibrary = article.getByRole('link', { name: 'مكتبة البرومبتات' });
     await expect(promptLibrary).toHaveAttribute('href', '/prompts');
@@ -94,12 +94,12 @@ test.describe('Sequential Project Path — Ticket 19: Operations and delivery', 
     await expect(page.getByRole('heading', { level: 1 })).toContainText('مكتبة البرومبتات');
 
     await page.goBack();
-    await page.locator('article').getByRole('link', { name: 'الملفات والقوالب' }).click();
+    await page.locator('article').first().getByRole('link', { name: 'الملفات والقوالب' }).click();
     await expect(page).toHaveURL(/\/templates\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('القوالب المرجعية الأربعة عشر');
 
     await page.goto('/learn/project-portfolio-entry');
-    await expect(page.locator('article').getByRole('link', { name: 'مكتبة البرومبتات' })).toHaveAttribute('href', '/prompts');
-    await expect(page.locator('article').getByRole('link', { name: 'الملفات والقوالب' })).toHaveAttribute('href', '/templates');
+    await expect(page.locator('article').first().getByRole('link', { name: 'مكتبة البرومبتات' })).toHaveAttribute('href', '/prompts');
+    await expect(page.locator('article').first().getByRole('link', { name: 'الملفات والقوالب' })).toHaveAttribute('href', '/templates');
   });
 });

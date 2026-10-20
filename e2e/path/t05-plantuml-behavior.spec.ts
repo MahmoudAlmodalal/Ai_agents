@@ -36,7 +36,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('أداة ومحرر PlantUML للنمذجة الهندسية ككود');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 10');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract fields
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
@@ -81,7 +81,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط حالات الاستخدام (Use Case Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 11');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/use-case.puml' }).first()).toBeVisible();
@@ -126,7 +126,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط النشاط وسير العمليات (Activity Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 12');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/activity-diagram.md' }).first()).toBeVisible();
@@ -189,7 +189,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('h1')).toContainText('مخطط الحالات ودورة حياة الكيانات (State Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 13');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/state-diagrams.md' }).first()).toBeVisible();

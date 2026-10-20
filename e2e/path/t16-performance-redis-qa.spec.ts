@@ -31,7 +31,7 @@ test.describe('Sequential Project Path - Ticket 16: Performance, Redis, and QA',
     await expect(page.locator('h1')).toContainText('هندسة أداء قاعدة البيانات');
     await expect(page.locator('header.rounded-3xl')).toContainText('موضوع 47');
 
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('لا تبدأ بقائمة تحسينات جاهزة');
     await expect(article).toContainText('عالج N+1 حين يثبتها عدّ الاستعلامات');
     await expect(article).toContainText('أضف فهرسًا لاستعلام مرصود');
@@ -60,7 +60,7 @@ test.describe('Sequential Project Path - Ticket 16: Performance, Redis, and QA',
     await expect(page.locator('h1')).toContainText('Redis: قرار مشروط');
     await expect(page.locator('header.rounded-3xl')).toContainText('موضوع 48');
 
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('اختر مسار التجاوز');
     await expect(article).toContainText('إذا لم تثبت الحاجة');
     await expect(article).toContainText('مصدر الحقيقة');
@@ -89,7 +89,7 @@ test.describe('Sequential Project Path - Ticket 16: Performance, Redis, and QA',
     await expect(page.locator('h1')).toContainText('QA: مراجعة متكاملة');
     await expect(page.locator('header.rounded-3xl')).toContainText('موضوع 49');
 
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('Passed');
     await expect(article).toContainText('Failed');
     await expect(article).toContainText('Not Run');
@@ -129,7 +129,7 @@ test.describe('Sequential Project Path - Ticket 16: Performance, Redis, and QA',
       await page.goto(path);
       for (const width of widths) {
         await page.setViewportSize({ width, height: 900 });
-        await expect(page.locator('article')).toBeVisible();
+        await expect(page.locator('article').first()).toBeVisible();
         const noPageOverflow = await page.evaluate(() =>
           document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
         );

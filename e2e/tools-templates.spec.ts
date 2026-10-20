@@ -49,12 +49,12 @@ test('reference topic destinations resolve and reference pages fit phone and des
 
 test('Tailwind lesson prepares versioned token mapping before Next project bootstrap', async ({ page }) => {
   await page.goto('/learn/tailwind-css-responsive');
-  await expect(page.locator('article')).toContainText('Tailwind v4');
-  await expect(page.locator('article')).toContainText('@theme');
-  await expect(page.locator('article')).toContainText('الموضوع 33');
-  await expect(page.locator('article')).toContainText('قيم توضيحية');
+  await expect(page.locator('article').first()).toContainText('Tailwind v4');
+  await expect(page.locator('article').first()).toContainText('@theme');
+  await expect(page.locator('article').first()).toContainText('الموضوع 33');
+  await expect(page.locator('article').first()).toContainText('قيم توضيحية');
   await expect(page.locator('header.rounded-3xl')).toContainText('src/app/globals.css');
   await page.goto('/learn/typescript-types');
-  await expect(page.locator('article')).toContainText("'student' | 'staff' | 'admin'");
-  await expect(page.locator('article')).not.toContainText("'faculty'");
+  await expect(page.locator('article').first()).toContainText("'student' | 'staff' | 'admin'");
+  await expect(page.locator('article').first()).not.toContainText("'faculty'");
 });

@@ -1,18 +1,19 @@
 {
-  "name": "سلاح العصر — Ai_agents",
+  "name": "Ai_agents — هندسة البرمجيات بالذكاء الاصطناعي",
   "short_name": "Ai_agents",
   "description": "منهاج هندسة برمجيات وكلاء الذكاء الاصطناعي وبناء المشاريع",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#090d16",
-  "theme_color": "#090d16",
+  "background_color": "#f5f5f0",
+  "theme_color": "#17231f",
   "lang": "ar",
   "dir": "rtl",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/ai-agents-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

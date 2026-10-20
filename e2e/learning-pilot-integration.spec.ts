@@ -87,7 +87,7 @@ test.describe('Learning pilot integration', () => {
       const authoredCode = page.locator('article .code-container').first();
       const expectedText = await authoredCode.locator('code').textContent();
       await authoredCode.getByRole('button').click();
-      await expect(page.getByRole('status')).toContainText('تم نسخ المحتوى');
+      await expect(page.getByRole('status').filter({ hasText: 'تم نسخ المحتوى إلى الحافظة بنجاح' })).toContainText('تم نسخ المحتوى');
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(expectedText);
       await page.getByRole('button', { name: 'طباعة كملف PDF', exact: true }).click();
       await page.getByRole('button', { name: 'الاستماع للمقدمة', exact: true }).click();
@@ -101,7 +101,7 @@ test.describe('Learning pilot integration', () => {
       expect(calls.some((call) => call.startsWith('speak:ar-SA:اختيار فكرة المشروع'))).toBe(true);
       await page.emulateMedia({ media: 'print' });
       await expect(page.getByRole('button', { name: 'طباعة كملف PDF', exact: true })).toBeHidden();
-      await expect(page.locator('article')).toContainText('PROJECT_CONTEXT.md');
+      await expect(page.locator('article').first()).toContainText('PROJECT_CONTEXT.md');
     });
   }
 

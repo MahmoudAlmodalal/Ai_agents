@@ -7,11 +7,13 @@ export type ChecklistStorageStatus = 'loading' | 'available' | 'read-error' | 'w
 export interface ApplicationChecklistSnapshot {
   readonly selected: ReadonlySet<string>;
   readonly storageStatus: ChecklistStorageStatus;
+  readonly sessionOnlyChanges: ReadonlyArray<{ itemKey: string; checked: boolean }>;
 }
 
 export const EMPTY_APPLICATION_CHECKLIST: ApplicationChecklistSnapshot = {
   selected: new Set<string>(),
   storageStatus: 'loading',
+  sessionOnlyChanges: [],
 };
 
 // Full normalized text is the semantic identity. Reordering never transfers a check
@@ -57,9 +59,12 @@ export function createApplicationChecklistStore(getStorage: () => ChecklistStora
 
   function publish(entry: Entry, selected: ReadonlySet<string>, storageStatus: ChecklistStorageStatus) {
     const previous = entry.snapshot;
+    const sessionOnlyChanges = [...entry.pending].map(([itemKey, checked]) => ({ itemKey, checked }));
     if (previous.storageStatus === storageStatus && previous.selected.size === selected.size
-      && [...selected].every((key) => previous.selected.has(key))) return;
-    entry.snapshot = { selected, storageStatus };
+      && [...selected].every((key) => previous.selected.has(key))
+      && previous.sessionOnlyChanges.length === sessionOnlyChanges.length
+      && sessionOnlyChanges.every((change) => previous.sessionOnlyChanges.some((previousChange) => previousChange.itemKey === change.itemKey && previousChange.checked === change.checked))) return;
+    entry.snapshot = { selected, storageStatus, sessionOnlyChanges };
     entry.listeners.forEach((listener) => listener());
   }
 
@@ -121,6 +126,12 @@ export function createApplicationChecklistStore(getStorage: () => ChecklistStora
 
   return {
     getSnapshot(slug: string) { return getEntry(slug).snapshot; },
+    listSnapshots(slugs: string[]) {
+      const uniqueSlugs = [...new Set(slugs)];
+      uniqueSlugs.forEach(getEntry);
+      refresh();
+      return Object.fromEntries(uniqueSlugs.map((slug) => [slug, getEntry(slug).snapshot]));
+    },
     subscribe(slug: string, listener: () => void) {
       const entry = getEntry(slug);
       entry.listeners.add(listener);
@@ -171,4 +182,6 @@ export function subscribeApplicationChecklist(slug: string, listener: () => void
 }
 
 export const getApplicationChecklistSnapshot = store.getSnapshot;
+/** Read dashboard snapshots in one storage pass, including in-memory selections after a write failure. */
+export const listApplicationChecklistSnapshots = store.listSnapshots;
 export const toggleApplicationChecklistItem = store.toggle;

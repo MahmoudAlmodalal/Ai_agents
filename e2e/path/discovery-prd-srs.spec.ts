@@ -41,11 +41,11 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await expect(page).toHaveURL(/\/learn\/discovery-grill-me/);
     await expect(page.locator('h1')).toContainText('استجواب الفكرة واستكشاف المتطلبات (Grill Me)');
     const topic02Header = page.locator('header.rounded-3xl');
-    await expect(topic02Header).toContainText('محتوى منشور');
+    await expect(topic02Header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(topic02Header).toContainText('docs/DECISIONS_LOG.md');
 
     // Check prerequisites note that no coding agent, skills or MCP are needed
-    await expect(page.locator('article')).toContainText('لا يشترط تثبيت أي أدوات برمجية للواجهة أو مهارات Skills أو خوادم MCP');
+    await expect(page.locator('article').first()).toContainText('لا يشترط تثبيت أي أدوات برمجية للواجهة أو مهارات Skills أو خوادم MCP');
 
     // Prev link points to Topic 01, Next link points to Topic 03
     const prevTo01 = page.getByRole('link', { name: /الموضوع السابق/ });
@@ -85,9 +85,9 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await expect(topic04Header).toContainText('docs/SRS.md');
 
     // Verify PRD vs SRS comparison & Given / When / Then criteria
-    await expect(page.locator('article')).toContainText('Given');
-    await expect(page.locator('article')).toContainText('When');
-    await expect(page.locator('article')).toContainText('Then');
+    await expect(page.locator('article').first()).toContainText('Given');
+    await expect(page.locator('article').first()).toContainText('When');
+    await expect(page.locator('article').first()).toContainText('Then');
 
     // Prev link points back to Topic 03
     const prevTo03 = page.getByRole('link', { name: /الموضوع السابق/ });
@@ -122,7 +122,7 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await page.goto('/prompts/prompt-01-grill-me-product-discovery');
     await expect(page.locator('h1')).toContainText('Grill Me: Product Discovery');
 
-    const copyBtn = page.getByRole('button', { name: /نسخ البرومبت/ });
+    const copyBtn = page.getByRole('button', { name: 'نسخ النسخة المحددة', exact: true });
     await expect(copyBtn).toBeVisible();
     await copyBtn.click();
 
@@ -136,30 +136,30 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await page.goto('/learn/prd-specification');
 
     // Check for Prompt 02 and Prompt 03 in the content
-    await expect(page.locator('article')).toContainText('PROMPT 02');
-    await expect(page.locator('article')).toContainText('27 sections');
-    await expect(page.locator('article')).toContainText('PROMPT 03');
-    await expect(page.locator('article')).toContainText('PRD Review');
+    await expect(page.locator('article').first()).toContainText('PROMPT 02');
+    await expect(page.locator('article').first()).toContainText('27 sections');
+    await expect(page.locator('article').first()).toContainText('PROMPT 03');
+    await expect(page.locator('article').first()).toContainText('PRD Review');
 
     // Verify that decisions precede generated documents
-    await expect(page.locator('article')).toContainText('docs/DECISIONS_LOG.md');
-    await expect(page.locator('article')).toContainText('Single Source of Truth');
+    await expect(page.locator('article').first()).toContainText('docs/DECISIONS_LOG.md');
+    await expect(page.locator('article').first()).toContainText('Single Source of Truth');
   });
 
   test('SRS topic grounds system behavior, error states, and Given/When/Then acceptance criteria', async ({ page }) => {
     await page.goto('/learn/srs');
 
     // Check behavior components
-    await expect(page.locator('article')).toContainText('Preconditions');
-    await expect(page.locator('article')).toContainText('Input Validation');
-    await expect(page.locator('article')).toContainText('State Transitions');
+    await expect(page.locator('article').first()).toContainText('Preconditions');
+    await expect(page.locator('article').first()).toContainText('Input Validation');
+    await expect(page.locator('article').first()).toContainText('State Transitions');
 
     // Check error handling & idempotency
-    await expect(page.locator('article')).toContainText('Idempotency');
-    await expect(page.locator('article')).toContainText('Race Conditions');
+    await expect(page.locator('article').first()).toContainText('Idempotency');
+    await expect(page.locator('article').first()).toContainText('Race Conditions');
 
     // Check Given/When/Then scenarios
-    await expect(page.locator('article')).toContainText('Happy Path Scenario');
-    await expect(page.locator('article')).toContainText('Validation Rejection');
+    await expect(page.locator('article').first()).toContainText('Happy Path Scenario');
+    await expect(page.locator('article').first()).toContainText('Validation Rejection');
   });
 });

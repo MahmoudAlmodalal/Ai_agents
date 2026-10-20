@@ -530,7 +530,7 @@ export const topic26SkillsHtml = `
       </div>
       <pre class="code-content"><code>---
 name: frontend-standards
-description: Enforce MET Academy Frontend standards for Next.js 15, React 19, Tailwind CSS and RTL.
+description: Enforce Ai_agents Frontend standards for Next.js 15, React 19, Tailwind CSS and RTL.
 ---
 
 # Frontend Engineering Skill: BorrowHub Standards

@@ -17,11 +17,13 @@ import {
 import type { TopicItem } from '@/src/types/topic';
 import {
   getTopicOfflineStatus,
+  getSavedTopicOfflinePayload,
   saveTopicOffline,
   removeTopicOffline,
   TopicOfflineStatus,
   OFFLINE_STORAGE_CHANGE_EVENT,
 } from '@/src/lib/offlineStorage';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 import {
   readSavedBookmarks,
   writeSavedBookmarks,
@@ -38,6 +40,8 @@ import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNot
 export function TopicReaderTools({ topic }: { topic: TopicItem }) {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [offlineStatus, setOfflineStatus] = React.useState<TopicOfflineStatus>('unsaved');
+  const [offlineContentVersion, setOfflineContentVersion] = React.useState<number | null>(null);
+  const [offlineQuizSaved, setOfflineQuizSaved] = React.useState(false);
   const [storageStatus, setStorageStatus] = React.useState<TopicStorageStatus>('loading');
   const [audioState, setAudioState] = React.useState<'stopped' | 'playing' | 'paused'>('stopped');
   const [audioSupported, setAudioSupported] = React.useState(false);
@@ -45,17 +49,31 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
 
   React.useEffect(() => {
     let active = true;
+    let statusRevision = 0;
     const checkOffline = async () => {
+      const revision = statusRevision;
       const status = await getTopicOfflineStatus(topic.slug);
-      if (active) setOfflineStatus(status);
+      const payload = status === 'saved' ? await getSavedTopicOfflinePayload(topic.slug) : null;
+      if (active && revision === statusRevision) {
+        setOfflineStatus(status);
+        setOfflineContentVersion(payload?.contentVersion ?? null);
+        setOfflineQuizSaved(!!payload?.learningContent?.quiz);
+      }
     };
     checkOffline();
 
     const handleOfflineEvent = (e: Event) => {
       const custom = e as CustomEvent;
-      if (!custom.detail || custom.detail.slug === topic.slug) {
-        checkOffline();
+      if (custom.detail && custom.detail.slug !== topic.slug) return;
+      statusRevision += 1;
+      const operationStatus = custom.detail?.status as TopicOfflineStatus | undefined;
+      if (operationStatus === 'saving' || operationStatus === 'updating' || operationStatus === 'failed') {
+        // These events describe the operation in progress/result. Reading the
+        // prior active bundle here would hide a failed replacement as "saved".
+        setOfflineStatus(operationStatus);
+        return;
       }
+      checkOffline();
     };
     window.addEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
 
@@ -64,6 +82,8 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
       window.removeEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
     };
   }, [topic.slug]);
+
+  const currentLearningContent = getTopicLearningContent(topic.slug);
 
   React.useEffect(() => {
     const update = () => {
@@ -150,7 +170,7 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
     }
   };
 
-  const buttonClass = 'inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] transition-colors cursor-pointer';
+  const buttonClass = 'inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] transition-colors cursor-pointer';
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2 no-print" aria-label="أدوات قراءة الموضوع">
@@ -230,10 +250,26 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
 
       {offlineStatus === 'unsupported' && (
         <span
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"
           title="المتصفح الحالي لا يوفر دعم Service Worker أو Storage API"
         >
           الحفظ غير متاح في هذا المتصفح
+        </span>
+      )}
+
+      {offlineStatus === 'unsaved' && currentLearningContent?.quiz && (
+        <span className="basis-full text-xs text-[var(--text-muted)]" role="status">
+          الاختبار متاح في هذه الصفحة لكنه غير محفوظ للعمل دون اتصال. الفيديوهات الخارجية تتطلب اتصالاً.
+        </span>
+      )}
+      {offlineStatus === 'saved' && (
+        <span className="basis-full text-xs text-[var(--text-muted)]" role="status">
+          {offlineQuizSaved
+            ? 'الاختبار محفوظ ضمن إصدار المحتوى ' + offlineContentVersion + '؛ أي نتيجة محفوظة ذاتياً وليست اعتماداً مستقلاً.'
+            : 'لا يتضمن الإصدار المحفوظ اختباراً. الفيديوهات الخارجية تتطلب اتصالاً بالإنترنت.'}
+          {currentLearningContent && offlineContentVersion !== currentLearningContent.contentVersion
+            ? ' يوجد إصدار أحدث من الدرس أو الاختبار؛ حدّث النسخة عند الاتصال.'
+            : ''}
         </span>
       )}
 

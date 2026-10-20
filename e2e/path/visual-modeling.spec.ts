@@ -50,7 +50,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     expect(flowText).toContain('AdminDecision');
 
     // Tied to PRD requirements (Rule 3)
-    await expect(page.locator('article')).toContainText('الحد الأقصى 2 استعارة نشطة - القاعدة 3');
+    await expect(page.locator('article').first()).toContainText('الحد الأقصى 2 استعارة نشطة - القاعدة 3');
 
     // Success path
     expect(flowText).toContain('Handover');
@@ -64,7 +64,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     expect(flowText).toContain('ExitReject');
 
     // Output deliverable
-    await expect(page.locator('article')).toContainText('docs/user-flow.md');
+    await expect(page.locator('article').first()).toContainText('docs/user-flow.md');
   });
 
   test('Topic 09 (Domain Model): Strictly conceptual without DB keys, SQL types, or functions', async ({ page }) => {
@@ -100,7 +100,7 @@ test.describe('Sequential Project Path - Topic 04: Visual Modeling (Mermaid, Use
     expect(domainText).toContain('يعتمد أو يرفض');
 
     // Deliverables
-    await expect(page.locator('article')).toContainText('docs/diagrams/domain-model.md');
+    await expect(page.locator('article').first()).toContainText('docs/diagrams/domain-model.md');
   });
 
   test('Modal Reader and MermaidViewer: Renders diagrams smoothly and switches perspectives', async ({ page }) => {

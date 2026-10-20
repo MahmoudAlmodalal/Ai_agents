@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('تخطيط واجهة المستخدم وهندسة الفرونت إند (Frontend Planning)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_PLAN.md');
     await expect(header).toContainText('docs/FRONTEND_TASKS.md');
     await expect(header).toContainText('docs/ROUTES_MAP.md');
@@ -19,7 +19,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Architecture before code & avoiding monolithic vibe coding
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('لماذا يسبق التخطيط المعماري أي كتابة للكود البرمجي؟');
     await expect(content).toContainText('البرمجة الاندفاعية');
     await expect(content).toContainText('docs/PRD.md');
@@ -66,7 +66,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(svg).toBeVisible();
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Practical steps and checklist
@@ -89,10 +89,10 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('مراجعة معايير التجربة والواجهة بـ UI/UX Pro Max');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/UI_UX_PRO_MAX_AUDIT.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Proper placement in workflow
     await expect(content).toContainText('التموضع الهندسي لأداة UI/UX Pro Max في مسار التطوير');
@@ -139,11 +139,11 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('تنظيم المواصفات وتطوير الميزات بـ Spec Kit');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/rules/frontend.md');
     await expect(header).toContainText('specs/001-equipment-browsing/spec.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Specification-Driven Development philosophy
     await expect(content).toContainText('فلسفة التطوير القائم على المواصفات');
@@ -191,10 +191,10 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('التنفيذ التدريجي للفرونت إند وحالات الواجهة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_EXECUTION_LOG.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Stop & Verify
     await expect(content).toContainText('مبدأ التنفيذ التدريجي والتوقف الذكي (Stop & Verify)');

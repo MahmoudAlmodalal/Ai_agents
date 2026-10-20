@@ -5,7 +5,7 @@ import { getAllTopics } from '@/src/lib/topicRegistry';
 import { getPromptLibraryRecord } from '@/src/lib/promptLibrary';
 
 export const metadata = {
-  title: 'Practical Prompts Cheatsheet | MET Academy',
+  title: 'Practical Prompts Cheatsheet | Ai_agents',
   description: 'مرجع سريع للبرومبتات العملية وخارطة مخرجات مشروع الطالب.',
 };
 

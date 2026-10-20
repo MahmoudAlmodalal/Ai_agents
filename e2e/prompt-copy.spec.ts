@@ -30,11 +30,11 @@ test.describe('Prompt Library Journey', () => {
 
     const promptBody = page.locator('pre').last();
     const fullPromptText = await promptBody.textContent();
-    const copyButton = page.getByRole('button', { name: 'نسخ البرومبت' });
+    const copyButton = page.getByRole('button', { name: 'نسخ النسخة المحددة' });
     await expect(copyButton).toBeVisible();
     await copyButton.focus();
     await page.keyboard.press('Enter');
-    await expect(page.getByRole('status')).toContainText('تم نسخ النص الكامل إلى الحافظة.');
+    await expect(page.getByRole('status')).toContainText('تم نسخ النص الكامل للنسخة المحددة.');
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(fullPromptText);
 
     await expect(page.getByRole('link', { name: 'اختيار فكرة المشروع وتحديد MVP' })).toHaveAttribute('href', '/learn/project-idea-mvp');
@@ -46,11 +46,27 @@ test.describe('Prompt Library Journey', () => {
         configurable: true,
         value: { writeText: async () => { throw new Error('permission denied'); } },
       });
+      document.execCommand = () => false;
     });
     await page.goto('/prompts/prompt-01-grill-me-product-discovery');
-    await page.getByRole('button', { name: 'نسخ البرومبت' }).click();
-    await expect(page.getByRole('status')).toContainText('تعذر الوصول إلى الحافظة');
-    await expect(page.getByRole('status')).not.toContainText('تم نسخ النص الكامل');
+    await page.getByRole('button', { name: 'نسخ النسخة المحددة' }).click();
+    await expect(page.getByRole('status')).toContainText('النص الكامل ظاهر؛ حدده وانسخه يدويًا');
+    await expect(page.getByRole('status')).not.toContainText('تم نسخ النص الكامل للنسخة المحددة.');
+  });
+
+  test('copies the complete selected prompt through the legacy clipboard fallback when the Clipboard API is unavailable', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+      document.execCommand = (command: string) => {
+        (window as typeof window & { legacyCopiedText?: string }).legacyCopiedText = document.querySelector('textarea')?.value;
+        return command === 'copy';
+      };
+    });
+    await page.goto('/prompts/prompt-01-grill-me-product-discovery');
+    const fullText = await page.locator('pre').last().textContent();
+    await page.getByRole('button', { name: 'نسخ النسخة المحددة' }).click();
+    await expect(page.getByRole('status')).toContainText('تم نسخ النص الكامل للنسخة المحددة.');
+    expect(await page.evaluate(() => (window as typeof window & { legacyCopiedText?: string }).legacyCopiedText)).toBe(fullText);
   });
 
   test('links the deployment example to the canonical backend and database topic', async ({ page }) => {

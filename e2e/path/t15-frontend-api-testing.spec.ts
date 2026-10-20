@@ -27,7 +27,7 @@ test.describe('Sequential Project Path - Ticket 15: Frontend/API Integration and
 
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await expect(page.locator('h1')).toContainText('ربط Frontend مع Backend');
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('docs/API_CONTRACTS.md');
     await expect(article).toContainText('docs/PERMISSIONS_MATRIX.md');
     await expect(article).toContainText('جلسة Cookie');
@@ -67,7 +67,7 @@ test.describe('Sequential Project Path - Ticket 15: Frontend/API Integration and
 
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await expect(page.locator('h1')).toContainText('Testing');
-    const article = page.locator('article');
+    const article = page.locator('article').first();
     await expect(article).toContainText('Frontend integration');
     await expect(article).toContainText('API / backend integration');
     await expect(article).toContainText('Full-Stack browser journey');

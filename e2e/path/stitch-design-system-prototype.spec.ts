@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('تصميم الشاشة المرجعية في Google Stitch');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/STITCH_MASTER_PROMPT.md');
     await expect(header).toContainText('الشاشة المرجعية المعتمدة في Google Stitch');
 
@@ -16,7 +16,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Core rule: Starts with ONE reference screen first, no bulk generation
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('قاعدة الشاشة المرجعية الواحدة');
     await expect(content).toContainText('ابدأ بشاشة مرجعية تمثيلية واحدة فقط');
     await expect(content).toContainText('منع الانجراف البصري');
@@ -54,7 +54,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await expect(codelabLink).toBeVisible();
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Practical steps and checklist
@@ -73,16 +73,21 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Title and headers
     await expect(page.locator('h1')).toContainText('قواعد نظام التصميم وبرومبتات الشاشات المنفصلة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/STITCH_SCREEN_PROMPTS.md');
 
-    // Design system rules: 60-30-10, Typography, 8px grid, UI states, WCAG 2.1 AA
-    const content = page.locator('article');
+    // Optional design examples, applicable UI states, and target-appropriate accessibility checks
+    const content = page.locator('article').first();
     await expect(content).toContainText('قاعدة الألوان 60-30-10');
+    await expect(content).toContainText('الأمثلة التالية وسائل اختيارية للنقاش، وليست قواعد إلزامية لكل واجهة');
+    await expect(content).toContainText('قاعدة 60-30-10 اقتراح بصري اختياري');
     await expect(content).toContainText('مقياس التايبوجرافي المتزن');
     await expect(content).toContainText('شبكة المسافات القياسية (8px Grid)');
-    await expect(content).toContainText('الحالات التفاعلية الست الإلزامية');
-    await expect(content).toContainText('WCAG 2.1 AA');
+    await expect(content).toContainText('يمكن تجربة شبكة 8px أو مقياس آخر');
+    await expect(content).toContainText('حالات واجهة شائعة تُراجع عند انطباقها (UI States to Consider)');
+    await expect(content).toContainText('أظهر رسالة أو مساراً مناسباً فقط إذا حددت المتطلبات قاعدة الصلاحية والسلوك');
+    await expect(content).toContainText('44×44 CSS px قيمة إرشادية شائعة للراحة وليست شرطاً عاماً من WCAG AA لكل عنصر');
+    await expect(content).toContainText('4.5:1 للنص العادي');
     await expect(content).toContainText('RTL First');
 
     // Embedded PROMPT 17 (Stitch Design System)
@@ -121,11 +126,11 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Title and headers
     await expect(page.locator('h1')).toContainText('النموذج التفاعلي (Prototype) والتحقق من الرحلات');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/PROTOTYPE_JOURNEYS_AUDIT.md');
 
     // Rejection of fake demo button antipattern
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('فحص سلوكي صارم بدل «زر التجربة الوهمي»');
     await expect(content).not.toHaveText('زر تجربة وهمي يعمل كرابط');
 

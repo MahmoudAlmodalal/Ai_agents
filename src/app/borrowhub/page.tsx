@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import CaseStudyTools from './CaseStudyTools';
 import { caseFiles, rules } from './caseStudy';
-export const metadata = { title: 'ورشة BorrowHub | سلاح العصر', description: 'دراسة حالة استعارة المعدات: القصة والأدوار والقواعد التسع ومسار الطالب.' };
+export const metadata = { title: 'ورشة BorrowHub | Ai_agents', description: 'دراسة حالة استعارة المعدات: القصة والأدوار والقواعد التسع ومسار الطالب.' };
 const panel = 'mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6';
 const tables = [
   ['users', 'الطلاب والمسؤولون وحالة اعتماد الحساب.'],

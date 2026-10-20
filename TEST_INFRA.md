@@ -25,10 +25,18 @@ Tests use the registered path rather than treating an old ordinal ID as a new to
 
 ## Running safely
 
-The default Playwright config starts or reuses a server on port 3000 (`E2E_PORT` overrides it) and runs one worker. For final verification, stop the development server, build once, start `npm run start -- --port 3000`, then run the suite against that production server. Avoid simultaneous Next.js builds and servers on constrained machines.
+The default Playwright config starts a development server on port 3000 (`E2E_PORT` overrides it) and runs one worker. Server reuse is opt-in with `E2E_REUSE_SERVER=1`; the same setting applies locally and in CI. `E2E_SERVER=production` selects `npm run start` instead of the development server, so Playwright can either launch the built production app or reuse an existing production server on the selected port.
+
+For example, after building once and starting the production app on port 3200, run:
+
+```sh
+E2E_SERVER=production E2E_REUSE_SERVER=1 E2E_PORT=3200 npm run test:e2e
+```
+
+The command selects port 3200 and reuses the server already listening there. If no server is available, Playwright launches the production command selected by `E2E_SERVER`. Use a port dedicated to the expected server when enabling reuse. Avoid simultaneous Next.js builds and servers on constrained machines.
 
 If Google Chrome is already installed, `E2E_BROWSER_CHANNEL=chrome npm run test:e2e` selects it without downloading bundled Chromium. Omit the variable to use Playwright's default browser.
 
 Run focused files during development; run the full suite after integration. Repeat only affected tests after a correction. Typechecking and build success are complementary checks, not educational or browser evidence.
 
-Record **Passed**, **Failed**, or **Not Run** with the command and actual observation. Speech API stubs do not prove audible Arabic playback. Capturing `window.print` does not verify a native print dialog or paper output. Content-owner approval remains separate from automated and agent educational reviews; parent issue #33 remains open pending that approval.
+Record **Passed**, **Failed**, or **Not Run** with the command and actual observation. Speech API stubs do not prove audible Arabic playback. Capturing `window.print` does not verify a native print dialog or paper output. Content-owner approval remains separate from automated and agent educational reviews; the already-closed pilot #33 remains unchanged, and no new acceptance is inferred from this verification.

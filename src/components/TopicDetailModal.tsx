@@ -6,8 +6,10 @@ import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicLearningActivities } from '@/src/components/TopicLearningActivities';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 
 
 interface TopicDetailModalProps {
@@ -46,6 +48,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   const [readingProgress, setReadingProgress] = React.useState<number>(0);
   const [showDiagram, setShowDiagram] = React.useState<boolean>(topic.diagramCount > 0);
   const status = getTopicImprovementStatus(topic.slug);
+  const learningContent = getTopicLearningContent(topic.slug);
 
   React.useEffect(() => setShowDiagram(topic.diagramCount > 0), [topic.slug, topic.diagramCount]);
 
@@ -224,7 +227,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
                   return nextVal;
                 });
               }}
-              className={`min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
+              className={`min-h-11 px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
                 showDiagram
                   ? 'bg-blue-50 dark:bg-blue-950/40 text-[var(--brand-primary)] border-blue-300 dark:border-blue-700 shadow-2xs'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]'
@@ -242,7 +245,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {/* Print as PDF Button */}
             <button
               onClick={() => window.print()}
-              className="min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
+              className="min-h-11 px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)]"
               title="طباعة أو حفظ هذا الموضوع كملف PDF (Ctrl+P)"
               aria-label="طباعة كملف PDF"
             >
@@ -257,7 +260,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {/* Heart Bookmark in Modal */}
             <button
               onClick={() => onToggleBookmark(topic.id)}
-              className={`min-h-[36px] min-w-[36px] px-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center justify-center ${
+              className={`min-h-11 min-w-11 px-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center justify-center ${
                 isBookmarked
                   ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-800 text-rose-600 dark:text-rose-400'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-rose-600 hover:border-rose-300'
@@ -283,7 +286,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {/* Audio Listen Button */}
             <button
               onClick={() => onListen(topic)}
-              className={`min-h-[36px] px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
+              className={`min-h-11 px-2 sm:px-3 rounded-xl text-xs font-bold border transition-colors cursor-pointer flex items-center gap-1.5 ${
                 isCurrentlySpeaking
                   ? 'bg-emerald-600 dark:bg-emerald-800 text-white border-emerald-600 dark:border-emerald-800'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:border-[var(--brand-primary)]'
@@ -299,7 +302,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             {/* Link to Full Learning Page */}
             <Link
               href={`/learn/${topic.slug}`}
-              className="min-h-[36px] px-2.5 sm:px-3 rounded-xl text-xs font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors flex items-center gap-1.5"
+              className="min-h-11 px-2.5 sm:px-3 rounded-xl text-xs font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors flex items-center gap-1.5"
               title="الانتقال إلى صفحة التعلم الكاملة"
               aria-label="قراءة الموضوع كاملاً"
             >
@@ -311,7 +314,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
             <button
               onClick={onClose}
               ref={closeButtonRef}
-              className="min-h-[36px] px-2.5 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 text-[var(--text-muted)] border border-[var(--border-color)] flex items-center justify-center gap-1 text-xs font-bold transition-colors cursor-pointer"
+              className="min-h-11 px-2.5 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/40 text-[var(--text-muted)] border border-[var(--border-color)] flex items-center justify-center gap-1 text-xs font-bold transition-colors cursor-pointer"
               title="إغلاق النافذة (Escape)"
               aria-label="إغلاق"
             >
@@ -502,6 +505,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 
           {/* Rendered HTML Content */}
           <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
+          {learningContent && <TopicLearningActivities key={`${topic.slug}:${learningContent.contentVersion}`} topic={topic} content={learningContent} />}
         </div>
 
         {/* Sticky Modal Footer with Next / Prev and Keyboard Hints */}
@@ -509,7 +513,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           <button
             onClick={() => onNavigateTopic('prev')}
             disabled={!hasPrev}
-            className="min-h-[38px] px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            className="min-h-11 px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
             title="الانتقال إلى الموضوع السابق (السهم الأيمن →)"
           >
             <span>→</span>
@@ -535,7 +539,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
           <button
             onClick={() => onNavigateTopic('next')}
             disabled={!hasNext}
-            className="min-h-[38px] px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
+            className="min-h-11 px-3 sm:px-4 rounded-xl text-xs font-bold border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--border-color)] transition-colors cursor-pointer flex items-center gap-1.5"
             title={nextTopicPending ? 'الموضوع التالي متاح للقراءة؛ خطوات التطبيق والمخرجات قيد الاستكمال' : 'الانتقال إلى الموضوع التالي (السهم الأيسر ←)'}
           >
             <kbd className="hidden sm:inline font-mono text-[10px] bg-[var(--border-color)] text-[var(--text-muted)] px-1 py-0.2 rounded">

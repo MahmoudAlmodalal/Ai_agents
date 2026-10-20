@@ -1,5 +1,5 @@
 import Link from 'next/link';
-export const metadata = { title: 'الصفحة غير موجودة | سلاح العصر', description: 'الرابط غير صحيح — عُد إلى مسار التعلم.' };
+export const metadata = { title: 'الصفحة غير موجودة | Ai_agents', description: 'الرابط غير صحيح — عُد إلى مسار التعلم.' };
 export default function NotFound() {
   return (<main className="flex min-h-[70vh] items-center justify-center px-4 py-16" dir="rtl"><div className="mx-auto max-w-xl text-center">
     <div className="font-mono text-7xl font-black text-[var(--primary)]" dir="ltr">404</div>

@@ -52,13 +52,13 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('Git: حفظ وثائق المشروع وتتبع النسخ محلياً');
-    await expect(page.getByText('محتوى منشور')).toBeVisible();
+    await expect(page.getByText('حالة التوفر: محتوى متاح (منشور)')).toBeVisible();
 
     // Practical steps on student project
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('article')).toContainText('git init');
-    await expect(page.locator('article')).toContainText('.gitignore');
-    await expect(page.locator('article')).toContainText('PROJECT_CONTEXT.md');
+    await expect(page.locator('article').first()).toContainText('git init');
+    await expect(page.locator('article').first()).toContainText('.gitignore');
+    await expect(page.locator('article').first()).toContainText('PROJECT_CONTEXT.md');
 
     // Outputs and Checklist
     await expect(page.getByText('المخرجات المطلوبة:')).toBeVisible();
@@ -81,15 +81,15 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('GitHub: المستودع البعيد والمراجعة والتعاون وحماية الأسرار');
-    await expect(page.getByText('محتوى منشور')).toBeVisible();
+    await expect(page.getByText('حالة التوفر: محتوى متاح (منشور)')).toBeVisible();
 
     // Content: PR review, secrets protection, README template
-    await expect(page.locator('article')).toContainText('Pull Request');
-    await expect(page.locator('article')).toContainText('Secret Scanning');
-    await expect(page.locator('article')).toContainText('README.md');
+    await expect(page.locator('article').first()).toContainText('Pull Request');
+    await expect(page.locator('article').first()).toContainText('Secret Scanning');
+    await expect(page.locator('article').first()).toContainText('README.md');
 
     // Official reference badge/notice
-    await expect(page.locator('article')).toContainText('docs.github.com');
+    await expect(page.locator('article').first()).toContainText('docs.github.com');
 
     // Navigation bounds:
     // Prev points to Topic 5 (git-project-docs)
@@ -113,7 +113,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await expect(header.getByText(/المصدر:.*PROMPT 04/)).toBeVisible();
 
     // Click copy button
-    const copyBtn = page.getByRole('button', { name: /نسخ البرومبت/ });
+    const copyBtn = page.getByRole('button', { name: 'نسخ النسخة المحددة', exact: true });
     await expect(copyBtn).toBeVisible();
     await copyBtn.click();
 

@@ -369,7 +369,7 @@ export const topic29DesignMdHtml = `
 <section id="topic-29-design-md" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 29 · أنظمة وقواعد التصميم</span>
-    <span class="step-pill">صياغة وثيقة DESIGN.md القياسية واستخراج التوكنز</span>
+    <span class="step-pill">صياغة وثيقة DESIGN.md المقترحة واستخراج التوكنز</span>
   </div>
 
   <div class="step-header">
@@ -395,16 +395,16 @@ export const topic29DesignMdHtml = `
         <span>ما هي وثيقة DESIGN.md؟</span>
       </div>
       <p class="leading-7">
-        هو معيار توثيقي هندسي معتمد (مطابق لنمط Google Design)، يجمع بين قسمين متكاملين: قسم <strong>رموز التصميم المهيكلة (Design Tokens في YAML Frontmatter)</strong> التي تغذي إعدادات Tailwind CSS برمجياً، وقسم <strong>الشرح المنطقي الهيكلي (Markdown Design Rationale)</strong> الذي يحدد قواعد التباين، والتسلسل الهرمي، والأنماط التفاعلية، ودعم اللغة العربية (RTL).
+      يستخدم تمرين الدورة بنية من قسمين: <strong>توكنز YAML Frontmatter</strong> لتسجيل القيم المنظمة، و<strong>شرح Markdown</strong> لمصادر القرار والتسلسل الهرمي والحالات وRTL. هذه صيغة تسليم تعليمية مقترحة، وليست ادعاءً بأن كل ملف <code>DESIGN.md</code> أو كل أداة يتطلب YAML أو يتعامل معه تلقائياً؛ تحقق من صيغة الأداة المستهدفة قبل ربطه بالكود.
       </p>
     </div>
   </div>
 
-  <!-- 2. Standard Google DESIGN.md Structure -->
+  <!-- 2. Suggested DESIGN.md exercise structure -->
   <div class="content-block mt-8">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. البنية القياسية لوثيقة DESIGN.md (توكنز YAML + شرح Markdown)</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. بنية تمرين DESIGN.md (توكنز YAML + شرح Markdown)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      تتألف وثيقة <code>DESIGN.md</code> المتوافقة مع معايير Google الهندسية من هيكل موحد ينقسم إلى ركيزتين:
+      في هذا التمرين، افصل القيم المقروءة آلياً عن شرح القرار. يمكن أن تختلف صيغة الملف بين الأدوات والمشاريع؛ تحقق من متطلبات الأداة، ولا تصف هذا المثال بأنه معيار عام:
     </p>
 
     <div class="table-container my-4">
@@ -437,15 +437,15 @@ export const topic29DesignMdHtml = `
             <td>بناء مكونات React في المواضيع 31 و32</td>
           </tr>
           <tr>
-            <td><strong>4. حالات الواجهة الست (UI States)</strong></td>
+            <td><strong>4. حالات الواجهة المناسبة للمهمة (UI States)</strong></td>
             <td><code>State Matrix</code></td>
-            <td>حالات المكونات: الافتراضية، والتحميل (Skeleton)، والفارغة (Empty)، والخطأ، والتعطيل (Disabled)، وحجب الصلاحية</td>
+            <td>وثّق الحالات ذات الصلة مثل الافتراضية أو التحميل أو الفراغ أو الخطأ أو التعطيل؛ حالة رفض الصلاحية لا تضاف إلا إذا عرّفت المتطلبات قاعدة الوصول والسلوك</td>
             <td>منع نسيان شاشات التحميل والحالات الفارغة</td>
           </tr>
           <tr>
             <td><strong>5. إمكانية الوصول وRTL (A11y)</strong></td>
             <td><code>WCAG &amp; BiDi Rules</code></td>
-            <td>فحص نسب التباين (Contrast ≥ 4.5:1)، وتوجيه الأيقونات، والتركيز بلوحة المفاتيح (Focus Ring)</td>
+            <td>فحص التباين وفق معيار WCAG المناسب لكل نص أو عنصر غير نصي، مع اتجاه الأيقونات والتركيز بلوحة المفاتيح</td>
             <td>مراجعة UI/UX Pro Max واختبارات الجودة</td>
           </tr>
         </tbody>
@@ -470,8 +470,10 @@ Use the connected Stitch MCP, or explicitly provided exports if MCP is unavailab
 Read the approved project and its screens. Extract REAL confirmed hex values,
 fonts, typography, spacing, radii, components, interaction patterns,
 responsive rules and accessibility notes.
-Create DESIGN.md using optional YAML tokens and Markdown design rationale,
-consistent with Google's DESIGN.md format. Do not invent values.
+Create DESIGN.md using the target tool's documented format. The course's
+YAML-frontmatter plus Markdown example is optional and is not a claim about a
+universal Google format or automatic token ingestion. Verify compatibility
+before connecting it to a build. Do not invent values.
 Create docs/STITCH_SCREEN_REFERENCES.md with screen identifiers and links.
 Report inaccessible properties. Do not modify Stitch screens.</code></pre>
     </div>
@@ -494,7 +496,7 @@ Report inaccessible properties. Do not modify Stitch screens.</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. المخطط الهندسي لدورة استخراج وثيقة DESIGN.md ومطابقتها</h3>
     <p class="leading-8 text-[var(--text-muted)] mb-4">
-      يوضح المخطط التالي كيفية تحويل مراجع الشاشات إلى وثيقة DESIGN.md القياسية، والمراجعة البشرية الإلزامية للمطابقة قبل الانتقال لكود الفرونت:
+      يوضح المخطط التالي كيفية تحويل مراجع الشاشات إلى وثيقة DESIGN.md المقترحة في هذا التمرين ومراجعتها قبل الانتقال لكود الفرونت:
     </p>
 
     <div class="diagram-box my-6">
@@ -545,7 +547,7 @@ Report inaccessible properties. Do not modify Stitch screens.</code></pre>
         <text x="662" y="122" fill="#a7f3d0" font-size="9" text-anchor="middle" font-family="sans-serif">قيم Hex، مقاسات، حواف، مسافات</text>
         <rect x="575" y="140" width="175" height="60" rx="6" fill="#064e3b" />
         <text x="662" y="158" fill="#6ee7b7" font-size="10" font-weight="bold" text-anchor="middle" font-family="monospace">Markdown Rationale</text>
-        <text x="662" y="174" fill="#a7f3d0" font-size="9" text-anchor="middle" font-family="sans-serif">الهرم البصري، الحالات الست</text>
+        <text x="662" y="174" fill="#a7f3d0" font-size="9" text-anchor="middle" font-family="sans-serif">الهرم البصري وحالات الواجهة</text>
         <text x="662" y="190" fill="#a7f3d0" font-size="9" text-anchor="middle" font-family="sans-serif">دعم RTL وقواعد التباين</text>
 
         <!-- Line from Center to Output -->
@@ -649,7 +651,7 @@ tokens:
 ## 2. Component Specifications
 ### Primary Action Button
 - Background: var(--colors-primary-default)
-- Height: 44px minimum for comfortable touch target on mobile screens.
+- Touch target size: choose and verify against the target platform and applicable accessibility criterion; 44px is an optional comfort guideline, not a universal AA requirement.
 - Border Radius: var(--radii-md) (8px).
 - Focus State: Visible 2px outline with #059669 and 2px offset.
 
@@ -658,16 +660,17 @@ tokens:
 - Hover Effect: Subtle elevation change (shadow-md) without abrupt layout shifts.
 - Image Aspect Ratio: 16:9 with object-cover and fallback placeholder.
 
-## 3. UI State Matrix (Mandatory Implementation)
-1. Default: Normal interactive presentation with full data.
-2. Loading: Animated Pulse Skeleton with identical component dimensions.
-3. Empty: Illustrated or iconography-backed message when zero results exist.
-4. Error: Clear human-friendly Arabic message with a Retry button.
-5. Disabled: Opacity 50%, pointer-events none, clear explanation why action is blocked.
-6. Permission Denied: Explains role requirement without crashing the interface.
+## 3. UI State Matrix (include applicable states)
+1. Default: Normal interactive presentation with the available data.
+2. Loading: Show progress appropriate to the operation; a skeleton is optional.
+3. Empty: Explain the absence of results and provide a useful next step when supported.
+4. Error: Explain the problem and recovery path; offer retry only when appropriate.
+5. Disabled: Explain unavailable actions in a keyboard- and assistive-technology-accessible way.
+6. Permission Denied: Include only when an approved requirement defines the access rule and response.
 
 ## 4. Accessibility Verification
-- All text meets WCAG AA 4.5:1 minimum contrast against its background.
+- Measure text contrast against the applicable WCAG criterion: 4.5:1 for normal text and 3:1 for large text; assess non-text controls and boundaries under their applicable criterion.
+- Do not claim conformance without recording the measurement and evaluation scope.
 - Interactive elements support full keyboard tab navigation.</code></pre>
     </div>
   </div>
@@ -751,12 +754,12 @@ export const t10Entries: TopicItem[] = [
     number: '29',
     slug: 'design-md-spec',
     title: 'وثيقة التصميم DESIGN.md واستخراج القيم المعتمدة',
-    subtitle: 'صياغة وثيقة نظام التصميم القياسية واستخراج التوكنز الحقيقية دون اختراع هوية جديدة',
+    subtitle: 'صياغة تسليم مقترح لوثيقة نظام التصميم واستخراج التوكنز الحقيقية دون اختراع هوية جديدة',
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'أنظمة وقواعد التصميم',
-    summary: 'صياغة وثيقة DESIGN.md القياسية المتوافقة مع معايير Google، واستخراج رموز التصميم (Design Tokens) والشرح المنطقي الهيكلي (Rationale) من الشاشات المعتمدة ومراجع Stitch المسترجعة في الموضوع السابق. يرسخ الموضوع مبدأ توثيق القيم الواقعية المعتمدة فعلياً في مشروع الطالب ومنع اختراع هوية جديدة أو استبدال متطلبات PRD، مع ضبط تباين الألوان وفق WCAG AA، ودعم اتجاه اللغة العربية RTL، وتوثيق الحالات التفاعلية الست لتكون مرجعاً موحداً لمرحلة كود الفرونت.',
-    tags: ['DESIGN.md', 'Design Tokens', 'Google Design Spec', 'Color Palette', 'Typography', '8px Grid', 'PROMPT 23', 'WCAG AA', 'RTL Support'],
+    summary: 'صياغة ملف DESIGN.md وفق بنية التمرين (توكنز منظمة وشرح Markdown) واستخراج قيم التصميم ومصادرها من مراجع الشاشات. لا يفترض أن كل مشروع يحتاج YAML أو أن شبكة 8px ملزمة؛ يوثق القيم المؤكدة فقط، ويترك غير المتاح UNKNOWN، مع مراجعة التباين وRTL والحالات قبل التنفيذ.',
+    tags: ['DESIGN.md', 'Design Tokens', 'Exercise Handoff Format', 'Color Palette', 'Typography', '8px Grid', 'PROMPT 23', 'WCAG AA', 'RTL Support'],
     contentTypes: ['code', 'checklist', 'prompt'],
     diagramCount: 1,
     promptCount: 1,
@@ -765,7 +768,7 @@ export const t10Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic29DesignMdHtml),
     htmlContent: topic29DesignMdHtml,
 
-    goal: 'صياغة وثيقة DESIGN.md القياسية المتوافقة مع معايير Google، وتوثيق رموز وهوية التصميم الحقيقية المستخرجة من شاشات مشروع الطالب المعتمدة، دون اختراع هوية جديدة أو استبدال متطلبات PRD.',
+    goal: 'صياغة DESIGN.md ببنية التمرين المقترحة، وتوثيق رموز التصميم ومصادرها من شاشات الطالب المعتمدة دون اختراع هوية أو استبدال متطلبات PRD؛ يتحقق الطالب من أن الأداة المستهدفة تقبل صيغة الملف.',
     prerequisites: [
       'الشاشات المعتمدة ونظام التصميم والنموذج التفاعلي (المواضيع 21 و22 و23)',
       'مراجع شاشات Stitch المسترجعة عبر MCP أو المصدّرة يدوياً (الموضوع 28)',
@@ -775,10 +778,10 @@ export const t10Entries: TopicItem[] = [
     steps: [
       '1. استعرض مراجع الشاشات المعتمدة في docs/STITCH_SCREEN_REFERENCES.md (المسترجعة عبر Stitch MCP أو المصدّرة يدوياً).',
       '2. استخدم برومبت استخراج وثيقة التصميم (PROMPT 23: Extract DESIGN.md from Stitch) لاستخراج رموز التصميم والأسس البصرية.',
-      '3. استخرج وثبّت قيم الألوان المؤكدة (Confirmed Hex Values) وافحص نسب التباين وإمكانية الوصول وفق WCAG AA (نسبة 4.5:1 للنصوص).',
-      '4. وثّق مقاييس التيبوغرافيا (Typography Scale مع دعم خطوط اللغة العربية واتجاه RTL) وشبكة المسافات (8px Grid) وأنصاف الأقطار ومستويات الظلال.',
-      '5. صيّغ وثيقة DESIGN.md بالهيكل القياسي المعتمد: رموز YAML Frontmatter في الرأس وشرح هندسي منطقي (Markdown Rationale) في المتن.',
-      '6. أجرِ مراجعة المطابقة البصرية الصارمة بين النموذج التفاعلي المعتمد ووثيقة DESIGN.md وتأكد من عدم اختراع أي هوية جديدة أو إسقاط حالات الواجهة الست قبل الانتقال لكود الفرونت.'
+      '3. استخرج قيم الألوان المؤكدة وافحص التباين وفق معيار WCAG المناسب؛ نسبة 4.5:1 تخص النص العادي، وتختلف المتطلبات حسب حجم النص ووزنه.',
+      '4. وثّق مقاييس الخطوط وRTL والمسافات والحواف والظلال التي يدعمها المصدر. يمكن اقتراح شبكة 8px كاتفاق اختياري فقط بعد مراجعتها.',
+      '5. في تمرين هذه الدورة، اكتب توكنز YAML Frontmatter وشرح Markdown؛ تحقّق من صيغة الأداة قبل وصف YAML بأنه قابل للاستهلاك آلياً.',
+      '6. أجرِ مراجعة المطابقة البصرية بين النموذج التفاعلي المعتمد ووثيقة DESIGN.md؛ وثّق الحالات التي تدعمها المتطلبات ولا تضف قاعدة رفض صلاحية بلا مصدر.'
     ],
     promptRefs: [
       'prompt-23-extract-design-md-from-stitch'
@@ -789,10 +792,10 @@ export const t10Entries: TopicItem[] = [
     ],
     checklist: [
       'استخراج القيم المعتمدة فعلياً من شاشات التصميم دون ابتكار هوية بصرية جديدة.',
-      'التأكد من صياغة DESIGN.md بهيكل توكنز YAML وشرح منطقي متوافق مع معايير Google.',
+      'استخدام بنية التمرين (YAML + Markdown) مع توضيح أنها صيغة تسليم مقترحة، والتحقق من متطلبات الأداة المستهدفة.',
       'توثيق قيم الألوان الدقيقة بصيغة Hex مع فحص نسب التباين وإمكانية الوصول WCAG AA.',
-      'تثبيت مقاييس الخطوط والتيبوغرافيا ودعم الاتجاه العربي RTL وشبكة المسافات 8px.',
-      'تحديد مواصفات المكونات والحالات الست التفاعلية في وثيقة التصميم.',
+      'توثيق الخطوط وRTL والمسافات التي يدعمها المصدر؛ شبكة 8px اختيار مشروع وليست قاعدة عامة.',
+      'تحديد حالات المكونات ذات الصلة، مع مصدر لكل حالة رفض صلاحية؛ وراجع الاستجابة وإمكانية الوصول كفحوص عابرة.',
       'إجراء المطابقة البصرية البشرية لضمان تطابق الوثيقة مع النموذج المعتمد قبل مرحلة كود الفرونت.'
     ],
     publicationStatus: 'unified-complete',

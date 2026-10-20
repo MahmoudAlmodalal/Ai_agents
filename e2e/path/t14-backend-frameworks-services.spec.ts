@@ -15,7 +15,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Django: بناء الخادم والنماذج والتهجيرات (بديل مستقل 1)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 41');
     await expect(header).toContainText('backend/config/settings.py');
     await expect(header).toContainText('backend/apps/*/models.py');
@@ -25,7 +25,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // RTL verification
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Acceptance criteria 1: Alternative banner & decision clarity (no building twice)
     await expect(content).toContainText('قرار المعمارية: بديلان مستقلان لخادم المشروع (Django أو FastAPI)');
@@ -84,7 +84,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('FastAPI: بناء الخادم ونماذج البيانات والتهجيرات مع Alembic (بديل مستقل 2)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 42');
     await expect(header).toContainText('backend/app/main.py');
     await expect(header).toContainText('backend/app/schemas/');
@@ -92,7 +92,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     await expect(header).toContainText('alembic/');
     await expect(header).toContainText('docs/FASTAPI_BACKEND_SETUP.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Acceptance criteria 1: Alternative banner & decision clarity (no building twice)
     await expect(content).toContainText('قرار المعمارية: بديلان مستقلان لخادم المشروع (FastAPI أو Django)');
@@ -153,12 +153,12 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('المصادقة والصلاحيات: تأمين الخادم والتحكم بالوصول (RBAC)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 43');
     await expect(header).toContainText('docs/AUTH_PERMISSIONS_SPEC.md');
     await expect(header).toContainText('tests/test_auth_permissions.py');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Acceptance criteria 3: Auth vs Permissions distinction
     await expect(content).toContainText('المصادقة (Authentication)');
@@ -223,12 +223,12 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Services وSelectors: فصل منطق العمل والمعاملات واستعلامات القراءة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 44');
     await expect(header).toContainText('docs/SERVICES_SELECTORS_ARCHITECTURE.md');
     await expect(header).toContainText('tests/test_services_business_rules.py');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Acceptance criteria 3: Services vs Selectors separation
     await expect(content).toContainText('المعضلة المعمارية: لماذا تفشل بنية CRUD السطحية في المشروعات الحقيقية؟');
