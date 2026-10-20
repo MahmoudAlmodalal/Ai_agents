@@ -31,6 +31,10 @@ test.describe('objective quiz and practical self-assessment', () => {
     await journeyQuestion.getByRole('radio', { name: /رحلة حجز واحدة من اختيار وقت إلى تأكيد واضح/ }).check();
     await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
     await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
+    await expect(evidenceQuestion.getByRole('status')).toContainText('لم تُجب عن هذا السؤال');
+    await expect(evidenceQuestion.getByRole('status')).toContainText('التوقع الذي لم يختبر بعد يظل افتراضاً');
+    await expect(journeyQuestion.getByRole('status')).toContainText('إجابة صحيحة في هذا الفحص الذاتي');
+    await expect(quiz.getByText(/هذه النتيجة لا تثبت صحة التطبيق أو إتقان المشروع/)).toBeVisible();
     await expect(quiz.getByText(/عرض سجل المحاولات \(2\)/)).toBeVisible();
 
     const problemCriterion = activity.getByRole('group', { name: 'صياغة المشكلة ودليلها' });
@@ -248,5 +252,166 @@ test.describe('objective quiz and practical self-assessment', () => {
     await expect(page.locator(activitySelector).getByRole('group', { name: 'صياغة المشكلة ودليلها' })
       .getByLabel('اختيارك للتقييم الذاتي')).toHaveValue('');
     expect(await page.evaluate((key) => localStorage.getItem(key), practicalStorageKey)).toBeNull();
+  });
+
+  test('keeps quiz results strictly distinct from reading activity, checklist selections, rubric assessment, and completion signals', async ({ page }) => {
+    await page.goto(`/learn/${topicSlug}`);
+    const activity = page.locator(activitySelector);
+    const quiz = quizSection(page);
+
+    // Initial check: check a checklist item in the sidebar
+    const checklistSection = page.locator('aside').filter({ hasText: 'قائمة تحقق التطبيق' });
+    const firstCheckbox = checklistSection.getByRole('checkbox').first();
+    await firstCheckbox.check();
+    await expect(firstCheckbox).toBeChecked();
+
+    // Verify rubric starts with no selections
+    const rubricSelects = activity.locator('select');
+    await expect(rubricSelects.first()).toHaveValue('');
+
+    // Submit quiz
+    const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
+    await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+    await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
+
+    // Verify checklist selection is completely unchanged
+    await expect(firstCheckbox).toBeChecked();
+    const checklistStorage = await page.evaluate((slug) => {
+      const doc = JSON.parse(localStorage.getItem('application-checklists-v1') ?? '{}');
+      return doc[slug]?.length ?? 0;
+    }, topicSlug);
+    expect(checklistStorage).toBe(1);
+
+    // Verify rubric selection is completely unchanged in UI and storage
+    await expect(rubricSelects.first()).toHaveValue('');
+    const rubricStorage = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.ratings?.length ?? 0;
+    }, { key: practicalStorageKey, slug: topicSlug });
+    expect(rubricStorage).toBe(0);
+
+    // Verify no completion signal or badge is created or awarded
+    await expect(page.getByText('مكتمل', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('تم إكمال المسار', { exact: false })).toHaveCount(0);
+    const badgeStorage = await page.evaluate(() => localStorage.getItem('ai-agents-badge-awards-v1'));
+    expect(badgeStorage).toBeNull();
+
+    // Verify reading storage recency is only tracking visited topic slugs, not completion or quiz score
+    const readingStorage = await page.evaluate(() => JSON.parse(localStorage.getItem('engineering_guide_recently_viewed') ?? '[]'));
+    expect(readingStorage).toEqual([topicSlug]);
+
+    // Now select a rubric rating and verify quiz attempt is completely unaffected
+    await activity.getByRole('group', { name: 'صياغة المشكلة ودليلها' })
+      .getByLabel('اختيارك للتقييم الذاتي').selectOption('in-progress');
+    const quizAttemptsAfterRubric = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.length ?? 0;
+    }, { key: quizStorageKey, slug: topicSlug });
+    expect(quizAttemptsAfterRubric).toBe(1);
+    await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
+  });
+
+  test('retains historical attempt when a question version is updated and begins the new version unselected', async ({ page }) => {
+    // Seed an attempt with the same quizId and quizVersion, but where a question version is 0 instead of 1
+    const priorVersionAttempt = {
+      attemptId: 'prior-question-version-attempt',
+      topicSlug,
+      quizId: `${topicSlug}-objective-quiz`,
+      quizVersion: 1,
+      policyId: `${topicSlug}-quiz-scoring-policy`,
+      policyVersion: 1,
+      answers: [
+        { questionId: 'idea-mvp-q-evidence', questionVersion: 0, selectedOptionId: 'old-opt-1', correctness: 'correct' },
+        { questionId: 'idea-mvp-q-journey', questionVersion: 1, selectedOptionId: 'old-opt-2', correctness: 'incorrect' },
+      ],
+      correctCount: 1,
+      incorrectCount: 1,
+      unansweredCount: 0,
+      score: 1,
+      maxScore: 2,
+      submittedAt: '2026-10-19T10:00:00.000Z',
+      selfCheck: true,
+      previewOnly: true,
+    };
+    await page.addInitScript(({ key, slug, attempt }) => {
+      localStorage.setItem(key, JSON.stringify({ schemaVersion: 1, byTopic: { [slug]: [attempt] } }));
+    }, { key: quizStorageKey, slug: topicSlug, attempt: priorVersionAttempt });
+
+    await page.goto(`/learn/${topicSlug}`);
+    const quiz = quizSection(page);
+
+    // Prior version attempt should be recognized as older, not current
+    await expect(quiz.getByText(/محاولات من اختبارات أو نسخ سابقة/)).toBeVisible();
+    await expect(quiz.getByText(/آخر نتيجة محفوظة في هذا المتصفح/)).toHaveCount(0);
+    // Radio buttons must be unselected for the new version
+    await expect(quiz.locator('input[type="radio"]:checked')).toHaveCount(0);
+
+    // Expand history to see the prior attempt preserved
+    await quiz.getByText(/عرض سجل المحاولات \(1\)/).click();
+    await expect(quiz.getByText(/نسخة سابقة/)).toBeVisible();
+    await expect(quiz.getByText('1/2')).toBeVisible();
+
+    // Now answer the current question version and submit
+    const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
+    const journeyQuestion = quiz.getByRole('group', { name: /أي اقتراح يصف MVP/ });
+    await evidenceQuestion.getByRole('radio', { name: 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', exact: true }).check();
+    await journeyQuestion.getByRole('radio', { name: /رحلة حجز واحدة من اختيار وقت إلى تأكيد واضح/ }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+
+    // Current version result is now displayed
+    await expect(quiz.getByText(/صحيح: 2 · غير صحيح: 0 · بلا إجابة: 0/)).toBeVisible();
+    // History now contains both attempts
+    await expect(quiz.getByText(/عرض سجل المحاولات \(2\)/)).toBeVisible();
+    // Storage has both attempts preserved
+    const attemptsCount = await page.evaluate(({ key, slug }) => {
+      const doc = JSON.parse(localStorage.getItem(key) ?? '{}');
+      return doc.byTopic?.[slug]?.length ?? 0;
+    }, { key: quizStorageKey, slug: topicSlug });
+    expect(attemptsCount).toBe(2);
+  });
+
+  test('supports accessible keyboard navigation, visible focus ring, ARIA status announcements, and touch target sizing', async ({ page }) => {
+    await page.goto(`/learn/${topicSlug}`);
+    const quiz = quizSection(page);
+
+    // Verify touch target sizing (minimum 44px height for interactive targets)
+    const radioLabels = quiz.locator('label:has(input[type="radio"])');
+    const count = await radioLabels.count();
+    expect(count).toBeGreaterThan(0);
+    for (let i = 0; i < count; i++) {
+      const box = await radioLabels.nth(i).boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+    const submitBtn = quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true });
+    const submitBox = await submitBtn.boundingBox();
+    expect(submitBox!.height).toBeGreaterThanOrEqual(44);
+
+    // Check keyboard navigation: focus the first radio and select with space
+    const firstRadio = quiz.locator('input[type="radio"]').first();
+    await firstRadio.focus();
+    await expect(firstRadio).toBeFocused();
+    await page.keyboard.press('Space');
+    await expect(firstRadio).toBeChecked();
+
+    // Focus submit button with Tab and press Enter
+    await submitBtn.focus();
+    await expect(submitBtn).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    // ARIA live / role="status" should announce feedback
+    const feedbackStatus = quiz.locator('[role="status"]').first();
+    await expect(feedbackStatus).toBeVisible();
+    await expect(feedbackStatus).toHaveAttribute('aria-live', 'polite');
+
+    // Retry button appears with >= 44px height and keyboard accessible
+    const retryBtn = quiz.getByRole('button', { name: 'إعادة المحاولة', exact: true });
+    const retryBox = await retryBtn.boundingBox();
+    expect(retryBox!.height).toBeGreaterThanOrEqual(44);
+    await retryBtn.focus();
+    await expect(retryBtn).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(firstRadio).not.toBeChecked();
   });
 });

@@ -248,3 +248,34 @@ test('shape-valid but impossible quiz records are rejected instead of restoring 
     assert.equal(storage.map.get(QUIZ_ATTEMPTS_STORAGE_KEY), raw);
   }
 });
+
+test('grades and retains an all-unanswered quiz attempt with score zero according to policy', () => {
+  const storage = mockStorage();
+  const store = createLearningRecordsStore(() => storage);
+  const unansweredAttempt = attempt({
+    attemptId: 'unanswered-attempt-1',
+    answers: [
+      { questionId: 'q-problem', questionVersion: 1, selectedOptionId: null, correctness: 'unanswered' },
+      { questionId: 'q-scope', questionVersion: 1, selectedOptionId: null, correctness: 'unanswered' },
+    ],
+    correctCount: 0,
+    incorrectCount: 0,
+    unansweredCount: 2,
+    score: 0,
+    maxScore: 2,
+  });
+  const saved = store.saveQuizAttempt(unansweredAttempt);
+  assert.equal(saved.storageStatus, 'available');
+  assert.equal(saved.attempts.length, 1);
+  assert.equal(saved.attempts[0].score, 0);
+  assert.equal(saved.attempts[0].unansweredCount, 2);
+  assert.equal(saved.attempts[0].correctCount, 0);
+  assert.equal(saved.attempts[0].incorrectCount, 0);
+
+  const reloaded = createLearningRecordsStore(() => storage);
+  const restored = reloaded.getQuizAttempts('project-idea-mvp');
+  assert.equal(restored.attempts.length, 1);
+  assert.equal(restored.attempts[0].score, 0);
+  assert.equal(restored.attempts[0].unansweredCount, 2);
+  assert.deepEqual(restored.attempts[0].answers.map((a) => a.correctness), ['unanswered', 'unanswered']);
+});
