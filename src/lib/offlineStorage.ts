@@ -3,7 +3,7 @@ import type { TopicLearningContent } from '@/src/types/learning';
 import { getTopicLearningContent } from '@/src/lib/learningContent';
 import { resolveCanonicalSlug } from '@/src/lib/topicRegistry';
 
-export type TopicOfflineStatus = 'unsaved' | 'saving' | 'saved' | 'updating' | 'failed' | 'unsupported';
+export type TopicOfflineStatus = 'unsaved' | 'saving' | 'saved' | 'updating' | 'failed' | 'unsupported' | 'unverified';
 
 export interface SavedTopicQuizMetadata {
   id: string;
@@ -70,6 +70,7 @@ interface OfflineBundlePointer {
   bundleId: string;
   cacheName: string;
   savedAt: number;
+  metadata?: SavedTopicMetadata;
 }
 
 interface VerifiedBundle {
@@ -141,7 +142,15 @@ export async function registerOfflineServiceWorker(): Promise<ServiceWorkerRegis
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return null;
   try {
     if (!('serviceWorker' in navigator)) return null;
-    return await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    if (navigator.serviceWorker.controller) {
+      try {
+        navigator.serviceWorker.controller.postMessage({ type: 'ENSURE_SHELL' });
+      } catch {
+        // Best effort background shell verification
+      }
+    }
+    return registration;
   } catch (error) {
     console.warn('Service Worker registration failed:', error);
     return null;
@@ -188,9 +197,38 @@ function contentVersionFromHtml(html: string): string | null {
   return match ? match[1] : null;
 }
 
-async function verifyBundle(cacheName: string, slug: string, bundleId: string): Promise<VerifiedBundle | null> {
+export type BundleVerificationResult =
+  | { status: 'valid'; bundle: VerifiedBundle }
+  | { status: 'missing' }
+  | { status: 'corrupt'; reason: string }
+  | { status: 'error'; error: unknown };
+
+async function verifyBundleSafe(
+  cacheName: string,
+  slug: string,
+  bundleId: string
+): Promise<BundleVerificationResult> {
+  if (typeof window === 'undefined' || !('caches' in window)) {
+    return { status: 'error', error: new Error('caches not supported') };
+  }
+  let exists = false;
   try {
-    const cache = await window.caches.open(cacheName);
+    exists = typeof window.caches.has === 'function' ? await window.caches.has(cacheName) : true;
+  } catch (error) {
+    return { status: 'error', error };
+  }
+  if (!exists) {
+    return { status: 'missing' };
+  }
+
+  let cache: Cache;
+  try {
+    cache = await window.caches.open(cacheName);
+  } catch (error) {
+    return { status: 'error', error };
+  }
+
+  try {
     const manifest = await parseJson<{
       complete: boolean;
       slug: string;
@@ -200,44 +238,110 @@ async function verifyBundle(cacheName: string, slug: string, bundleId: string): 
       assets: string[];
     }>(cache, bundleManifestUrl(bundleId));
     if (!manifest || manifest.complete !== true || manifest.slug !== slug || manifest.bundleId !== bundleId ||
-      !manifest.htmlPath || !manifest.payloadPath || !Array.isArray(manifest.assets)) return null;
+      !manifest.htmlPath || !manifest.payloadPath || !Array.isArray(manifest.assets)) {
+      return { status: 'corrupt', reason: 'invalid-manifest' };
+    }
 
     const htmlUrl = new URL(manifest.htmlPath, window.location.origin).href;
     const htmlResponse = await cache.match(htmlUrl);
-    if (!htmlResponse) return null;
+    if (!htmlResponse) return { status: 'corrupt', reason: 'missing-html' };
     const html = await htmlResponse.clone().text();
+
     const payload = await parseJson<OfflineTopicPayload>(cache, bundlePayloadUrl(bundleId));
     if (!payload || !payload.topic || !payload.metadata || payload.metadata.slug !== slug ||
       payload.topic.slug !== slug || payload.bundleId !== bundleId || payload.metadata.bundleId !== bundleId ||
-      payload.contentVersion !== payload.metadata.contentVersion) return null;
+      payload.contentVersion !== payload.metadata.contentVersion) {
+      return { status: 'corrupt', reason: 'invalid-payload' };
+    }
+
     if (payload.metadata.diagramCount > 0) {
       const snapshots = payload.diagramSnapshots;
       if (!snapshots || REQUIRED_DIAGRAM_PERSPECTIVES.some((perspective) =>
         typeof snapshots[perspective] !== 'string' || !snapshots[perspective].toLowerCase().includes('<svg')
-      )) return null;
+      )) {
+        return { status: 'corrupt', reason: 'missing-diagram-snapshots' };
+      }
     }
+
     if (payload.learningContent && (payload.learningContent.topicSlug !== slug ||
       payload.learningContent.contentVersion !== payload.contentVersion ||
       !payload.learningContent.quiz || !Array.isArray(payload.learningContent.quiz.questions) ||
-      contentVersionFromHtml(html) !== String(payload.contentVersion))) return null;
-    for (const assetUrl of manifest.assets) {
-      if (!(await cache.match(assetUrl))) return null;
+      contentVersionFromHtml(html) !== String(payload.contentVersion))) {
+      return { status: 'corrupt', reason: 'invalid-learning-content' };
     }
-    return { cache, payload, pointer: { slug, bundleId, cacheName, savedAt: payload.savedAt } };
-  } catch {
-    return null;
+
+    for (const assetUrl of manifest.assets) {
+      if (!(await cache.match(assetUrl))) {
+        return { status: 'corrupt', reason: 'missing-asset: ' + assetUrl };
+      }
+    }
+
+    return {
+      status: 'valid',
+      bundle: { cache, payload, pointer: { slug, bundleId, cacheName, savedAt: payload.savedAt, metadata: payload.metadata } },
+    };
+  } catch (error) {
+    return { status: 'error', error };
   }
 }
 
-async function readActiveBundle(slug: string): Promise<VerifiedBundle | null> {
-  try {
-    const index = await window.caches.open(OFFLINE_CACHE_NAMES.TOPICS);
-    const pointer = await parseJson<OfflineBundlePointer>(index, topicIndexUrl(slug));
-    if (!pointer || pointer.slug !== slug || !pointer.bundleId || !pointer.cacheName) return null;
-    return verifyBundle(pointer.cacheName, slug, pointer.bundleId);
-  } catch {
-    return null;
+async function verifyBundle(cacheName: string, slug: string, bundleId: string): Promise<VerifiedBundle | null> {
+  const result = await verifyBundleSafe(cacheName, slug, bundleId);
+  return result.status === 'valid' ? result.bundle : null;
+}
+
+async function readActiveBundleSafe(slug: string): Promise<BundleVerificationResult> {
+  if (typeof window === 'undefined' || !('caches' in window)) {
+    return { status: 'error', error: new Error('caches not supported') };
   }
+  let index: Cache;
+  try {
+    index = await window.caches.open(OFFLINE_CACHE_NAMES.TOPICS);
+  } catch (error) {
+    return { status: 'error', error };
+  }
+
+  const url = topicIndexUrl(slug);
+  let pointer: OfflineBundlePointer | null = null;
+  try {
+    const response = await index.match(url);
+    if (!response) {
+      return { status: 'missing' };
+    }
+    pointer = await response.json() as OfflineBundlePointer;
+  } catch (error) {
+    return { status: 'error', error };
+  }
+
+  if (!pointer || pointer.slug !== slug || !pointer.bundleId || !pointer.cacheName) {
+    try {
+      await index.delete(url);
+    } catch {
+      // ignore
+    }
+    return { status: 'corrupt', reason: 'invalid-pointer' };
+  }
+
+  const result = await verifyBundleSafe(pointer.cacheName, slug, pointer.bundleId);
+  if (result.status === 'valid') {
+    return result;
+  }
+  if (result.status === 'missing' || result.status === 'corrupt') {
+    // Only delete pointer when the bundle cache is confirmed absent or corrupted
+    try {
+      await index.delete(url);
+    } catch {
+      // ignore
+    }
+    return result;
+  }
+  // Transient error: do NOT delete pointer
+  return result;
+}
+
+async function readActiveBundle(slug: string): Promise<VerifiedBundle | null> {
+  const result = await readActiveBundleSafe(slug);
+  return result.status === 'valid' ? result.bundle : null;
 }
 
 async function readHistoricalBundle(slug: string, bundleId: string): Promise<VerifiedBundle | null> {
@@ -463,15 +567,40 @@ function loadedPageAssets(): string[] {
   return Array.from(assets).sort();
 }
 
-async function legacyTopicBundleIsComplete(slug: string): Promise<boolean> {
+async function legacyTopicBundleCheck(slug: string): Promise<{
+  status: 'valid' | 'missing' | 'corrupt' | 'error';
+  metadata?: SavedTopicMetadata;
+}> {
+  if (typeof window === 'undefined' || !('caches' in window)) {
+    return { status: 'error' };
+  }
+  const manifest = readOfflineManifest();
+  const metadata = manifest[slug];
+  const payload = readLegacyPayload(slug);
+  if (!metadata || !payload) {
+    return { status: 'missing' };
+  }
+  let exists = false;
   try {
-    const manifest = readOfflineManifest();
-    const payload = readLegacyPayload(slug);
-    if (!manifest[slug] || !payload) return false;
-    const cache = await window.caches.open(OFFLINE_CACHE_NAMES.LEGACY_TOPICS);
+    exists = typeof window.caches.has === 'function' ? await window.caches.has(OFFLINE_CACHE_NAMES.LEGACY_TOPICS) : true;
+  } catch {
+    return { status: 'error' };
+  }
+  if (!exists) {
+    return { status: 'missing' };
+  }
+
+  let cache: Cache;
+  try {
+    cache = await window.caches.open(OFFLINE_CACHE_NAMES.LEGACY_TOPICS);
+  } catch {
+    return { status: 'error' };
+  }
+
+  try {
     const pageUrl = new URL('/learn/' + slug, window.location.origin).href;
     const htmlResponse = await cache.match(pageUrl) || await cache.match(pageUrl + '/');
-    if (!htmlResponse) return false;
+    if (!htmlResponse) return { status: 'corrupt' };
     const html = await htmlResponse.clone().text();
     const queue = Array.from(assetsFromHtml(html, pageUrl));
     const visited = new Set<string>();
@@ -480,7 +609,7 @@ async function legacyTopicBundleIsComplete(slug: string): Promise<boolean> {
       if (visited.has(assetUrl)) continue;
       visited.add(assetUrl);
       const response = await cache.match(assetUrl);
-      if (!response) return false;
+      if (!response) return { status: 'corrupt' };
       const type = response.headers.get('content-type') || '';
       const pathname = new URL(assetUrl).pathname;
       let dependencies = new Set<string>();
@@ -493,10 +622,15 @@ async function legacyTopicBundleIsComplete(slug: string): Promise<boolean> {
         if (!visited.has(dependency)) queue.push(dependency);
       }
     }
-    return true;
+    return { status: 'valid', metadata };
   } catch {
-    return false;
+    return { status: 'error' };
   }
+}
+
+async function legacyTopicBundleIsComplete(slug: string): Promise<boolean> {
+  const result = await legacyTopicBundleCheck(slug);
+  return result.status === 'valid';
 }
 
 /** Render SVG snapshots for each Mermaid perspective before saving the unit. */
@@ -735,20 +869,65 @@ export async function listSavedTopicsOffline(): Promise<SavedTopicMetadata[]> {
   if (typeof window === 'undefined' || !('caches' in window)) return [];
   const saved = new Map<string, SavedTopicMetadata>();
   try {
-    const index = await window.caches.open(OFFLINE_CACHE_NAMES.TOPICS);
+    let index: Cache;
+    try {
+      index = await window.caches.open(OFFLINE_CACHE_NAMES.TOPICS);
+    } catch {
+      return [];
+    }
+
+    const oldManifest = readOfflineManifest();
     for (const request of await index.keys()) {
-      const pointer = await parseJson<OfflineBundlePointer>(index, request.url);
-      if (!pointer || !pointer.slug) continue;
-      const bundle = await verifyActiveBundle(pointer.slug, pointer.bundleId);
-      if (!bundle) {
-        await index.delete(request);
+      let pointer: OfflineBundlePointer | null = null;
+      try {
+        pointer = await parseJson<OfflineBundlePointer>(index, request.url);
+      } catch {
         continue;
       }
-      saved.set(pointer.slug, bundle.payload.metadata);
+      if (!pointer || !pointer.slug) continue;
+      const result = await verifyBundleSafe(pointer.cacheName, pointer.slug, pointer.bundleId);
+      if (result.status === 'valid') {
+        saved.set(pointer.slug, result.bundle.payload.metadata);
+      } else if (result.status === 'missing' || result.status === 'corrupt') {
+        // Positively known to be absent or corrupt: delete dead pointer
+        try {
+          await index.delete(request);
+        } catch {
+          // ignore
+        }
+      } else {
+        // Transient error reading cache: retain pointer and keep visible if metadata exists
+        const metadata = pointer.metadata || oldManifest[pointer.slug];
+        if (metadata) {
+          saved.set(pointer.slug, metadata);
+        }
+      }
     }
-    const oldManifest = readOfflineManifest();
+
+    let manifestChanged = false;
     for (const [slug, metadata] of Object.entries(oldManifest)) {
-      if (!saved.has(slug) && await legacyTopicBundleIsComplete(slug)) saved.set(slug, metadata);
+      if (!saved.has(slug)) {
+        const legacy = await legacyTopicBundleCheck(slug);
+        if (legacy.status === 'valid') {
+          saved.set(slug, metadata);
+        } else if (legacy.status === 'missing' || legacy.status === 'corrupt') {
+          delete oldManifest[slug];
+          manifestChanged = true;
+          try {
+            window.localStorage.removeItem(OFFLINE_STORAGE_KEYS.TOPIC_PREFIX + slug);
+          } catch {
+            // Ignore storage removal errors
+          }
+        }
+        // If legacy.status === 'error', do NOT delete from oldManifest
+      }
+    }
+    if (manifestChanged) {
+      try {
+        window.localStorage.setItem(OFFLINE_STORAGE_KEYS.MANIFEST, JSON.stringify(oldManifest));
+      } catch {
+        // Ignore storage update errors
+      }
     }
   } catch {
     return [];
@@ -764,8 +943,135 @@ export async function getTopicOfflineStatus(slugOrId: string): Promise<TopicOffl
   if (!slug) return 'unsaved';
   const transient = safelyGetTransientStatus(slug);
   if (transient === 'saving' || transient === 'updating') return transient;
-  if (await readActiveBundle(slug)) return 'saved';
-  return await legacyTopicBundleIsComplete(slug) ? 'saved' : 'unsaved';
+
+  const activeResult = await readActiveBundleSafe(slug);
+  if (activeResult.status === 'valid') return 'saved';
+  if (activeResult.status === 'error') {
+    // Transient or blocked storage error: do not destroy data, report honestly
+    return 'unverified';
+  }
+
+  const legacyResult = await legacyTopicBundleCheck(slug);
+  if (legacyResult.status === 'valid') return 'saved';
+  if (legacyResult.status === 'error') {
+    // Transient error reading legacy cache: do not destroy localStorage mirror
+    return 'unverified';
+  }
+
+  // If legacy localStorage has an orphaned entry without actual cached bundle, clean it up honestly
+  try {
+    const manifest = readOfflineManifest();
+    if (manifest[slug]) {
+      delete manifest[slug];
+      window.localStorage.setItem(OFFLINE_STORAGE_KEYS.MANIFEST, JSON.stringify(manifest));
+      window.localStorage.removeItem(OFFLINE_STORAGE_KEYS.TOPIC_PREFIX + slug);
+    }
+  } catch {
+    // Non-blocking cleanup
+  }
+  return 'unsaved';
+}
+
+/**
+ * Find the most recent verified complete historical bundle for this topic, excluding the active bundle.
+ */
+export async function getTopicRollbackCandidate(slugOrId: string): Promise<SavedTopicMetadata | null> {
+  if (typeof window === 'undefined' || !('caches' in window)) return null;
+  const slug = resolveCanonicalSlug(slugOrId);
+  if (!slug) return null;
+
+  try {
+    const active = await readActiveBundle(slug);
+    if (!active) return null;
+
+    const allCacheNames = await window.caches.keys();
+    const prefix = OFFLINE_CACHE_NAMES.TOPIC_BUNDLE_PREFIX + slug + '-';
+    const candidates: Array<{ metadata: SavedTopicMetadata; savedAt: number }> = [];
+
+    for (const name of allCacheNames) {
+      if (!name.startsWith(prefix)) continue;
+      const bundleId = name.slice(prefix.length);
+      if (bundleId === active.pointer.bundleId) continue;
+
+      const verified = await readHistoricalBundle(slug, bundleId);
+      if (verified && verified.payload && verified.payload.metadata) {
+        candidates.push({
+          metadata: verified.payload.metadata,
+          savedAt: verified.payload.savedAt || verified.payload.metadata.savedAt || 0,
+        });
+      }
+    }
+
+    if (candidates.length === 0) return null;
+    candidates.sort((a, b) => b.savedAt - a.savedAt);
+    return candidates[0].metadata;
+  } catch {
+    return null;
+  }
+}
+
+/** Roll back an active topic pointer to a previously verified historical bundle. */
+export async function rollbackTopicOffline(
+  slugOrId: string,
+  targetBundleId?: string
+): Promise<{ success: boolean; error?: string }> {
+  if (typeof window === 'undefined' || !isOfflineStorageSupported()) {
+    return { success: false, error: 'المتصفح لا يوفر دعم التخزين بدون إنترنت' };
+  }
+  const slug = resolveCanonicalSlug(slugOrId);
+  if (!slug) return { success: false, error: 'تعذر تحديد الموضوع المطلوب استعادته' };
+
+  try {
+    let resolvedBundleId = targetBundleId;
+    if (!resolvedBundleId) {
+      const candidate = await getTopicRollbackCandidate(slug);
+      if (!candidate || !candidate.bundleId) {
+        return { success: false, error: 'لا توجد نسخة سابقة مكتملة ومؤكدة لهذا الموضوع' };
+      }
+      resolvedBundleId = candidate.bundleId;
+    }
+
+    const historical = await readHistoricalBundle(slug, resolvedBundleId);
+    if (!historical) {
+      return { success: false, error: 'النسخة السابقة المطلوبة غير مكتملة أو غير متوفرة' };
+    }
+
+    const worker = await getActiveWorker();
+    if (worker) {
+      try {
+        await postWorkerMessage(worker, {
+          type: 'ROLLBACK_TOPIC_UNIT',
+          slug,
+          bundleId: resolvedBundleId,
+        });
+      } catch {
+        // Fall back to direct Cache Storage pointer update below
+      }
+    }
+
+    const index = await window.caches.open(OFFLINE_CACHE_NAMES.TOPICS);
+    const pointerUrl = topicIndexUrl(slug);
+    const cacheName = OFFLINE_CACHE_NAMES.TOPIC_BUNDLE_PREFIX + slug + '-' + resolvedBundleId;
+    const pointer = {
+      slug,
+      bundleId: resolvedBundleId,
+      cacheName,
+      savedAt: historical.payload.savedAt || Date.now(),
+      metadata: historical.payload.metadata,
+    };
+    const response = new Response(JSON.stringify(pointer), {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
+    await index.put(pointerUrl, response);
+    clearTransientStatus(slug);
+    broadcastOfflineStorageChange(slug, 'saved');
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'تعذرت استعادة النسخة السابقة'
+    };
+  }
 }
 
 export async function clearAllOfflineSavedTopics(): Promise<{ success: boolean; clearedCount: number }> {

@@ -247,11 +247,31 @@ async function verifyBundleCache(cacheName, slug, bundleId) {
 }
 
 async function readTopicPointer(slug) {
-  const index = await caches.open(TOPIC_INDEX_CACHE);
-  const pointer = await readJson(index, topicIndexUrl(slug));
-  if (!pointer || pointer.slug !== slug || !pointer.bundleId || !pointer.cacheName) return null;
-  const verified = await verifyBundleCache(pointer.cacheName, slug, pointer.bundleId);
-  return verified ? { pointer, ...verified } : null;
+  try {
+    const index = await caches.open(TOPIC_INDEX_CACHE);
+    const url = topicIndexUrl(slug);
+    const pointer = await readJson(index, url);
+    if (!pointer || pointer.slug !== slug || !pointer.bundleId || !pointer.cacheName) return null;
+    let exists = false;
+    try {
+      exists = await caches.has(pointer.cacheName);
+    } catch {
+      // Inconclusive or transient storage error: retain pointer
+      return null;
+    }
+    if (!exists) {
+      await index.delete(url);
+      return null;
+    }
+    const verified = await verifyBundleCache(pointer.cacheName, slug, pointer.bundleId);
+    if (!verified) {
+      await index.delete(url);
+      return null;
+    }
+    return { pointer, ...verified };
+  } catch {
+    return null;
+  }
 }
 
 async function verifyTopic(slug, expectedBundleId) {
@@ -311,6 +331,19 @@ async function readShellPointer() {
 }
 
 async function matchActiveAsset(request) {
+  // Fast path: inspect the active shell bundle first if registered
+  try {
+    const index = await caches.open(SHELL_INDEX_CACHE);
+    const pointer = await readJson(index, SHELL_POINTER_URL);
+    if (pointer && pointer.cacheName) {
+      const shellCache = await caches.open(pointer.cacheName);
+      const shellResponse = await shellCache.match(request);
+      if (shellResponse) return shellResponse;
+    }
+  } catch {
+    // Fall back to scanning all candidate caches
+  }
+
   // This path handles one immutable static URL after its network request has
   // failed. Verify the full bundle once at navigation/readiness time; doing
   // that asset-graph scan for every script request turns an offline page load
@@ -362,11 +395,13 @@ async function cacheShellRoutes() {
   const bundleId = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
   const stageName = SHELL_STAGE_PREFIX + bundleId;
   const finalName = SHELL_BUNDLE_PREFIX + bundleId;
-  const stage = await caches.open(stageName);
-  const assets = new Set();
-  const routes = {};
+  let previousShellPointer = null;
 
   try {
+    const stage = await caches.open(stageName);
+    const assets = new Set();
+    const routes = {};
+
     const savedUrl = absoluteUrl('/saved');
     const savedResponse = await fetch(savedUrl, { cache: 'reload', credentials: 'same-origin' });
     if (!savedResponse.ok) throw new Error('Unable to cache the offline saved-content entry point (' + savedResponse.status + ')');
@@ -406,10 +441,21 @@ async function cacheShellRoutes() {
       if (!(await finalCache.match(url))) throw new Error('A saved-page dependency is missing: ' + url);
     }
     const index = await caches.open(SHELL_INDEX_CACHE);
+    previousShellPointer = await readJson(index, SHELL_POINTER_URL);
     await index.put(SHELL_POINTER_URL, jsonResponse({ bundleId, cacheName: finalName }));
     await caches.delete(stageName);
   } catch (error) {
     await caches.delete(stageName);
+    try {
+      const index = await caches.open(SHELL_INDEX_CACHE);
+      const currentPointer = await readJson(index, SHELL_POINTER_URL);
+      if (currentPointer && currentPointer.bundleId === bundleId) {
+        if (previousShellPointer) await index.put(SHELL_POINTER_URL, jsonResponse(previousShellPointer));
+        else await index.delete(SHELL_POINTER_URL);
+      }
+    } catch {
+      // Retain prior shell pointer if possible
+    }
     await caches.delete(finalName);
     throw error;
   }
@@ -435,6 +481,14 @@ self.addEventListener('activate', (event) => {
     await Promise.all(keys
       .filter((key) => key.startsWith(TOPIC_STAGE_PREFIX) || key.startsWith(SHELL_STAGE_PREFIX))
       .map((key) => caches.delete(key)));
+    try {
+      const shell = await readShellPointer();
+      if (!shell) {
+        await cacheShellRoutes();
+      }
+    } catch {
+      // Shell recovery on activation is best-effort
+    }
   })());
 });
 
@@ -491,6 +545,15 @@ async function cacheTopicUnit(data) {
   const bundleId = data.bundleId;
   if (!slug || !bundleId || !data.payload || !data.payload.topic || !data.payload.metadata ||
       data.payload.metadata.slug !== slug) throw new Error('Topic bundle data is incomplete');
+
+  try {
+    const activeShell = await readShellPointer();
+    if (!activeShell) {
+      await cacheShellRoutes();
+    }
+  } catch {
+    // Shell caching is best effort during topic save
+  }
 
   const stageName = TOPIC_STAGE_PREFIX + bundleId;
   const finalName = TOPIC_BUNDLE_PREFIX + slug + '-' + bundleId;
@@ -701,6 +764,56 @@ async function handleMessage(event) {
     await legacy.delete(absoluteUrl('/learn/' + data.slug));
     await legacy.delete(absoluteUrl('/learn/' + data.slug + '/'));
     reply({ type: 'PURGE_TOPIC_SUCCESS', slug: data.slug, success: true });
+    return;
+  }
+
+  if (data.type === 'ENSURE_SHELL') {
+    let shell = await readShellPointer();
+    if (!shell || data.force) {
+      try {
+        await cacheShellRoutes();
+        shell = await readShellPointer();
+      } catch (error) {
+        reply({
+          type: 'ENSURE_SHELL_RESULT',
+          success: false,
+          error: error instanceof Error ? error.message : String(error),
+        });
+        return;
+      }
+    }
+    reply({
+      type: 'ENSURE_SHELL_RESULT',
+      success: !!shell,
+      bundleId: shell && shell.pointer.bundleId,
+    });
+    return;
+  }
+
+  if (data.type === 'ROLLBACK_TOPIC_UNIT') {
+    const slug = data.slug;
+    const bundleId = data.bundleId;
+    if (!slug || !bundleId) {
+      reply({ type: 'ROLLBACK_TOPIC_UNIT_RESULT', success: false, error: 'Slug and target bundle ID are required' });
+      return;
+    }
+    const cacheName = TOPIC_BUNDLE_PREFIX + slug + '-' + bundleId;
+    const verified = await verifyBundleCache(cacheName, slug, bundleId);
+    if (!verified) {
+      reply({ type: 'ROLLBACK_TOPIC_UNIT_RESULT', success: false, error: 'The requested historical bundle is incomplete or unavailable' });
+      return;
+    }
+    const index = await caches.open(TOPIC_INDEX_CACHE);
+    const pointerUrl = topicIndexUrl(slug);
+    const pointer = {
+      slug,
+      bundleId,
+      cacheName,
+      savedAt: verified.manifest.savedAt || Date.now(),
+      metadata: verified.manifest.metadata,
+    };
+    await index.put(pointerUrl, jsonResponse(pointer));
+    reply({ type: 'ROLLBACK_TOPIC_UNIT_RESULT', success: true, slug, bundleId, metadata: verified.manifest.metadata });
     return;
   }
 
