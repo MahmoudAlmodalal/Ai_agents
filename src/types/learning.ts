@@ -176,6 +176,12 @@ export interface VersionedRubricRating {
   ratedAt: string;
 }
 
+/** Optional parent identity preserves provenance for newly archived ratings. */
+export interface HistoricalRubricRating extends VersionedRubricRating {
+  assessmentId?: string;
+  assessmentVersion?: number;
+}
+
 export interface PracticalAssessmentRecord {
   topicSlug: string;
   assessmentId: string;
@@ -185,7 +191,7 @@ export interface PracticalAssessmentRecord {
   criteria: Array<{ criterionId: string; criterionVersion: number }>;
   ratings: VersionedRubricRating[];
   /** Retired criterion judgments stay inspectable and are never applied to new versions. */
-  history: VersionedRubricRating[];
+  history: HistoricalRubricRating[];
   updatedAt: string;
   selfAssessment: true;
   previewOnly: boolean;
