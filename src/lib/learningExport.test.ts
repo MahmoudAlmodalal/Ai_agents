@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { getAllTopics } from '@/src/lib/topicRegistry';
-import { buildLearningExportFiles, summarizeTopicLearning, type LearningExportSnapshot } from './learningExport';
+import { buildLearningExportFiles, createLearningExportArchive, summarizeTopicLearning, type LearningExportSnapshot } from './learningExport';
 import type { TopicLearningContent } from '@/src/types/learning';
 import { PROMPT_LIBRARY } from './promptLibrary';
+import { REFERENCE_TEMPLATES } from '@/src/data/reference-templates';
 
 const topic = getAllTopics().find((item) => item.slug === 'user-flow-modeling')!;
 
@@ -113,4 +114,75 @@ test('export availability lists all expected topic outputs and labels unavailabl
   const activity = readTextFile(files, 'learner-data/activity-summary.md');
   assert.match(activity, /غير مؤكدة \(read-error\)/);
   assert.match(activity, /غير مؤكدة \(invalid\)/);
+});
+
+test('createLearningExportArchive produces a valid non-empty PK zip buffer', () => {
+  const archive = createLearningExportArchive(snapshot(), [topic], [learningContent()], PROMPT_LIBRARY, REFERENCE_TEMPLATES);
+  assert.ok(archive.length > 0);
+  assert.equal(archive[0], 0x50); // 'P'
+  assert.equal(archive[1], 0x4b); // 'K'
+  assert.equal(archive[2], 0x03);
+  assert.equal(archive[3], 0x04);
+});
+
+test('empty learner snapshot produces accurate zero-activity records and honest available status', () => {
+  const files = buildLearningExportFiles(snapshot(), [topic], [learningContent()], PROMPT_LIBRARY, REFERENCE_TEMPLATES);
+  const manifest = JSON.parse(readTextFile(files, 'manifest.json'));
+  assert.equal(manifest.recordsStatus, 'readable-from-current-browser');
+  assert.equal(manifest.recordStorageStatus.quizAttempts, 'available');
+  assert.equal(manifest.recordStorageStatus.practicalAssessments, 'available');
+  assert.equal(manifest.recordStorageStatus.checklists, 'available');
+
+  const records = JSON.parse(readTextFile(files, 'learner-data/records.json'));
+  assert.deepEqual(records.quizAttempts, []);
+  assert.deepEqual(records.practicalAssessments, []);
+  assert.deepEqual(records.bookmarks, []);
+  assert.deepEqual(records.recentlyViewed, []);
+  assert.deepEqual(records.checklistActivity.entries, []);
+  assert.deepEqual(records.promptCustomizations, {});
+
+  const summary = readTextFile(files, 'learner-data/activity-summary.md');
+  assert.match(summary, /الموضوعات التي زرتها مؤخرًا: 0 معرّفًا/);
+  assert.match(summary, /الموضوعات المفضلة: 0 معرّفًا/);
+  assert.match(summary, /محاولات الاختبار المسجلة: 0/);
+  assert.match(summary, /تقييمات عملية ذاتية: 0/);
+});
+
+test('customized prompt without library source is preserved in export and marked unavailable in manifest', () => {
+  const customSnapshot: LearningExportSnapshot = {
+    ...snapshot(),
+    promptCustomizations: {
+      'orphaned-custom-prompt': {
+        promptSlug: 'orphaned-custom-prompt',
+        text: 'Custom prompt text for retired prompt',
+        sourceRevision: 'rev-historical',
+        updatedAt: '2026-10-20T10:00:00.000Z',
+      },
+    },
+  };
+  const files = buildLearningExportFiles(customSnapshot, [topic], [], PROMPT_LIBRARY, REFERENCE_TEMPLATES);
+  const paths = new Set(files.map((file) => file.path));
+  assert.ok(paths.has('prompts/customized/orphaned-custom-prompt.txt'));
+  assert.ok(paths.has('prompts/customized/orphaned-custom-prompt.json'));
+  assert.equal(readTextFile(files, 'prompts/customized/orphaned-custom-prompt.txt'), 'Custom prompt text for retired prompt');
+
+  const orphanedMeta = JSON.parse(readTextFile(files, 'prompts/customized/orphaned-custom-prompt.json'));
+  assert.equal(orphanedMeta.sourcePromptAvailable, false);
+
+  const availability = JSON.parse(readTextFile(files, 'resources/availability-manifest.json'));
+  assert.ok(availability.savedCustomizationsWithUnavailableSource.some((entry: { promptSlug: string; includedTextPath: string }) =>
+    entry.promptSlug === 'orphaned-custom-prompt' && entry.includedTextPath === 'prompts/customized/orphaned-custom-prompt.txt'));
+});
+
+test('availability manifest explicitly disclaims external videos, complete templates, and learner project files', () => {
+  const files = buildLearningExportFiles(snapshot(), [topic], [learningContent()], PROMPT_LIBRARY, REFERENCE_TEMPLATES);
+  const availability = JSON.parse(readTextFile(files, 'resources/availability-manifest.json'));
+  assert.equal(availability.learnerProjectFilesNotAccessible, true);
+  assert.ok(availability.referenceTemplates.length > 0);
+  assert.ok(availability.referenceTemplates.every((item: { completeTemplateFile: string }) => item.completeTemplateFile === 'not-available'));
+  assert.ok(availability.externalVideosNotDownloaded !== undefined);
+
+  const readme = readTextFile(files, 'README.md');
+  assert.match(readme, /ليست أداة استيراد أو استعادة أو مزامنة/);
+  assert.match(readme, /لا تحتوي على ملفات Learner Project/);
 });

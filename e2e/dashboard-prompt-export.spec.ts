@@ -56,6 +56,8 @@ test.describe('Learner dashboard and export', () => {
     expect(availability.referenceTemplates.every((item: { completeTemplateFile: string }) => item.completeTemplateFile === 'not-available')).toBe(true);
     expect(availability.learnerProjectFilesNotAccessible).toBe(true);
     expect(files.get('README.md')).toContain('ليست أداة استيراد أو استعادة');
+    const statusMsg = page.getByRole('status').first();
+    await expect(statusMsg).toContainText('بدأ تنزيل ملف ZIP؛ افتح README.md وقائمة توفر الموارد داخل الحزمة.');
   });
 
   test('seeded learner records survive reload and remain isolated to their browser profile', async ({ page }) => {
@@ -219,6 +221,27 @@ test.describe('Learner dashboard and export', () => {
     await expect(page.locator('[aria-label="ملخص محلي للأنشطة المسجلة"]').getByText('العدد غير مؤكد')).toHaveCount(4);
     await expect(page.getByText('لا توجد تقييمات ذاتية مسجلة.')).toBeVisible();
     await expect(page.getByText(/نتيجة الشروط غير مؤكدة/)).toHaveCount(2);
+    const statusMsg = page.getByRole('status').first();
+    await expect(statusMsg).toContainText('بدأ تنزيل الحزمة. تتضمن ملف السجلات حالة التخزين، وقد تكون بعض البيانات غير متاحة.');
+    await expect(page.getByText('بدأ تنزيل ملف ZIP؛ افتح README.md', { exact: false })).toHaveCount(0);
+  });
+
+  test('failed package generation displays honest error status without reporting a successful export', async ({ page }) => {
+    await page.goto('/dashboard');
+    await expect(page.getByRole('heading', { level: 1, name: 'لوحة تعلّمي' })).toBeVisible();
+
+    await page.evaluate(() => {
+      window.URL.createObjectURL = () => {
+        throw new Error('Simulated package download failure');
+      };
+    });
+
+    await page.getByTestId('learning-export').click();
+    const statusMsg = page.getByRole('status').first();
+    await expect(statusMsg).toBeVisible();
+    await expect(statusMsg).toContainText('تعذر إنشاء الحزمة أو بدء تنزيلها. لم يتم تأكيد نجاح التصدير.');
+    await expect(page.getByText('بدأ تنزيل ملف ZIP', { exact: false })).toHaveCount(0);
+    await expect(page.getByText('بدأ تنزيل الحزمة', { exact: false })).toHaveCount(0);
   });
 
   test('frozen legacy HTML checklist fixture stays visible after a blocked write and same-tab dashboard transition', async ({ page }) => {
@@ -268,6 +291,8 @@ test.describe('Learner dashboard and export', () => {
     expect(manifest.recordStorageStatus.checklists).toBe('write-error');
     expect(records.checklistActivity.entries.some((entry: { sessionOnly: boolean; sessionOnlyChanges?: Array<{ item: string; checked: boolean }> }) => entry.sessionOnly
       && entry.sessionOnlyChanges?.some((change) => change.item === itemText && change.checked))).toBe(true);
+    const statusMsg = page.getByRole('status').first();
+    await expect(statusMsg).toContainText('بدأ تنزيل الحزمة. تتضمن ملف السجلات حالة التخزين، وقد تكون بعض البيانات غير متاحة.');
   });
 
   test('prompt customization survives reload, copies the full custom text, resets, and flags a stale source revision', async ({ page, context }) => {
