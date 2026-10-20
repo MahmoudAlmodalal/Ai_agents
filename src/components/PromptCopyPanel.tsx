@@ -134,11 +134,11 @@ export function PromptCopyPanel({ promptSlug, body }: { promptSlug: string; body
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 px-4 py-3 text-sm text-slate-300">
         <span className="flex items-center gap-2"><FileText className="h-4 w-4 text-emerald-400" aria-hidden="true" /> النص الأصلي محفوظ كما ورد في المصدر</span>
         <div className="flex flex-wrap items-center gap-2">
-          <button type="button" onClick={() => { setMode('original'); setCopyStatus('idle'); }} aria-pressed={mode === 'original'} className="rounded-lg border border-slate-600 px-3 py-2 text-xs font-bold aria-pressed:border-emerald-400 aria-pressed:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300">الأصل</button>
-          <button type="button" onClick={() => { setMode('custom'); setCopyStatus('idle'); }} aria-pressed={mode === 'custom'} className="rounded-lg border border-slate-600 px-3 py-2 text-xs font-bold aria-pressed:border-emerald-400 aria-pressed:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300">تخصيصي</button>
+          <button type="button" onClick={() => { setMode('original'); setCopyStatus('idle'); }} aria-pressed={mode === 'original'} className="inline-flex min-h-9 items-center justify-center rounded-lg border border-slate-600 px-3 py-2 text-xs font-bold aria-pressed:border-emerald-400 aria-pressed:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300">الأصل</button>
+          <button type="button" onClick={() => { setMode('custom'); setCopyStatus('idle'); }} aria-pressed={mode === 'custom'} className="inline-flex min-h-9 items-center justify-center rounded-lg border border-slate-600 px-3 py-2 text-xs font-bold aria-pressed:border-emerald-400 aria-pressed:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300">تخصيصي</button>
           <button
             onClick={copyPrompt}
-            className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-wait disabled:opacity-70"
+            className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-wait disabled:opacity-70"
             type="button"
             disabled={copyStatus === 'copying' || !selectedText.length}
           >
