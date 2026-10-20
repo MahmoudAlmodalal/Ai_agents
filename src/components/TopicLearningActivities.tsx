@@ -134,7 +134,7 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
       previewOnly: !quizPolicyEnabled,
     };
     const snapshot = saveQuizAttempt(attempt);
-    setQuizAttempts(snapshot.attempts.filter((saved) => saved.quizId === content.quiz.id));
+    setQuizAttempts(snapshot.attempts);
     setQuizStorageStatus(snapshot.storageStatus);
     setSubmittedAttemptId(attempt.attemptId);
   }

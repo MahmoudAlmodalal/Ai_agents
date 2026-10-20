@@ -197,6 +197,11 @@ test.describe('objective quiz and practical self-assessment', () => {
     await quiz.getByText(/عرض سجل المحاولات \(1\)/).click();
     await expect(quiz.getByText(new RegExp(`اختبار سابق: ${topicSlug}-previous-objective-quiz`))).toBeVisible();
     await expect(quiz.getByText(/نسخة سابقة/)).toBeVisible();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات', exact: true }).click();
+    await expect(quiz.getByText(/صحيح: 0 · غير صحيح: 0 · بلا إجابة: 2/)).toBeVisible();
+    await expect(quiz.getByText(/عرض سجل المحاولات \(2\)/)).toBeVisible();
+    await quiz.getByText(/عرض سجل المحاولات \(2\)/).click();
+    await expect(quiz.getByText(new RegExp(`اختبار سابق: ${topicSlug}-previous-objective-quiz`))).toBeVisible();
     await expect(page.locator(activitySelector).getByText(/أحكام من نسخة rubric سابقة/)).toBeVisible();
     await expect(page.locator(activitySelector).getByRole('group', { name: 'صياغة المشكلة ودليلها' }).getByLabel('اختيارك للتقييم الذاتي')).toHaveValue('');
     expect(await page.evaluate(({ key, slug }) => {
