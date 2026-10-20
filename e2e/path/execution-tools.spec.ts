@@ -109,7 +109,8 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
 
     // Content: System Instructions and structured JSON mock data matching ERD
     await expect(content).toContainText('ضبط تعليمات النظام وتوليد Mock Data بنمط JSON');
-    await expect(content).toContainText('Structured Outputs (JSON Mode)');
+    await expect(content).toContainText('يمكن لبعض النماذج تقديم خرج مقيد أو JSON');
+    await expect(content).toContainText('هذا لا يضمن مطابقة ERD');
 
     // Content: API key security and isolation
     await expect(content).toContainText('إذا استخدمت Gemini API: أمّن المفتاح واعزله عن المتصفح');

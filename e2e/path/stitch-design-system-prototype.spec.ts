@@ -19,7 +19,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     // Core rule: Starts with ONE reference screen first, no bulk generation
     const content = page.locator('article').first();
     await expect(content).toContainText('قاعدة الشاشة المرجعية الواحدة');
-    await expect(content).toContainText('ابدأ بشاشة مرجعية تمثيلية واحدة فقط');
+    await expect(content).toContainText('يقترح هذا التمرين البدء بشاشة مرجعية تمثيلية واحدة فقط');
     await expect(content).toContainText('منع الانجراف البصري');
 
     // Embedded PROMPT 16 (Master Prompt Generator)
@@ -223,7 +223,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await page.goto('/learn/design-system-rules');
     const act22 = page.locator('.learning-activities');
     await expect(act22).toBeVisible();
-    await expect(act22.getByRole('heading', { name: 'المدخل: دليل معتمد قابل للفحص' })).toBeVisible();
+    await expect(act22.getByRole('heading', { name: 'المدخل: دليل شاشة قابل للفحص' })).toBeVisible();
     await expect(act22.getByRole('heading', { name: 'نظام تصميم مصدره واضح' })).toBeVisible();
     await expect(act22.getByRole('heading', { name: 'برومبتات الشاشات' })).toBeVisible();
     await expect(act22.getByRole('heading', { name: 'خطوات التطبيق ومخرجاتها' })).toBeVisible();
@@ -280,7 +280,9 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await page.goto('/learn/interactive-prototype');
     const steps23 = page.locator('.learning-activities section[aria-labelledby*="-steps"] ol > li');
     await expect(steps23).toHaveCount(2);
-    await expect(steps23.nth(0)).toContainText('اربط شاشات المسار المعتمد في Stitch');
+    await expect(steps23.nth(0)).toContainText('ابدأ بجدول انتقالات مصدره واضح، ثم اربط الإجراء الأساسي في أداة نموذج متاحة حتى النتيجة');
+    await expect(steps23.nth(0)).toContainText('نموذج تفاعلي فعلي ورابط/معرف يمكن مراجعته');
+    await expect(steps23.nth(0)).toContainText('جدول الانتقالات تحضيراً لا بديلاً');
     await expect(steps23.nth(1)).toContainText('docs/PROTOTYPE_JOURNEYS_AUDIT.md');
   });
 
