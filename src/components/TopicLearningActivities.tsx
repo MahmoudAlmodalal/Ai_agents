@@ -275,7 +275,13 @@ export function TopicLearningActivities({ topic, content: authoredContent }: { t
         <h3 id={`${instanceId}-videos`} className="font-black text-[var(--text-main)]">موارد فيديو خارجية</h3>
         {content.candidateVideos.length > 0 ? <>
           <p className="text-xs leading-6 text-[var(--text-muted)]">مصادر الفيديو الخارجية تتطلب اتصالاً بالإنترنت ولا تتوفر دون اتصال.</p>
-          {content.candidateVideos.map((video) => <ExternalVideoResource key={video.id} resource={video} topicTitle={topic.title} />)}
+          {content.candidateVideos.map((video) => <ExternalVideoResource
+            key={video.id}
+            resource={video}
+            topicTitle={topic.title}
+            topicSlug={content.topicSlug}
+            contentVersion={content.contentVersion}
+          />)}
         </> : <ExternalVideoResource topicTitle={topic.title} />}
       </section>
 

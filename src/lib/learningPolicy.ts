@@ -1,4 +1,4 @@
-import type { PolicyApproval } from '@/src/types/learning';
+import type { CandidateExternalVideo, PolicyApproval } from '@/src/types/learning';
 
 /** All owner-approved behavior uses the same audit-evidence gate. */
 export function isPolicyApproved(value: unknown): value is Extract<PolicyApproval, { state: 'approved' }> {
@@ -67,6 +67,26 @@ export function resolvePolicyWordingState(
   return 'pending';
 }
 
-export function isExternalVideoApproved(video: { availability: string; approval: unknown }): boolean {
-  return video.availability === 'available' && isPolicyApproved(video.approval);
+export function isExternalVideoApproved(
+  video: Pick<CandidateExternalVideo, 'availability' | 'approval' | 'url' | 'acceptanceReview'>,
+  topicSlug?: string,
+  contentVersion?: number,
+): boolean {
+  const review = video.acceptanceReview;
+  if (video.availability !== 'available' || !isPolicyApproved(video.approval) || !review ||
+      !topicSlug || !Number.isInteger(contentVersion)) return false;
+  const checklist = review.checklist;
+  return review.topicSlug === topicSlug
+    && review.contentVersion === contentVersion
+    && typeof review.reviewer === 'string' && review.reviewer.trim().length > 0
+    && typeof review.reviewedAt === 'string' && Number.isFinite(Date.parse(review.reviewedAt))
+    && review.sourceUrl === video.url
+    && typeof review.evidence === 'string' && review.evidence.trim().length > 0
+    && !!checklist
+    && checklist.topicAlignment === 'passed'
+    && checklist.educationalSuitability === 'passed'
+    && checklist.playback === 'passed'
+    && checklist.captions === 'passed'
+    && checklist.accessibility === 'passed'
+    && checklist.unavailableHandling === 'passed';
 }

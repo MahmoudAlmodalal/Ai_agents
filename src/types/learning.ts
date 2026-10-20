@@ -46,6 +46,25 @@ export interface CandidateExternalVideo {
   availability: 'candidate' | 'available' | 'unavailable';
   approval: PolicyApproval;
   reviewEvidence: ReviewEvidence[];
+  /** Structured, exact-Topic review required before a link can become actionable. */
+  acceptanceReview?: ExternalVideoAcceptanceReview;
+}
+
+export interface ExternalVideoAcceptanceReview {
+  topicSlug: string;
+  contentVersion: number;
+  reviewer: string;
+  reviewedAt: string;
+  sourceUrl: string;
+  evidence: string;
+  checklist: {
+    topicAlignment: ReviewOutcome;
+    educationalSuitability: ReviewOutcome;
+    playback: ReviewOutcome;
+    captions: ReviewOutcome;
+    accessibility: ReviewOutcome;
+    unavailableHandling: ReviewOutcome;
+  };
 }
 
 export interface QuizAnswerOption {

@@ -418,6 +418,30 @@ test.describe('production offline bundles', () => {
     await fresh.reload();
     await expect(fresh.locator('.learning-activities')).toHaveAttribute('data-offline-content-version', '1');
     await expect(fresh.locator('.learning-activities').getByText(/آخر نتيجة محفوظة في هذا المتصفح/)).toBeVisible();
+
+    // Matching counts and HTML cannot make a bundle ready if its offline answer
+    // key is missing.
+    await fresh.evaluate(async (slug) => {
+      const index = await caches.open('ai-agents-topic-index-v2');
+      const pointerResponse = await index.match(new URL('/__ai_agents_offline_v2__/topics/' + encodeURIComponent(slug), location.origin).href);
+      if (!pointerResponse) throw new Error('Expected an active saved-topic pointer');
+      const pointer = await pointerResponse.json();
+      const bundleCache = await caches.open(pointer.cacheName);
+      const payloadUrl = new URL('/__ai_agents_offline_v2__/bundle/' + encodeURIComponent(pointer.bundleId) + '/payload.json', location.origin).href;
+      const payloadResponse = await bundleCache.match(payloadUrl);
+      if (!payloadResponse) throw new Error('Expected a saved quiz payload');
+      const payload = await payloadResponse.json();
+      delete payload.learningContent.quiz.questions[0].correctOptionId;
+      await bundleCache.put(payloadUrl, new Response(JSON.stringify(payload), {
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      }));
+    }, TOPIC_SLUG);
+
+    await context.setOffline(true);
+    await fresh.goto(TOPIC);
+    await expect(fresh.getByRole('heading', { name: 'هذا الموضوع غير محفوظ للمطالعة بدون إنترنت' })).toBeVisible();
+    await fresh.goto('/saved');
+    await expect(fresh.getByText('لا توجد مواضيع محفوظة حالياً')).toBeVisible();
   });
 
   test('validates actual cached HTML/assets for project-idea-mvp, rejecting orphaned localStorage records when cache is deleted', async ({ page }) => {

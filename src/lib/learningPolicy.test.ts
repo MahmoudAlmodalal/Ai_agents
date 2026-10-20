@@ -7,7 +7,7 @@ const validApproval = {
   approvedBy: 'Course owner',
   approvedAt: '2026-10-19T12:00:00.000Z',
   decisionReference: 'assessment-policy-review-1',
-};
+} as const;
 const passingReview = [{
   area: 'question',
   outcome: 'passed',
@@ -45,8 +45,32 @@ test('owner approval requires the full audit evidence before enabling policy or 
     { area: 'rubric', evidence: passingRubricReview },
     { area: 'rubric', evidence: passingReview },
   ]), false);
-  assert.equal(isExternalVideoApproved({ availability: 'candidate', approval: validApproval }), false);
-  assert.equal(isExternalVideoApproved({ availability: 'available', approval: validApproval }), true);
+  const videoReview = {
+    topicSlug: 'topic-test',
+    contentVersion: 2,
+    reviewer: 'Synthetic test fixture',
+    reviewedAt: '2026-10-19T12:00:00.000Z',
+    sourceUrl: 'https://example.org/video',
+    evidence: 'Synthetic test fixture only; not evidence of an actual video review.',
+    checklist: {
+      topicAlignment: 'passed',
+      educationalSuitability: 'passed',
+      playback: 'passed',
+      captions: 'passed',
+      accessibility: 'passed',
+      unavailableHandling: 'passed',
+    },
+  } as const;
+  const video = {
+    availability: 'available',
+    approval: validApproval,
+    url: 'https://example.org/video',
+    acceptanceReview: videoReview,
+  } as const;
+  assert.equal(isExternalVideoApproved({ ...video, availability: 'candidate' }, 'topic-test', 2), false);
+  assert.equal(isExternalVideoApproved({ ...video, acceptanceReview: undefined }, 'topic-test', 2), false);
+  assert.equal(isExternalVideoApproved(video, 'topic-test', 2), true);
+  assert.equal(isExternalVideoApproved(video, 'topic-test', 3), false);
 });
 
 test('resolvePolicyWordingState resolves to approved, pending, or draft accurately', () => {

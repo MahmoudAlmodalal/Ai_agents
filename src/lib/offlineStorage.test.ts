@@ -144,11 +144,38 @@ async function seedCompleteBundle(storage: MemoryCacheStorage) {
     },
     topic: { slug },
     diagramSnapshots: { architecture: '<svg></svg>', flow: '<svg></svg>', sequence: '<svg></svg>' },
+    learningContent: {
+      topicSlug: slug,
+      contentVersion: 3,
+      quiz: {
+        id: 'quiz-08',
+        version: 2,
+        title: 'Check your understanding',
+        questions: [
+          {
+            id: 'q-1', version: 1, objectiveId: 'objective-1', prompt: 'Which state applies?',
+            options: [{ id: 'q-1-a', text: 'Draft' }, { id: 'q-1-b', text: 'Ready' }],
+            correctOptionId: 'q-1-b', explanation: 'The ready state is recorded after review.',
+          },
+          {
+            id: 'q-2', version: 1, objectiveId: 'objective-2', prompt: 'Who records the result?',
+            options: [{ id: 'q-2-a', text: 'Student' }, { id: 'q-2-b', text: 'Reviewer' }],
+            correctOptionId: 'q-2-b', explanation: 'The reviewer records the result.',
+          },
+        ],
+        scoringPolicy: {
+          id: 'quiz-08-policy', version: 1,
+          correctAnswerPoints: 1, incorrectAnswerPoints: 0, unansweredAnswerPoints: 0,
+          retryPolicy: 'unlimited', feedbackTiming: 'after-submit', retainedAttempts: 'all',
+          summary: 'One point for a correct response.', approval: { state: 'proposed' },
+        },
+      },
+    },
     contentVersion: 3,
     bundleId,
     savedAt: 123,
   };
-  await cache.put(htmlUrl, new Response('<html></html>', { headers: { 'content-type': 'text/html' } }));
+  await cache.put(htmlUrl, new Response('<html data-offline-content-version="3"></html>', { headers: { 'content-type': 'text/html' } }));
   await cache.put(assetUrl, new Response('lesson code'));
   await cache.put(payloadUrl, new Response(JSON.stringify(payload)));
   await cache.put(manifestUrl, new Response(JSON.stringify({
@@ -176,6 +203,68 @@ test('bundle readiness requires the real HTML, payload, and every recorded asset
 
     const bundle = await browser.storage.open(fixture.cacheName);
     await bundle.delete(fixture.assetUrl);
+    assert.equal(await getTopicOfflineStatus(fixture.slug), 'unsaved');
+    assert.deepEqual(await listSavedTopicsOffline(), []);
+  } finally {
+    browser.cleanup();
+  }
+});
+
+test('a saved quiz bundle is rejected when its grading content is missing', async () => {
+  const browser = setupBrowser();
+  try {
+    const fixture = await seedCompleteBundle(browser.storage);
+    assert.equal(await getTopicOfflineStatus(fixture.slug), 'saved');
+
+    const cache = await browser.storage.open(fixture.cacheName);
+    const response = await cache.match(fixture.payloadUrl);
+    const payload = await response!.json() as {
+      learningContent?: unknown;
+      metadata: { quiz: { questionCount: number } };
+    };
+
+    // A summary alone cannot stand in for the answer key and feedback used to
+    // compute an offline attempt.
+    delete payload.learningContent;
+    await cache.put(fixture.payloadUrl, new Response(JSON.stringify(payload)));
+    assert.equal(await getTopicOfflineStatus(fixture.slug), 'unsaved');
+    assert.deepEqual(await listSavedTopicsOffline(), []);
+  } finally {
+    browser.cleanup();
+  }
+});
+
+test('a saved quiz bundle is rejected when its question count is stale', async () => {
+  const browser = setupBrowser();
+  try {
+    const fixture = await seedCompleteBundle(browser.storage);
+    const cache = await browser.storage.open(fixture.cacheName);
+    const response = await cache.match(fixture.payloadUrl);
+    const payload = await response!.json() as { metadata: { quiz: { questionCount: number } } };
+    payload.metadata.quiz.questionCount = 1;
+    await cache.put(fixture.payloadUrl, new Response(JSON.stringify(payload)));
+
+    assert.equal(await getTopicOfflineStatus(fixture.slug), 'unsaved');
+    assert.deepEqual(await listSavedTopicsOffline(), []);
+  } finally {
+    browser.cleanup();
+  }
+});
+
+test('a saved quiz bundle is rejected when an answer key is missing despite a matching question count', async () => {
+  const browser = setupBrowser();
+  try {
+    const fixture = await seedCompleteBundle(browser.storage);
+    const cache = await browser.storage.open(fixture.cacheName);
+    const response = await cache.match(fixture.payloadUrl);
+    const payload = await response!.json() as {
+      learningContent: { quiz: { questions: Array<Record<string, unknown>> } };
+    };
+    const originalCount = payload.learningContent.quiz.questions.length;
+    delete payload.learningContent.quiz.questions[0].correctOptionId;
+    assert.equal(payload.learningContent.quiz.questions.length, originalCount);
+    await cache.put(fixture.payloadUrl, new Response(JSON.stringify(payload)));
+
     assert.equal(await getTopicOfflineStatus(fixture.slug), 'unsaved');
     assert.deepEqual(await listSavedTopicsOffline(), []);
   } finally {
