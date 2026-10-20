@@ -1,3 +1,5 @@
+import type { PolicyApproval } from '@/src/types/learning';
+
 export type EducationalReviewVerdict = 'passed' | 'failed' | 'not-run' | 'pending';
 
 export interface EducationalReviewRecord {
@@ -14,6 +16,7 @@ export interface LessonTemplateCompliance {
   hasPracticalSteps: boolean;
   hasExpectedOutputs: boolean;
   hasChecklist: boolean;
+  hasApprovedVideo?: boolean;
   evidenceNotes?: string;
 }
 
@@ -27,6 +30,7 @@ export interface ProposedGroupRecord {
   isProposedFirstGroup?: boolean;
   groupBoundariesApproved: boolean; // Course-owner approval of group boundaries
   templateApproved: boolean; // Course-owner approval of lesson template
+  releaseApproval?: PolicyApproval; // Explicit acceptance for this complete group
 }
 
 export type ContentAvailabilityStatus = 'available' | 'in-progress' | 'unknown';

@@ -7,6 +7,7 @@ import {
   TopicImprovementStatus,
 } from '@/src/types/roadmap.ts';
 import { getAllTopics, getTopicBySlug } from '@/src/lib/topicRegistry.ts';
+import { isPolicyApproved } from '@/src/lib/learningPolicy.ts';
 
 /**
  * 19 educational groups covering all 58 canonical topics exactly once.
@@ -236,6 +237,7 @@ export const TOPIC_TEMPLATE_COMPLIANCE: Record<string, LessonTemplateCompliance>
       hasPracticalSteps: false,
       hasExpectedOutputs: false,
       hasChecklist: false,
+      hasApprovedVideo: false,
       evidenceNotes: 'قالب الدرس معتمد بقرار مالك المساق بتاريخ 2026-10-20؛ اكتمال تطبيقه وأدلة المراجعة وقبول إصدار المجموعة ما زال معلقًا.',
     },
   ])
@@ -249,6 +251,7 @@ export const TOPIC_TEMPLATE_COMPLIANCE: Record<string, LessonTemplateCompliance>
  * 3. Every member topic must exist in the group.
  * 4. Every member topic must have complete template compliance with all required sections verified.
  * 5. Every member topic must have passed educational review with recorded reviewer, timestamp, and evidence.
+ * 6. Every member has its approved video and this complete group has explicit owner release acceptance.
  * If any member is missing, failed, pending, or not-run, or if approvals/evidence are missing, the group is NOT improved.
  */
 export function isGroupImproved(
@@ -256,7 +259,7 @@ export function isGroupImproved(
   reviews: Record<string, EducationalReviewRecord> = TOPIC_EDUCATIONAL_REVIEWS,
   compliance: Record<string, LessonTemplateCompliance> = TOPIC_TEMPLATE_COMPLIANCE
 ): boolean {
-  if (!group || !group.groupBoundariesApproved || !group.templateApproved) {
+  if (!group || !group.groupBoundariesApproved || !group.templateApproved || !isPolicyApproved(group.releaseApproval)) {
     return false;
   }
   if (!group.topicSlugs || group.topicSlugs.length === 0) {
@@ -278,6 +281,7 @@ export function isGroupImproved(
     if (!comp.hasPracticalSteps) return false;
     if (!comp.hasExpectedOutputs) return false;
     if (!comp.hasChecklist) return false;
+    if (!comp.hasApprovedVideo) return false;
     if (!comp.evidenceNotes || comp.evidenceNotes.trim().length === 0) return false;
   }
   return true;
