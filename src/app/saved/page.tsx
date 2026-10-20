@@ -11,11 +11,14 @@ import {
   CheckCircle2,
   ArrowRight,
   RefreshCw,
+  RotateCcw,
 } from 'lucide-react';
 import {
   listSavedTopicsOffline,
   removeTopicOffline,
   clearAllOfflineSavedTopics,
+  getTopicRollbackCandidate,
+  rollbackTopicOffline,
   SavedTopicMetadata,
   OFFLINE_STORAGE_CHANGE_EVENT,
 } from '@/src/lib/offlineStorage';
@@ -23,6 +26,7 @@ import { useToast } from '@/src/components/Toast';
 
 export default function SavedTopicsPage() {
   const [savedTopics, setSavedTopics] = useState<SavedTopicMetadata[]>([]);
+  const [rollbackCandidates, setRollbackCandidates] = useState<Record<string, SavedTopicMetadata>>({});
   const [loading, setLoading] = useState(true);
   const [storageEstimate, setStorageEstimate] = useState<{ usedMb: string; quotaMb: string } | null>(null);
   const { showToast } = useToast();
@@ -32,6 +36,21 @@ export default function SavedTopicsPage() {
     const list = await listSavedTopicsOffline();
     setSavedTopics(list);
     setLoading(false);
+
+    const candidates: Record<string, SavedTopicMetadata> = {};
+    await Promise.all(
+      list.map(async (item) => {
+        try {
+          const candidate = await getTopicRollbackCandidate(item.slug);
+          if (candidate) {
+            candidates[item.slug] = candidate;
+          }
+        } catch {
+          // ignore candidate error
+        }
+      })
+    );
+    setRollbackCandidates(candidates);
 
     if (typeof navigator !== 'undefined' && 'storage' in navigator && navigator.storage.estimate) {
       try {
@@ -63,6 +82,16 @@ export default function SavedTopicsPage() {
       await loadTopics();
     } else {
       showToast('تعذرت إزالة الموضوع من التخزين المحلي', 'error');
+    }
+  };
+
+  const handleRollback = async (slug: string, targetBundleId: string, title: string) => {
+    const res = await rollbackTopicOffline(slug, targetBundleId);
+    if (res.success) {
+      showToast(`تمت استعادة النسخة السابقة لموضوع "${title}"`);
+      await loadTopics();
+    } else {
+      showToast(res.error || 'تعذرت استعادة النسخة السابقة لهذا الموضوع', 'error');
     }
   };
 
@@ -215,6 +244,19 @@ export default function SavedTopicsPage() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  {rollbackCandidates[item.slug] && (
+                    <button
+                      type="button"
+                      onClick={() => handleRollback(item.slug, rollbackCandidates[item.slug].bundleId!, item.title)}
+                      className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 px-3 text-xs font-bold text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 transition-colors shadow-2xs"
+                      title="استعادة النسخة السابقة المحفوظة لهذا الموضوع"
+                      aria-label={`استعادة النسخة السابقة لموضوع ${item.title}`}
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>استعادة النسخة السابقة</span>
+                    </button>
+                  )}
+
                   <Link
                     href={`/learn/${item.slug}`}
                     className="inline-flex min-h-9 items-center gap-1.5 rounded-xl bg-[var(--action-bg)] px-3.5 text-xs font-bold text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] transition-colors shadow-2xs"

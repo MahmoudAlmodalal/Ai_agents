@@ -248,6 +248,19 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
         </button>
       )}
 
+      {offlineStatus === 'unverified' && (
+        <button
+          type="button"
+          onClick={handleSaveOffline}
+          className={`${buttonClass} border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 bg-amber-50/80 dark:bg-amber-950/30`}
+          aria-label="حالة الحفظ غير مؤكدة - انقر لإعادة المحاولة"
+          title="تعذر التحقق من اكتمال النسخة المحفوظة بسبب خطأ مؤقت في التخزين. انقر لإعادة التأكيد أو الحفظ."
+        >
+          <AlertCircle className="h-4 w-4 text-amber-600" aria-hidden="true" />
+          <span>حالة الحفظ غير مؤكدة</span>
+        </button>
+      )}
+
       {offlineStatus === 'unsupported' && (
         <span
           className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"

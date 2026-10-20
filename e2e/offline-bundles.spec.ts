@@ -419,4 +419,172 @@ test.describe('production offline bundles', () => {
     await expect(fresh.locator('.learning-activities')).toHaveAttribute('data-offline-content-version', '1');
     await expect(fresh.locator('.learning-activities').getByText(/آخر نتيجة محفوظة في هذا المتصفح/)).toBeVisible();
   });
+
+  test('validates actual cached HTML/assets for project-idea-mvp, rejecting orphaned localStorage records when cache is deleted', async ({ page }) => {
+    // 1. Simulate legacy localStorage entry without actual Cache Storage content
+    await page.goto('/learn/project-idea-mvp');
+    await waitForController(page);
+    await page.evaluate(() => {
+      localStorage.setItem('ai_agents_offline_manifest_v1', JSON.stringify({
+        'project-idea-mvp': {
+          slug: 'project-idea-mvp',
+          id: 'topic-01',
+          number: '01',
+          title: 'اختيار فكرة المشروع وتحديد MVP',
+          savedAt: Date.now(),
+          version: '1',
+          contentVersion: 1,
+          diagramCount: 1,
+        },
+      }));
+      localStorage.setItem('ai_agents_offline_topic_v1:project-idea-mvp', JSON.stringify({
+        metadata: { slug: 'project-idea-mvp' },
+        topic: { slug: 'project-idea-mvp' },
+      }));
+    });
+
+    // 2. Reload: because ai-agents-topics-v1 does not exist, status must be unsaved
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'حفظ للمطالعة بدون إنترنت', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'تحديث النسخة المحفوظة', exact: true })).toHaveCount(0);
+
+    // 3. /saved must not list the orphaned topic
+    await page.goto('/saved');
+    await expect(page.getByText('لا توجد مواضيع محفوظة حالياً')).toBeVisible();
+
+    // 4. Save project-idea-mvp with real service worker
+    await page.goto('/learn/project-idea-mvp');
+    await waitForController(page);
+    await saveCurrentTopic(page);
+    await expect(page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toBeVisible();
+
+    await page.goto('/saved');
+    await expect(page.locator('a[href="/learn/project-idea-mvp"]').filter({ hasText: 'قراءة الدرس' })).toBeVisible();
+
+    // 5. Delete its bundle cache from Cache Storage to simulate eviction / deletion
+    await page.evaluate(async () => {
+      const index = await caches.open('ai-agents-topic-index-v2');
+      const pointerRes = await index.match(new URL('/__ai_agents_offline_v2__/topics/project-idea-mvp', location.origin).href);
+      if (pointerRes) {
+        const pointer = await pointerRes.json();
+        await caches.delete(pointer.cacheName);
+      }
+    });
+
+    // 6. Reload: UI must immediately report unsaved and controls must disappear
+    await page.goto('/learn/project-idea-mvp');
+    await expect(page.getByRole('button', { name: 'حفظ للمطالعة بدون إنترنت', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toHaveCount(0);
+
+    // 7. /saved must honestly report no saved topics
+    await page.goto('/saved');
+    await expect(page.getByText('لا توجد مواضيع محفوظة حالياً')).toBeVisible();
+  });
+
+  test('safe update commits atomically, retains previous bundle in cache, and rollback restores previous version', async ({ page, context }) => {
+    await openTopic(page);
+    await waitForController(page);
+    await saveCurrentTopic(page);
+    const before = await activeBundle(page);
+    expect(before).not.toBeNull();
+    const originalBundleId = before!.pointer.bundleId;
+
+    // Confirm that when only 1 version exists, /saved does not offer rollback
+    await page.goto('/saved');
+    await expect(page.getByRole('button', { name: /استعادة النسخة السابقة/ })).toHaveCount(0);
+
+    // Navigate back and trigger update via the UI
+    await page.goto(TOPIC);
+    await waitForController(page);
+    await page.getByRole('button', { name: 'تحديث النسخة المحفوظة', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toBeVisible({ timeout: 45000 });
+
+    const after = await activeBundle(page);
+    expect(after).not.toBeNull();
+    const updatedBundleId = after!.pointer.bundleId;
+    expect(updatedBundleId).not.toBe(originalBundleId);
+    expect(after!.manifest.complete).toBe(true);
+    expect(after!.missingAssets).toEqual([]);
+
+    // Both the previous and new bundle caches must remain in Cache Storage
+    const cacheNames = await page.evaluate(async () => await caches.keys());
+    expect(cacheNames).toContain(before!.pointer.cacheName);
+    expect(cacheNames).toContain(after!.pointer.cacheName);
+
+    // Open /saved: now that a previous complete bundle exists, the rollback button appears
+    await page.goto('/saved');
+    const rollbackBtn = page.getByRole('button', { name: /استعادة النسخة السابقة/ });
+    await expect(rollbackBtn).toBeVisible();
+
+    // Click rollback in the UI
+    await rollbackBtn.click();
+    await expect(page.getByText(/تمت استعادة النسخة السابقة/)).toBeVisible();
+
+    // Verify active bundle is safely restored to original
+    const restored = await activeBundle(page);
+    expect(restored?.pointer.bundleId).toBe(originalBundleId);
+
+    // Reopen offline in a fresh page to confirm the restored bundle works completely
+    await page.close();
+    await context.setOffline(true);
+    const fresh = await context.newPage();
+    observeWorker(context, fresh);
+    await disableHttpCache(context, fresh);
+    await fresh.goto('/saved');
+    await expect(fresh.getByRole('heading', { name: 'المواضيع المحفوظة بدون إنترنت' })).toBeVisible();
+    await fresh.locator(`a[href="${TOPIC}"]`).filter({ hasText: 'قراءة الدرس' }).click();
+    await expect(fresh).toHaveURL(new RegExp(`${TOPIC}$`));
+    await expect(fresh.locator('[aria-label="المخطط الهندسي التفاعلي"] .mermaid-zoombox svg')).toBeVisible();
+    await expect(fresh.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toBeVisible();
+  });
+
+  test('clearing all offline topics from /saved frees bundle storage while leaving learner records intact', async ({ page }) => {
+    await openTopic(page);
+    await waitForController(page);
+    await saveCurrentTopic(page);
+
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_bookmarks', JSON.stringify(['user-flow-modeling', 'project-idea-mvp']));
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['user-flow-modeling']));
+      localStorage.setItem('application-checklists-v1', JSON.stringify({ 'user-flow-modeling': ['check-offline-1'] }));
+    });
+
+    await page.goto('/saved');
+    await expect(page.locator(`a[href="${TOPIC}"]`).filter({ hasText: 'قراءة الدرس' })).toBeVisible();
+
+    page.on('dialog', (dialog) => dialog.accept());
+    await page.getByRole('button', { name: 'إفراغ المحفوظات' }).click();
+
+    await expect(page.getByText('لا توجد مواضيع محفوظة حالياً')).toBeVisible();
+
+    const remainingTopicCaches = await page.evaluate(async () => {
+      const keys = await caches.keys();
+      return keys.filter((key) => key.startsWith('ai-agents-topic-v2-') || key.startsWith('ai-agents-topic-stage-v2-'));
+    });
+    expect(remainingTopicCaches).toEqual([]);
+
+    const indexKeys = await page.evaluate(async () => {
+      const index = await caches.open('ai-agents-topic-index-v2');
+      return await index.keys();
+    });
+    expect(indexKeys).toEqual([]);
+
+    const shellCachePresent = await page.evaluate(async () => {
+      const keys = await caches.keys();
+      return keys.some((key) => key.startsWith('ai-agents-shell-bundle-v2-'));
+    });
+    expect(shellCachePresent).toBe(true);
+
+    const learnerRecords = await page.evaluate(() => ({
+      bookmarks: localStorage.getItem('engineering_guide_bookmarks'),
+      recent: localStorage.getItem('engineering_guide_recently_viewed'),
+      checklist: localStorage.getItem('application-checklists-v1'),
+    }));
+    expect(learnerRecords).toEqual({
+      bookmarks: JSON.stringify(['user-flow-modeling', 'project-idea-mvp']),
+      recent: JSON.stringify(['user-flow-modeling']),
+      checklist: JSON.stringify({ 'user-flow-modeling': ['check-offline-1'] }),
+    });
+  });
 });
