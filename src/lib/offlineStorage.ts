@@ -562,7 +562,6 @@ export async function saveTopicOffline(
   const canonical = resolveCanonicalSlug(topic && topic.slug);
   if (!canonical) return { success: false, error: 'تعذر تحديد الموضوع المطلوب حفظه' };
 
-  const previous = await readActiveBundle(canonical);
   setTransientStatus(canonical, options && options.isUpdate ? 'updating' : 'saving');
   broadcastOfflineStorageChange(canonical, options && options.isUpdate ? 'updating' : 'saving');
   let bundleId = '';
@@ -682,7 +681,10 @@ export async function saveTopicOffline(
     return { success: true };
   } catch (error) {
     clearTransientStatus(canonical);
-    broadcastOfflineStorageChange(canonical, previous ? 'saved' : 'failed');
+    // The active bundle remains unchanged after failure. Subscribers consume
+    // this operation state directly instead of asynchronously rereading the
+    // old bundle and replacing the retry state with "saved".
+    broadcastOfflineStorageChange(canonical, 'failed');
     console.error('Failed saving topic offline [' + canonical + ']:', error);
     return { success: false, error: quotaMessage(error) };
   }

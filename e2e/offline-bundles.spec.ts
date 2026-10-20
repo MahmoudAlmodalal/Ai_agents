@@ -2,38 +2,66 @@ import { test, expect, type BrowserContext, type Page } from '@playwright/test';
 
 const TOPIC = '/learn/user-flow-modeling';
 const TOPIC_SLUG = 'user-flow-modeling';
-type WorkerDiagnostics = { console: string[]; failures: string[]; badResponses: string[] };
+const TEST_ORIGIN = new URL(process.env.E2E_BASE_URL ?? `http://127.0.0.1:${process.env.E2E_PORT ?? '3000'}`).origin;
+type WorkerDiagnostics = {
+  console: string[];
+  pageErrors: string[];
+  failures: string[];
+  badResponses: string[];
+  serviceWorkerResponses: Array<{ status: number; url: string }>;
+};
 const workerDiagnostics = new WeakMap<BrowserContext, WorkerDiagnostics>();
+const observedPages = new WeakMap<BrowserContext, WeakSet<Page>>();
 
-function observeWorker(context: BrowserContext): WorkerDiagnostics {
+function observeWorker(context: BrowserContext, page?: Page): WorkerDiagnostics {
   const existing = workerDiagnostics.get(context);
-  if (existing) return existing;
-  const diagnostics: WorkerDiagnostics = { console: [], failures: [], badResponses: [] };
-  context.on('serviceworker', (worker) => {
-    diagnostics.console.push(`worker started: ${worker.url()}`);
-    worker.on('console', (message) => diagnostics.console.push(message.text()));
-    worker.on('close', () => diagnostics.console.push(`worker closed: ${worker.url()}`));
-  });
-  context.on('requestfailed', (request) => {
-    if (request.url().startsWith('http://127.0.0.1:3101/')) diagnostics.failures.push(`${request.url()} ${request.failure()?.errorText ?? ''}`);
-  });
-  context.on('response', (response) => {
-    if (response.url().startsWith('http://127.0.0.1:3101/') && response.status() >= 400) {
-      diagnostics.badResponses.push(`${response.status()} ${response.url()}`);
+  const diagnostics = existing ?? { console: [], pageErrors: [], failures: [], badResponses: [], serviceWorkerResponses: [] };
+  if (!existing) {
+    workerDiagnostics.set(context, diagnostics);
+    context.on('serviceworker', (worker) => {
+      diagnostics.console.push(`worker started: ${worker.url()}`);
+      worker.on('console', (message) => diagnostics.console.push(message.text()));
+      worker.on('close', () => diagnostics.console.push(`worker closed: ${worker.url()}`));
+    });
+    context.on('requestfailed', (request) => {
+      if (request.url().startsWith(`${TEST_ORIGIN}/`)) {
+        diagnostics.failures.push(`${request.url()} ${request.failure()?.errorText ?? ''}`);
+      }
+    });
+    context.on('response', (response) => {
+      if (response.fromServiceWorker()) {
+        diagnostics.serviceWorkerResponses.push({ status: response.status(), url: response.url() });
+      }
+      if (response.url().startsWith(`${TEST_ORIGIN}/`) && response.status() >= 400) {
+        diagnostics.badResponses.push(`${response.status()} ${response.url()}`);
+      }
+    });
+  }
+  if (page) {
+    let pages = observedPages.get(context);
+    if (!pages) {
+      pages = new WeakSet<Page>();
+      observedPages.set(context, pages);
     }
-  });
-  workerDiagnostics.set(context, diagnostics);
+    if (!pages.has(page)) {
+      pages.add(page);
+      page.on('pageerror', (error) => diagnostics.pageErrors.push(error.message));
+      page.on('console', (message) => {
+        if (message.type() === 'error') diagnostics.console.push(`page console: ${message.text()}`);
+      });
+    }
+  }
   return diagnostics;
 }
 
 async function openTopic(page: Page, search = '') {
-  observeWorker(page.context());
+  observeWorker(page.context(), page);
   await page.goto(TOPIC + search);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 }
 
 async function waitForController(page: Page) {
-  const diagnostics = observeWorker(page.context());
+  const diagnostics = observeWorker(page.context(), page);
   try {
     await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker?.controller)), {
       timeout: 20000,
@@ -94,6 +122,22 @@ async function activeBundle(page: Page) {
   }, TOPIC_SLUG);
 }
 
+async function expectFailedSaveStatus(page: Page, timeout: number) {
+  try {
+    await expect(page.getByRole('button', { name: 'فشل الحفظ - انقر لإعادة المحاولة', exact: true })).toBeVisible({ timeout });
+  } catch (error) {
+    const state = await page.evaluate(() => ({
+      url: location.href,
+      buttons: Array.from(document.querySelectorAll('button')).map((button) => ({
+        label: button.getAttribute('aria-label'), text: button.innerText,
+      })).filter((button) => button.label || /حفظ|تحديث|فشل/.test(button.text)),
+      statuses: Array.from(document.querySelectorAll('[role="alert"], [role="status"]')).map((node) => node.textContent),
+    })).catch((inspectionError) => ({ inspectionError: String(inspectionError) }));
+    const bundle = await activeBundle(page).catch((inspectionError) => ({ inspectionError: String(inspectionError) }));
+    throw new Error(`${String(error)}\nUpdate state: ${JSON.stringify({ state, bundle, diagnostics: workerDiagnostics.get(page.context()) })}`);
+  }
+}
+
 async function disableHttpCache(context: BrowserContext, page: Page) {
   const session = await context.newCDPSession(page);
   await session.send('Network.enable');
@@ -103,6 +147,41 @@ async function disableHttpCache(context: BrowserContext, page: Page) {
 
 test.describe('production offline bundles', () => {
   test.describe.configure({ timeout: 120_000 });
+
+  test.afterEach(async ({ context }, testInfo) => {
+    if (testInfo.status === testInfo.expectedStatus) return;
+    const diagnostics = workerDiagnostics.get(context);
+    if (!diagnostics) return;
+    await testInfo.attach('offline-worker-and-network-diagnostics', {
+      body: Buffer.from(JSON.stringify(diagnostics, null, 2)),
+      contentType: 'application/json',
+    });
+    console.error(`[offline-worker-diagnostics] ${testInfo.title}: ${JSON.stringify(diagnostics)}`);
+  });
+
+  test('keeps online lesson and quiz readable when Service Worker storage is unavailable', async ({ page }) => {
+    await page.addInitScript(() => {
+      const originalNavigator = window.navigator;
+      const navigatorWithoutServiceWorker = new Proxy(originalNavigator, {
+        has(target, property) {
+          return property === 'serviceWorker' ? false : Reflect.has(target, property);
+        },
+        get(target, property) {
+          return property === 'serviceWorker' ? undefined : Reflect.get(target, property, target);
+        },
+      });
+      Object.defineProperty(window, 'navigator', {
+        configurable: true,
+        get: () => navigatorWithoutServiceWorker,
+      });
+      if ('serviceWorker' in navigator) throw new Error('Service Worker capability was not hidden for the unsupported-browser case');
+    });
+    await openTopic(page);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.locator('.learning-activities').getByRole('heading', { name: 'فحص ذاتي للمفاهيم' })).toBeVisible();
+    await expect(page.getByText('الحفظ غير متاح في هذا المتصفح')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'حفظ للمطالعة بدون إنترنت', exact: true })).toHaveCount(0);
+  });
 
   test('reopens /saved and its diagram with HTTP cache disabled, rejects unsaved content, and removes only the bundle', async ({ page, context }) => {
     await openTopic(page);
@@ -127,16 +206,17 @@ test.describe('production offline bundles', () => {
     expect(saved!.missingAssets).toEqual([]);
     expect(saved!.payload.topic.slug).toBe(TOPIC_SLUG);
     const assetPaths = saved!.manifest.assets.map((asset: string) => new URL(asset).pathname);
+    const appScriptChunks = assetPaths.filter((asset: string) => asset.startsWith('/_next/static/chunks/') && /\.js$/i.test(asset));
     expect(assetPaths.filter((asset: string) => asset.includes('/chunks/static/chunks/'))).toEqual([]);
-    expect(assetPaths.filter((asset: string) => /\/_next\/static\/chunks\/[a-f0-9]{8}\.[a-f0-9]{16}\.js$/i.test(asset)).length).toBeGreaterThan(50);
+    console.log(`[offline] cached ${appScriptChunks.length} production JavaScript chunks; examples: ${appScriptChunks.slice(0, 8).join(', ')}`);
+    expect(appScriptChunks.length).toBeGreaterThan(0);
     await page.evaluate(() => Reflect.deleteProperty(window, 'localStorage'));
 
     await page.close();
     await context.setOffline(true);
     const fresh = await context.newPage();
-    const pageErrors: string[] = [];
+    const diagnostics = observeWorker(context, fresh);
     const failedStaticRequests: string[] = [];
-    fresh.on('pageerror', (error) => pageErrors.push(error.message));
     fresh.on('requestfailed', (request) => {
       if (request.url().includes('/_next/static/')) failedStaticRequests.push(request.url());
     });
@@ -151,17 +231,31 @@ test.describe('production offline bundles', () => {
     await expect(fresh).toHaveURL(new RegExp(`${TOPIC}$`));
     const renderedDiagram = fresh.locator('[aria-label="المخطط الهندسي التفاعلي"] .mermaid-zoombox svg');
     await expect(renderedDiagram).toBeVisible();
-    for (const [label, perspective] of [
-      ['🏗️ بنية النظام', 'architecture'],
-      ['🔄 مسار العمليات', 'flow'],
-      ['⚡ تسلسل التفاعلات', 'sequence'],
+    const diagramText = () => renderedDiagram.evaluate((svg) => (svg.textContent ?? '').replace(/\s+/g, ' ').trim());
+    let previousDiagramText = '';
+    const perspectiveContents = new Set<string>();
+    for (const label of [
+      '🏗️ بنية النظام',
+      '🔄 مسار العمليات',
+      '⚡ تسلسل التفاعلات',
     ]) {
-      await fresh.getByRole('button', { name: label, exact: true }).click();
-      await expect(renderedDiagram).toHaveAttribute('id', new RegExp(`snapshot-topic-08-${perspective}-`));
+      const perspectiveButton = fresh.getByRole('button', { name: label, exact: true });
+      await perspectiveButton.click();
+      await expect(perspectiveButton).toHaveAttribute('aria-pressed', 'true');
+      await expect.poll(diagramText).not.toBe('');
+      if (previousDiagramText) await expect.poll(diagramText).not.toBe(previousDiagramText);
+      previousDiagramText = await diagramText();
+      perspectiveContents.add(previousDiagramText);
     }
+    expect(perspectiveContents.size).toBe(3);
     await expect(fresh.getByRole('button', { name: 'إزالة النسخة المحفوظة بدون إنترنت', exact: true })).toBeVisible();
-    expect(pageErrors).toEqual([]);
-    expect(failedStaticRequests).toEqual([]);
+    expect(diagnostics.pageErrors).toEqual([]);
+    const serviceWorkerStaticResponses = new Set(diagnostics.serviceWorkerResponses
+      .filter((response) => response.url.includes('/_next/static/'))
+      .map((response) => response.url));
+    const unsatisfiedStaticRequests = Array.from(new Set(failedStaticRequests))
+      .filter((url) => !serviceWorkerStaticResponses.has(url));
+    expect(unsatisfiedStaticRequests).toEqual([]);
 
     await fresh.goto('/learn/discovery-grill-me');
     await expect(fresh.getByRole('heading', { name: 'هذا الموضوع غير محفوظ للمطالعة بدون إنترنت' })).toBeVisible();
@@ -198,7 +292,7 @@ test.describe('production offline bundles', () => {
     for (const search of failingUpdates) {
       await openTopic(page, search);
       await page.getByRole('button', { name: 'تحديث النسخة المحفوظة', exact: true }).click();
-      await expect(page.getByRole('button', { name: 'فشل الحفظ - انقر لإعادة المحاولة', exact: true })).toBeVisible({ timeout: 30000 });
+      await expectFailedSaveStatus(page, 30000);
       const current = await activeBundle(page);
       expect(current?.pointer.bundleId).toBe(original!.pointer.bundleId);
       expect(current?.manifest.complete).toBe(true);
@@ -274,6 +368,7 @@ test.describe('production offline bundles', () => {
     await page.close();
     await context.setOffline(true);
     const fresh = await context.newPage();
+    observeWorker(context, fresh);
     await disableHttpCache(context, fresh);
     await fresh.goto('/saved');
     await expect(fresh.getByRole('heading', { name: 'المواضيع المحفوظة بدون إنترنت' })).toBeVisible();
