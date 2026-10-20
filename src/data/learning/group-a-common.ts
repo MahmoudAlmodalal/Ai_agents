@@ -149,3 +149,41 @@ export function buildTopic(draft: TopicDraft): TopicLearningContent {
   };
 }
 
+export const rootQuestionReview = (id: string) => ({
+  area: 'question' as const,
+  outcome: 'passed' as const,
+  reviewer: 'root',
+  reviewedAt: '2026-10-20',
+  evidence: `Root independently checked the four options, keyed answer, and rationale for ${id}; the answer and rationale are educationally sound for the stated objective. This narrow review does not cover the full lesson, assessment policy, template, video, browser rendering, or owner acceptance.`,
+});
+
+export const rootCriterionReview = (id: string, outputId: string) => ({
+  area: 'rubric' as const,
+  outcome: 'passed' as const,
+  reviewer: 'root',
+  reviewedAt: '2026-10-20',
+  evidence: `Root independently checked criterion ${id} against semantic output ${outputId} and its evidence prompt; it is artifact-bound and asks for observable evidence without inferring mastery. This narrow review does not approve the proposed self-assessment policy or cover the full lesson, template, video, browser rendering, or owner acceptance.`,
+});
+
+export function buildReviewedTopic(draft: TopicDraft): TopicLearningContent {
+  const reviewedDraft: TopicDraft = {
+    ...draft,
+    questions: draft.questions.map((question) => ({
+      ...question,
+      reviewEvidence: [rootQuestionReview(question.id)],
+    })) as TopicDraft['questions'],
+    criteria: draft.criteria.map((criterion) => ({
+      ...criterion,
+      reviewEvidence: [rootCriterionReview(criterion.id, criterion.outputId)],
+    })) as TopicDraft['criteria'],
+  };
+  return buildTopic(reviewedDraft);
+}
+
+export function buildReviewedGroup(drafts: TopicDraft[]): Record<string, TopicLearningContent> {
+  return Object.fromEntries(
+    drafts.map((draft) => [draft.topicSlug, buildReviewedTopic(draft)]),
+  );
+}
+
+
