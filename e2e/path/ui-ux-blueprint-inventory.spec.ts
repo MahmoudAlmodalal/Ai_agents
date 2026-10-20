@@ -80,7 +80,7 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     // Skeletons, WCAG AA and target-size guidance
     const article = page.locator('article').first();
     await expect(article).toContainText('Skeleton Screens');
-    await expect(article).toContainText('WCAG AA');
+    await expect(article).toContainText('معيار WCAG المناسب');
     await expect(article).toContainText('44 CSS px قيمة راحة اختيارية وليست شرطاً عاماً لكل عنصر');
 
     // PROMPT 15 section

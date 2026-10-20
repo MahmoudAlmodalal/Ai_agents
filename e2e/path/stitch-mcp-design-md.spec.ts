@@ -130,7 +130,7 @@ test.describe('Sequential Project Path - Ticket 10: Stitch MCP & DESIGN.md (Topi
     // Content: Concrete DESIGN.md template with YAML tokens
     await expect(content).toContainText('نموذج تعليمي لملف DESIGN.md');
     await expect(content).toContainText('#059669');
-    await expect(content).toContainText('WCAG AA');
+    await expect(content).toContainText('معيار WCAG المناسب');
     await expect(content).toContainText('Tajawal');
     await expect(content).toContainText('RTL First');
 
