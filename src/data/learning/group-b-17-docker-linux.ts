@@ -4,6 +4,7 @@ import {
   buildGroupB,
   proposedApproval,
 } from '@/src/data/learning/group-b-base.ts';
+import { recordIndependentTopicReview } from '@/src/data/learning/group-b-16-19-independent-review.ts';
 
 export const QUESTION_IDS_GROUP_B_17: Record<string, [string, string]> = {
   'docker-container-workflow': ['container-needed-decision', 'runtime-secret-injection'],
@@ -81,6 +82,16 @@ export const TOPIC_DRAFTS_GROUP_B_17: Record<string, TopicDraft> = {
     reviewNote: 'راجع المؤلف التفريق بين Linux مُدار ويدوي، وميّز فحص القراءة من تغيير الملكية. المثال لا يوجه إلى تنفيذ أمر إداري قبل الإذن وخطة الرجوع.',
   },
 };
+
+const INDEPENDENT_REVIEW_NOTES_GROUP_B_17: Record<string, string> = {
+  'docker-container-workflow': 'قرأت الفرق بين الصورة والحاوية والبناء المُدار، ومتى يلزم Docker، ثم راجعت توافق أمثلة Python/Next.js وسياق البناء وحماية الأسرار وهوية التشغيل. container-decision وcontainer-runtime-evidence يقدمان مدخلاً إلى فحص حدود مسؤولية Linux. البناء والتشغيل لم ينفذا على مشروع متعلم.',
+  'linux-server-operations': 'راجعت التمييز بين مضيف مُدار وخادم يديره المتعلم، ودلالات هوية العملية وrwx وأقل صلاحية، مع حصر أوامر التغيير في خطة لا في تنفيذ إنتاجي. linux-ownership وlinux-change-plan ينتقلان إلى runbook مع خيار توثيق التجاوز عندما لا يملك المتعلم صلاحية المضيف.',
+};
+
+recordIndependentTopicReview(TOPIC_DRAFTS_GROUP_B_17, INDEPENDENT_REVIEW_NOTES_GROUP_B_17,
+  'راجعت السؤالين والخيارات ومفتاح كل إجابة والتعليل مقابل الهدف والمحتوى؛ لا يوجد مفتاح ملتبس أو تشجيع لتجاوز حدود مسؤولية المضيف أو كشف الأسرار. سياسة النقاط المقبولة في issue #70 تمنح نقطة للصحيح وصفر للخطأ أو غير المجاب، مع محاولات غير محدودة وتفسير بعد الإرسال وحفظ كل المحاولات بإصدارات السؤال والسياسة. هذا لا يثبت إتقان المتعلم.',
+  'راجعت المخرجين ومطابقة كل معيار لمخرجه وسؤال الدليل. سياسة التقييم العملي المقبولة في issue #70 ذاتية بثلاثة مستويات وبلا حد إتقان أو تحقق مستقل للصحة.',
+);
 
 export const LEARNING_CONTENT_GROUP_B_17: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_17, QUESTION_IDS_GROUP_B_17, VIDEO_CANDIDATES_GROUP_B_17);

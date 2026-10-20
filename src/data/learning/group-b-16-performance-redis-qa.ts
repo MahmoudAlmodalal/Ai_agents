@@ -4,6 +4,7 @@ import {
   buildGroupB,
   proposedApproval,
 } from '@/src/data/learning/group-b-base.ts';
+import { recordIndependentTopicReview } from '@/src/data/learning/group-b-16-19-independent-review.ts';
 
 export const QUESTION_IDS_GROUP_B_16: Record<string, [string, string]> = {
   'database-performance-engineering': ['measure-before-index', 'plan-vs-latency-evidence'],
@@ -52,7 +53,7 @@ export const TOPIC_DRAFTS_GROUP_B_16: Record<string, TopicDraft> = {
       { id: 'one-change', instruction: 'جرّب تحسينا واحداً في test وقارن الخطة والزمن والصفوف.', expectedOutput: 'جدول قبل/بعد مع كلفة الكتابة والتخزين؛ القياس غير المنفذ Not Run.' },
       { id: 'decision', instruction: 'وثق سبب اعتماد/رفض التغيير وmigration إن لزم.', expectedOutput: 'قرار مرتبط بقياس دون تعديل قاعدة إنتاج.' },
     ],
-    workedExample: { id: 'query-plan-record', title: 'خطة قراءة', context: 'استعلام dev يفلتر status ويرتب created_at.', result: 'تسجل environment=test وحجم العلاقة والخطة. يمكن إبقاء sequential scan إذا الجدول صغير؛ لا يدعى فرق أداء قبل إعادة القياس.', caseStudy: 'learner-project' },
+    workedExample: { id: 'query-plan-record', title: 'خطة قراءة', context: 'استعلام test يفلتر status ويرتب created_at.', result: 'تسجل environment=test وحجم العلاقة والخطة. يمكن إبقاء sequential scan إذا الجدول صغير؛ لا يدعى فرق أداء قبل إعادة القياس.', caseStudy: 'learner-project' },
     questions: [
       { objective: 1, prompt: 'ما الذي يسبق إنشاء فهرس؟', options: ['ملاحظة استعلام وخطة/قياس مناسب.', 'فهرس كل عمود.', 'نقل البيانات إلى Redis.'], correct: 0, explanation: 'القياس يحدد المشكلة والفهرس له كلفة.' },
       { objective: 2, prompt: 'Index Scan في plan يثبت ماذا؟', options: ['أن query أسرع دائماً.', 'أن الخطة استخدمت فهرساً؛ يلزم قياس سياقي للمقارنة.', 'أن الصيانة لم تعد لازمة.'], correct: 1, explanation: 'نوع الخطة وحده لا يثبت زمن المستخدم أو تحسناً.' },
@@ -116,5 +117,19 @@ export const TOPIC_DRAFTS_GROUP_B_16: Record<string, TopicDraft> = {
   },
 };
 
+const INDEPENDENT_REVIEW_NOTES_GROUP_B_16: Record<string, string> = {
+  'database-performance-engineering': 'قرأت هدف القياس المتكرر ومقاطع خط الأساس وN+1 والفهرس والتزامن والتقرير. المثال الآن يطابق بيئة test في سياقه ونتيجته. db-baseline وdb-change يقدمان سياقاً وقرار مفاضلة واضحين ويغذيان قرار Redis التالي. الأمثلة توضيحية؛ لم ينفذ قياس على مشروع متعلم.',
+  'redis-optional-infrastructure': 'راجعت مساري cache والمهام الخلفية بوصف Redis اختياراً مشروطاً، مع مصدر حقيقة وTTL والإبطال والخصوصية وسلوك التعطل. خيار التأجيل مخرج صالح عند غياب دليل حاجة. redis-decision وcache-policy يستهلكهما موضوع QA؛ لم تشغّل خدمة Redis أو فحوصها هنا.',
+  'integrated-project-qa': 'راجعت ربط المتطلب بالفحص والدليل، وتغطية التصميم والتجاوب والوصولية والتكامل وإعادة الفحص. المثال يفصل فحص API عن مراجعة الواجهة التي تبقى Not Run، ومخرجا qa-matrix وqa-gaps ينتقلان إلى قرارات التشغيل دون ادعاء مرور فحوص فعلية.',
+};
+
+recordIndependentTopicReview(TOPIC_DRAFTS_GROUP_B_16, INDEPENDENT_REVIEW_NOTES_GROUP_B_16,
+  'راجعت السؤالين والخيارات ومفتاح كل إجابة والتعليل مقابل الهدف والمحتوى؛ لا يوجد مفتاح ملتبس أو ادعاء يتجاوز الدرس. سياسة النقاط المقبولة في issue #70 تمنح نقطة للصحيح وصفر للخطأ أو غير المجاب، مع محاولات غير محدودة وتفسير بعد الإرسال وحفظ كل المحاولات بإصدارات السؤال والسياسة. هذا لا يثبت إتقان المتعلم.',
+  'راجعت المخرجين ومطابقة كل معيار لمخرجه وسؤال الدليل. سياسة التقييم العملي المقبولة في issue #70 ذاتية بثلاثة مستويات وبلا حد إتقان أو تحقق مستقل للصحة.',
+);
+
 export const LEARNING_CONTENT_GROUP_B_16: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_16, QUESTION_IDS_GROUP_B_16, VIDEO_CANDIDATES_GROUP_B_16);
+
+// Topic 47's corrected worked-example environment requires fresh offline copies.
+LEARNING_CONTENT_GROUP_B_16['database-performance-engineering'].contentVersion = 2;

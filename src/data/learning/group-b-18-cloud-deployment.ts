@@ -4,6 +4,7 @@ import {
   buildGroupB,
   proposedApproval,
 } from '@/src/data/learning/group-b-base.ts';
+import { recordIndependentTopicReview } from '@/src/data/learning/group-b-16-19-independent-review.ts';
 
 export const QUESTION_IDS_GROUP_B_18: Record<string, [string, string]> = {
   'vercel-frontend-deployment': ['public-vs-runtime-env', 'preview-scope'],
@@ -115,6 +116,17 @@ export const TOPIC_DRAFTS_GROUP_B_18: Record<string, TopicDraft> = {
     reviewNote: 'راجع المؤلف فصل API/DB عن الواجهة وسلامة migrations ومصدر الأسرار. المثال يصرح بوضوح أن hostname تجريبي وأن التحقق لم يحدث.',
   },
 };
+
+const INDEPENDENT_REVIEW_NOTES_GROUP_B_18: Record<string, string> = {
+  'vercel-frontend-deployment': 'راجعت ربط repo وإعدادات build/runtime/env بمرجع فعلي، وفصل preview للواجهة عن نشر API/DB. المثال يصرح أن المسارات المبينة وبيانات fixtures لا تثبت خدمة خلفية أو production؛ vercel-config-record وvercel-preview-evidence يغذيان المقارنة أو runbook التاليين.',
+  'netlify-frontend-deployment': 'راجعت اشتراط مطابقة وثائق Netlify الحالية لإطار ونسخة المشروع، وتسجيل build settings دون افتراض دعم، وفصل preview للواجهة عن API. netlify-compatibility-record وnetlify-preview-report يوضحان المصدر والتاريخ والقيود؛ أي صلاحية مجهولة تبقى غير متحققة.',
+  'backend-database-deployment': 'راجعت خريطة frontend/API/DB ومصدر الأسرار، وبيئة staging للترحيل وفصل health عن auth وملكية البيانات وفحص DB. العنوان في المثال موسوم توضيحياً والفحوص/النسخ لم تنفذ. backend-topology وbackend-smoke-report يغذيان runbook.',
+};
+
+recordIndependentTopicReview(TOPIC_DRAFTS_GROUP_B_18, INDEPENDENT_REVIEW_NOTES_GROUP_B_18,
+  'راجعت السؤالين والخيارات ومفتاح كل إجابة والتعليل مقابل الهدف والمحتوى؛ الإجابات تفصل بين دليل preview/health وبين خدمة backend أو بيانات غير مفحوصة. سياسة النقاط المقبولة في issue #70 تمنح نقطة للصحيح وصفر للخطأ أو غير المجاب، مع محاولات غير محدودة وتفسير بعد الإرسال وحفظ كل المحاولات بإصدارات السؤال والسياسة. هذا لا يثبت إتقان المتعلم.',
+  'راجعت المخرجين ومطابقة كل معيار لمخرجه وسؤال الدليل. سياسة التقييم العملي المقبولة في issue #70 ذاتية بثلاثة مستويات وبلا حد إتقان أو تحقق مستقل للصحة.',
+);
 
 export const LEARNING_CONTENT_GROUP_B_18: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_18, QUESTION_IDS_GROUP_B_18, VIDEO_CANDIDATES_GROUP_B_18);

@@ -4,6 +4,7 @@ import {
   buildGroupB,
   proposedApproval,
 } from '@/src/data/learning/group-b-base.ts';
+import { recordIndependentTopicReview } from '@/src/data/learning/group-b-16-19-independent-review.ts';
 
 export const QUESTION_IDS_GROUP_B_19: Record<string, [string, string]> = {
   'project-operations-runbook': ['backup-vs-restore-drill', 'application-rollback-vs-schema'],
@@ -71,7 +72,7 @@ export const TOPIC_DRAFTS_GROUP_B_19: Record<string, TopicDraft> = {
       { id: 'capability-evidence', outputId: 'operations-capabilities', name: 'قدرة بدليل', description: 'كل ادعاء تشغيل مرتبط بصفحة/إعداد ومصنف بصدق.', evidencePrompt: 'أرفق قدرة واحدة ومصدرها وما بقي غير متحقق.' },
       { id: 'data-application-separation', outputId: 'restore-rollback-plan', name: 'فصل الإجراءين', description: 'الرجوع للكود لا يوصف باستعادة قاعدة البيانات.', evidencePrompt: 'أشر إلى خطوة تطبيق وخطوة بيانات وشرط كل منهما.' },
     ],
-    reviewNote: 'راجع المؤلف حالات القدرة الأربع وفصل rollback عن restore. الدليل التعليمي يتطلب اختباراً خارج الإنتاج أو يسجل Not Run صريحاً؛ قبول المالك ما زال مطلوباً.',
+    reviewNote: 'راجع المؤلف حالات القدرة الأربع وفصل rollback عن restore. الدليل التعليمي يتطلب اختباراً خارج الإنتاج أو يسجل Not Run صريحاً؛ قبول المجموعة النهائي ما زال مطلوباً.',
   },
   'project-handoff-package': {
     slug: 'project-handoff-package',
@@ -149,6 +150,18 @@ export const TOPIC_DRAFTS_GROUP_B_19: Record<string, TopicDraft> = {
     reviewNote: 'راجع المؤلف الفرق بين مساهمة شخصية وأثر منتج، واشتراط خط أساس ووسيلة قياس لأي نسبة. المثال prototype توضيحي وليس سيرة أو إنجازاً فعلياً.',
   },
 };
+
+const INDEPENDENT_REVIEW_NOTES_GROUP_B_19: Record<string, string> = {
+  'project-operations-runbook': 'راجعت توثيق قدرات الاستضافة مع المصدر والحالة والمالك، والفصل الصريح بين تراجع التطبيق واستعادة DB وتوافق migration. المثال يترك النسخ غير معلوم وتمرين الاستعادة Not Run؛ operations-capabilities وrestore-rollback-plan يغذيان فهرس handoff.',
+  'project-handoff-package': 'راجعت نقطة بدء README والفهرس والروابط والنسخ، وربط حالة QA بالcommit والبيئة والأمر والتاريخ، مع وسم placeholder كبيان توضيحي لا كاختبار فعلي. handoff-index وhandoff-evidence يوفران مدخلات قابلة للتتبع لمشهد Demo Day.',
+  'project-demo-day': 'راجعت ترتيب قصة المشكلة والرحلة والقرار والقيود، وتمييز live عن mock أو تسجيل fallback، وربط كل ادعاء بمصدر. المثال لا يزعم استخداماً حقيقياً أو رضا مقاساً؛ demo-script وdemo-readiness يغذيان بطاقة المحفظة.',
+  'project-portfolio-entry': 'راجعت فصل مساهمة الفرد عن الفريق ومساعدة الأدوات، والتحقق من الروابط والخصوصية، واشتراط baseline/source/sample/method للادعاء الرقمي أو التصريح بعدم القياس. المثال موسوم كنموذج أولي توضيحي، لا خبرة فعلية.',
+};
+
+recordIndependentTopicReview(TOPIC_DRAFTS_GROUP_B_19, INDEPENDENT_REVIEW_NOTES_GROUP_B_19,
+  'راجعت السؤالين والخيارات ومفتاح كل إجابة والتعليل مقابل الهدف والمحتوى؛ الأجوبة تميز بين ادعاء مدعوم وآخر غير مختبر أو غير مقاس. سياسة النقاط المقبولة في issue #70 تمنح نقطة للصحيح وصفر للخطأ أو غير المجاب، مع محاولات غير محدودة وتفسير بعد الإرسال وحفظ كل المحاولات بإصدارات السؤال والسياسة. هذا لا يثبت إتقان المتعلم.',
+  'راجعت المخرجين ومطابقة كل معيار لمخرجه وسؤال الدليل. سياسة التقييم العملي المقبولة في issue #70 ذاتية بثلاثة مستويات وبلا حد إتقان أو تحقق مستقل للصحة.',
+);
 
 export const LEARNING_CONTENT_GROUP_B_19: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_19, QUESTION_IDS_GROUP_B_19, VIDEO_CANDIDATES_GROUP_B_19);
