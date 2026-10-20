@@ -71,6 +71,12 @@ test.describe('Issue #70 production-build learner journey', () => {
     const landing = await page.goto('/');
     expect(landing?.status()).toBe(200);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await page.setViewportSize({ width: 390, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const landingScreenshot = testInfo.outputPath('landing-390.png');
+    await page.screenshot({ path: landingScreenshot });
+    await testInfo.attach('landing-390.png', { path: landingScreenshot, contentType: 'image/png' });
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.getByRole('banner').getByRole('button', { name: /عرض المزيد من أقسام Ai_agents/ }).click();
     await page.getByRole('banner').getByRole('link', { name: 'خارطة تنفيذ المشروع', exact: true }).click();
     await expect(page).toHaveURL(/\/start#project-path$/);
@@ -87,6 +93,9 @@ test.describe('Issue #70 production-build learner journey', () => {
     await expect(page.locator('header.learning-reader-header')).toContainText('حالة التحسين:');
     await expect(page.getByText(/جميع المواضيع متاحة ويمكنك دراسة أي موضوع مباشرة/)).toBeVisible();
     await expect(page.locator('article').first()).toBeVisible();
+    const readerScreenshot = testInfo.outputPath('reader-1280.png');
+    await page.screenshot({ path: readerScreenshot });
+    await testInfo.attach('reader-1280.png', { path: readerScreenshot, contentType: 'image/png' });
     console.log('Automated journey step passed: landing → roadmap → Topic 38; 58 distinct Topic links are available.');
 
     const activities = page.locator('.learning-activities');
