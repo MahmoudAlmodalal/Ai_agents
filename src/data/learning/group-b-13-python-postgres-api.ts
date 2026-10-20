@@ -75,7 +75,7 @@ export const TOPIC_DRAFTS_GROUP_B_13: Record<string, TopicDraft> = {
     practicalSteps: [
       { id: 'dev-db', instruction: 'وثق طريقة تشغيل قاعدة تطوير وإصدارها ومتطلبات الاتصال.', expectedOutput: 'docs/POSTGRES_SETUP.md يصف البيئة والمتغيرات بالاسم فقط.' },
       { id: 'least-privilege', instruction: 'حدد دور تطبيق بالامتيازات اللازمة واترك الإدارة منفصلة.', expectedOutput: 'جدول دور/امتيازات بلا كلمة مرور محفوظة في Git.' },
-      { id: 'verify-schema', instruction: 'سجل حالة SELECT 1 ببيئة التطوير وطابق حدود التخطيط مع التنفيذ. لا تطبق migration هنا؛ أجّلها حتى اختيار Django/FastAPI وإعداد ORM في الموضوع 41 أو 42.', expectedOutput: 'نتيجة SELECT 1 الفعلية أو Not Run؛ migration=Deferred حتى اختيار الإطار/ORM ووجود models، لا migration=applied.' },
+      { id: 'verify-schema', instruction: 'سجل حالة SELECT 1 في بيئة التطوير وطابق حدود التخطيط مع التنفيذ. هذا يفحص الاتصال فقط، ولا يثبت وجود المخطط أو مطابقته. لا تطبق migration هنا؛ أجّلها حتى اختيار Django/FastAPI وإعداد ORM في الموضوع 41 أو 42.', expectedOutput: 'نتيجة SELECT 1 الفعلية أو Not Run؛ migration=Deferred حتى اختيار الإطار/ORM ووجود models، لا migration=applied.' },
     ],
     workedExample: { id: 'postgres-check', title: 'قالب سجل اتصال', context: 'توثيق إعداد قاعدة تطوير؛ لا يتضمن هذا المثال تنفيذ أمر أو تطبيق مخطط.', result: 'Environment=not-recorded; SELECT 1=Not Run; migration=Deferred until ORM/models are selected in topic 41 or 42. Production connectivity and restore drill=Not Run.', caseStudy: 'learner-project' },
     questions: [
@@ -94,7 +94,7 @@ export const TOPIC_DRAFTS_GROUP_B_13: Record<string, TopicDraft> = {
     objectives: ['حوّل رحلة مستخدم إلى عقد API يحدد المورد والطلب والاستجابة والأخطاء.', 'افصل حدود HTTP عن قواعد العمل واربط كل قاعدة بمصدر متطلبات.'],
     sections: [
       { id: 'inputs', heading: 'العقد يسبق route', body: 'المدخل PRD/SRS وERD ورحلة المستخدم، ومخرجا الموضوع 39 pg-setup وpg-check بحدود اتصال وتخطيط قاعدة التطوير وحالة SELECT 1 أو Not Run. استخدم هذه المعلومات لتحديد قيود التخزين ذات الصلة فقط؛ لا تفترض أن migration طُبقت. ثبت method/path/request/response/auth/errors. لا تنسخ قاعدة أو دور BorrowHub إلى مشروع الطالب ما لم تنص وثائقه عليه.' },
-      { id: 'example', heading: 'مثال محلول: إنشاء مورد', body: 'POST /api/items يستقبل name وcategoryId؛ النجاح 201 مع id؛ قيمة غير صالحة تعيد خطأ منظماً. قواعد pagination أو idempotency تدخل فقط إذا تطلبها المصدر.' },
+      { id: 'example', heading: 'مثال توضيحي: عقد إنشاء مورد', body: 'في عقد توضيحي، POST /api/items يستقبل name وcategoryId؛ استخدم 201 مع id فقط إذا نص عليه عقد مشروعك، واجعل خطأ القيمة غير الصالحة مطابقاً للحالة والجسم المحددين فيه. قواعد pagination أو idempotency تدخل فقط إذا تطلبها المصدر.' },
       { id: 'exercise', heading: 'برومبت ومخرج', body: 'برومبت: «استخرج endpoints من هذه الرحلة، واذكر method/path/request/response/errors/auth ومصدر كل قاعدة. أظهر التعارضات كأسئلة ولا تختر إطاراً». العقد يغذي اختيار Django أو FastAPI.' },
     ],
     practicalSteps: [
@@ -102,7 +102,7 @@ export const TOPIC_DRAFTS_GROUP_B_13: Record<string, TopicDraft> = {
       { id: 'write-contract', instruction: 'اكتب عقد OpenAPI أو docs/API_CONTRACTS.md مع نجاح وفشل.', expectedOutput: 'العقد يوضح الحقول ورموز الحالات والتحقق والمصادقة إن لزمت.' },
       { id: 'layers', instruction: 'ارسم route/controller → service → persistence وسم ما لم ينفذ.', expectedOutput: 'مخطط طلب لا يخفي قواعد عمل داخل طبقة HTTP.' },
     ],
-    workedExample: { id: 'create-item-api', title: 'عقد إنشاء', context: 'عميل مصرح يضيف عنصراً إلى مشروعه.', result: 'Request {name, categoryId}; success 201 {id,name}; validation 400 {code:"invalid_input"}. التنفيذ الفعلي لاحق.', caseStudy: 'learner-project' },
+    workedExample: { id: 'create-item-api', title: 'عقد إنشاء توضيحي', context: 'مثال تعليمي لعميل مصرح يضيف عنصراً إلى مشروعه؛ الحالة الفعلية يحددها عقد المشروع.', result: 'Request {name, categoryId}; success 201 {id,name} only if the project contract specifies 201; validation uses the contract-defined status and body. التنفيذ الفعلي لاحق.', caseStudy: 'learner-project' },
     questions: [
       { objective: 1, prompt: 'ما الذي يجعل عقد API قابلاً للتنفيذ؟', options: ['اسم route فقط.', 'method وحقول الطلب والاستجابة والحالات.', 'اسم framework.'], correct: 1, explanation: 'العقد يحدد الرسائل والنتائج التي يتفق عليها الطرفان.' },
       { objective: 2, prompt: 'مثال BorrowHub يحدد سقفاً غير موجود في مشروعك. ماذا تفعل؟', options: ['تنسخه.', 'تتركه خارج العقد أو تفتحه كسؤال.', 'تطبقه في الواجهة وحدها.'], correct: 1, explanation: 'BorrowHub اختياري؛ لا يصبح شرطاً للمشروع إلا إذا كان ضمن متطلباته المعتمدة.' },
@@ -118,3 +118,6 @@ export const TOPIC_DRAFTS_GROUP_B_13: Record<string, TopicDraft> = {
 
 export const LEARNING_CONTENT_GROUP_B_13: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_13, QUESTION_IDS_GROUP_B_13, VIDEO_CANDIDATES_GROUP_B_13);
+
+LEARNING_CONTENT_GROUP_B_13['postgresql-database-setup'].contentVersion = 2;
+LEARNING_CONTENT_GROUP_B_13['backend-architecture-api-contracts'].contentVersion = 2;

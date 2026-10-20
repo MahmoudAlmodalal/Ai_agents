@@ -68,7 +68,7 @@ export const TOPIC_DRAFTS_GROUP_B_15: Record<string, TopicDraft> = {
       { id: 'success-failure', instruction: 'نفذ success وvalidation/network failure ببيانات test ثابتة.', expectedOutput: 'تغطية UI/HTTP بأسماء source واضحة؛ الفشل لا يمر كنجاح.' },
       { id: 'run-record', instruction: 'سجل الأمر والمتصفح والبيئة والوقت والنتائج الفعلية.', expectedOutput: 'Passed/Failed/Not Run لكل حالة مع طريقة إعادة إنتاج.' },
     ],
-    workedExample: { id: 'journey-example', title: 'إنشاء وقراءة', context: 'E2E لمستخدم تجريبي في test أو staging.', result: 'Given empty catalog → submit valid item → 201 → visible list; submit invalid name → validation message; cleanup removes only fixture created by test.', caseStudy: 'learner-project' },
+    workedExample: { id: 'journey-example', title: 'إنشاء وقراءة', context: 'مثال توضيحي لرحلة متصفح بمستخدم تجريبي في test أو staging؛ لم تُشغّل هذه العينة.', result: 'Given an empty catalog → submit a valid item → receive the success status defined by the project contract (for example, 201 only when the contract specifies it) → show the item; submit an invalid name → show the contract-defined validation message; cleanup removes only the fixture created by the test.', caseStudy: 'learner-project' },
     questions: [
       { objective: 1, prompt: 'الرحلة تستخدم mock لـ API. ما الذي تثبته؟', options: ['تكامل DB حقيقي.', 'سلوك الواجهة مع response mock المحدد.', 'أداء الإنتاج.'], correct: 1, explanation: 'المحاكاة تغطي حدها فقط؛ يجب تسمية ما لم يدخل.' },
       { objective: 2, prompt: 'كيف تجعل الرحلة قابلة للإعادة؟', options: ['تعتمد على بيانات اختبار سابق.', 'تهيئ fixtures وتعزلها وتنظف ما أنشأته.', 'تستخدم بيانات أشخاص حقيقية.'], correct: 1, explanation: 'التهيئة والتنظيف يمنعان الاعتماد على ترتيب التشغيل ويحميان البيانات.' },
@@ -84,3 +84,5 @@ export const TOPIC_DRAFTS_GROUP_B_15: Record<string, TopicDraft> = {
 
 export const LEARNING_CONTENT_GROUP_B_15: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_15, QUESTION_IDS_GROUP_B_15, VIDEO_CANDIDATES_GROUP_B_15);
+
+LEARNING_CONTENT_GROUP_B_15['full-stack-journey-testing'].contentVersion = 2;

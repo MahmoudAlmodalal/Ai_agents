@@ -57,9 +57,9 @@ export const TOPIC_DRAFTS_GROUP_B_14: Record<string, TopicDraft> = {
       { id: 'exercise', heading: 'برومبت مراجعة migration', body: 'برومبت: «طابق models مع ERD والقيود. أنشئ migration وافحص أثرها وrollback في dev؛ لا تطبقها على الإنتاج». الناتج يغذي المصادقة في الموضوع 43.' },
     ],
     practicalSteps: [
-      { id: 'choose-framework', instruction: 'سجل اختيار Django أو FastAPI وسبباً؛ إذا اخترت Django تجاوز بناء FastAPI.', expectedOutput: 'docs/BACKEND_FRAMEWORK_DECISION.md يذكر الإطار والبديل الذي لم ينفذ.' },
-      { id: 'models', instruction: 'أنشئ models من الكيانات والعلاقات والقيود المعتمدة.', expectedOutput: 'نماذج تتبع ERD مع كل اختلاف كقرار أو سؤال.' },
-      { id: 'migration', instruction: 'ولّد migration وراجعها على قاعدة تطوير قبل التطبيق.', expectedOutput: 'ملف migration ونتيجة أمر الفحص؛ الإنتاج Not Run.' },
+      { id: 'choose-framework', instruction: 'سجل اختيار Django أو FastAPI وسببه في docs/BACKEND_FRAMEWORK_DECISION.md؛ إذا لم تحسمه، دوّن ذلك كسؤال مفتوح ولا تدّع تنفيذ فرع. إذا اخترت FastAPI، علّم مخرجات Django هنا بأنها Not Applicable وانتقل إلى الموضوع 42؛ وإذا اخترت Django، استخدم هذا الفرع وتجاوز تنفيذ FastAPI.', expectedOutput: 'docs/BACKEND_FRAMEWORK_DECISION.md يذكر الإطار والبديل الذي لم ينفذ, أو يوسم الاختيار بأنه غير محسوم مع السؤال المفتوح. مخرجات الفرع غير المختار تظهر كـ Not Applicable.' },
+      { id: 'models', instruction: 'إذا كان Django هو الإطار المختار، أنشئ models من الكيانات والعلاقات والقيود المعتمدة؛ إذا اخترت FastAPI فسجل هذه الخطوة Not Applicable، وإذا ظل الاختيار غير محسوم فسجل Not Run.', expectedOutput: 'في فرع Django: نماذج تتبع ERD مع كل اختلاف كقرار أو سؤال. في فرع FastAPI: Not Applicable، واستخدم api-schemas من الموضوع 42. إذا لم يُحسم الإطار: Not Run.' },
+      { id: 'migration', instruction: 'إذا كان Django هو الإطار المختار، ولّد migration وراجعها على قاعدة تطوير قبل التطبيق؛ إذا اخترت FastAPI فسجل هذه الخطوة Not Applicable، وإذا ظل الاختيار غير محسوم فسجل Not Run.', expectedOutput: 'في فرع Django: ملف migration ونتيجة أمر الفحص؛ الإنتاج Not Run. في فرع FastAPI: Not Applicable، واستخدم alembic-record من الموضوع 42. إذا لم يُحسم الإطار: Not Run.' },
     ],
     workedExample: { id: 'django-migration', title: 'مراجعة حقل جديد', context: 'إضافة category_id إلى نموذج.', result: 'افحص هل الحقل nullable أو يحتاج تعبئة أولاً، ثم راجع upgrade/reverse قبل تطبيقه على dev.', caseStudy: 'learner-project' },
     questions: [
@@ -82,9 +82,9 @@ export const TOPIC_DRAFTS_GROUP_B_14: Record<string, TopicDraft> = {
       { id: 'exercise', heading: 'برومبت ومخرج', body: 'برومبت: «راجع فصل schema/ORM وربط Alembic metadata. اعرض migration وفرق الترقية والتراجع، ولا تطبقها حتى تفحص dev». الناتج يهيئ auth الموحد.' },
     ],
     practicalSteps: [
-      { id: 'schemas', instruction: 'أنشئ request وresponse منفصلين عن ORM واختبر قيمة طلب غير صالحة.', expectedOutput: 'مخططان يوضحان حقول الإدخال والمخرج؛ لا يتسرب internal field.' },
-      { id: 'session', instruction: 'حدد دورة session عبر dependency؛ استخدم async فقط مع driver مناسب.', expectedOutput: 'اختبار/مخطط يوضح فتح الجلسة وإغلاقها لكل طلب.' },
-      { id: 'alembic', instruction: 'اربط metadata وولّد migration تجريبية وافحص upgrade/downgrade على dev.', expectedOutput: 'رأس Alembic ونتيجة تطبيق على dev؛ الإنتاج لم يتغير.' },
+      { id: 'schemas', instruction: 'استخدم docs/BACKEND_FRAMEWORK_DECISION.md إن وُجد؛ إذا لم يوجد أو كان الاختيار غير محسوم، حدّد اختياراً هنا أو دوّن السؤال المفتوح في الملف نفسه، ولا تجعل غياب الملف حاجزاً لدراسة الموضوع. إذا كان FastAPI هو المختار، أنشئ request وresponse منفصلين عن ORM واختبر قيمة غير صالحة؛ وإلا فسجّل مخرجات هذا الفرع Not Applicable عند اختيار Django أو Not Run عند بقاء الاختيار مفتوحاً.', expectedOutput: 'في فرع FastAPI: مخططان يوضحان حقول الإدخال والمخرج؛ لا يتسرب internal field. في فرع Django: Not Applicable، واستخدم django-models من الموضوع 41. إذا لم يُحسم الاختيار: السؤال مسجل وNot Run.' },
+      { id: 'session', instruction: 'إذا كان FastAPI هو الإطار المختار، حدد دورة session عبر dependency؛ استخدم async فقط مع driver مناسب. إذا اخترت Django فسجل الخطوة Not Applicable، وإذا لم تحسم الاختيار فسجل Not Run.', expectedOutput: 'في فرع FastAPI: اختبار/مخطط يوضح فتح الجلسة وإغلاقها لكل طلب. في فرع Django: Not Applicable. إذا لم يُحسم الإطار: Not Run.' },
+      { id: 'alembic', instruction: 'إذا كان FastAPI هو الإطار المختار، اربط metadata وولّد migration تجريبية وافحص upgrade/downgrade على dev. إذا اخترت Django فسجل الخطوة Not Applicable، وإذا لم تحسم الاختيار فسجل Not Run.', expectedOutput: 'في فرع FastAPI: رأس Alembic ونتيجة تطبيق على dev؛ الإنتاج لم يتغير. في فرع Django: Not Applicable، واستخدم django-migration من الموضوع 41. إذا لم يُحسم الإطار: Not Run.' },
     ],
     workedExample: { id: 'fastapi-schema-example', title: 'إنشاء عنصر', context: 'العميل يحتاج id/name ولا يحتاج internal_note.', result: 'CreateItemRequest → SQLAlchemy Item → ItemResponse(id,name).', caseStudy: 'learner-project' },
     questions: [
@@ -152,3 +152,6 @@ export const TOPIC_DRAFTS_GROUP_B_14: Record<string, TopicDraft> = {
 
 export const LEARNING_CONTENT_GROUP_B_14: Record<string, TopicLearningContent> =
   buildGroupB(TOPIC_DRAFTS_GROUP_B_14, QUESTION_IDS_GROUP_B_14, VIDEO_CANDIDATES_GROUP_B_14);
+
+LEARNING_CONTENT_GROUP_B_14['django-backend'].contentVersion = 2;
+LEARNING_CONTENT_GROUP_B_14['fastapi-backend'].contentVersion = 2;

@@ -1,15 +1,26 @@
 # Issue #62: Frontend planning and Spec Kit — author review evidence
 
 **Recorded:** 2026-10-20
-**Implementation:** complete draft in `src/data/learning/group-b.ts` for the 4 canonical Topics.
-**Educational author review:** lesson, question, and rubric records carry a specific Curriculum B author review. Each record remains `review-ready`.
-**Release decision:** blocked pending course-owner template/scoring/rubric/video acceptance. No owner approval is recorded. Candidate videos are not approved; playback, captions, accessibility, and user-facing availability remain Not Run.
+**Implementation:** `src/data/learning/group-b-12-frontend-planning-spec-kit.ts` supplies the draft for the 4 canonical Topics; the original reader lessons remain in the matching wave2/wave3 topic file.
+**Educational review state:** authored lesson/question/rubric records remain `review-ready`. The independent static lesson-flow review below passed for the complete group; it does not claim execution of learner tasks.
+**Course-owner decisions:** DEC-70 v2 accepted the 19-group membership and lesson template, quiz policy, and descriptive self-assessment policy on 2026-10-20. This is not group-specific release acceptance. The course owner deferred individual video approval until human review of lesson fit, playback, captions, and accessibility. Candidate videos remain `candidate` with `proposed` approval; those human checks are Not Run. No Topic is marked approved and this group is not announced as improved.
 
 **Independent narrow assessment review:** root passed all 58 B question/key/rationale and artifact-bound criterion/output references on 2026-10-20; see [scope and limits](group-b-narrow-review-2026-10-20.md).
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
-The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+The broader output-to-input traceability review for Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). This packet adds an independent review of every owned Topic's inputs, all three authored practical steps and expected outputs, illustrative sample, and handoff. Learner execution and actual project outputs are Not Run; exact-candidate browser/accessibility journeys and per-video human review remain pending.
+
+## Independent lesson-flow re-review
+
+**Verdict:** Passed for authored lesson sequence and output/handoff coherence by static review on 2026-10-20. This verdict concerns the curriculum design only. The sample outputs below are illustrative examples checked for consistency; none was produced by running the learner project. Tool execution is Not Run.
+
+| Topic | Independent walkthrough finding | Result |
+|---|---|---|
+| `frontend-architecture-planning` | 3/3 steps: planning from approved requirements to route/component/data mapping; illustrative output records decisions and unknowns; handoff to UX review receives both map and task slice. | **Passed (static)**; learner execution **Not Run** |
+| `ui-ux-pro-max-review` | 3/3 steps: safe context, recommendation triage, then only reviewed changes; illustrative output keeps the established token and leaves the new color open; handoff to Spec Kit carries decisions and questions. | **Passed (static)**; learner execution **Not Run** |
+| `spec-kit-workflow` | 3/3 steps: spec, clarification, and traceable plan/tasks; illustrative local-draft example keeps cloud sync open; handoff to incremental implementation carries accepted scope and acceptance criteria. | **Passed (static)**; learner execution **Not Run** |
+| `frontend-incremental-implementation` | 3/3 steps: bounded slice, labeled fixture/API source, and recorded checks; illustrative detail flow separates fixture from later API work; handoff to Backend retains the slice and evidence. | **Passed (static)**; learner execution **Not Run** |
 
 ## `frontend-architecture-planning`
 
@@ -18,7 +29,7 @@ The current output-to-input traceability review for all Topics 30–58 is record
   - اختر رحلة واقطعها إلى مهام صغيرة تبدأ بسطح المستخدم وتنتهي بمخرج قابل للتجربة. → `قائمة مهام فيها empty/success states وقبول ملاحظ، لا مهمة واحدة بعنوان "ابن التطبيق".`
   - سجل الاختلاف بين PRD وERD أو الشاشة مع مصدر القرار المطلوب. → `docs/FRONTEND_OPEN_QUESTIONS.md يذكر السؤال والمراجع والمالك.`
 
-**Sample project output (worked example `route-map-example`):** خريطة قائمة موارد — المستندات تصف فهرساً وفتح سجل.
+**Illustrative sample output (worked example `route-map-example`):** خريطة قائمة موارد — المستندات تصف فهرساً وفتح سجل.
 
 ```text
 Route /equipment → SearchBar + EquipmentList؛ route /equipment/[id] → EquipmentDetail. الرابط يحمل id، وبقية الحقول مصدرها محدد في الخريطة.
@@ -30,7 +41,7 @@ Route /equipment → SearchBar + EquipmentList؛ route /equipment/[id] → Equip
   - `frontend-architecture-planning-requirement-conflict-source` (frontend-architecture-planning-objective-1): تختلف شاشة عن ERD في حقلين. ما الخطوة الأولى؟ — مفتاح frontend-architecture-planning-requirement-conflict-source-b; التعليل: الخطة تميز القرار من الافتراض، ولا تنشئ عقداً متعارضاً بالتخمين.
   - `frontend-architecture-planning-reviewable-task-boundary` (frontend-architecture-planning-objective-2): أي مهمة يسهل مراجعتها؟ — مفتاح frontend-architecture-planning-reviewable-task-boundary-b; التعليل: مهمة صغيرة ذات مدخل ونتيجة مرئية يمكن فحصها مستقلة.
 
-**Practical assessment:** scale `frontend-architecture-planning-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `frontend-architecture-planning-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `front-map`: خريطة route/component/data مرتبطة بمصادر المتطلبات.
   - `task-slice`: مهام عمودية صغيرة وأسئلة وأدلة قبول.
 
@@ -44,7 +55,7 @@ Criteria:
 
 **Resource evidence:** فهرس الدورة يسرد درس Architectural Requirements ومدته 7:44 وExercise 2: Architectural Requirements؛ صفحة التمرين تشرح استخراج المتطلبات المعمارية من مواصفة مشروع. صلة الخريطة/المهام جزئية، ولا تُعد موافقة قالب الدورة. لم يُختبر التشغيل أو captions أو الوصولية أو قبول المالك. [Publisher/source page](https://frontendatscale.com/courses/frontend-architecture/foundations/course-overview).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `ui-ux-pro-max-review`
 
@@ -53,7 +64,7 @@ Criteria:
   - صنف كل توصية: قبول أو رفض أو اختبار/قرار مطلوب. → `docs/UX_REVIEW_DECISIONS.md يربط التوصية بعنصر الشاشة والمتطلب.`
   - حوّل المقبول فقط إلى تغييرات بقبل/بعد ومعيار تحقق. → `تغييرات لا تحتوي توصيات غير محسومة ولا ادعاء امتثال غير مفحوص.`
 
-**Sample project output (worked example `ux-decision`):** فرز اقتراح لون ومساحة — أداة تقترح تكبير زر ثانوي وتغيير لونه.
+**Illustrative sample output (worked example `ux-decision`):** فرز اقتراح لون ومساحة — أداة تقترح تكبير زر ثانوي وتغيير لونه.
 
 ```text
 تكبير مساحة النقر مقبول لتسهيل اللمس؛ اللون الجديد ينتظر قراراً لأنه خارج DESIGN.md. يضاف فحص contrast قبل أي تغيير لون.
@@ -65,7 +76,7 @@ Criteria:
   - `ui-ux-pro-max-review-suggestion-vs-approved-system` (ui-ux-pro-max-review-objective-1): اقترحت الأداة لوناً غير موجود في DESIGN.md. ماذا تفعل؟ — مفتاح ui-ux-pro-max-review-suggestion-vs-approved-system-b; التعليل: المخرجات مقترحات؛ تغيير النظام قرار قابل للتتبع.
   - `ui-ux-pro-max-review-actionable-critique-evidence` (ui-ux-pro-max-review-objective-2): كيف تجعل ملاحظة "المسافة غير مريحة" قابلة للتنفيذ؟ — مفتاح ui-ux-pro-max-review-actionable-critique-evidence-a; التعليل: المراجع يحتاج موضعاً وسبباً وخطوة تحقق.
 
-**Practical assessment:** scale `ui-ux-pro-max-review-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `ui-ux-pro-max-review-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `ux-context`: سياق شاشة آمن يحدد المستخدم والمهمة والاتجاه والرموز.
   - `ux-decisions`: قرارات قبول/رفض وأسئلة مع دليل ومعيار فحص.
 
@@ -79,7 +90,7 @@ Criteria:
 
 **Resource evidence:** صفحة Figma الرسمية تسرد “How to use Figma agent in your design workflows” كدرس فيديو وتشرح أن agent يقدم نقداً ضمن طبقات التصميم والسياق وإرشادات الوصولية. المورد خاص بأداة Figma AI ولا يثبت جودة توصياتها أو تغطية اختبار المستخدم. التشغيل/captions/accessibility وموافقة المالك غير منفذة. [Publisher/source page](https://www.figma.com/solutions/ai-design-feedback-agent/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `spec-kit-workflow`
 
@@ -88,7 +99,7 @@ Criteria:
   - سجل أسئلة الأداة ومن يجيب عنها ولا تحول الافتراض إلى قاعدة صامتة. → `قائمة clarification لا تحتوي أسئلة حرجة مخفية داخل الخطة.`
   - راجع الخطة وقسمها لمهام صغيرة مع ملفات واختبار قبول. → `plan/tasks تربط كل مهمة بشرط من spec؛ لا تشمل تنفيذ الكود.`
 
-**Sample project output (worked example `local-draft-spec`):** مواصفة حفظ مسودة — عودة المتعلم للمسودة في المتصفح نفسه.
+**Illustrative sample output (worked example `local-draft-spec`):** مواصفة حفظ مسودة — عودة المتعلم للمسودة في المتصفح نفسه.
 
 ```text
 المواصفة تحدد الحقول والحفظ والاستعادة وفشل storage. سؤال مزامنة الأجهزة يبقى مفتوحاً؛ لا يضاف Backend دون قرار.
@@ -100,7 +111,7 @@ Criteria:
   - `spec-kit-workflow-scope-expansion-control` (spec-kit-workflow-objective-1): أضافت أداة التخطيط مزامنة سحابية لنطاق محلي. ما التصرف؟ — مفتاح spec-kit-workflow-scope-expansion-control-b; التعليل: الخطة لا تملك صلاحية توسيع المتطلبات المعتمدة.
   - `spec-kit-workflow-spec-plan-task-trace` (spec-kit-workflow-objective-2): ما الذي يجعل tasks قابلة للمراجعة؟ — مفتاح spec-kit-workflow-spec-plan-task-trace-a; التعليل: التتبع والقبول يحددان حجم التغيير وأثره.
 
-**Practical assessment:** scale `spec-kit-workflow-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `spec-kit-workflow-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `feature-spec`: مواصفة سيناريوهات وأسئلة مرتبطة بالمصادر.
   - `feature-plan`: خطة ومهام صغيرة ضمن النطاق وبقبول واضح.
 
@@ -114,7 +125,7 @@ Criteria:
 
 **Resource evidence:** مقال Microsoft for Developers يصف Spec Kit ويضع رابط فيديو بعنوان “The ONLY guide you’ll need for GitHub Spec Kit”. صفحة GitHub الرسمية كذلك تسرد Video Overview. المحتوى ملائم كتقديم، لكن تعليمات CLI/version لا تُعامل كمرجع حالي دون فحص المستودع. لم يُختبر الفيديو أو captions أو الوصولية، ولا قبول مالك. [Publisher/source page](https://developer.microsoft.com/blog/spec-driven-development-spec-kit/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `frontend-incremental-implementation`
 
@@ -123,7 +134,7 @@ Criteria:
   - نفذ حالة نجاح وفراغ أو خطأ مناسبة مع مصدر بيانات واضح. → `تدفق لا يوحي بتكامل Backend إن كان mock.`
   - شغل الفحص المتاح وسجل الأمر والنتيجة والملفات الخارجة عن النطاق. → `docs/FRONTEND_SLICE_REVIEW.md بنتيجة Passed/Failed/Not Run وتالية محددة.`
 
-**Sample project output (worked example `detail-slice`):** شريحة تفاصيل — مواصفة لفتح سجل من الفهرس.
+**Illustrative sample output (worked example `detail-slice`):** شريحة تفاصيل — مواصفة لفتح سجل من الفهرس.
 
 ```text
 1: عرض fixture. 2: حالة id غير موجود. 3: ربط API بعد توفر العقد والخادم. تسجل كل مرحلة على حدة ولا توصف الأولى كتدفق مكتمل.
@@ -135,7 +146,7 @@ Criteria:
   - `frontend-incremental-implementation-vertical-slice-choice` (frontend-incremental-implementation-objective-1): أي شريحة أفضل بداية؟ — مفتاح frontend-incremental-implementation-vertical-slice-choice-a; التعليل: الشريحة المحدودة يسهل فحصها وتصحيحها.
   - `frontend-incremental-implementation-mocked-service-boundary` (frontend-incremental-implementation-objective-2): الاختبار يستخدم fixture بدلاً من API. ماذا تسجل؟ — مفتاح frontend-incremental-implementation-mocked-service-boundary-b; التعليل: النتيجة يجب أن تطابق الطبقة التي اختبرت فعلاً.
 
-**Practical assessment:** scale `frontend-incremental-implementation-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `frontend-incremental-implementation-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `ui-slice`: تغيير واجهة محدود يحقق معياراً مع مصدر بيانات واضح.
   - `slice-evidence`: سجل ملفات وفحوص ونتائج وفجوة وتالية.
 
@@ -149,12 +160,10 @@ Criteria:
 
 **Resource evidence:** صفحة فيديو Frontend at Scale تسمي درس 22 وتعرض نصاً زمنياً: عند 00:30 يشرح تقسيم النظام إلى modules ومشكلات صغيرة. الملاءمة لتجزئة التنفيذ عملية؛ لا تثبت نجاح تنفيذ مشروع المتعلم. التشغيل/captions/accessibility/owner approval لم تُفحص. [Publisher/source page](https://frontendatscale.com/courses/frontend-architecture/designing/breaking-things-down/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
-## Owner gates
+## Remaining acceptance conditions
 
-- Approve or revise the first-group/template and this membership before any group is marked improved.
-- Decide the proposed quiz scoring and descriptive rubric scale; all scoring/rubric policy approvals remain `proposed`.
-- Review each candidate against the actual lesson, approve/reject each resource, and confirm captions/accessibility/playback before release. A publisher listing alone is not approval.
-- Record course-owner acceptance for the complete group and the independent evidence required by the parent release issue.
-- Browser journey, persisted history, RTL/LTR, keyboard/mobile, and integrated build checks remain for root-coordinated integration.
+- Keep each Topic in `review-ready`; no group-specific owner acceptance or improved status is recorded in this packet.
+- DEC-70 v2 defers individual video approvals until a human checks fit with the actual lesson, playback, captions, accessibility, and user-facing unavailable/offline behavior. Keep every resource labeled as a candidate until that review is recorded.
+- Exact-candidate browser journeys, persistence, RTL/LTR, keyboard/mobile, and integrated build checks belong to the root-coordinated release evidence; this packet does not claim them.

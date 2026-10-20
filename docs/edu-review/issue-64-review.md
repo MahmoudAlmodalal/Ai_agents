@@ -1,24 +1,35 @@
 # Issue #64: Django, FastAPI, permissions, and services — author review evidence
 
 **Recorded:** 2026-10-20
-**Implementation:** complete draft in `src/data/learning/group-b.ts` for the 4 canonical Topics.
-**Educational author review:** lesson, question, and rubric records carry a specific Curriculum B author review. Each record remains `review-ready`.
-**Release decision:** blocked pending course-owner template/scoring/rubric/video acceptance. No owner approval is recorded. Candidate videos are not approved; playback, captions, accessibility, and user-facing availability remain Not Run.
+**Implementation:** `src/data/learning/group-b-14-backend-frameworks-services.ts` supplies the draft for the 4 canonical Topics; the original reader lessons remain in the matching wave2/wave3 topic file.
+**Educational review state:** authored lesson/question/rubric records remain `review-ready`. The independent static lesson-flow review below passed for the complete group; it does not claim execution of learner tasks.
+**Course-owner decisions:** DEC-70 v2 accepted the 19-group membership and lesson template, quiz policy, and descriptive self-assessment policy on 2026-10-20. This is not group-specific release acceptance. The course owner deferred individual video approval until human review of lesson fit, playback, captions, and accessibility. Candidate videos remain `candidate` with `proposed` approval; those human checks are Not Run. No Topic is marked approved and this group is not announced as improved.
 
 **Independent narrow assessment review:** root passed all 58 B question/key/rationale and artifact-bound criterion/output references on 2026-10-20; see [scope and limits](group-b-narrow-review-2026-10-20.md).
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
-The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+The broader output-to-input traceability review for Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). This packet adds an independent review of every owned Topic's inputs, all three authored practical steps and expected outputs, illustrative sample, and handoff. Learner execution and actual project outputs are Not Run; exact-candidate browser/accessibility journeys and per-video human review remain pending.
+
+## Independent lesson-flow re-review
+
+**Verdict:** Passed for authored lesson sequence and output/handoff coherence by static review on 2026-10-20. This verdict concerns the curriculum design only. The sample outputs below are illustrative examples checked for consistency; none was produced by running the learner project. Tool execution is Not Run.
+
+| Topic | Independent walkthrough finding | Result |
+|---|---|---|
+| `django-backend` | 3/3 steps reviewed: framework choice, models, and migration. Topic 41 records the selected branch or an open question; Django outputs are conditional, FastAPI outputs are `Not Applicable`, and an unresolved branch remains `Not Run`. | **Passed (static)**; learner execution **Not Run** |
+| `fastapi-backend` | 3/3 steps reviewed: schemas, session lifecycle, and Alembic. Topic 42 can use the optional decision record or resolve the choice itself; Django outputs are `Not Applicable`, while unresolved work is `Not Run`. The absent record is not an access gate. | **Passed (static)**; learner execution **Not Run** |
+| `auth-permissions` | 3/3 steps: source permissions in SRS, enforce at server, test anonymous/unauthorized/allowed; illustrative ownership denial leaves 403/404 to the contract; handoff to services and integration consumes matrix plus test record. | **Passed (static)**; learner execution **Not Run** |
+| `services-selectors` | 3/3 steps: layer map, invariant/concurrency test, and measured query count; illustrative transaction example preserves authorization and rollback boundaries; handoff to frontend integration consumes service and invariant evidence. | **Passed (static)**; learner execution **Not Run** |
 
 ## `django-backend`
 
 **Inputs and lesson walk-through:** Django خيار مستقل → مثال محلول: قيد uniqueness → برومبت مراجعة migration. يستخدم مخرجات Python/PostgreSQL/API من الموضوعات 38–40 قبل إنشاء ORM؛ Django وFastAPI مساران بديلان. Steps:
-  - سجل اختيار Django أو FastAPI وسبباً؛ إذا اخترت Django تجاوز بناء FastAPI. → `docs/BACKEND_FRAMEWORK_DECISION.md يذكر الإطار والبديل الذي لم ينفذ.`
-  - أنشئ models من الكيانات والعلاقات والقيود المعتمدة. → `نماذج تتبع ERD مع كل اختلاف كقرار أو سؤال.`
-  - ولّد migration وراجعها على قاعدة تطوير قبل التطبيق. → `ملف migration ونتيجة أمر الفحص؛ الإنتاج Not Run.`
+  - سجل اختيار Django أو FastAPI وسببه في `docs/BACKEND_FRAMEWORK_DECISION.md`. إن لم يُحسم، دوّن سؤالاً مفتوحاً ولا تدّع تنفيذ فرع. عند اختيار FastAPI، علّم مخرجات Django هنا `Not Applicable` وانتقل إلى الموضوع 42؛ وعند اختيار Django، استخدم هذا الفرع وتجاوز تنفيذ FastAPI. → `الملف يذكر الإطار والبديل الذي لم ينفذ أو يوثق الاختيار غير المحسوم؛ الفرع غير المختار Not Applicable.`
+  - إذا كان Django هو الإطار المختار، أنشئ models من الكيانات والعلاقات والقيود المعتمدة؛ إذا اختير FastAPI فسجل الخطوة `Not Applicable`، وإذا ظل الاختيار غير محسوم فسجلها `Not Run`. → `في فرع Django: نماذج تتبع ERD مع كل اختلاف كقرار أو سؤال. في فرع FastAPI: Not Applicable، واستخدم api-schemas من الموضوع 42. عند عدم الحسم: Not Run.`
+  - إذا كان Django هو الإطار المختار، ولّد migration وراجعها على قاعدة تطوير قبل التطبيق؛ إذا اختير FastAPI فسجل الخطوة `Not Applicable`، وإذا ظل الاختيار غير محسوم فسجلها `Not Run`. → `في فرع Django: ملف migration ونتيجة أمر الفحص؛ الإنتاج Not Run. في فرع FastAPI: Not Applicable، واستخدم alembic-record من الموضوع 42. عند عدم الحسم: Not Run.`
 
-**Sample project output (worked example `django-migration`):** مراجعة حقل جديد — إضافة category_id إلى نموذج.
+**Illustrative sample output (worked example `django-migration`):** مراجعة حقل جديد — إضافة category_id إلى نموذج.
 
 ```text
 افحص هل الحقل nullable أو يحتاج تعبئة أولاً، ثم راجع upgrade/reverse قبل تطبيقه على dev.
@@ -30,7 +41,7 @@ The current output-to-input traceability review for all Topics 30–58 is record
   - `django-backend-database-constraint-vs-ui-check` (django-backend-objective-1): قيد uniqueness يعتمد على organization وname. ما الذي يحميه عند كتابتين متزامنتين؟ — مفتاح django-backend-database-constraint-vs-ui-check-b; التعليل: قيد التخزين يحمي invariant حتى عند التزامن؛ يجب أن يتبع ERD والمتطلبات المعتمدة.
   - `django-backend-migration-risk-review` (django-backend-objective-2): ما الذي تراجعه قبل migration؟ — مفتاح django-backend-migration-risk-review-a; التعليل: التوليد لا يثبت سلامة التغيير؛ افحص الأثر أولاً.
 
-**Practical assessment:** scale `django-backend-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `django-backend-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `django-models`: نماذج Django وقرار إطار مرتبطان بـ ERD.
   - `django-migration`: migration ونتيجة مراجعتها في بيئة محددة.
 
@@ -44,16 +55,16 @@ Criteria:
 
 **Resource evidence:** صفحة Real Python تذكر REST، serializers، Django views/ViewSets، URLs والصلاحيات؛ وتذكر إصدارات العينة 3.13/5.1.2/3.15.2. الملاءمة مباشرة لمخرجات الموضوع. لم يُختبر التشغيل أو captions أو الوصولية، ومراجعة المالك غير موجودة. [Publisher/source page](https://realpython.com/videos/building-drf-overview/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `fastapi-backend`
 
 **Inputs and lesson walk-through:** FastAPI خيار مستقل → مثال محلول: schema مقابل ORM → برومبت ومخرج. يستخدم مخرجات Python/PostgreSQL/API من الموضوعات 38–40 قبل إنشاء ORM؛ FastAPI وDjango مساران بديلان. Steps:
-  - أنشئ request وresponse منفصلين عن ORM واختبر قيمة طلب غير صالحة. → `مخططان يوضحان حقول الإدخال والمخرج؛ لا يتسرب internal field.`
-  - حدد دورة session عبر dependency؛ استخدم async فقط مع driver مناسب. → `اختبار/مخطط يوضح فتح الجلسة وإغلاقها لكل طلب.`
-  - اربط metadata وولّد migration تجريبية وافحص upgrade/downgrade على dev. → `رأس Alembic ونتيجة تطبيق على dev؛ الإنتاج لم يتغير.`
+  - استخدم `docs/BACKEND_FRAMEWORK_DECISION.md` إن وُجد؛ إن غاب أو بقي الاختيار مفتوحاً، احسمه هنا أو دوّن السؤال نفسه بلا جعل الملف شرطاً للدراسة. إذا كان FastAPI مختاراً، أنشئ request وresponse منفصلين عن ORM واختبر قيمة غير صالحة؛ عند اختيار Django فسجل هذه الخطوة `Not Applicable`، وعند عدم الحسم اكتب `Not Run`. → `في فرع FastAPI: مخططان يوضحان حقول الإدخال والمخرج؛ لا يتسرب internal field. في فرع Django: Not Applicable، واستخدم django-models من الموضوع 41. عند عدم الحسم: السؤال مسجل وNot Run.`
+  - إذا كان FastAPI هو الإطار المختار، حدد دورة session عبر dependency؛ استخدم async فقط مع driver مناسب. إذا اختير Django فسجل الخطوة `Not Applicable`، وإذا ظل الاختيار غير محسوم فسجلها `Not Run`. → `في فرع FastAPI: اختبار/مخطط يوضح فتح الجلسة وإغلاقها لكل طلب. في فرع Django: Not Applicable. عند عدم الحسم: Not Run.`
+  - إذا كان FastAPI هو الإطار المختار، اربط metadata وولّد migration تجريبية وافحص upgrade/downgrade على dev. إذا اختير Django فسجل الخطوة `Not Applicable`، وإذا ظل الاختيار غير محسوم فسجلها `Not Run`. → `في فرع FastAPI: رأس Alembic ونتيجة تطبيق على dev؛ الإنتاج لم يتغير. في فرع Django: Not Applicable، واستخدم django-migration من الموضوع 41. عند عدم الحسم: Not Run.`
 
-**Sample project output (worked example `fastapi-schema-example`):** إنشاء عنصر — العميل يحتاج id/name ولا يحتاج internal_note.
+**Illustrative sample output (worked example `fastapi-schema-example`):** إنشاء عنصر — العميل يحتاج id/name ولا يحتاج internal_note.
 
 ```text
 CreateItemRequest → SQLAlchemy Item → ItemResponse(id,name).
@@ -65,7 +76,7 @@ CreateItemRequest → SQLAlchemy Item → ItemResponse(id,name).
   - `fastapi-backend-request-schema-validation` (fastapi-backend-objective-1): أين تتحقق من طول اسم يصل في الطلب؟ — مفتاح fastapi-backend-request-schema-validation-a; التعليل: تحقق المدخل يحدث عند حد API قبل تمرير القيمة للمنطق.
   - `fastapi-backend-migration-generated-diff-review` (fastapi-backend-objective-2): ماذا تفحص في migration مولدة؟ — مفتاح fastapi-backend-migration-generated-diff-review-a; التعليل: التوليد الآلي مسودة تحتاج مراجعة واختباراً.
 
-**Practical assessment:** scale `fastapi-backend-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `fastapi-backend-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `api-schemas`: مخططات request/response مفصولة عن ORM.
   - `alembic-record`: migration ومراجعة الجلسة والترحيل في dev.
 
@@ -79,7 +90,7 @@ Criteria:
 
 **Resource evidence:** فهرس دورة Real Python يسرد درساً مرئياً لـ FastAPI وطلبات CRUD وPydantic validation وSwagger/HTTPie وتمارين. صلة عملية بواجهة API؛ الاستضافة/التشغيل الآمن تحتاج مواد أخرى. playback/captions/accessibility وقبول المالك لم تُفحص. [Publisher/source page](https://realpython.com/courses/python-rest-apis-with-fastapi/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `auth-permissions`
 
@@ -88,7 +99,7 @@ Criteria:
   - نفذ فحص هوية ثم تفويض على الخادم وفق الإطار المختار. → `endpoint يرفض العملية عند غياب الصلاحية؛ الواجهة ليست الحارس الوحيد.`
   - اكتب اختبار مجهول/مسجل بلا دور/مسموح وسجل HTTP status. → `نتائج تطابق العقد ولا تطبع اعتماداً أو سراً.`
 
-**Sample project output (worked example `owner-check`):** رفض تعديل غير مملوك — مستخدم مسجل يحاول تعديل سجل مستخدم آخر.
+**Illustrative sample output (worked example `owner-check`):** رفض تعديل غير مملوك — مستخدم مسجل يحاول تعديل سجل مستخدم آخر.
 
 ```text
 identity=valid; actor=user-3; owner=user-8; action=denied by server. قرار 403/404 يتبع العقد.
@@ -100,7 +111,7 @@ identity=valid; actor=user-3; owner=user-8; action=denied by server. قرار 40
   - `auth-permissions-authenticated-identity-vs-authorization` (auth-permissions-objective-1): ما الفرق بين المصادقة والتفويض؟ — مفتاح auth-permissions-authenticated-identity-vs-authorization-a; التعليل: هما قراران مختلفان يجب أن يحمي الثاني كل endpoint.
   - `auth-permissions-server-enforced-ownership` (auth-permissions-objective-2): كيف تثبت أن مالكاً آخر لا يستطيع تعديل المورد؟ — مفتاح auth-permissions-server-enforced-ownership-b; التعليل: اختبار الخادم يتحقق من الحماية عند الحد الحقيقي.
 
-**Practical assessment:** scale `auth-permissions-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `auth-permissions-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `permission-matrix`: مصفوفة دور/ملكية/إجراء مستندة إلى SRS.
   - `auth-tests`: نتائج رفض المجهول وغير المصرح والسماح.
 
@@ -114,7 +125,7 @@ Criteria:
 
 **Resource evidence:** صفحة DjangoTV تصف الفيديو حول مصفوفات authentication/authorization وأذونات endpoint وobject وfield وHTTP method، مع مثال قيود قائمة على مالك المورد. المورد قديم؛ يراجع فقط الأفكار ويُطابق مع DRF الحالي. لم يُختبر playback/captions/accessibility ولا موافقة المالك. [Publisher/source page](https://www.djangotv.com/videos/djangocon-us/2015/djangocon-us-2015-rest-easy-api-security-done-right-by-jeff-schenck/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
 ## `services-selectors`
 
@@ -123,7 +134,7 @@ Criteria:
   - حدد invariant من وثيقة المشروع واكتب اختباراً يعيد إنتاج التعارض. → `اختبار يثبت أن المحاولات لا تنتج حالة ممنوعة وأن الفشل يسبب rollback.`
   - سجل عدد الاستعلامات قبل التحسين ثم قارن بعده إذا ظهر دليل N+1. → `قبل/بعد أو Not Run؛ لا يذكر رقماً غير مقاس.`
 
-**Sample project output (worked example `atomic-request`):** طلب ذري — قاعدة مشروع تسمح بحجز مورد متاح مرة واحدة.
+**Illustrative sample output (worked example `atomic-request`):** طلب ذري — قاعدة مشروع تسمح بحجز مورد متاح مرة واحدة.
 
 ```text
 authenticate → authorize ownership/action without disclosing availability → begin transaction → lock authorized row → re-check authorization and race-sensitive availability → create → commit; conflict/denial → rollback and policy-consistent response. selector يقرأ القائمة دون كتابة.
@@ -135,7 +146,7 @@ authenticate → authorize ownership/action without disclosing availability → 
   - `services-selectors-selector-read-side-effects` (services-selectors-objective-1): ما الطبقة المناسبة لقراءة قائمة لا تغير البيانات؟ — مفتاح services-selectors-selector-read-side-effects-a; التعليل: selector يعزل القراءة ويبقى بلا أثر جانبي.
   - `services-selectors-service-invariant-ownership` (services-selectors-objective-2): لماذا قيد أو قفل قاعدة مهم للحجز؟ — مفتاح services-selectors-service-invariant-ownership-b; التعليل: الذرية تحمي سلامة الحالة؛ لا تضمن أداءً أفضل لكل الاستعلامات.
 
-**Practical assessment:** scale `services-selectors-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `services-selectors-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `approved` under the course-owner decision in DEC-70 v2 (issue #43). Outputs:
   - `service-map`: خريطة طبقات الكتابة والقراءة وحد transaction.
   - `invariant-evidence`: اختبار تنافس وقياس استعلامات حسب البيئة.
 
@@ -149,12 +160,10 @@ Criteria:
 
 **Resource evidence:** فهرس O’Reilly لفيديو FastAPI يعرض فصلاً باسم Service Layer (10m 19s) بين API Router وDependency Chaining، ما يطابق حدود الخدمة/القراءة. لا يثبت أن كل مشروع يحتاج هذا النمط؛ قد يتطلب اشتراكاً. التشغيل/captions/accessibility وقبول المالك لم تُراجع. [Publisher/source page](https://www.oreilly.com/videos/ultimate-guide-to/9781806101337/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Gaps:** per-video owner review remains deferred under DEC-70 v2 and awaits human review; playback, captions, accessibility, and user-facing unavailable/offline behavior are Not Run. No individual video approval or final availability is claimed.
 
-## Owner gates
+## Remaining acceptance conditions
 
-- Approve or revise the first-group/template and this membership before any group is marked improved.
-- Decide the proposed quiz scoring and descriptive rubric scale; all scoring/rubric policy approvals remain `proposed`.
-- Review each candidate against the actual lesson, approve/reject each resource, and confirm captions/accessibility/playback before release. A publisher listing alone is not approval.
-- Record course-owner acceptance for the complete group and the independent evidence required by the parent release issue.
-- Browser journey, persisted history, RTL/LTR, keyboard/mobile, and integrated build checks remain for root-coordinated integration.
+- Keep each Topic in `review-ready`; no group-specific owner acceptance or improved status is recorded in this packet.
+- DEC-70 v2 defers individual video approvals until a human checks fit with the actual lesson, playback, captions, accessibility, and user-facing unavailable/offline behavior. Keep every resource labeled as a candidate until that review is recorded.
+- Exact-candidate browser journeys, persistence, RTL/LTR, keyboard/mobile, and integrated build checks belong to the root-coordinated release evidence; this packet does not claim them.
