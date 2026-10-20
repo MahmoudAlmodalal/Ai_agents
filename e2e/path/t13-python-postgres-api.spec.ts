@@ -14,7 +14,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Python: أساسيات الخادم وتهيئة البيئة لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('.env.example');
     await expect(header).toContainText('docs/BACKEND_SETUP.md');
 
@@ -75,7 +75,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('PostgreSQL: إعداد قاعدة البيانات والاتصال والأسرار');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/DATABASE_CONNECTION_SPEC.md');
     await expect(header).toContainText('docs/MIGRATION_STRATEGY.md');
 
@@ -139,7 +139,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Title and headers
     await expect(page.locator('h1')).toContainText('معمارية Backend وعقود API لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/API_CONTRACTS.md');
     await expect(header).toContainText('docs/PERMISSIONS_MATRIX.md');
 

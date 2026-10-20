@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('تخطيط واجهة المستخدم وهندسة الفرونت إند (Frontend Planning)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_PLAN.md');
     await expect(header).toContainText('docs/FRONTEND_TASKS.md');
     await expect(header).toContainText('docs/ROUTES_MAP.md');
@@ -89,7 +89,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('مراجعة معايير التجربة والواجهة بـ UI/UX Pro Max');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/UI_UX_PRO_MAX_AUDIT.md');
 
     const content = page.locator('article');
@@ -139,7 +139,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('تنظيم المواصفات وتطوير الميزات بـ Spec Kit');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/rules/frontend.md');
     await expect(header).toContainText('specs/001-equipment-browsing/spec.md');
 
@@ -191,7 +191,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('التنفيذ التدريجي للفرونت إند وحالات الواجهة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_EXECUTION_LOG.md');
 
     const content = page.locator('article');

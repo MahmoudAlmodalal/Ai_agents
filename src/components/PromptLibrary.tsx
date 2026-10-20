@@ -67,16 +67,16 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
-      <header className="mb-8 rounded-3xl bg-[var(--primary)] p-7 text-white sm:p-10">
-        <div className="mb-3 flex flex-wrap items-center gap-2 text-emerald-300">
+      <header className="mb-8 rounded-3xl bg-[var(--action-bg)] p-7 text-[var(--action-text)] sm:p-10">
+        <div className="mb-3 flex flex-wrap items-center gap-2 opacity-80">
           <Sparkles className="h-5 w-5" aria-hidden="true" />
           <span className="text-sm font-bold" data-testid="prompt-library-count">
             {prompts.length} نصًا قابلًا للنسخ · {counts.catalog} أساسية · {counts.supplementary + counts['cheatsheet-core']} إضافية · {counts['cheatsheet-stage']} أمثلة مرحلية
           </span>
         </div>
         <h1 className="text-3xl font-black sm:text-5xl">مكتبة البرومبتات</h1>
-        <p className="mt-4 max-w-3xl leading-8 text-slate-200">ابحث في النصوص الكاملة، صفِّها حسب المهمة والمصدر، وافتح أي بطاقة لمراجعة المدخلات والمخرجات والأداة والموضوعات المرتبطة. النصوص تبقى كما وردت في مصادرها؛ راجع قواعد مشروعك قبل اعتماد أي نتيجة.</p>
-        <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-300">
+        <p className="mt-4 max-w-3xl leading-8 opacity-90">ابحث في النصوص الكاملة، صفِّها حسب المهمة والمصدر، وافتح أي بطاقة لمراجعة المدخلات والمخرجات والأداة والموضوعات المرتبطة. النصوص تبقى كما وردت في مصادرها؛ راجع قواعد مشروعك قبل اعتماد أي نتيجة.</p>
+        <p className="mt-2 max-w-3xl text-sm leading-7 opacity-80">
           العدد مشتق من السجلات: {counts.catalog} برومبتًا مرقمًا، و{counts.supplementary} برومبت إضافي، و{counts['cheatsheet-core']} قوالب عامة، و{counts['cheatsheet-stage']} أمثلة مرحلية.
         </p>
       </header>

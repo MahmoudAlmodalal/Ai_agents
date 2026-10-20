@@ -17,11 +17,13 @@ import {
 import type { TopicItem } from '@/src/types/topic';
 import {
   getTopicOfflineStatus,
+  getSavedTopicOfflinePayload,
   saveTopicOffline,
   removeTopicOffline,
   TopicOfflineStatus,
   OFFLINE_STORAGE_CHANGE_EVENT,
 } from '@/src/lib/offlineStorage';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 import {
   readSavedBookmarks,
   writeSavedBookmarks,
@@ -38,6 +40,8 @@ import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNot
 export function TopicReaderTools({ topic }: { topic: TopicItem }) {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [offlineStatus, setOfflineStatus] = React.useState<TopicOfflineStatus>('unsaved');
+  const [offlineContentVersion, setOfflineContentVersion] = React.useState<number | null>(null);
+  const [offlineQuizSaved, setOfflineQuizSaved] = React.useState(false);
   const [storageStatus, setStorageStatus] = React.useState<TopicStorageStatus>('loading');
   const [audioState, setAudioState] = React.useState<'stopped' | 'playing' | 'paused'>('stopped');
   const [audioSupported, setAudioSupported] = React.useState(false);
@@ -47,7 +51,12 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
     let active = true;
     const checkOffline = async () => {
       const status = await getTopicOfflineStatus(topic.slug);
-      if (active) setOfflineStatus(status);
+      const payload = status === 'saved' ? await getSavedTopicOfflinePayload(topic.slug) : null;
+      if (active) {
+        setOfflineStatus(status);
+        setOfflineContentVersion(payload?.contentVersion ?? null);
+        setOfflineQuizSaved(!!payload?.learningContent?.quiz);
+      }
     };
     checkOffline();
 
@@ -64,6 +73,8 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
       window.removeEventListener(OFFLINE_STORAGE_CHANGE_EVENT, handleOfflineEvent);
     };
   }, [topic.slug]);
+
+  const currentLearningContent = getTopicLearningContent(topic.slug);
 
   React.useEffect(() => {
     const update = () => {
@@ -234,6 +245,22 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
           title="المتصفح الحالي لا يوفر دعم Service Worker أو Storage API"
         >
           الحفظ غير متاح في هذا المتصفح
+        </span>
+      )}
+
+      {offlineStatus === 'unsaved' && currentLearningContent?.quiz && (
+        <span className="basis-full text-xs text-[var(--text-muted)]" role="status">
+          الاختبار متاح في هذه الصفحة لكنه غير محفوظ للعمل دون اتصال. الفيديوهات الخارجية تتطلب اتصالاً.
+        </span>
+      )}
+      {offlineStatus === 'saved' && (
+        <span className="basis-full text-xs text-[var(--text-muted)]" role="status">
+          {offlineQuizSaved
+            ? 'الاختبار محفوظ ضمن إصدار المحتوى ' + offlineContentVersion + '؛ أي نتيجة محفوظة ذاتياً وليست اعتماداً مستقلاً.'
+            : 'لا يتضمن الإصدار المحفوظ اختباراً. الفيديوهات الخارجية تتطلب اتصالاً بالإنترنت.'}
+          {currentLearningContent && offlineContentVersion !== currentLearningContent.contentVersion
+            ? ' يوجد إصدار أحدث من الدرس أو الاختبار؛ حدّث النسخة عند الاتصال.'
+            : ''}
         </span>
       )}
 

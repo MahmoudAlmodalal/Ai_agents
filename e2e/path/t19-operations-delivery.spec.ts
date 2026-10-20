@@ -45,7 +45,7 @@ test.describe('Sequential Project Path — Ticket 19: Operations and delivery', 
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(lesson.title);
 
       const header = page.locator('header.rounded-3xl');
-      await expect(header).toContainText('محتوى منشور');
+      await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
       await expect(header).toContainText(lesson.output);
 
       const content = page.locator('article');

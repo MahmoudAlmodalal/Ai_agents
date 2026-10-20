@@ -8,7 +8,7 @@ import {
 } from '@/src/lib/educationalRoadmap';
 
 export const metadata = {
-  title: 'ابدأ هنا | سلاح العصر',
+  title: 'ابدأ هنا | Ai_agents',
   description: 'ابدأ سياق مشروعك ثم اتبع رحلة Full-Stack من المتطلبات إلى الواجهات والخادم والاختبار والنشر.',
 };
 
@@ -53,10 +53,10 @@ export default function StartPage() {
             ابدأ مشروعك من الصفر — بدون تخطي المراحل
           </h1>
           <p className="mt-4 max-w-4xl leading-8 text-[var(--text-muted)]">
-            برنامج MET Academy — سلاح العصر، مدته الرسمية 40 ساعة. ابنِ مشروعًا تختاره ضمن مسار Full-Stack من الفكرة إلى واجهات وخادم وقاعدة بيانات واختبار ونشر وعرض. ابدأ بمشروع واحد وسر معه على مراحل. احتفظ بكل مخرجاتك داخل مجلد docs/ ولا تعتمد قرار AI قبل فهمه.
+            Ai_agents مسار عملي مدته الرسمية 40 ساعة. ابنِ مشروعًا تختاره ضمن رحلة متدرجة من الفكرة إلى الواجهات والخادم وقاعدة البيانات والاختبار والنشر والتسليم. ابدأ بمشروع واحد وسر معه على مراحل. احتفظ بمخرجاتك في وثائق مشروعك ولا تعتمد قرار AI قبل فهمه.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/learn/project-idea-mvp" className="rounded-xl bg-[var(--primary)] px-5 py-3 text-sm font-black text-white">
+            <Link href="/learn/project-idea-mvp" className="rounded-xl bg-[var(--action-bg)] px-5 py-3 text-sm font-black text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]">
               ابدأ بالموضوع الأول
             </Link>
             <Link href="/roadmap" className="rounded-xl border border-[var(--border-color)] px-5 py-3 text-sm font-black">
@@ -71,7 +71,7 @@ export default function StartPage() {
           <ol className="mt-4 grid gap-3 md:grid-cols-2">
             {steps.map((s, i) => (
               <li key={i} className="flex gap-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--primary)] font-mono text-sm font-black text-white">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--action-bg)] font-mono text-sm font-black text-[var(--action-text)]">
                   {i + 1}
                 </span>
                 <span className="text-sm leading-7">{s}</span>
@@ -144,7 +144,7 @@ export default function StartPage() {
                   <header className="mb-3">
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-mono text-xs font-black px-2 py-0.5 rounded-md bg-[var(--primary)] text-white">
+                        <span className="font-mono text-xs font-black px-2 py-0.5 rounded-md bg-[var(--action-bg)] text-[var(--action-text)]">
                           المجموعة {group.number}
                         </span>
                         <h3 className="text-base sm:text-lg font-black text-[var(--text-main)]">

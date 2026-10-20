@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicLearningActivities } from '@/src/components/TopicLearningActivities';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 import { TopicReaderTools } from '@/src/components/TopicReaderTools';
 import { MermaidViewer } from '@/src/components/MermaidViewer';
@@ -12,6 +13,7 @@ import {
   LEGACY_ROUTE_DESTINATIONS,
 } from '@/src/lib/topicRegistry';
 import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 
 export function generateStaticParams() {
   return getAllTopicSlugs().map((slug) => ({ slug }));
@@ -35,6 +37,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
   const previous = position > 0 ? allTopics[position - 1] : undefined;
   const next = position >= 0 && position < allTopics.length - 1 ? allTopics[position + 1] : undefined;
   const status = getTopicImprovementStatus(topic.slug);
+  const learningContent = getTopicLearningContent(topic.slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
@@ -48,7 +51,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
       </nav>
 
       {/* Main Topic Header */}
-      <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm sm:p-10">
+      <header className="learning-reader-header rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm sm:p-10">
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-800 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
             {topic.categoryName} · موضوع {topic.number}
@@ -149,6 +152,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
 
           {/* Preserved HTML Content */}
           <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
+          {learningContent && <TopicLearningActivities key={`${topic.slug}:${learningContent.contentVersion}`} topic={topic} content={learningContent} />}
         </article>
 
         {/* Aside Sidebar */}

@@ -52,7 +52,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('Git: حفظ وثائق المشروع وتتبع النسخ محلياً');
-    await expect(page.getByText('محتوى منشور')).toBeVisible();
+    await expect(page.getByText('حالة التوفر: محتوى متاح (منشور)')).toBeVisible();
 
     // Practical steps on student project
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
@@ -81,7 +81,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
 
     // Header and status
     await expect(page.locator('h1')).toContainText('GitHub: المستودع البعيد والمراجعة والتعاون وحماية الأسرار');
-    await expect(page.getByText('محتوى منشور')).toBeVisible();
+    await expect(page.getByText('حالة التوفر: محتوى متاح (منشور)')).toBeVisible();
 
     // Content: PR review, secrets protection, README template
     await expect(page.locator('article')).toContainText('Pull Request');

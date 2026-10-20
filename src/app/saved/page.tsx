@@ -105,7 +105,7 @@ export default function SavedTopicsPage() {
               المواضيع المحفوظة بدون إنترنت
             </h1>
             <p className="mt-2 text-sm sm:text-base text-[var(--text-muted)] max-w-2xl">
-              تصفح الدروس والمخططات الهندسية التي قمت بحفظها مسبقاً. يمكنك فتحها ومطالعتها حتى عند انقطاع الاتصال بالإنترنت تماماً.
+              تصفح الدروس والمخططات والاختبارات الموجودة في النسخة التي حفظتها. أما الفيديوهات الخارجية فتتطلب اتصالاً بالإنترنت؛ وتظهر حالة سياسة تقييم الاختبار كما هي في المحتوى المحفوظ.
             </p>
           </div>
 
@@ -187,14 +187,37 @@ export default function SavedTopicsPage() {
 
                   <div className="mt-2 flex items-center gap-3 text-[11px] text-[var(--text-muted)] font-mono">
                     <span>حُفظ بتاريخ: {new Date(item.savedAt).toLocaleDateString('ar-EG')}</span>
-                    {item.sizeBytes && <span>الحجم: ~{Math.round(item.sizeBytes / 1024)} ك.ب</span>}
+                    {item.sizeBytes && <span>بيانات الدرس التقريبية: ~{Math.round(item.sizeBytes / 1024)} ك.ب</span>}
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px]">
+                    {item.quiz ? (
+                      <>
+                        <span className="rounded-full border border-emerald-200 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-1 font-bold text-emerald-800 dark:text-emerald-300">
+                          اختبار هذه النسخة محفوظ · {item.quiz.questionCount} أسئلة
+                        </span>
+                        {item.quiz.approvalState === 'proposed' && (
+                          <span className="rounded-full border border-amber-200 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/30 px-2.5 py-1 font-medium text-amber-800 dark:text-amber-300">
+                            معاينة تعليمية · سياسة التقييم مقترحة
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-2.5 py-1 text-[var(--text-muted)]">
+                        لا يتضمن هذا الحفظ اختباراً
+                      </span>
+                    )}
+                    {!!item.onlineOnlyVideoCount && (
+                      <span className="text-[var(--text-muted)]">
+                        {item.onlineOnlyVideoCount} فيديو خارجي يتطلب اتصالاً
+                      </span>
+                    )}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
                   <Link
                     href={`/learn/${item.slug}`}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-xl bg-emerald-600 dark:bg-emerald-700 px-3.5 text-xs font-bold text-white hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-2xs"
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-xl bg-[var(--action-bg)] px-3.5 text-xs font-bold text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] transition-colors shadow-2xs"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>قراءة الدرس</span>

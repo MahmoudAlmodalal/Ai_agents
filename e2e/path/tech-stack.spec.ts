@@ -15,7 +15,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('TypeScript: الأنواع وعقود البيانات لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('src/types/project.ts');
     await expect(header).toContainText('docs/TYPESCRIPT_GUIDELINES.md');
 
@@ -66,7 +66,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('React: المكونات والحالة وتدفق البيانات في الواجهة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('src/components/common/StatusBadge.tsx');
     await expect(header).toContainText('docs/REACT_ARCHITECTURE.md');
 
@@ -112,7 +112,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('Tailwind CSS: التنسيق والتجاوب ونظام التصميم المعتمد');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('src/app/globals.css');
     await expect(header).toContainText('docs/TAILWIND_DESIGN_MAPPING.md');
 
@@ -161,7 +161,7 @@ test.describe('Sequential Project Path - Ticket 11: TypeScript, React, Tailwind 
     // Title and headers
     await expect(page.locator('h1')).toContainText('Next.js: بنية App Router والمسارات والصفحات');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('src/app/layout.tsx');
     await expect(header).toContainText('docs/NEXTJS_ROUTING_SPEC.md');
 

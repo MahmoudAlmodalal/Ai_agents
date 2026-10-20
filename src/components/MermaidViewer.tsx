@@ -79,7 +79,8 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
 
     const renderDiagram = async () => {
       // 1. If an offline snapshot is available, load it immediately
-      const offline = getSavedTopicOfflinePayload(topic.slug);
+      const offline = await getSavedTopicOfflinePayload(topic.slug);
+      if (isCancelled) return;
       if (offline?.diagramSnapshots?.[perspective]) {
         if (!isCancelled) {
           setSvgContent(offline.diagramSnapshots[perspective]);
@@ -180,7 +181,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
                 onClick={() => setPerspective(item.id)}
                 className={`min-h-[32px] px-2.5 sm:px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
                   isActive
-                    ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] shadow-xs'
+                    ? 'bg-[var(--action-bg)] text-[var(--action-text)] border-[var(--action-bg)] shadow-xs'
                     : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)] hover:border-[var(--brand-primary)]/50'
                 }`}
                 title={item.description}

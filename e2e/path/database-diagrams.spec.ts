@@ -36,7 +36,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط العلاقات بين الكيانات (ERD)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 14');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract fields: Goal, Outputs, Steps, Checklist
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
@@ -80,7 +80,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('لغة DBML ومحرر dbdiagram.io');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 15');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/database.dbml' }).first()).toBeVisible();
@@ -116,7 +116,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط تسلسل التفاعلات (Sequence Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 16');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Contract outputs
     await expect(page.locator('code').filter({ hasText: 'docs/diagrams/sequence-diagrams.md' }).first()).toBeVisible();
@@ -146,7 +146,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('h1')).toContainText('مخطط الكلاسات البرمجية (Class Diagram)');
     const header = page.locator('header.rounded-3xl').first();
     await expect(header).toContainText('موضوع 17');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Prerequisite verification: ERD and Sequence come BEFORE Class Diagram
     const prereqSection = page.locator('section').filter({ hasText: 'المتطلبات السابقة' }).first();

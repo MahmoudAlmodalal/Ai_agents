@@ -41,7 +41,7 @@ test.describe('Sequential Project Path - Topic 02: Discovery, PRD, and SRS', () 
     await expect(page).toHaveURL(/\/learn\/discovery-grill-me/);
     await expect(page.locator('h1')).toContainText('استجواب الفكرة واستكشاف المتطلبات (Grill Me)');
     const topic02Header = page.locator('header.rounded-3xl');
-    await expect(topic02Header).toContainText('محتوى منشور');
+    await expect(topic02Header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(topic02Header).toContainText('docs/DECISIONS_LOG.md');
 
     // Check prerequisites note that no coding agent, skills or MCP are needed

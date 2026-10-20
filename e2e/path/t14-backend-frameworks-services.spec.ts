@@ -15,7 +15,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Django: بناء الخادم والنماذج والتهجيرات (بديل مستقل 1)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 41');
     await expect(header).toContainText('backend/config/settings.py');
     await expect(header).toContainText('backend/apps/*/models.py');
@@ -84,7 +84,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('FastAPI: بناء الخادم ونماذج البيانات والتهجيرات مع Alembic (بديل مستقل 2)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 42');
     await expect(header).toContainText('backend/app/main.py');
     await expect(header).toContainText('backend/app/schemas/');
@@ -153,7 +153,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('المصادقة والصلاحيات: تأمين الخادم والتحكم بالوصول (RBAC)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 43');
     await expect(header).toContainText('docs/AUTH_PERMISSIONS_SPEC.md');
     await expect(header).toContainText('tests/test_auth_permissions.py');
@@ -223,7 +223,7 @@ test.describe('Sequential Project Path - Ticket 14: Backend Frameworks, Auth & P
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Services وSelectors: فصل منطق العمل والمعاملات واستعلامات القراءة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('محتوى منشور');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('معمارية وتطوير الخادم · موضوع 44');
     await expect(header).toContainText('docs/SERVICES_SELECTORS_ARCHITECTURE.md');
     await expect(header).toContainText('tests/test_services_business_rules.py');

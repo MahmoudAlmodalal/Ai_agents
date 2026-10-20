@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, HeartCrack } from 'lucide-react';
+import { Search, HeartCrack, ArrowLeft, BookOpen, Eye, Route } from 'lucide-react';
 import { TOPICS, deriveCategoryCounts } from '@/src/data/topicsData.ts';
 import { TopicCategory, ContentType, TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, stripHtml } from '@/src/utils/searchUtils.ts';
@@ -28,8 +28,10 @@ import {
   type TopicStorageStatus,
 } from '@/src/lib/topicRegistry.ts';
 import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNotice';
+import { getAllProposedGroups } from '@/src/lib/educationalRoadmap';
 
 const firstTopic = TOPICS[0];
+const proposedGroupCount = getAllProposedGroups().length;
 
 export default function HomePage() {
   // State: Search & Filters
@@ -336,52 +338,63 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Compact Hero Kicker & Stats Strip */}
+        {/* Ai_agents entry journey */}
         {!showFavoritesOnly && (
-          <section className="mb-4 sm:mb-6 p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-2xs">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-              <div className="max-w-2xl">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] sm:text-xs font-bold text-[var(--brand-primary)] uppercase tracking-wider block">
-                    MET Academy — سلاح العصر
-                  </span>
-                </div>
-                <h2 className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
-                  من فكرة مشروعك إلى منتج Full-Stack: واجهات وخادم وبيانات واختبار ونشر
-                </h2>
-                <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6">لمن يعرف أساسيات البرمجة ويبدأ تعلّم وكلاء الذكاء الاصطناعي (AI Agents)، ويريد تحويل فكرة تطبيق إلى مشروع واضح خطوة بخطوة.</p>
-                <p className="mt-2 text-xs text-[var(--text-muted)] leading-6">المدة الرسمية للبرنامج: 40 ساعة. ترتيب المواضيع يتبع اعتماديات مشروعك؛ ليس توزيعًا زمنيًا للساعات.</p>
-                <p className="mt-2 text-xs sm:text-sm text-[var(--text-muted)] leading-6"><strong>ستبدأ بـ {firstTopic.title}: </strong>{firstTopic.goal}</p>
-                <p className="mt-2 text-xs text-[var(--text-muted)] leading-6"><strong>مخرجك الأول: </strong>{firstTopic.outputs.join('، ')}</p>
-                <Link href={`/learn/${firstTopic.slug}`} className="mt-3 inline-flex min-h-10 items-center justify-center rounded-xl bg-[var(--brand-primary)] px-4 text-sm font-bold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)]">ابدأ بالموضوع الأول</Link>
-                <Link href="/start" className="mx-3 inline-flex min-h-10 items-center text-sm font-bold text-[var(--primary)] underline">ابدأ هنا: كيف تستخدم المسار؟</Link>
+          <section className="home-hero mb-4 sm:mb-6" aria-labelledby="home-hero-title">
+            <div className="home-hero-copy">
+              <span className="home-hero-kicker"><span dir="ltr" className="font-brand">Ai_agents</span> · التعلّم بالتطبيق</span>
+              <h1 id="home-hero-title" className="home-hero-title">
+                من فكرة أولية إلى منتج برمجي <em>تفهمه وتختبره</em>
+              </h1>
+              <p className="home-hero-description">
+                تعلّم كيف توجّه وكلاء الذكاء الاصطناعي عبر المتطلبات والتصميم والبناء والاختبار، مع بقاء القرارات الهندسية واضحة لك.
+              </p>
+              <div className="home-hero-actions">
+                <Link href={`/learn/${firstTopic.slug}`} className="home-hero-button home-hero-button-primary">
+                  <BookOpen className="h-4 w-4" aria-hidden="true" />
+                  <span>ابدأ بالموضوع الأول</span>
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <button
+                  type="button"
+                  className="home-hero-button home-hero-button-secondary"
+                  onClick={() => handleOpenTopic(firstTopic.id)}
+                  aria-haspopup="dialog"
+                >
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                  <span>معاينة سريعة</span>
+                </button>
               </div>
-
-              {/* Compact 4-Metric Grid */}
-              <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 pt-2 md:pt-0 border-t md:border-t-0 border-[var(--border-color)] shrink-0">
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-[var(--brand-primary)]">{TOPICS.length}</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">درسًا</div>
-                </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-emerald-600 dark:text-emerald-400">8</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مخططات</div>
-                </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-indigo-600 dark:text-indigo-400">38+</div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">برومبتاً</div>
-                </div>
-                <div className="bg-[var(--bg-card-subtle)] px-2 py-1.5 rounded-lg border border-[var(--border-color)] text-center">
-                  <div className="text-sm sm:text-base font-black font-mono text-rose-500">
-                    {bookmarks.length}
-                  </div>
-                  <div className="text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">مفضلة</div>
-                </div>
+              <div className="home-hero-facts" aria-label="معلومات المسار">
+                <span className="home-hero-fact"><strong dir="ltr">{TOPICS.length}</strong> موضوعًا متاحًا</span>
+                <span className="home-hero-fact"><strong dir="ltr">{proposedGroupCount}</strong> مجموعة مقترحة</span>
+                <span className="home-hero-fact"><Route className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" /> يمكنك فتح أي موضوع مباشرة</span>
               </div>
+              <Link href="/start#project-path" className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-bold text-[var(--primary)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-md">
+                استكشف خارطة رحلة المشروع <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
             </div>
-            <EntryQuestion />
+
+            <div className="home-lesson-card" aria-label="معاينة الموضوع الأول">
+              <div className="home-lesson-topline">
+                <span dir="ltr" className="home-lesson-label">TOPIC 01 · START HERE</span>
+                <span dir="ltr">Ai_agents / 01</span>
+              </div>
+              <h2>{firstTopic.title}</h2>
+              <p className="home-lesson-subtitle">{firstTopic.subtitle}</p>
+              <p className="home-lesson-goal">{firstTopic.goal}</p>
+              {firstTopic.outputs[0] && (
+                <div className="home-lesson-output">
+                  <small>مخرجك الأول</small>
+                  <code dir="ltr">{firstTopic.outputs[0]}</code>
+                </div>
+              )}
+              <p className="home-lesson-footer">ابدأ بمشروعك أنت، وكل موضوع يبني على مخرج واضح.</p>
+            </div>
           </section>
         )}
+
+        {!showFavoritesOnly && <EntryQuestion />}
 
         {/* Persistence status notice */}
         <LearnerPersistenceNotice status={storageStatus} className="mb-4" />
@@ -441,7 +454,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={() => setShowFavoritesOnly(false)}
-              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] dark:bg-[#162c46] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-[var(--action-bg)] text-[var(--action-text)] text-xs font-bold shadow-2xs hover:bg-[var(--action-bg-hover)] transition-colors cursor-pointer"
             >
               استعراض كافة المواضيع
             </button>
@@ -465,7 +478,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={handleResetFilters}
-              className="h-9 px-4 rounded-xl bg-[var(--brand-primary)] dark:bg-[#162c46] text-white text-xs font-bold shadow-2xs hover:bg-blue-700 transition-colors cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-[var(--action-bg)] text-[var(--action-text)] text-xs font-bold shadow-2xs hover:bg-[var(--action-bg-hover)] transition-colors cursor-pointer"
             >
               إعادة ضبط الفلاتر
             </button>

@@ -6,8 +6,10 @@ import { TopicItem } from '@/src/types/topic.ts';
 import { formatReadingTime } from '@/src/utils/searchUtils.ts';
 import { MermaidViewer } from '@/src/components/MermaidViewer.tsx';
 import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicLearningActivities } from '@/src/components/TopicLearningActivities';
 import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
 import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 
 
 interface TopicDetailModalProps {
@@ -46,6 +48,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
   const [readingProgress, setReadingProgress] = React.useState<number>(0);
   const [showDiagram, setShowDiagram] = React.useState<boolean>(topic.diagramCount > 0);
   const status = getTopicImprovementStatus(topic.slug);
+  const learningContent = getTopicLearningContent(topic.slug);
 
   React.useEffect(() => setShowDiagram(topic.diagramCount > 0), [topic.slug, topic.diagramCount]);
 
@@ -502,6 +505,7 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 
           {/* Rendered HTML Content */}
           <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
+          {learningContent && <TopicLearningActivities key={`${topic.slug}:${learningContent.contentVersion}`} topic={topic} content={learningContent} />}
         </div>
 
         {/* Sticky Modal Footer with Next / Prev and Keyboard Hints */}

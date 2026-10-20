@@ -1,5 +1,5 @@
 import Link from 'next/link';
-export const metadata = { title: 'الأسئلة الشائعة | سلاح العصر', description: 'إجابات أثناء مسار مشروع Full-Stack: الوثائق والمخططات والأدوات والتنفيذ.' };
+export const metadata = { title: 'الأسئلة الشائعة | Ai_agents', description: 'إجابات أثناء مسار مشروع Full-Stack: الوثائق والمخططات والأدوات والتنفيذ.' };
 const faqs = [
   { question: 'هل BorrowHub مشروع إلزامي؟', answer: 'لا. BorrowHub مثال مرافق له قواعده الخاصة. طبّق المنهج على مشروعك وسجّل قراراته في PRD؛ لا تنقل شروط استعارة المعدات تلقائيًا.', href: '/borrowhub', label: 'دراسة BorrowHub' },
   { question: 'هل أبدأ بالبرمجة مباشرة؟', answer: 'ابدأ بتحديد المشكلة والمستخدم وMVP، ثم اكتشف المتطلبات واعتمد الوثائق والمخططات والتصميم والخطة المناسبة للمرحلة قبل تنفيذ مهمة صغيرة قابلة للتحقق.', href: '/learn/project-idea-mvp', label: 'اختيار الفكرة وMVP' },

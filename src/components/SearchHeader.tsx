@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Headphones, Sun, Moon, Printer, Heart } from 'lucide-react';
+import { Search, Headphones, Sun, Moon, Printer, Heart, BookOpen } from 'lucide-react';
 
 interface SearchHeaderProps {
   searchQuery: string;
@@ -60,15 +60,15 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
         <div className="h-[52px] sm:h-[60px] flex items-center justify-between gap-3">
           {/* Brand Wordmark (Right in RTL) */}
           <div className="flex items-center gap-2 min-w-0 shrink-0">
-            <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-linear-to-br from-blue-700 to-blue-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs select-none">
-              AI
+            <span className="w-8 h-8 rounded-lg bg-[var(--primary-light)] text-[var(--primary)] flex items-center justify-center shrink-0 shadow-2xs select-none">
+              <BookOpen className="h-4 w-4" aria-hidden="true" />
             </span>
             <div className="min-w-0">
               <span className="text-sm sm:text-base font-extrabold text-[var(--text-main)] truncate block leading-tight">
-                الدليل الهندسي الشامل
+                فهرس الموضوعات
               </span>
               <span className="hidden sm:block text-xs text-[var(--text-muted)] font-medium truncate">
-                نمذجة وبناء المشاريع بالذكاء الاصطناعي
+                ابحث في الدروس والمفاهيم والتطبيقات
               </span>
             </div>
           </div>
@@ -82,7 +82,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="ابحث (Sequence, PRD, N+1, B-Tree, UML)..."
-                className="w-full h-9 pr-8 pl-12 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-blue-500/20 font-sans"
+                className="w-full h-9 pr-8 pl-12 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary-light)] font-sans"
               />
               {searchQuery ? (
                 <button
@@ -106,7 +106,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
               onClick={onToggleMobileSearch}
               className={`md:hidden w-9 h-9 rounded-lg border transition-colors flex items-center justify-center text-sm cursor-pointer ${
                 isMobileSearchOpen || searchQuery
-                  ? 'bg-blue-50 border-blue-300 text-blue-600 dark:bg-blue-950/40 dark:border-blue-800 dark:text-blue-400'
+                  ? 'bg-[var(--primary-light)] border-[var(--primary-border)] text-[var(--primary)]'
                   : 'bg-[var(--bg-card-subtle)] border-[var(--border-color)] text-[var(--text-main)]'
               }`}
               title="البحث في المواضيع"
@@ -148,7 +148,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
               onClick={onToggleTTS}
               className={`h-9 px-2 sm:px-2.5 rounded-lg border text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer ${
                 isTTSActive
-                  ? 'bg-blue-600 dark:bg-blue-800 text-white border-blue-600 shadow-2xs'
+                  ? 'bg-[var(--action-bg)] text-[var(--action-text)] border-[var(--action-bg)] shadow-2xs'
                   : 'bg-[var(--bg-card-subtle)] text-[var(--text-main)] border-[var(--border-color)] hover:bg-[var(--border-color)]'
               }`}
               title="القارئ الصوتي الذكي (Web Speech API)"
@@ -215,7 +215,7 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
                   placeholder="ابحث (Sequence, PRD, N+1, UML, استعارة)..."
-                  className="w-full h-10 pr-9 pl-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--brand-primary)] font-sans"
+                  className="w-full h-10 pr-9 pl-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] placeholder-slate-400 text-xs focus:outline-none focus:border-[var(--primary)] font-sans"
                 />
                 {searchQuery && (
                   <button

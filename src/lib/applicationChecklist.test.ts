@@ -85,12 +85,17 @@ test('write failures preserve multiple checks and clearing; errors do not leak i
   store.toggle('topic-a', 'one', false);
   assert.deepEqual([...store.getSnapshot('topic-a').selected], ['two']);
   assert.equal(store.getSnapshot('topic-a').storageStatus, 'write-error');
+  assert.deepEqual(store.getSnapshot('topic-a').sessionOnlyChanges, [
+    { itemKey: 'one', checked: false },
+    { itemKey: 'two', checked: true },
+  ]);
   store.subscribe('topic-b', () => {});
   assert.equal(store.getSnapshot('topic-b').storageStatus, 'available');
   assert.equal(saved.getItem(APPLICATION_CHECKLIST_STORAGE_KEY), null);
   blocked = false;
   store.refresh();
   assert.equal(store.getSnapshot('topic-a').storageStatus, 'available');
+  assert.deepEqual(store.getSnapshot('topic-a').sessionOnlyChanges, []);
   assert.deepEqual(JSON.parse(saved.getItem(APPLICATION_CHECKLIST_STORAGE_KEY)!)['topic-a'], ['two']);
 });
 

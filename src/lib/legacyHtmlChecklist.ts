@@ -18,27 +18,39 @@ export function legacyHtmlChecklistIdentity(topic: { id: string; slug: string },
   return {
     key: `${STABLE_KEY_PREFIX}${JSON.stringify([topic.slug, normalized])}`,
     legacyKey: index >= 0 ? `checklist_topic-03_${index}` : undefined,
+    topicSlug: topic.slug,
+    item: normalized,
   };
 }
 
 type Identity = ReturnType<typeof legacyHtmlChecklistIdentity>;
-type Snapshot = { checked: boolean; storageStatus: ChecklistStorageStatus };
+type Snapshot = { checked: boolean; storageStatus: ChecklistStorageStatus; sessionOnly: boolean };
+
+export interface LegacyHtmlChecklistRecordSnapshot {
+  key: string;
+  topicSlug: string;
+  item: string;
+  checked: boolean;
+  storageStatus: ChecklistStorageStatus;
+  sessionOnly: boolean;
+}
 
 export function createLegacyHtmlChecklistStore(getStorage: () => Pick<Storage, 'getItem' | 'setItem'>) {
-  const entries = new Map<string, { identity: Identity; snapshot: Snapshot; pending: boolean | null; listeners: Set<() => void> }>();
+  const entries = new Map<string, { identity: Identity; snapshot: Snapshot; pending: boolean | null; hasStoredValue: boolean; listeners: Set<() => void> }>();
 
   function getEntry(identity: Identity) {
     let entry = entries.get(identity.key);
     if (!entry) {
-      entry = { identity, snapshot: { checked: false, storageStatus: 'loading' }, pending: null, listeners: new Set() };
+      entry = { identity, snapshot: { checked: false, storageStatus: 'loading', sessionOnly: false }, pending: null, hasStoredValue: false, listeners: new Set() };
       entries.set(identity.key, entry);
     }
     return entry;
   }
 
   function publish(entry: ReturnType<typeof getEntry>, checked: boolean, storageStatus: ChecklistStorageStatus) {
-    if (entry.snapshot.checked === checked && entry.snapshot.storageStatus === storageStatus) return;
-    entry.snapshot = { checked, storageStatus };
+    const sessionOnly = entry.pending !== null;
+    if (entry.snapshot.checked === checked && entry.snapshot.storageStatus === storageStatus && entry.snapshot.sessionOnly === sessionOnly) return;
+    entry.snapshot = { checked, storageStatus, sessionOnly };
     entry.listeners.forEach((listener) => listener());
   }
 
@@ -58,15 +70,18 @@ export function createLegacyHtmlChecklistStore(getStorage: () => Pick<Storage, '
         publish(entry, entry.snapshot.checked, 'invalid');
         continue;
       }
+      entry.hasStoredValue = raw !== null;
       if (entry.pending !== null) {
+        const pending = entry.pending;
         try {
-          storage.setItem(entry.identity.key, String(entry.pending));
+          storage.setItem(entry.identity.key, String(pending));
         } catch {
-          publish(entry, entry.pending, 'write-error');
+          publish(entry, pending, 'write-error');
           continue;
         }
-        raw = String(entry.pending);
+        raw = String(pending);
         entry.pending = null;
+        entry.hasStoredValue = true;
       }
       publish(entry, raw === 'true', 'available');
     }
@@ -86,11 +101,27 @@ export function createLegacyHtmlChecklistStore(getStorage: () => Pick<Storage, '
       publish(entry, checked, entry.snapshot.storageStatus);
       refresh();
     },
+    listSnapshots(): LegacyHtmlChecklistRecordSnapshot[] {
+      refresh();
+      return [...entries.values()]
+        .filter((entry) => entry.hasStoredValue || entry.pending !== null)
+        .map(({ identity, snapshot }) => ({
+          key: identity.key,
+          topicSlug: identity.topicSlug,
+          item: identity.item,
+          checked: snapshot.checked,
+          storageStatus: snapshot.storageStatus,
+          sessionOnly: snapshot.sessionOnly,
+        }));
+    },
     refresh,
   };
 }
 
 const store = createLegacyHtmlChecklistStore(() => window.localStorage);
+
+/** Includes checked or unchecked HTML choices still pending after a blocked write. */
+export const listLegacyHtmlChecklistSnapshots = store.listSnapshots;
 
 /** Retain authored HTML interactions in both readers, independently of React's checklist. */
 export function attachLegacyHtmlChecklist(container: HTMLElement, topic: { id: string; slug: string }) {

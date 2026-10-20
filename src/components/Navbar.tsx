@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Menu,
@@ -23,6 +24,7 @@ import {
   Rocket,
   Layers,
   Download,
+  Gauge,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -38,20 +40,21 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'الرئيسية', href: '/', icon: Home, isPrimary: true },
   { title: 'ابدأ هنا', href: '/start', icon: Compass, isPrimary: true },
   { title: 'مسار التعلم', href: '/learn/project-idea-mvp', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
-  { title: 'المتطلبات', href: '/learn/discovery-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: true },
-  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: true },
+  { title: 'المتطلبات', href: '/learn/discovery-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: false },
+  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: false },
   { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: 'مسار متسلسل', isPrimary: true },
-  { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: true },
+  { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: false },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
-  { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: true },
-  { title: 'ورشة BorrowHub', href: '/borrowhub', icon: FolderGit2, badge: 'حالة عملية', isPrimary: true },
-  { title: 'المحتوى المحفوظ', href: '/saved', icon: Download, badge: 'أوفلاين', isPrimary: true },
-  { title: 'الأدوات والتثبيت', href: '/tools', icon: Wrench, badge: '13 وكيلا', isPrimary: true },
-  { title: 'مؤشر الموديلات', href: '/models', icon: Sparkles, badge: 'الأفضل الآن', isPrimary: true },
+  { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: false },
+  { title: 'ورشة BorrowHub', href: '/borrowhub', icon: FolderGit2, badge: 'حالة عملية', isPrimary: false },
+  { title: 'المحتوى المحفوظ', href: '/saved', icon: Download, badge: 'أوفلاين', isPrimary: false },
+  { title: 'الأدوات والتثبيت', href: '/tools', icon: Wrench, badge: '13 وكيلا', isPrimary: false },
+  { title: 'مؤشر الموديلات', href: '/models', icon: Sparkles, badge: 'الأفضل الآن', isPrimary: false },
+  { title: 'لوحة التقدم', href: '/dashboard', icon: Gauge, badge: 'محلي', isPrimary: false, description: 'راجع نشاطك المحفوظ على هذا الجهاز' },
   { title: 'الملفات والقوالب', href: '/templates', icon: Files, badge: '14 قالب', isPrimary: false, description: 'قوالب PRD و DESIGN.md ومخططات جاهزة' },
   { title: 'القاموس التقني', href: '/glossary', icon: BookOpen, badge: '35 مصطلح', isPrimary: false, description: 'دليل المصطلحات الإنجليزية والعربية' },
   { title: 'الأسئلة الشائعة', href: '/faq', icon: HelpCircle, badge: '12 سؤال', isPrimary: false, description: 'إجابات هندسية على استفسارات الطلاب' },
-  { title: 'عن الدورة', href: '/about', icon: Info, isPrimary: false, description: 'رؤية MET Academy ومنهجية سلاح العصر' },
+  { title: 'عن Ai_agents', href: '/about', icon: Info, isPrimary: false, description: 'مسار هندسة البرمجيات ووكلاء الذكاء الاصطناعي' },
 ];
 
 export const Navbar: React.FC = () => {
@@ -179,22 +182,17 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 href="/"
-                className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] rounded-lg p-1 transition-transform active:scale-95"
-                aria-label="MET Academy سلاح العصر - الصفحة الرئيسية"
+                className="group flex min-h-11 items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-lg p-1 transition-transform active:scale-95"
+                aria-label="Ai_agents — الصفحة الرئيسية"
               >
-                {/* MET Academy Hex/Badge Logo */}
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1e3a5f] text-white flex items-center justify-center font-black text-sm sm:text-base shadow-sm ring-1 ring-[#10b981]/40 overflow-hidden group-hover:ring-[#10b981] transition-all">
-                  <span className="z-10 tracking-tighter">MET</span>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#1e3a5f] via-[#1e3a5f] to-[#10b981]/40 opacity-80" />
-                  <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-[#10b981] rounded-full blur-[2px]" />
-                </div>
+                <Image src="/ai-agents-mark.svg" alt="" width={40} height={40} className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl shadow-sm transition-transform group-hover:scale-[1.03]" />
 
                 <div className="flex flex-col text-right">
-                  <span className="text-sm sm:text-base font-extrabold text-[var(--text-main)] leading-tight group-hover:text-[#1e3a5f] dark:group-hover:text-[#10b981] transition-colors">
-                    سلاح العصر
+                  <span dir="ltr" className="font-brand text-sm sm:text-base font-extrabold text-[var(--text-main)] leading-tight group-hover:text-[var(--primary)] transition-colors">
+                    Ai_agents
                   </span>
                   <span className="hidden xl:block text-[10px] sm:text-[11px] font-medium text-[var(--text-muted)] tracking-tight">
-                    MET Academy — من الفكرة إلى النشر والعرض
+                    هندسة برمجيات بالذكاء الاصطناعي
                   </span>
                 </div>
               </Link>
@@ -212,16 +210,16 @@ export const Navbar: React.FC = () => {
                     key={item.href}
                     href={item.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`relative px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] ${
+                    className={`relative px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1.5 select-none whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                       active
-                        ? 'bg-[#1e3a5f]/10 text-[#1e3a5f] dark:bg-[#10b981]/15 dark:text-[#10b981]'
+                        ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                         : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                     }`}
                   >
-                    <item.icon className={`w-3.5 h-3.5 ${active ? 'text-[#10b981]' : 'opacity-70'}`} />
+                    <item.icon className={`w-3.5 h-3.5 ${active ? 'text-[var(--primary)]' : 'opacity-70'}`} />
                     <span>{item.title}</span>
                     {active && (
-                      <span className="absolute bottom-0 inset-x-2 h-0.5 bg-[#10b981] rounded-full" />
+                      <span className="absolute bottom-0 inset-x-2 h-0.5 bg-[var(--primary)] rounded-full" />
                     )}
                   </Link>
                 );
@@ -234,10 +232,10 @@ export const Navbar: React.FC = () => {
                   onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
                   aria-expanded={isMoreDropdownOpen}
                   aria-haspopup="true"
-                  aria-label="عرض المزيد من أقسام الدورة"
-                  className={`px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981] ${
+                  aria-label="عرض المزيد من أقسام Ai_agents"
+                  className={`px-2.5 xl:px-3 py-1.5 rounded-lg text-xs xl:text-sm font-bold transition-all flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] ${
                     isMoreActive || isMoreDropdownOpen
-                      ? 'bg-[#1e3a5f]/10 text-[#1e3a5f] dark:bg-[#10b981]/15 dark:text-[#10b981]'
+                      ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                       : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                   }`}
                 >
@@ -245,11 +243,11 @@ export const Navbar: React.FC = () => {
                   <span>المزيد</span>
                   <ChevronDown
                     className={`w-3 h-3 transition-transform duration-200 ${
-                      isMoreDropdownOpen ? 'rotate-180 text-[#10b981]' : 'opacity-70'
+                      isMoreDropdownOpen ? 'rotate-180 text-[var(--primary)]' : 'opacity-70'
                     }`}
                   />
                   {isMoreActive && (
-                    <span className="absolute bottom-0 inset-x-2 h-0.5 bg-[#10b981] rounded-full" />
+                    <span className="absolute bottom-0 inset-x-2 h-0.5 bg-[var(--primary)] rounded-full" />
                   )}
                 </button>
 
@@ -268,14 +266,14 @@ export const Navbar: React.FC = () => {
                           aria-current={active ? 'page' : undefined}
                           className={`flex items-start gap-3 p-2.5 rounded-xl transition-all ${
                             active
-                              ? 'bg-[#1e3a5f]/10 text-[#1e3a5f] dark:bg-[#10b981]/15 dark:text-[#10b981]'
+                              ? 'bg-[var(--primary-light)] text-[var(--primary)]'
                               : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                           }`}
                         >
                           <div
                             className={`p-1.5 rounded-lg shrink-0 mt-0.5 ${
                               active
-                                ? 'bg-[#10b981] text-white'
+                                ? 'bg-[var(--action-bg)] text-[var(--action-text)]'
                                 : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)]'
                             }`}
                           >
@@ -309,7 +307,7 @@ export const Navbar: React.FC = () => {
               {/* Quick CTA Button (Desktop only) */}
               <Link
                 href="/start"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-extrabold text-white bg-gradient-to-r from-[#1e3a5f] to-[#10b981] hover:opacity-95 shadow-xs transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] shadow-xs transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               >
                 <Rocket className="w-3.5 h-3.5" />
                 <span>ابدأ الآن</span>
@@ -321,7 +319,7 @@ export const Navbar: React.FC = () => {
                 onClick={toggleTheme}
                 aria-label={isDark ? 'التحويل إلى النمط النهاري' : 'التحويل إلى النمط الليلي'}
                 title={isDark ? 'التحويل إلى النمط النهاري' : 'التحويل إلى النمط الليلي'}
-                className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="w-11 h-11 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               >
                 {isDark ? (
                   <Sun className="w-4 h-4 text-amber-400" />
@@ -338,7 +336,7 @@ export const Navbar: React.FC = () => {
                 aria-expanded={isDrawerOpen}
                 aria-controls="mobile-nav-drawer"
                 aria-label="فتح قائمة التنقل الرئيسية"
-                className="lg:hidden w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="lg:hidden w-11 h-11 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
               >
                 <Menu className="w-5 h-5" />
               </button>
@@ -378,12 +376,10 @@ export const Navbar: React.FC = () => {
           {/* Drawer Header */}
           <div className="h-16 px-4 border-b border-[var(--border-color)] flex items-center justify-between gap-3 bg-[var(--bg-card-subtle)]/50">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#1e3a5f] text-white flex items-center justify-center font-black text-xs ring-1 ring-[#10b981]/40">
-                MET
-              </div>
+              <Image src="/ai-agents-mark.svg" alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
               <div className="text-right">
-                <div className="text-sm font-extrabold text-[var(--text-main)]">سلاح العصر</div>
-                <div className="text-[10px] text-[var(--text-muted)]">دليل الدورة الكامل</div>
+                <div dir="ltr" className="font-brand text-sm font-extrabold text-[var(--text-main)]">Ai_agents</div>
+                <div className="text-[10px] text-[var(--text-muted)]">من الفكرة إلى منتج برمجي</div>
               </div>
             </div>
 
@@ -391,7 +387,7 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setIsDrawerOpen(false)}
               aria-label="إغلاق القائمة"
-              className="w-8 h-8 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center justify-center cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+              className="w-11 h-11 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-muted)] hover:text-[var(--text-main)] flex items-center justify-center cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -415,18 +411,18 @@ export const Navbar: React.FC = () => {
                       aria-current={active ? 'page' : undefined}
                       className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
                         active
-                          ? 'bg-[#1e3a5f] text-white shadow-xs'
+                          ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <item.icon className={`w-4 h-4 ${active ? 'text-[#10b981]' : 'text-[var(--text-muted)]'}`} />
+                        <item.icon className={`w-4 h-4 ${active ? 'text-[var(--action-text)]' : 'text-[var(--text-muted)]'}`} />
                         <span>{item.title}</span>
                       </div>
                       {item.badge && (
                         <span
                           className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                            active ? 'bg-white/20 text-white' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
+                            active ? 'bg-black/10 text-[var(--action-text)]' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
                           }`}
                         >
                           {item.badge}
@@ -454,18 +450,18 @@ export const Navbar: React.FC = () => {
                       aria-current={active ? 'page' : undefined}
                       className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
                         active
-                          ? 'bg-[#1e3a5f] text-white shadow-xs'
+                          ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <item.icon className={`w-4 h-4 ${active ? 'text-[#10b981]' : 'text-[var(--text-muted)]'}`} />
+                        <item.icon className={`w-4 h-4 ${active ? 'text-[var(--action-text)]' : 'text-[var(--text-muted)]'}`} />
                         <span>{item.title}</span>
                       </div>
                       {item.badge && (
                         <span
                           className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                            active ? 'bg-white/20 text-white' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
+                            active ? 'bg-black/10 text-[var(--action-text)]' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
                           }`}
                         >
                           {item.badge}
@@ -493,18 +489,18 @@ export const Navbar: React.FC = () => {
                       aria-current={active ? 'page' : undefined}
                       className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
                         active
-                          ? 'bg-[#1e3a5f] text-white shadow-xs'
+                          ? 'bg-[var(--action-bg)] text-[var(--action-text)] shadow-xs'
                           : 'text-[var(--text-main)] hover:bg-[var(--bg-card-subtle)]'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <item.icon className={`w-4 h-4 ${active ? 'text-[#10b981]' : 'text-[var(--text-muted)]'}`} />
+                        <item.icon className={`w-4 h-4 ${active ? 'text-[var(--action-text)]' : 'text-[var(--text-muted)]'}`} />
                         <span>{item.title}</span>
                       </div>
                       {item.badge && (
                         <span
                           className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                            active ? 'bg-white/20 text-white' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
+                            active ? 'bg-black/10 text-[var(--action-text)]' : 'bg-[var(--border-color)] text-[var(--text-muted)]'
                           }`}
                         >
                           {item.badge}
@@ -520,14 +516,14 @@ export const Navbar: React.FC = () => {
           {/* Drawer Footer */}
           <div className="p-4 border-t border-[var(--border-color)] bg-[var(--bg-card-subtle)]/40 space-y-3">
             <div className="text-center">
-              <div className="text-[11px] font-bold text-[#10b981]">Don&apos;t Just Prompt. Engineer.</div>
-              <div className="text-[10px] text-[var(--text-muted)] mt-0.5">MET Academy © 2026</div>
+              <div className="text-[11px] font-bold text-[var(--accent)]">من الفكرة إلى منتج برمجي</div>
+              <div className="text-[10px] text-[var(--text-muted)] mt-0.5">Ai_agents © 2026</div>
             </div>
 
             <Link
               href="/start"
               onClick={() => setIsDrawerOpen(false)}
-              className="w-full py-2.5 rounded-xl text-xs font-extrabold text-white bg-gradient-to-r from-[#1e3a5f] to-[#10b981] flex items-center justify-center gap-2 shadow-xs transition-opacity hover:opacity-95"
+              className="w-full py-2.5 rounded-xl text-xs font-extrabold text-[var(--action-text)] bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] flex items-center justify-center gap-2 shadow-xs transition-colors"
             >
               <Rocket className="w-4 h-4" />
               <span>ابدأ رحلة التعلم</span>

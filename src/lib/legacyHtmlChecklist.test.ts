@@ -51,6 +51,10 @@ test('legacy blocked reads/writes keep multiple local choices; recovery saves th
   assert.equal(store.getSnapshot(one).checked, true);
   assert.equal(store.getSnapshot(two).checked, true);
   assert.equal(store.getSnapshot(one).storageStatus, 'read-error');
+  assert.deepEqual(store.listSnapshots().map(({ topicSlug, item, checked, sessionOnly, storageStatus }) => ({ topicSlug, item, checked, sessionOnly, storageStatus })), [
+    { topicSlug: 'requirements-prd', item: originalLabel, checked: true, sessionOnly: true, storageStatus: 'read-error' },
+    { topicSlug: 'requirements-prd', item: 'criterion two', checked: true, sessionOnly: true, storageStatus: 'read-error' },
+  ]);
   blockRead = false;
   store.refresh();
   assert.equal(store.getSnapshot(one).storageStatus, 'write-error');

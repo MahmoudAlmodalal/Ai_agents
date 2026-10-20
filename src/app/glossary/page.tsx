@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import GlossarySearch from './GlossarySearch';
-export const metadata = { title: 'القاموس التقني | سلاح العصر', description: 'مصطلحات المسار بالعربية والإنجليزية مع البحث.' };
+export const metadata = { title: 'القاموس التقني | Ai_agents', description: 'مصطلحات المسار بالعربية والإنجليزية مع البحث.' };
 export default function GlossaryPage() {
   return <div className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">
     <Link href="/" className="mb-6 inline-flex text-sm font-bold text-[var(--primary)]">→ الرئيسية</Link>
