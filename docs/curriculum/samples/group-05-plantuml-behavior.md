@@ -23,11 +23,14 @@ rectangle "Study-group scheduling exercise" {
   usecase "Propose meeting times" as UC1
   usecase "Record one preference" as UC2
   usecase "Review responses" as UC3
-  usecase "View selected result\n(viewer unresolved: Q-05)" as UC4
 }
 Organizer --> UC1
 Organizer --> UC3
 Participant --> UC2
+note right of UC3
+  FR-004 selected-result view is omitted from this actor/use-case model.
+  Q-05 leaves its viewer and visibility unresolved.
+end note
 @enduml
 ```
 
@@ -40,13 +43,14 @@ The Organizer use cases are to propose three distinct candidate times
 (FR-001) and review saved preferences and select one listed option (FR-003).
 The Participant use case is to submit one option from the current session
 (FR-002). FR-004 requires a selected-result view, but the PRD does not say who
-may open it; UC4 is intentionally left without an actor association until
-Q-05 is resolved. This does not imply a notification channel. The diagram
-records task roles only; it does not define authentication or prove that a
-participant is authorized to use a link. Missing/foreign options and missing
-sessions are covered by sample validation choices FR-005 and FR-006 in the
-separate flow model; they are not actor permissions. Tie handling remains
-Q-02. Result storage and visibility remain Q-05.
+may open it; the diagram records FR-004 as an unresolved note instead of
+creating an unassociated use case or inventing a viewer for Q-05. This does
+not imply a notification channel. The diagram records task roles only; it
+does not define authentication or prove that a participant is authorized to
+use a link. Missing/foreign options and missing sessions are covered by
+sample validation choices FR-005 and FR-006 in the separate flow model; they
+are not actor permissions. Tie handling remains Q-02. Result storage and
+visibility remain Q-05.
 
 Status: static explanation of fictional exercise requirements. No use case was
 executed, independently validated, or accepted by a product owner.

@@ -2,11 +2,11 @@
 
 **Group:** Group 04: Visual Modeling (`group-04-visual-modeling`)  
 **Canonical Topics:** `mermaid-syntax` (Topic 07), `user-flow-modeling` (Topic 08), `conceptual-domain-model` (Topic 09)  
-**Status:** Evidence complete and awaiting course-owner sign-off. (The educational review and technical browser walkthroughs are complete; group release remains pending course-owner sign-off).  
+**Status:** Static educational review recorded; Group 04 remains draft and is not announced as improved. DEC-70 accepted the common template, boundaries, and assessment policies; this packet does not record a complete-group release sign-off. Individual video approval remains deferred.
 **Sample artifact packet:** [Mermaid, User Flow, and Domain Model fictional project outputs](samples/group-04-mermaid-flow-domain.md).  
 **Reviewer:** Educational review conducted by Antigravity Pair Programmer / Curriculum Reviewer.  
 **Review Date:** 2026-10-20.  
-**Course-Owner Acceptance:** Awaiting formal sign-off (decision pending).  
+**Course-Owner Acceptance:** Common curriculum policies are accepted in DEC-70; complete-group release acceptance is not recorded here.
 
 ---
 
@@ -36,10 +36,10 @@
 | **Worked Example** | Fictional appointment availability decision (`flowchart TD`) with decision diamond `CheckAuth` and labeled branches. BorrowHub callout explicitly marks BorrowHub as optional. | **Passed** | Fictional example is self-contained and demonstrates branching without introducing unverified business rules. |
 | **Practical Steps** | Step 1: Select a small MVP scenario, choose diagram type/direction, author and preview Mermaid.<br/>Step 2: Save in `docs/diagrams/README.md` with Arabic explanation, fixing syntax errors. | **Passed** | Actionable for the learner's own project. Directly prepares diagramming knowledge for Topic 08. |
 | **Exercise & Prompts** | Prompts reference `prompt-05-user-flow` and `prompt-06-conceptual-domain-model-not-uml` for downstream diagram creation. Copyable code blocks in lesson. | **Passed** | Copy button functions with `✓ تم النسخ!` visual feedback and verified clipboard contents. |
-| **Expected Outputs** | `mermaid-guide` (`docs/diagrams/README.md`) and `mermaid-samples` (valid Mermaid snippets with explanatory text). | **Passed** | Real concrete deliverables documented in `samples/group-04-mermaid-flow-domain.md`. |
+| **Expected Outputs** | `mermaid-guide` (`docs/diagrams/README.md`) and `mermaid-samples` (Mermaid snippets with explanatory text). | **Passed — static** | Fictional sample deliverables are documented in `samples/group-04-mermaid-flow-domain.md`; diagram rendering is not established by this packet. |
 | **Quiz Assessment** | Q1 (`mermaid-q-type`): Start with `flowchart TD` for steps & decisions. Correct option: 0. Explanation verified.<br/>Q2 (`mermaid-q-meaning`): Rendering success does not prove semantic business accuracy against PRD. Correct option: 0. Explanation verified. | **Passed** | 4 options per question, correct single keys, precise educational rationales, unlimited retry support verified. |
 | **Rubric & Checklist** | Criteria: `mermaid-r-valid` bound to `mermaid-samples`; `mermaid-r-doc` bound to `mermaid-guide`. 5-item application checklist. | **Passed** | Criteria bind to declared output IDs. Self-assessment ratings and checklist selections persist across reload and support reversal. |
-| **Candidate Video** | Title: *How to Create Mermaid Diagrams* (GitLab Unfiltered)<br/>URL: `https://www.youtube.com/watch?v=SQ9QmuTHuSI`<br/>Source: GitLab Unfiltered via Mermaid official tutorials. | **Passed (Candidate)** | Relevant Live Editor introduction. Displayed with "مرشح — بانتظار المراجعة" badge and online-only disclaimer. Playback/captions pending owner check. |
+| **Candidate Video** | Title: *How to Create Mermaid Diagrams* (GitLab Unfiltered)<br/>URL: `https://www.youtube.com/watch?v=SQ9QmuTHuSI`<br/>Source: GitLab Unfiltered via Mermaid official tutorials. | **Candidate record only** | The reader displays the candidate badge and online-only notice. The lesson fit, live playback, captions, and accessibility have not been checked; no endorsement or approval is claimed. |
 
 - **Sample Output Walkthrough (`mermaid-syntax`):**
   ```markdown
@@ -66,10 +66,10 @@
 | **Worked Example** | BorrowHub equipment loan flow: Browse -> SelectItem -> CheckAuth -> CheckStock -> CheckActiveLoans -> SubmitRequest -> PendingReview -> AdminDecision -> ApprovedReady / Rejection. Callout explicitly notes BorrowHub is optional. | **Passed** | Full branch coverage: Happy Path to Handover/ActiveLoan; 4 documented failure exits (`ExitAuth`, `ExitStock`, `ExitLimit`, `ExitReject`). |
 | **Practical Steps** | Step 1: Select one scoped MVP scenario, model entry to observable exit including failure paths in `docs/user-flow.md`.<br/>Step 2: Cross-check every node and edge against PRD; log unsupported behaviors as open questions. | **Passed** | Concrete expected outputs supply the basis for subsequent conceptual domain modeling and UX blueprinting. |
 | **Exercise & Prompts** | `PROMPT 05 — User Flow`: Senior UX Designer persona, reading `docs/PRD.md`, generating `flowchart TD` with decision points, no invented rules. | **Passed** | Embedded copyable prompt box with copy button; verified in browser test suite. |
-| **Expected Outputs** | `user-flow-doc` (`docs/user-flow.md`) and `user-flow-diagram` (`flowchart TD` diagram covering MVP happy and failure paths). | **Passed** | Real sample produced in `samples/group-04-mermaid-flow-domain.md` with requirements traceability table. |
+| **Expected Outputs** | `user-flow-doc` (`docs/user-flow.md`) and `user-flow-diagram` (`flowchart TD` diagram covering MVP happy and failure paths). | **Passed — static** | A fictional sample with a requirements trace table is documented in `samples/group-04-mermaid-flow-domain.md`; rendering and owner validation are not established. |
 | **Quiz Assessment** | Q1 (`userflow-q-actor`): Admin confirms handover in the real world when PRD assigns that role. Correct option: 1. Explanation verified.<br/>Q2 (`userflow-q-source`): Unverified rules found in diagrams must be removed or logged as open questions. Correct option: 1. Explanation verified. | **Passed** | Questions reinforce core engineering discipline. Clear educational explanations. |
 | **Rubric & Checklist** | Criteria: `userflow-r-coverage` bound to `user-flow-diagram`; `userflow-r-source` bound to `user-flow-doc`. 5-item application checklist. | **Passed** | Output bindings verified. Descriptive 3-level rating scale functions without completion/mastery inference. |
-| **Candidate Video** | Title: *User Journeys vs. User Flows (And When to Use Each)*<br/>URL: `https://www.nngroup.com/videos/user-journeys-vs-user-flows/?lm=journey-mapping-ux-practitioners&pt=article`<br/>Source: Nielsen Norman Group (NN/g). | **Passed (Candidate)** | Excellent 4-minute conceptual video clarifying user journeys vs. task-level flows. Online-only disclaimers present. |
+| **Candidate Video** | Title: *User Journeys vs. User Flows (And When to Use Each)*<br/>URL: `https://www.nngroup.com/videos/user-journeys-vs-user-flows/?lm=journey-mapping-ux-practitioners&pt=article`<br/>Source: Nielsen Norman Group (NN/g). | **Candidate record only** | The title suggests a topic match; duration and instructional fit are unverified because the video was not played. Captions, accessibility, and approval are also pending human review. |
 
 - **Sample Output Walkthrough (`user-flow-modeling`):**
   ```mermaid
@@ -103,10 +103,10 @@
 | **Worked Example** | BorrowHub domain model using `flowchart LR` with subgraphs (`Users_Domain`, `Inventory_Domain`, `Loan_Domain`) and business-labeled edges. Callout marks BorrowHub as optional. | **Passed** | Purely conceptual; verified zero PK/FK, zero SQL types, zero programming methods. |
 | **Practical Steps** | Step 1: Extract concepts and define business responsibilities in `docs/diagrams/domain-model.md`.<br/>Step 2: Draw concepts in `docs/diagrams/domain-model.mmd` using `flowchart LR` and review boundaries with domain owner. | **Passed** | Practical outputs provide clean input for downstream DB modeling (Topic 14 ERD & DBML). |
 | **Exercise & Prompts** | `PROMPT 06 — Conceptual Domain Model (not UML)`: Senior Domain Analyst persona, reads PRD and User Flow, outputs `flowchart LR` with business boundaries and Arabic explanation. | **Passed** | Copyable prompt container verified; clipboard test passed. |
-| **Expected Outputs** | `domain-model-doc` (`docs/diagrams/domain-model.md`) and `domain-model-diagram` (`docs/diagrams/domain-model.mmd`). | **Passed** | Real sample produced in `samples/group-04-mermaid-flow-domain.md`. |
+| **Expected Outputs** | `domain-model-doc` (`docs/diagrams/domain-model.md`) and `domain-model-diagram` (`docs/diagrams/domain-model.mmd`). | **Passed — static** | A fictional sample is documented in `samples/group-04-mermaid-flow-domain.md`; it is not a learner artifact or owner-approved model. |
 | **Quiz Assessment** | Q1 (`domain-q-level`): Conceptual question asks business meaning and relationships before database schema design. Correct option: 0. Explanation verified.<br/>Q2 (`domain-q-relationship`): Unspecified cardinality must remain an open decision, not assumed as many-to-many. Correct option: 1. Explanation verified. | **Passed** | Sound questions testing conceptual level boundaries and requirements integrity. |
 | **Rubric & Checklist** | Criteria: `domain-r-definitions` bound to `domain-model-doc`; `domain-r-boundary` bound to `domain-model-diagram`. 5-item application checklist. | **Passed** | Both criteria strictly bound to declared output IDs. Self-assessment persistence and reversal verified. |
-| **Candidate Video** | Title: *Week 2: Lecture 10 — How to start creating a software conceptual design*<br/>URL: `https://www.youtube.com/watch?v=UMUxxW7MzkE`<br/>Source: NPTEL / IIT Bombay, Software Conceptual Design course. | **Passed (Candidate)** | Academic lecture covering conceptual modeling principles. Candidate status clearly noted. |
+| **Candidate Video** | Title: *Week 2: Lecture 10 — How to start creating a software conceptual design*<br/>URL: `https://www.youtube.com/watch?v=UMUxxW7MzkE`<br/>Source: NPTEL / IIT Bombay, Software Conceptual Design course. | **Candidate record only** | Publisher/title metadata is recorded. Lesson fit, playback, captions, accessibility, and language suitability have not been checked by a human. |
 
 - **Sample Output Walkthrough (`conceptual-domain-model`):**
   ```mermaid
@@ -123,7 +123,7 @@
 
 ## 3. Browser Suite Verification Record
 
-The browser test suite `e2e/path/visual-modeling.spec.ts` was extended with comprehensive observable assertions and run on port 3204 against the production build:
+The browser test suite `e2e/path/visual-modeling.spec.ts` has an earlier author-reported run on port 3204 against a production build. The results below are historical and were not repeated in this static review; application reader coverage does not establish that the fictional sample diagrams render correctly.
 
 ```bash
 E2E_SERVER=production E2E_PORT=3204 npx playwright test e2e/path/visual-modeling.spec.ts
@@ -177,6 +177,17 @@ E2E_SERVER=production E2E_PORT=3204 npx playwright test e2e/path/visual-modeling
 
 ## 5. Group Release Recommendation
 
-**Release decision for Issue #54:**  
-**Evidence complete and awaiting course-owner sign-off.**  
-All educational review steps, content template audits, sample output checks, and browser verification journeys for Group 04 (`mermaid-syntax`, `user-flow-modeling`, `conceptual-domain-model`) have passed. Content models retain `reviewState: 'draft'` awaiting centralized state promotion by the orchestrator upon course-owner sign-off.
+**Release status for Issue #54:** Group 04 (`mermaid-syntax`, `user-flow-modeling`, `conceptual-domain-model`) remains **draft; not announced as improved**. The static lesson/sample review and author-reported reader tests do not approve the three candidate videos or establish rendered diagram output. Per-video human decisions, independent complete-group verification, and explicit owner sign-off remain outstanding.
+
+## 6. Independent Educational Review Update — 2026-10-20
+
+This static review checked the authored objectives, diagram purposes, source links, and handoffs in Topics 07–09. It did not render the sample Mermaid diagrams, run a learner workflow, or review external video playback. The browser results above are historical author reports, not outcomes of this review.
+
+| Topic or handoff | Status | Finding and remaining evidence |
+|---|---|---|
+| Topic 07 `mermaid-syntax` | **Pass — static** | Introduces diagram-as-code and provides type/direction and source-documentation guidance. The fictional syntax example and sample packet were not parsed or rendered in this review. |
+| Topic 07 → Topic 08 | **Pass — documented artifact shape** | Topic 07's Mermaid syntax guidance is used by the user-flow lesson; there is no completion gate. |
+| Topic 08 `user-flow-modeling` | **Pass — static** | The fictional flow includes an entry, decision points, success/failure branches, and PRD trace labels. Tie handling remains open; the scenario is not owner-validated and rendering was not run. |
+| Topic 08 → Topic 09 | **Pass — documented artifact shape** | The flow provides business actions and concepts that can inform a conceptual model, while unsupported behavior remains an open question. |
+| Topic 09 `conceptual-domain-model` | **Pass — static** | The sample uses business concepts and relationship labels, keeping database keys, SQL types, and programming operations out of this conceptual artifact. Rendering and domain-owner validation remain outstanding. |
+| Candidate videos | **Not reviewed** | All three records remain candidates pending human review of playback, captions, accessibility, and lesson fit under DEC-70. |
