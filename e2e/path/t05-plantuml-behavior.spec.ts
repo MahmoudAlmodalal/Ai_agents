@@ -45,7 +45,7 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Distinction from Mermaid
-    await expect(page.locator('text=لا يعمل إطلاقاً داخل Mermaid Live')).toBeVisible();
+    await expect(page.locator('text=محرر Mermaid Live لا يفسر صياغة PlantUML')).toBeVisible();
     await expect(page.locator('text=فلسفة أداة PlantUML')).toBeVisible();
 
     // Editor links

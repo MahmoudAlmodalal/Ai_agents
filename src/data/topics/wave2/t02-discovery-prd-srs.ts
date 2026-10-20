@@ -580,9 +580,8 @@ export const t02Entries: TopicItem[] = [
       '6. نظّم مصفوفة تتبع المتطلبات (Requirements Traceability Matrix) لربط كل بند سلوكي في SRS بالمتطلب المعتمد في PRD المقابل له لمنع اختراع متطلبات جديدة.',
       '7. احفظ وثيقة مواصفات النظام في docs/SRS.md وتأكد من اكتمالها لتكون المرجع الحاسم لكتابة الاختبارات وبناء المخططات ومستودع Git.'
     ],
-    promptRefs: [
-      'prompt-02-generate-prd-after-grill-me'
-    ],
+    // The SRS prompt is embedded in this lesson; Prompt 02 generates a PRD.
+    promptRefs: [],
     outputs: [
       'docs/SRS.md (مواصفات السلوك ومعايير القبول Given/When/Then)',
       'مصفوفة تتبع المتطلبات (Requirements Traceability: PRD -> SRS)'

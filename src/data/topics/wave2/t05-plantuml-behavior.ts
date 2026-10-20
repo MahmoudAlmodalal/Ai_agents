@@ -24,8 +24,8 @@ export const topic10Html = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. فلسفة أداة PlantUML في مسار هندسة البرمجيات</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      تُعد <strong>PlantUML</strong> من أقدم وأقوى الأدوات مفتوحة المصدر في عالم <em>Diagrams as Code</em>؛ حيث صُممت لتطبيق معايير اتحاد إدارة الكائنات (OMG UML Standard) بدقة بالغة.
-      بينما نعتمد على Mermaid في مسارات العمل السريعة داخل المتصفح، تبرز الحاجة الهندسية لأداة PlantUML عند نمذجة <strong>مخططات حالات الاستخدام (Use Case Diagrams)</strong>، حيث توفر تمثيلاً بيانياً قياسياً للفواعل (Actors) وحدود النظام (System Boundaries) والعلاقات الإلزامية والشرطية (include / extend) دون تشويه بصري.
+      تُعد <strong>PlantUML</strong> أداة مفتوحة المصدر لكتابة أنواع متعددة من المخططات بصيغة نصية ضمن منهجية <em>Diagrams as Code</em>. وهي توفر صياغة شائعة لمفاهيم UML مثل الفواعل وحالات الاستخدام وحدود النظام، لكن قبول الشيفرة من المصيّر لا يثبت التوافق مع كل أجزاء معيار UML أو صحة النموذج بالنسبة إلى المتطلبات.
+      بينما يمكن استخدام Mermaid لبعض الرسوم السريعة التي يدعمها المضيف، تتيح PlantUML صياغة مخططات UML-style وحفظ مصدرها النصي. راجع مرجع الأداة للأنواع والعلاقات المدعومة، ثم راجع معنى المخطط مقابل متطلبات المشروع.
     </p>
 
     <!-- Distinction from Mermaid Table -->
@@ -41,18 +41,18 @@ export const topic10Html = `
         <tbody>
           <tr>
             <td><strong>المعيار الهندسي</strong></td>
-            <td>امتثال صارم لمواصفات UML 2.x الرسمية (Actors, Use Cases, Boundaries)</td>
-            <td>تركيز على الرسوم الإجرائية السريعة (Flowcharts, Sequences, State)</td>
+            <td>صياغة نصية لمجموعة من عناصر UML-style مثل Actors وUse Cases وBoundaries؛ قبول المصيّر لا يثبت التوافق الكامل أو المعنى الصحيح</td>
+            <td>مكتبة JavaScript تصيّر أنواعاً مدعومة من الرسوم، مثل Flowcharts وSequences وState؛ يختلف الدعم باختلاف المضيف والنسخة</td>
           </tr>
           <tr>
             <td><strong>محرك التصيير (Rendering)</strong></td>
-            <td>يعتمد على محرك Java مع مكتبة Graphviz لتخطيط العقد وتوليد الصور</td>
-            <td>يعمل بنسبة 100% داخل المتصفح عبر JavaScript وتوليد SVG المباشر</td>
+            <td>يعالج مصدر PlantUML؛ وقد تعتمد بعض المخططات أو إعدادات الخادم على Graphviz</td>
+            <td>يعمل عبر JavaScript في المضيفات التي تدمج Mermaid، مع اختلاف الأنواع المدعومة حسب النسخة والمضيف</td>
           </tr>
           <tr>
             <td><strong>التوافق مع المحررات الحية</strong></td>
-            <td><strong class="text-amber-600 dark:text-amber-400">لا يعمل إطلاقاً داخل Mermaid Live!</strong> يتطلب محررات مخصصة</td>
-            <td>مدعوم مباشرة في Mermaid Live وGitHub Markdown دون إضافات</td>
+            <td>يحتاج محرراً أو مصيّراً يدعم صياغة PlantUML؛ Mermaid Live لا يفسرها</td>
+            <td>تدعمه أسطح GitHub Markdown المحددة، مع اختلاف الدعم حسب النسخة والمضيف</td>
           </tr>
           <tr>
             <td><strong>محررات الويب المعتمدة</strong></td>
@@ -93,10 +93,10 @@ export const topic10Html = `
       <div class="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-5">
         <div class="flex items-center justify-between mb-2">
           <h4 class="font-bold text-[var(--text-main)] text-base">خادم PlantUML الرسمي المرجعي</h4>
-          <span class="rounded bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-bold text-blue-800 dark:text-blue-300">المرجع القياسي</span>
+          <span class="rounded bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-bold text-blue-800 dark:text-blue-300">خدمة تصيير ويب</span>
         </div>
         <p class="text-sm leading-6 text-[var(--text-muted)] mb-3">
-          الخادم المرجعي المفتوح من مؤلفي الأداة، يضمن التوافق الكامل مع أحدث قواعد الصياغة ودعم جميع امتدادات OMG UML الرسمية.
+          خدمة ويب لتصيير صياغة PlantUML. نجاحها يؤكد أن النسخة الحالية قبلت المصدر ورسمته؛ ولا يثبت مطابقة كل عنصر لمعيار UML أو صحة قرارات المنتج.
         </p>
         <a href="https://www.plantuml.com/plantuml/uml/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline" dir="ltr">
           https://www.plantuml.com/plantuml/uml/ ↗
@@ -108,8 +108,8 @@ export const topic10Html = `
     <div class="callout mistake">
       <div class="callout-header">⚠️ خطأ شائع يجب الحذر منه</div>
       <p>
-        <strong>لا تلصق كود PlantUML داخل محرر Mermaid Live أو العكس!</strong>
-        تختلف اللغتان جذرياً في محرك التصيير وقواعد الصياغة النحوية. كود PlantUML يبدأ دائماً بالوسم <code>@startuml</code> وينتهي بـ <code>@enduml</code>، بينما يبدأ Mermaid بتعريف النوع مثل <code>flowchart TD</code> أو <code>stateDiagram-v2</code>.
+        <strong>محرر Mermaid Live لا يفسر صياغة PlantUML، ومصيّر PlantUML لا يفسر صياغة Mermaid.</strong>
+        تختلف اللغتان في قواعد الصياغة والمصيّر. ملف PlantUML يبدأ عادةً بالوسم <code>@startuml</code> وينتهي بـ <code>@enduml</code>، بينما يبدأ Mermaid بتعريف النوع مثل <code>flowchart TD</code> أو <code>stateDiagram-v2</code>.
       </p>
     </div>
   </div>
@@ -610,7 +610,7 @@ export const topic13Html = `
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. القاعدة المعمارية الصارمة: عدم اختراع حالات وهمية</h3>
     <p class="leading-8 text-[var(--text-muted)]">
       واحدة من أخطر ثغرات التصميم هي أن يقوم المهندس أو وكيل الذكاء الاصطناعي <strong>باختراع حالات افتراضية</strong> لم يرد لها ذكر في وثيقة المتطلبات (PRD) أو قواعد العمل (مثل: <code>UnderInspectionByDean</code> أو <code>SentToThirdPartyCleaning</code>).
-      كل حالة تظهر في المخطط يجب أن تنعكس مباشرة في حقل <code>status</code> في جدول قاعدة البيانات؛ واختراع حالات خيالية يؤدي إلى:
+      يجب أن تستند كل حالة في المخطط إلى متطلب أو قاعدة عمل موثقة. لا يفرض مخطط المجال كيف ستُخزّن الحالة؛ تمثيلها في قاعدة البيانات قرار تصميم لاحق، وقد لا يقابل كل عنصر في آلة الحالات قيمة مستقلة في حقل <code>status</code>. اختراع حالات بلا سند يؤدي إلى:
     </p>
 
     <ul class="list-disc list-inside space-y-2 text-[var(--text-muted)] my-3 leading-7">
