@@ -1,0 +1,3125 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "d1e136ce7a0bbeb14c9ee13567af970db6c8188e",
+  "integrity": {
+    "isValid": true,
+    "totalTopics": 58,
+    "totalGroups": 19,
+    "missingSlugs": [],
+    "duplicateSlugs": []
+  },
+  "groups": [
+    {
+      "id": "group-01",
+      "topicSlugs": [
+        "project-idea-mvp"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-02",
+      "topicSlugs": [
+        "discovery-grill-me",
+        "prd-specification",
+        "srs"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-03",
+      "topicSlugs": [
+        "git-project-docs",
+        "github-docs-collaboration"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-04",
+      "topicSlugs": [
+        "mermaid-syntax",
+        "user-flow-modeling",
+        "conceptual-domain-model"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-05",
+      "topicSlugs": [
+        "plantuml",
+        "use-case-diagram",
+        "activity-diagram",
+        "state-diagram"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-06",
+      "topicSlugs": [
+        "relational-erd-design",
+        "dbml-dbdiagram-io",
+        "sequence-diagram-modeling",
+        "class-diagram-design"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-07",
+      "topicSlugs": [
+        "ui-ux-roles-navigation",
+        "ux-blueprint",
+        "screen-inventory"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-08",
+      "topicSlugs": [
+        "stitch-reference-screen",
+        "design-system-rules",
+        "interactive-prototype"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-09",
+      "topicSlugs": [
+        "ai-coding-agent",
+        "google-ai-studio",
+        "agent-skills",
+        "mcp-protocol"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-10",
+      "topicSlugs": [
+        "stitch-mcp-integration",
+        "design-md-spec"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-11",
+      "topicSlugs": [
+        "typescript-types",
+        "react-components-state",
+        "tailwind-css-responsive",
+        "nextjs-app-router"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-12",
+      "topicSlugs": [
+        "frontend-architecture-planning",
+        "ui-ux-pro-max-review",
+        "spec-kit-workflow",
+        "frontend-incremental-implementation"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-13",
+      "topicSlugs": [
+        "python-backend-foundation",
+        "postgresql-database-setup",
+        "backend-architecture-api-contracts"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-14",
+      "topicSlugs": [
+        "django-backend",
+        "fastapi-backend",
+        "auth-permissions",
+        "services-selectors"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-15",
+      "topicSlugs": [
+        "frontend-backend-integration",
+        "full-stack-journey-testing"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-16",
+      "topicSlugs": [
+        "database-performance-engineering",
+        "redis-optional-infrastructure",
+        "integrated-project-qa"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-17",
+      "topicSlugs": [
+        "docker-container-workflow",
+        "linux-server-operations"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-18",
+      "topicSlugs": [
+        "vercel-frontend-deployment",
+        "netlify-frontend-deployment",
+        "backend-database-deployment"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    },
+    {
+      "id": "group-19",
+      "topicSlugs": [
+        "project-operations-runbook",
+        "project-handoff-package",
+        "project-demo-day",
+        "project-portfolio-entry"
+      ],
+      "groupBoundariesApproved": true,
+      "templateApproved": true,
+      "releaseApproval": null
+    }
+  ],
+  "topics": [
+    {
+      "slug": "project-idea-mvp",
+      "route": "/learn/project-idea-mvp",
+      "groupId": "group-01",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "58e5eebe734f3ae165837966364b9291115acc85af937f7a278e8f09c68742fd",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "project-idea-mvp-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "idea-mvp-q-evidence",
+            "version": 1
+          },
+          {
+            "id": "idea-mvp-q-journey",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "project-idea-mvp-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "idea-mvp-r-problem",
+            "version": 1,
+            "outputId": "project-context"
+          },
+          {
+            "id": "idea-mvp-r-scope",
+            "version": 1,
+            "outputId": "project-context"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "project-idea-mvp-yc-mvp-2023",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "discovery-grill-me",
+      "route": "/learn/discovery-grill-me",
+      "groupId": "group-02",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "90d888ad55cc4daa4bc6dceddaac269068edc6568fed20ce8018b23c2ef92794",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "discovery-grill-me-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "discovery-q-one-at-time",
+            "version": 1
+          },
+          {
+            "id": "discovery-q-decision-log",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "discovery-grill-me-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "discovery-r-trace",
+            "version": 1,
+            "outputId": "decisions-log"
+          },
+          {
+            "id": "discovery-r-scope",
+            "version": 1,
+            "outputId": "open-questions"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "discovery-grill-me-atlassian-product-discovery",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "prd-specification",
+      "route": "/learn/prd-specification",
+      "groupId": "group-02",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "c448750e58edbd0bc39852224903947165fe8f19dd0cfedb2a9aede7f2fc2e62",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "prd-specification-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "prd-q-open-rule",
+            "version": 1
+          },
+          {
+            "id": "prd-q-traceable",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "prd-specification-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "prd-r-source",
+            "version": 1,
+            "outputId": "prd"
+          },
+          {
+            "id": "prd-r-review",
+            "version": 1,
+            "outputId": "prd-review"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "prd-specification-atlassian-prd-blueprint",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "srs",
+      "route": "/learn/srs",
+      "groupId": "group-02",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "df640c8450212af32de7e084c22ce0be74903c855f50cc9232c4d886ad699196",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "srs-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "srs-q-trace-source",
+            "version": 1
+          },
+          {
+            "id": "srs-q-gwt",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "srs-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "srs-r-scenario",
+            "version": 1,
+            "outputId": "srs"
+          },
+          {
+            "id": "srs-r-trace",
+            "version": 1,
+            "outputId": "requirements-traceability"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "srs-uw-waterloo-srs",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "git-project-docs",
+      "route": "/learn/git-project-docs",
+      "groupId": "group-03",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "0c5edf0b2b3285ebfa9a316e822d8d1ef977c0df46424ac6634514616e310f1d",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "git-project-docs-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "gitdocs-q-ignore",
+            "version": 1
+          },
+          {
+            "id": "gitdocs-q-commit",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "git-project-docs-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "gitdocs-r-ignore",
+            "version": 1,
+            "outputId": "local-repository"
+          },
+          {
+            "id": "gitdocs-r-history",
+            "version": 1,
+            "outputId": "tracked-docs"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "git-project-docs-github-git-basics",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "github-docs-collaboration",
+      "route": "/learn/github-docs-collaboration",
+      "groupId": "group-03",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "cc22f993e525002f79888ca32573f770ca9da20670e0f78582272ecdfec12847",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "github-docs-collaboration-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "githubdocs-q-pr",
+            "version": 1
+          },
+          {
+            "id": "githubdocs-q-remote",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "github-docs-collaboration-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "githubdocs-r-remote",
+            "version": 1,
+            "outputId": "remote-repository"
+          },
+          {
+            "id": "githubdocs-r-review",
+            "version": 1,
+            "outputId": "review-pull-request"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "github-docs-collaboration-exampro-pull-requests",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "mermaid-syntax",
+      "route": "/learn/mermaid-syntax",
+      "groupId": "group-04",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "377edd84af9f0f31a1664a48c23238fbb5c62ad991bdd3a0fd1018296bf15d1f",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "mermaid-syntax-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "mermaid-q-type",
+            "version": 1
+          },
+          {
+            "id": "mermaid-q-meaning",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "mermaid-syntax-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "mermaid-r-valid",
+            "version": 1,
+            "outputId": "mermaid-samples"
+          },
+          {
+            "id": "mermaid-r-doc",
+            "version": 1,
+            "outputId": "mermaid-guide"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "mermaid-syntax-gitlab-mermaid-editor",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "user-flow-modeling",
+      "route": "/learn/user-flow-modeling",
+      "groupId": "group-04",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "dcfd589974392cdc1fb36b8adcced0974d9b000c526384804e66057447b3becc",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "user-flow-modeling-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "userflow-q-actor",
+            "version": 1
+          },
+          {
+            "id": "userflow-q-source",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "user-flow-modeling-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "userflow-r-coverage",
+            "version": 1,
+            "outputId": "user-flow-diagram"
+          },
+          {
+            "id": "userflow-r-source",
+            "version": 1,
+            "outputId": "user-flow-doc"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "user-flow-modeling-nng-user-flows",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "conceptual-domain-model",
+      "route": "/learn/conceptual-domain-model",
+      "groupId": "group-04",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "a407e7302566baeea6af846691c50001e718e842cbe723ba019d874dfd45c3b1",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "conceptual-domain-model-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "domain-q-level",
+            "version": 1
+          },
+          {
+            "id": "domain-q-relationship",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "conceptual-domain-model-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "domain-r-definitions",
+            "version": 1,
+            "outputId": "domain-model-doc"
+          },
+          {
+            "id": "domain-r-boundary",
+            "version": 1,
+            "outputId": "domain-model-diagram"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "conceptual-domain-model-nptel-conceptual-design",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "plantuml",
+      "route": "/learn/plantuml",
+      "groupId": "group-05",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "a084ee42278731e4b9d9847f28ef70c17cb48d4995fd0d76657727da84530e93",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "plantuml-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "plantuml-q-boundary",
+            "version": 1
+          },
+          {
+            "id": "plantuml-q-render",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "plantuml-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "plantuml-r-render",
+            "version": 1,
+            "outputId": "plantuml-sample"
+          },
+          {
+            "id": "plantuml-r-guide",
+            "version": 1,
+            "outputId": "plantuml-guide"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "plantuml-yasenstar-plantuml-quickstart",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "use-case-diagram",
+      "route": "/learn/use-case-diagram",
+      "groupId": "group-05",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "ef9740f8b72c4949b67a1ebe49c3d1297534f8e4de726c1750cba77be21828ae",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "use-case-diagram-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "usecase-q-actor",
+            "version": 1
+          },
+          {
+            "id": "usecase-q-extend",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "use-case-diagram-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "usecase-r-boundary",
+            "version": 1,
+            "outputId": "usecase-puml"
+          },
+          {
+            "id": "usecase-r-relations",
+            "version": 1,
+            "outputId": "usecase-notes"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "use-case-diagram-lucid-use-case",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "activity-diagram",
+      "route": "/learn/activity-diagram",
+      "groupId": "group-05",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "371cefd7dc24783264c05dfbb9776423a5ab8f070d512a5c0c92304af82b4068",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "activity-diagram-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "activity-q-guard",
+            "version": 1
+          },
+          {
+            "id": "activity-q-source",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "activity-diagram-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "activity-r-paths",
+            "version": 1,
+            "outputId": "activity-code"
+          },
+          {
+            "id": "activity-r-source",
+            "version": 1,
+            "outputId": "activity-doc"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "activity-diagram-lucid-activity",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "state-diagram",
+      "route": "/learn/state-diagram",
+      "groupId": "group-05",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "b619229afccfda4e1bb65ca334a003ac2d5c2e6ef4f7c2a30aee46a8784ba383",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "state-diagram-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "state-q-event",
+            "version": 1
+          },
+          {
+            "id": "state-q-unknown",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "state-diagram-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "state-r-lifecycle",
+            "version": 1,
+            "outputId": "state-code"
+          },
+          {
+            "id": "state-r-unknown",
+            "version": 1,
+            "outputId": "state-doc"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "state-diagram-hamburg-state-machine",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "relational-erd-design",
+      "route": "/learn/relational-erd-design",
+      "groupId": "group-06",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "6364f8df0ff619fa54f06162961c70274aba39f1ecfdff7d6ab605a10ef1dc0e",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "relational-erd-design-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "erd-q-fk",
+            "version": 1
+          },
+          {
+            "id": "erd-q-concurrency",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "relational-erd-design-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "erd-r-integrity",
+            "version": 1,
+            "outputId": "erd-doc"
+          },
+          {
+            "id": "erd-r-concurrency",
+            "version": 1,
+            "outputId": "database-review"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "relational-erd-design-lucid-erd",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "dbml-dbdiagram-io",
+      "route": "/learn/dbml-dbdiagram-io",
+      "groupId": "group-06",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "0310f914a3a9c9c5c4ac3da241d68f3b52eae155a5816037defdce1feff5e5ac",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "dbml-dbdiagram-io-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "dbml-q-language",
+            "version": 1
+          },
+          {
+            "id": "dbml-q-export",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "dbml-dbdiagram-io-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "dbml-r-fidelity",
+            "version": 1,
+            "outputId": "dbml-source"
+          },
+          {
+            "id": "dbml-r-export",
+            "version": 1,
+            "outputId": "sql-export"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "dbml-dbdiagram-io-fazt-dbml",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "sequence-diagram-modeling",
+      "route": "/learn/sequence-diagram-modeling",
+      "groupId": "group-06",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "033494699b61294b76637b0ec5d07f6cb87d4c9c56d5d80e85c5a877b03f0c6e",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "sequence-diagram-modeling-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "sequence-q-order",
+            "version": 1
+          },
+          {
+            "id": "sequence-q-alt",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "sequence-diagram-modeling-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "sequence-r-order",
+            "version": 1,
+            "outputId": "sequence-code"
+          },
+          {
+            "id": "sequence-r-branches",
+            "version": 1,
+            "outputId": "sequence-doc"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "sequence-diagram-modeling-hamburg-sequence",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "class-diagram-design",
+      "route": "/learn/class-diagram-design",
+      "groupId": "group-06",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "444623561af2ae863a35d9ed7062213b9ba95890c93e51e7ff619b45df14a215",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "class-diagram-design-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "class-q-source",
+            "version": 1
+          },
+          {
+            "id": "class-q-responsibility",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "class-diagram-design-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "class-r-structure",
+            "version": 1,
+            "outputId": "class-code"
+          },
+          {
+            "id": "class-r-alignment",
+            "version": 1,
+            "outputId": "class-doc"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "class-diagram-design-lucid-class",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "ui-ux-roles-navigation",
+      "route": "/learn/ui-ux-roles-navigation",
+      "groupId": "group-07",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "8cc7769ec42be26dfc7a01316ed1f7ccc8700040a0c162073d49416c88478e9e",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "ui-ux-roles-navigation-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "uiux-q-role",
+            "version": 1
+          },
+          {
+            "id": "uiux-q-navigation",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "ui-ux-roles-navigation-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "uiux-r-permission",
+            "version": 1,
+            "outputId": "role-ui-matrix"
+          },
+          {
+            "id": "uiux-r-navigation",
+            "version": 1,
+            "outputId": "uiux-requirements"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "ui-ux-roles-navigation-nng-information-architecture",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "ux-blueprint",
+      "route": "/learn/ux-blueprint",
+      "groupId": "group-07",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "b7282e40223c22fa915a28c0b9589701b8aa5408c6d339209bb7a723050de989",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "ux-blueprint-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "uxbp-q-empty",
+            "version": 1
+          },
+          {
+            "id": "uxbp-q-a11y",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "ux-blueprint-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "uxbp-r-states",
+            "version": 1,
+            "outputId": "states-matrix"
+          },
+          {
+            "id": "uxbp-r-journey",
+            "version": 1,
+            "outputId": "ux-blueprint"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "ux-blueprint-nng-service-blueprint",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "screen-inventory",
+      "route": "/learn/screen-inventory",
+      "groupId": "group-07",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "953abd586aa246f44a0f7b57305121b055c63378fd9d381f051787b39704b465",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "screen-inventory-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "inventory-q-coverage",
+            "version": 1
+          },
+          {
+            "id": "inventory-q-fields",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "screen-inventory-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "inventory-r-detail",
+            "version": 1,
+            "outputId": "screen-inventory"
+          },
+          {
+            "id": "inventory-r-trace",
+            "version": 1,
+            "outputId": "screen-traceability"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "screen-inventory-nng-wireflows-101",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "stitch-reference-screen",
+      "route": "/learn/stitch-reference-screen",
+      "groupId": "group-08",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "62ab8bc4cf1a2421152ff89f359108112462e74610f4e29355a1f145f6523ea0",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "stitch-reference-screen-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "stitchref-q-unknown",
+            "version": 1
+          },
+          {
+            "id": "stitchref-q-reference",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "stitch-reference-screen-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "stitchref-r-scope",
+            "version": 1,
+            "outputId": "stitch-prompt"
+          },
+          {
+            "id": "stitchref-r-evidence",
+            "version": 1,
+            "outputId": "reference-screen"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "stitch-reference-screen-google-stitch-intro",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "design-system-rules",
+      "route": "/learn/design-system-rules",
+      "groupId": "group-08",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "ec89b6c084461a6f60d247cc0238afb5a11fb60905ffc80fd77797894b7ed71c",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "design-system-rules-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "designrules-q-token",
+            "version": 1
+          },
+          {
+            "id": "designrules-q-prompts",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "design-system-rules-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "designrules-r-source",
+            "version": 1,
+            "outputId": "screen-prompts"
+          },
+          {
+            "id": "designrules-r-consistency",
+            "version": 1,
+            "outputId": "design-system-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "design-system-rules-figma-design-systems-lesson-1",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "interactive-prototype",
+      "route": "/learn/interactive-prototype",
+      "groupId": "group-08",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "12ab6a0eb91a196f4c671d7ccdb2415859f16f1ba27adff5f6b50b36ed93664c",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "interactive-prototype-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "prototype-q-functional",
+            "version": 1
+          },
+          {
+            "id": "prototype-q-audit",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "interactive-prototype-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "prototype-r-interaction",
+            "version": 1,
+            "outputId": "prototype"
+          },
+          {
+            "id": "prototype-r-audit",
+            "version": 1,
+            "outputId": "prototype-audit"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "interactive-prototype-figma-prototype-fundamentals",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "ai-coding-agent",
+      "route": "/learn/ai-coding-agent",
+      "groupId": "group-09",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "4bde874a9c24acc8db26cc066e7e22c7e507b62344cb586ff7c3579e19e0cac6",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "ai-coding-agent-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "agent-q-secret",
+            "version": 1
+          },
+          {
+            "id": "agent-q-scope",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "ai-coding-agent-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "agent-r-boundary",
+            "version": 1,
+            "outputId": "agent-setup"
+          },
+          {
+            "id": "agent-r-secret",
+            "version": 1,
+            "outputId": "safe-env"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "ai-coding-agent-openai-codex-for-beginners",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "google-ai-studio",
+      "route": "/learn/google-ai-studio",
+      "groupId": "group-09",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "7ebae36a8e0c4ef5aa3c98c28456a4660e40889a6dde98335b70b34d659b3062",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "google-ai-studio-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "aistudio-q-data",
+            "version": 1
+          },
+          {
+            "id": "aistudio-q-key",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "google-ai-studio-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "aistudio-r-repro",
+            "version": 1,
+            "outputId": "studio-workflow"
+          },
+          {
+            "id": "aistudio-r-schema",
+            "version": 1,
+            "outputId": "mock-data"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "google-ai-studio-google-ai-studio-developers",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "agent-skills",
+      "route": "/learn/agent-skills",
+      "groupId": "group-09",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "f707e6f6dd59ada29f564d384c5648db38dfa3fb7562e6e7d7ac5bbe94d39541",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "agent-skills-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "skills-q-scope",
+            "version": 1
+          },
+          {
+            "id": "skills-q-test",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "agent-skills-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "skills-r-trigger",
+            "version": 1,
+            "outputId": "skill-index"
+          },
+          {
+            "id": "skills-r-output",
+            "version": 1,
+            "outputId": "frontend-skill"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "agent-skills-anthropic-agent-skills-webinar",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "mcp-protocol",
+      "route": "/learn/mcp-protocol",
+      "groupId": "group-09",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "19a07c93a40f451276303c24402be62330a4bfbf065a40dce73b731762117448",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "mcp-protocol-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "mcp-q-roles",
+            "version": 1
+          },
+          {
+            "id": "mcp-q-scope",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "mcp-protocol-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "mcp-r-roles",
+            "version": 1,
+            "outputId": "mcp-foundations"
+          },
+          {
+            "id": "mcp-r-permissions",
+            "version": 1,
+            "outputId": "mcp-config"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "mcp-protocol-anthropic-mcp-origin",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "stitch-mcp-integration",
+      "route": "/learn/stitch-mcp-integration",
+      "groupId": "group-10",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "7d4beada18e9522ee85eb69b21f9d93117dbeeec6697bd4ad475c9b891a0fb91",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "stitch-mcp-integration-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "stitchmcp-q-scope",
+            "version": 1
+          },
+          {
+            "id": "stitchmcp-q-fallback",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "stitch-mcp-integration-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "stitchmcp-r-readonly",
+            "version": 1,
+            "outputId": "stitch-connection"
+          },
+          {
+            "id": "stitchmcp-r-fallback",
+            "version": 1,
+            "outputId": "stitch-reference"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "stitch-mcp-integration-alex-hitt-stitch-mcp",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "design-md-spec",
+      "route": "/learn/design-md-spec",
+      "groupId": "group-10",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "d6baa7087712ffe0151f9dc3789fa0868b0c134b82fc3193ad7139e150ae1499",
+      "reviewState": "draft",
+      "quiz": {
+        "id": "design-md-spec-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "designmd-q-unknown",
+            "version": 1
+          },
+          {
+            "id": "designmd-q-role",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "design-md-spec-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "designmd-r-token",
+            "version": 1,
+            "outputId": "design-tokens"
+          },
+          {
+            "id": "designmd-r-scope",
+            "version": 1,
+            "outputId": "design-md"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "design-md-spec-google-design-md-video",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "typescript-types",
+      "route": "/learn/typescript-types",
+      "groupId": "group-11",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "d07933104bbe2622a00b70e3614c51c68fc4857da165e617708d8c4467c10680",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "typescript-types-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "typescript-types-typed-status-union",
+            "version": 1
+          },
+          {
+            "id": "typescript-types-runtime-json-validation",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "typescript-types-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "typescript-types-contract-source",
+            "version": 1,
+            "outputId": "types-file"
+          },
+          {
+            "id": "typescript-types-runtime-boundary",
+            "version": 1,
+            "outputId": "type-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "typescript-types-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "react-components-state",
+      "route": "/learn/react-components-state",
+      "groupId": "group-11",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "7f3f023b2a3984b34b148a8812f11f12fbe48c39f0751186b5cb9ef05edec103",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "react-components-state-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "react-components-state-shared-state-owner",
+            "version": 1
+          },
+          {
+            "id": "react-components-state-server-client-boundary",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "react-components-state-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "react-components-state-state-owner",
+            "version": 1,
+            "outputId": "component-map"
+          },
+          {
+            "id": "react-components-state-state-coverage",
+            "version": 1,
+            "outputId": "state-fixtures"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "react-components-state-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "tailwind-css-responsive",
+      "route": "/learn/tailwind-css-responsive",
+      "groupId": "group-11",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "5ea821a47cecefa879d7bbc7c28ad47654748ebc94ad8a6288c05c5a47dbf326",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "tailwind-css-responsive-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "tailwind-css-responsive-design-token-source",
+            "version": 1
+          },
+          {
+            "id": "tailwind-css-responsive-logical-spacing-rtl",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "tailwind-css-responsive-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "tailwind-css-responsive-token-source",
+            "version": 1,
+            "outputId": "token-map"
+          },
+          {
+            "id": "tailwind-css-responsive-direction-check",
+            "version": 1,
+            "outputId": "responsive-report"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "tailwind-css-responsive-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "nextjs-app-router",
+      "route": "/learn/nextjs-app-router",
+      "groupId": "group-11",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "933251cb5e6903688e621ac30a5d42e2d15f01710f0282f03821dcd172733667",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "nextjs-app-router-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "nextjs-app-router-layout-route-mapping",
+            "version": 1
+          },
+          {
+            "id": "nextjs-app-router-fixture-vs-api",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "nextjs-app-router-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "nextjs-app-router-screen-trace",
+            "version": 1,
+            "outputId": "route-spec"
+          },
+          {
+            "id": "nextjs-app-router-source-label",
+            "version": 1,
+            "outputId": "route-shell"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "nextjs-app-router-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "frontend-architecture-planning",
+      "route": "/learn/frontend-architecture-planning",
+      "groupId": "group-12",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "18c09cfe708b1c4006f8868f9a193dd649d66d318b42cb5c909485270fdea6ab",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "frontend-architecture-planning-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "frontend-architecture-planning-requirement-conflict-source",
+            "version": 1
+          },
+          {
+            "id": "frontend-architecture-planning-reviewable-task-boundary",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "frontend-architecture-planning-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "frontend-architecture-planning-map-source",
+            "version": 1,
+            "outputId": "front-map"
+          },
+          {
+            "id": "frontend-architecture-planning-slice-acceptance",
+            "version": 1,
+            "outputId": "task-slice"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "frontend-architecture-planning-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "ui-ux-pro-max-review",
+      "route": "/learn/ui-ux-pro-max-review",
+      "groupId": "group-12",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "1a000c94a30e4c1537fd029543051def88945f65d92889aef039ad16bbe30207",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "ui-ux-pro-max-review-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "ui-ux-pro-max-review-suggestion-vs-approved-system",
+            "version": 1
+          },
+          {
+            "id": "ui-ux-pro-max-review-actionable-critique-evidence",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "ui-ux-pro-max-review-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "ui-ux-pro-max-review-review-context",
+            "version": 1,
+            "outputId": "ux-context"
+          },
+          {
+            "id": "ui-ux-pro-max-review-decision-record",
+            "version": 1,
+            "outputId": "ux-decisions"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "ui-ux-pro-max-review-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "spec-kit-workflow",
+      "route": "/learn/spec-kit-workflow",
+      "groupId": "group-12",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "c047e9a40b99af9a06f9a3280d04cbc8c7a961a18dc3ab7d16356437d22a5b20",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "spec-kit-workflow-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "spec-kit-workflow-scope-expansion-control",
+            "version": 1
+          },
+          {
+            "id": "spec-kit-workflow-spec-plan-task-trace",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "spec-kit-workflow-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "spec-kit-workflow-scope",
+            "version": 1,
+            "outputId": "feature-spec"
+          },
+          {
+            "id": "spec-kit-workflow-tasks",
+            "version": 1,
+            "outputId": "feature-plan"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "spec-kit-workflow-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "frontend-incremental-implementation",
+      "route": "/learn/frontend-incremental-implementation",
+      "groupId": "group-12",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "4226e6d07671994be76394e1f56c00a4e99bf2400e6d92889dac9abac55d2f16",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "frontend-incremental-implementation-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "frontend-incremental-implementation-vertical-slice-choice",
+            "version": 1
+          },
+          {
+            "id": "frontend-incremental-implementation-mocked-service-boundary",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "frontend-incremental-implementation-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "frontend-incremental-implementation-acceptance",
+            "version": 1,
+            "outputId": "ui-slice"
+          },
+          {
+            "id": "frontend-incremental-implementation-test-result",
+            "version": 1,
+            "outputId": "slice-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "frontend-incremental-implementation-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "python-backend-foundation",
+      "route": "/learn/python-backend-foundation",
+      "groupId": "group-13",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "f6b20f946bae5b07335bf92faa13bd0ad34845f18ca0a765db16cf8695caf134",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "python-backend-foundation-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "python-backend-foundation-venv-vs-secret-storage",
+            "version": 1
+          },
+          {
+            "id": "python-backend-foundation-runtime-input-validation-vs-type-hints",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "python-backend-foundation-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "python-backend-foundation-reproducible",
+            "version": 1,
+            "outputId": "python-env"
+          },
+          {
+            "id": "python-backend-foundation-secret-boundary",
+            "version": 1,
+            "outputId": "config-template"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "python-backend-foundation-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "postgresql-database-setup",
+      "route": "/learn/postgresql-database-setup",
+      "groupId": "group-13",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "ef50560b40bc9501451c32791a10c51beb446fc3fa0ddd1c01a3c8ae4ad83667",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "postgresql-database-setup-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "postgresql-database-setup-least-privilege-db-role",
+            "version": 1
+          },
+          {
+            "id": "postgresql-database-setup-dev-connection-evidence",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "postgresql-database-setup-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "postgresql-database-setup-db-role",
+            "version": 1,
+            "outputId": "pg-setup"
+          },
+          {
+            "id": "postgresql-database-setup-env-result",
+            "version": 1,
+            "outputId": "pg-check"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "postgresql-database-setup-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "backend-architecture-api-contracts",
+      "route": "/learn/backend-architecture-api-contracts",
+      "groupId": "group-13",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "82920d15e1050e6955c67647cfaeec7a33574d02b05620927e0a4f51ed455649",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "backend-architecture-api-contracts-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "backend-architecture-api-contracts-contract-fields-before-route",
+            "version": 1
+          },
+          {
+            "id": "backend-architecture-api-contracts-borrowhub-optional-rule",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "backend-architecture-api-contracts-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "backend-architecture-api-contracts-contract-shape",
+            "version": 1,
+            "outputId": "api-contract"
+          },
+          {
+            "id": "backend-architecture-api-contracts-rule-source",
+            "version": 1,
+            "outputId": "api-layers"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "backend-architecture-api-contracts-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "django-backend",
+      "route": "/learn/django-backend",
+      "groupId": "group-14",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "09d135246ec186d3d32d5ad1fac93deb55772f9cef29432defa206825c9ff966",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "django-backend-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "django-backend-database-constraint-vs-ui-check",
+            "version": 1
+          },
+          {
+            "id": "django-backend-migration-risk-review",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "django-backend-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "django-backend-erd-match",
+            "version": 1,
+            "outputId": "django-models"
+          },
+          {
+            "id": "django-backend-migration-review",
+            "version": 1,
+            "outputId": "django-migration"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "django-backend-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "fastapi-backend",
+      "route": "/learn/fastapi-backend",
+      "groupId": "group-14",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "14ad30af13e503af6a19c501e532287cbc5501eeca411ea3c37ac9283e903d20",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "fastapi-backend-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "fastapi-backend-request-schema-validation",
+            "version": 1
+          },
+          {
+            "id": "fastapi-backend-migration-generated-diff-review",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "fastapi-backend-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "fastapi-backend-schema-boundary",
+            "version": 1,
+            "outputId": "api-schemas"
+          },
+          {
+            "id": "fastapi-backend-migration-context",
+            "version": 1,
+            "outputId": "alembic-record"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "fastapi-backend-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "auth-permissions",
+      "route": "/learn/auth-permissions",
+      "groupId": "group-14",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "b1488bd9788a1e1e7159537edc30c5f570662ef366eb69aaf6b319329d86faf3",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "auth-permissions-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "auth-permissions-authenticated-identity-vs-authorization",
+            "version": 1
+          },
+          {
+            "id": "auth-permissions-server-enforced-ownership",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "auth-permissions-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "auth-permissions-role-source",
+            "version": 1,
+            "outputId": "permission-matrix"
+          },
+          {
+            "id": "auth-permissions-server-check",
+            "version": 1,
+            "outputId": "auth-tests"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "auth-permissions-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "services-selectors",
+      "route": "/learn/services-selectors",
+      "groupId": "group-14",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "d2983dd47eaf2d10e884d928c7b6d9b41fa505d64445ce0d126cf458f52856c3",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "services-selectors-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "services-selectors-selector-read-side-effects",
+            "version": 1
+          },
+          {
+            "id": "services-selectors-service-invariant-ownership",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "services-selectors-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "services-selectors-tx-boundary",
+            "version": 1,
+            "outputId": "service-map"
+          },
+          {
+            "id": "services-selectors-measured-rule",
+            "version": 1,
+            "outputId": "invariant-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "services-selectors-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "frontend-backend-integration",
+      "route": "/learn/frontend-backend-integration",
+      "groupId": "group-15",
+      "improvementStatus": "pending-review",
+      "contentVersion": 1,
+      "contentSha256": "21572b4f995a98bc3b264f0f6cfe0b9a85a26b4b9f5a6045746f2db066b76092",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "frontend-backend-integration-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "frontend-backend-integration-successful-empty-response-state",
+            "version": 1
+          },
+          {
+            "id": "frontend-backend-integration-browser-public-env-vs-secret",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "frontend-backend-integration-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "frontend-backend-integration-contract-errors",
+            "version": 1,
+            "outputId": "api-client"
+          },
+          {
+            "id": "frontend-backend-integration-secret-boundary",
+            "version": 1,
+            "outputId": "integration-config"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "frontend-backend-integration-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "full-stack-journey-testing",
+      "route": "/learn/full-stack-journey-testing",
+      "groupId": "group-15",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "dfc37aba0f67df06c1c9a26725a87896814b49e37ab00e73bde7faa387195d88",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "full-stack-journey-testing-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "full-stack-journey-testing-test-layer-evidence",
+            "version": 1
+          },
+          {
+            "id": "full-stack-journey-testing-reproducible-e2e-fixture",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "full-stack-journey-testing-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "full-stack-journey-testing-reproducible",
+            "version": 1,
+            "outputId": "journey-spec"
+          },
+          {
+            "id": "full-stack-journey-testing-test-boundary",
+            "version": 1,
+            "outputId": "journey-log"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "full-stack-journey-testing-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "database-performance-engineering",
+      "route": "/learn/database-performance-engineering",
+      "groupId": "group-16",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "c9a7097e9189320a5df253761b9c26744ada900254676440d2f550483ca4e60d",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "database-performance-engineering-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "database-performance-engineering-measure-before-index",
+            "version": 1
+          },
+          {
+            "id": "database-performance-engineering-plan-vs-latency-evidence",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "database-performance-engineering-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "database-performance-engineering-measurement-context",
+            "version": 1,
+            "outputId": "db-baseline"
+          },
+          {
+            "id": "database-performance-engineering-tradeoff",
+            "version": 1,
+            "outputId": "db-change"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "database-performance-engineering-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "redis-optional-infrastructure",
+      "route": "/learn/redis-optional-infrastructure",
+      "groupId": "group-16",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "7450fcfd8ddaca89ce99a46bf30356c60a32f05efa7f6ba02db13ac7f2c8b5fb",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "redis-optional-infrastructure-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "redis-optional-infrastructure-cache-need-evidence",
+            "version": 1
+          },
+          {
+            "id": "redis-optional-infrastructure-cache-invalidation-after-update",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "redis-optional-infrastructure-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "redis-optional-infrastructure-choice-evidence",
+            "version": 1,
+            "outputId": "redis-decision"
+          },
+          {
+            "id": "redis-optional-infrastructure-consistency",
+            "version": 1,
+            "outputId": "cache-policy"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "redis-optional-infrastructure-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "integrated-project-qa",
+      "route": "/learn/integrated-project-qa",
+      "groupId": "group-16",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "75eeb1a38355c7845547cc78aee0e71519040c10998091abc4b50ec1397c7932",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "integrated-project-qa-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "integrated-project-qa-build-vs-accessibility-evidence",
+            "version": 1
+          },
+          {
+            "id": "integrated-project-qa-test-reproduction-context",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "integrated-project-qa-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "integrated-project-qa-traceability",
+            "version": 1,
+            "outputId": "qa-matrix"
+          },
+          {
+            "id": "integrated-project-qa-blocker",
+            "version": 1,
+            "outputId": "qa-gaps"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "integrated-project-qa-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "docker-container-workflow",
+      "route": "/learn/docker-container-workflow",
+      "groupId": "group-17",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "3642fdc818194c157589d66f68793eb6b34ebf688eac0b5c05e74284c48d5bda",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "docker-container-workflow-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "docker-container-workflow-container-needed-decision",
+            "version": 1
+          },
+          {
+            "id": "docker-container-workflow-runtime-secret-injection",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "docker-container-workflow-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "docker-container-workflow-container-need",
+            "version": 1,
+            "outputId": "container-decision"
+          },
+          {
+            "id": "docker-container-workflow-container-safety",
+            "version": 1,
+            "outputId": "container-runtime-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "docker-container-workflow-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "linux-server-operations",
+      "route": "/learn/linux-server-operations",
+      "groupId": "group-17",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "054ab218419f56548cab5dbef67e9ae57f4f1eeed616fb932b7c694645e0154f",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "linux-server-operations-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "linux-server-operations-managed-host-boundary",
+            "version": 1
+          },
+          {
+            "id": "linux-server-operations-least-privilege-file-access",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "linux-server-operations-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "linux-server-operations-host-boundary",
+            "version": 1,
+            "outputId": "linux-ownership"
+          },
+          {
+            "id": "linux-server-operations-least-privilege",
+            "version": 1,
+            "outputId": "linux-change-plan"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "linux-server-operations-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "vercel-frontend-deployment",
+      "route": "/learn/vercel-frontend-deployment",
+      "groupId": "group-18",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "f0e7dbb9df3a8355f439b9fe298f377499d13d74abdc50ce65f6d04ee5bada3f",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "vercel-frontend-deployment-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "vercel-frontend-deployment-public-vs-runtime-env",
+            "version": 1
+          },
+          {
+            "id": "vercel-frontend-deployment-preview-scope",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "vercel-frontend-deployment-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "vercel-frontend-deployment-deploy-source",
+            "version": 1,
+            "outputId": "vercel-config-record"
+          },
+          {
+            "id": "vercel-frontend-deployment-preview-scope",
+            "version": 1,
+            "outputId": "vercel-preview-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "vercel-frontend-deployment-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "netlify-frontend-deployment",
+      "route": "/learn/netlify-frontend-deployment",
+      "groupId": "group-18",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "c5c9d45791806fe6de5a9bb1ba40402e97e7b8cca01524e8673d6aed4a5ec411",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "netlify-frontend-deployment-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "netlify-frontend-deployment-current-framework-support",
+            "version": 1
+          },
+          {
+            "id": "netlify-frontend-deployment-preview-mock",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "netlify-frontend-deployment-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "netlify-frontend-deployment-current-support",
+            "version": 1,
+            "outputId": "netlify-compatibility-record"
+          },
+          {
+            "id": "netlify-frontend-deployment-separated-services",
+            "version": 1,
+            "outputId": "netlify-preview-report"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "netlify-frontend-deployment-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "backend-database-deployment",
+      "route": "/learn/backend-database-deployment",
+      "groupId": "group-18",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "5f6c2533543d0ac01181f86385dbf0d7c360e56fe004c9e0a005ba2ba6b54aa2",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "backend-database-deployment-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "backend-database-deployment-runtime-secret-configuration",
+            "version": 1
+          },
+          {
+            "id": "backend-database-deployment-health-vs-database-check",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "backend-database-deployment-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "backend-database-deployment-network-secrets",
+            "version": 1,
+            "outputId": "backend-topology"
+          },
+          {
+            "id": "backend-database-deployment-smoke-scope",
+            "version": 1,
+            "outputId": "backend-smoke-report"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "backend-database-deployment-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "project-operations-runbook",
+      "route": "/learn/project-operations-runbook",
+      "groupId": "group-19",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "ee8736691230475040c5020e5638309ebf78f3f30d98d64c4a83db5ecda4e9da",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "project-operations-runbook-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "project-operations-runbook-backup-vs-restore-drill",
+            "version": 1
+          },
+          {
+            "id": "project-operations-runbook-application-rollback-vs-schema",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "project-operations-runbook-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "project-operations-runbook-capability-evidence",
+            "version": 1,
+            "outputId": "operations-capabilities"
+          },
+          {
+            "id": "project-operations-runbook-data-application-separation",
+            "version": 1,
+            "outputId": "restore-rollback-plan"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "project-operations-runbook-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "project-handoff-package",
+      "route": "/learn/project-handoff-package",
+      "groupId": "group-19",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "3c83bb11f09a39ae960168291756a4be3f25259aaf6e015507c1588dc8565faf",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "project-handoff-package-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "project-handoff-package-missing-resource-traceability",
+            "version": 1
+          },
+          {
+            "id": "project-handoff-package-test-commit-provenance",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "project-handoff-package-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "project-handoff-package-link-integrity",
+            "version": 1,
+            "outputId": "handoff-index"
+          },
+          {
+            "id": "project-handoff-package-test-provenance",
+            "version": 1,
+            "outputId": "handoff-evidence"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "project-handoff-package-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "project-demo-day",
+      "route": "/learn/project-demo-day",
+      "groupId": "group-19",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "8b73adfef57b8f67b66be3f41a3a503620b8b3446e4038076e5e748690196d28",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "project-demo-day-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "project-demo-day-reproducible-demo-flow",
+            "version": 1
+          },
+          {
+            "id": "project-demo-day-live-vs-recorded-evidence",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "project-demo-day-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "project-demo-day-claim-evidence",
+            "version": 1,
+            "outputId": "demo-script"
+          },
+          {
+            "id": "project-demo-day-fallback-label",
+            "version": 1,
+            "outputId": "demo-readiness"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "project-demo-day-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    },
+    {
+      "slug": "project-portfolio-entry",
+      "route": "/learn/project-portfolio-entry",
+      "groupId": "group-19",
+      "improvementStatus": "pending-review",
+      "contentVersion": 2,
+      "contentSha256": "e31bbc36c17c27ba3012352dd80ce3efe2a26cac503459a3f9d8926fa34e8621",
+      "reviewState": "review-ready",
+      "quiz": {
+        "id": "project-portfolio-entry-objective-quiz",
+        "version": 1,
+        "policyVersion": 1,
+        "policyApproval": "approved",
+        "questions": [
+          {
+            "id": "project-portfolio-entry-individual-contribution-attribution",
+            "version": 1
+          },
+          {
+            "id": "project-portfolio-entry-measured-impact-claim",
+            "version": 1
+          }
+        ]
+      },
+      "selfAssessment": {
+        "id": "project-portfolio-entry-practical-assessment",
+        "version": 1,
+        "scaleVersion": 1,
+        "scaleApproval": "approved",
+        "criteria": [
+          {
+            "id": "project-portfolio-entry-contribution-accuracy",
+            "version": 1,
+            "outputId": "portfolio-narrative"
+          },
+          {
+            "id": "project-portfolio-entry-impact-method",
+            "version": 1,
+            "outputId": "portfolio-evidence-map"
+          }
+        ]
+      },
+      "videos": [
+        {
+          "id": "project-portfolio-entry-video-candidate",
+          "state": "candidate",
+          "approval": "proposed"
+        }
+      ]
+    }
+  ]
+}
