@@ -34,7 +34,7 @@ async function disableHttpCache(context: BrowserContext, page: Page) {
 }
 
 async function inspectActiveTopicBundle(page: Page) {
-  return page.evaluate(async (slug) => {
+  return page.evaluate(async ({ slug, path }) => {
     const index = await caches.open('ai-agents-topic-index-v2');
     const pointerUrl = new URL('/__ai_agents_offline_v2__/topics/' + encodeURIComponent(slug), location.origin).href;
     const pointerResponse = await index.match(pointerUrl);
@@ -53,11 +53,11 @@ async function inspectActiveTopicBundle(page: Page) {
     return {
       pointer,
       manifest,
-      hasHtml: Boolean(await bundleCache.match(new URL(topicPath, location.origin).href)),
+      hasHtml: Boolean(await bundleCache.match(new URL(path, location.origin).href)),
       payload: payloadResponse ? await payloadResponse.json() : null,
       missingAssets,
     };
-  }, topicSlug);
+  }, { slug: topicSlug, path: topicPath });
 }
 
 test.describe('Issue #70 production-build learner journey', () => {

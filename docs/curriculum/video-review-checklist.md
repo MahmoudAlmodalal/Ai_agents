@@ -1,6 +1,6 @@
 # External video acceptance checklist
 
-**Decision state:** Proposed for course-owner review. No external video is approved by this packet.
+**Decision state:** Accepted by course owner (2026-10-20, `docs/edu-review/owner-decision-package-70.md` Decision 44). Per-video approval deferred pending human review.
 
 This checklist is for a human reviewer to use before publishing an external video as an approved learning resource. Candidate research and link metadata do not count as the independent educational review or owner decision.
 
@@ -8,7 +8,7 @@ This checklist is for a human reviewer to use before publishing an external vide
 
 For each resource, record:
 
-- Stable Topic slug and the specific objective or Practical Step it supports.
+- Stable Topic slug and the specific objective or Practical Step it supports (Topic alignment).
 - Exact video title, creator/publisher, platform, canonical URL, and any relevant published date or version.
 - Date and method of the playback check; report `reachable`, `unreachable`, or `not checked`. A check is point-in-time evidence only.
 - Content evidence: transcript, chapters, or direct viewing notes with timestamps for the claims relevant to the Topic. Note whether this came from the publisher or a third-party transcript.
@@ -25,21 +25,22 @@ For each resource, record:
 5. Can learners who rely on captions or a transcript access the spoken content? Are the language and any visual-only information described?
 6. Is the video a supplement? The written lesson and exercise must remain usable without watching it.
 
-## Honest display and availability rules proposed for approval
+## Honest display and availability rules approved by course owner
 
 - `candidate` plus `approval.state: proposed`: label as an unapproved candidate; show that it is external and internet-dependent. Never style or describe it as a course-approved resource.
-- `available` plus `approval.state: approved`: make the external link actionable and show the publisher and internet requirement. “Available” means checked on a recorded date, not guaranteed to remain reachable.
-- `unavailable`: hide the outbound action and state that the recorded resource is unavailable. Retain the written lesson and provide a way to report a replacement.
-- No candidate record: say that no reviewed video has been assigned to this Topic.
+- `available` plus `approval.state: approved`: make the external link actionable and show the publisher, platform, and internet requirement. “Available” means checked on a recorded date, not guaranteed to remain reachable.
+- `unavailable`: hide the outbound action and state that the recorded resource is unavailable. Retain the written lesson and reassure the learner that the text lesson and exercises are complete and usable without it.
+- No candidate record (`missing`): say that no reviewed video has been assigned to this Topic.
 - No external video is included in offline guarantees, cached as a local asset, or presented as playable when the device is offline.
 
 ## Course-owner decision
 
-- [ ] Accept this checklist for video reviews.
+- [x] Accept this checklist for video reviews.
 - [ ] Request changes (record them below).
-- Owner / date / decision reference: **Pending**.
-- Requested changes: **None recorded**.
+- Owner / date / decision reference: **Accepted 2026-10-20 by MahmoudAlmodalal (course owner), decision reference `docs/edu-review/owner-decision-package-70.md` Decision 44**.
+- Requested changes: **None recorded. Per-video approval deferred until a human reviews playback, captions, accessibility, and lesson fit.**
 
 ## Research note for issue #47
 
-One representative candidate is documented in `issue47-video-candidate-evidence.md`. Its metadata and transcript were inspected for topic fit, but live playback and caption state were not verified; owner approval remains pending.
+One representative candidate is documented in `issue47-video-candidate-evidence.md` (Topic 01 `project-idea-mvp` — Michael Seibel, Y Combinator). Its metadata, transcript, and topic fit were reviewed; live player playback and captions check remain pending human review per the course owner’s deferred disposition in Decision 44.
+

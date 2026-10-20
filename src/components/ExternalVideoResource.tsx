@@ -1,7 +1,7 @@
 'use client';
 
 import { CandidateExternalVideo } from '@/src/types/learning.ts';
-import { getExternalVideoDisplayState } from '@/src/types/externalVideo.ts';
+import { getExternalVideoDisplayState, getExternalSourceLabel } from '@/src/types/externalVideo.ts';
 import React from 'react';
 
 interface ExternalVideoResourceProps {
@@ -33,6 +33,7 @@ export function ExternalVideoResource({ video, resource, topicTitle = 'المو�
 
   const approved = state === 'approved';
   const unavailable = state === 'unavailable';
+  const sourceLabel = candidate.url ? getExternalSourceLabel(candidate.url) : '';
 
   return (
     <section
@@ -49,6 +50,15 @@ export function ExternalVideoResource({ video, resource, topicTitle = 'المو�
         >
           {approved ? 'مورد معتمد' : unavailable ? 'غير متاح' : 'مرشح — بانتظار المراجعة'}
         </span>
+        {sourceLabel && (
+          <span
+            className="rounded-full border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-2.5 py-0.5 text-xs text-[var(--text-muted)] font-mono"
+            dir="ltr"
+            data-testid="external-video-source"
+          >
+            {sourceLabel}
+          </span>
+        )}
       </div>
       <p className="mt-2 font-semibold" dir="auto">
         {candidate.title}
@@ -61,6 +71,11 @@ export function ExternalVideoResource({ video, resource, topicTitle = 'المو�
             ? 'تم تسجيل هذا المورد على أنه غير متاح. تحقق من مصادر أخرى أو تابع الدرس النصي.'
             : 'هذا رابط مرشح لم تتم الموافقة عليه كمورد تعليمي. يتطلب المصدر الخارجي اتصالاً بالإنترنت، ولا يتوفر دون اتصال.'}
       </p>
+      {unavailable && (
+        <p className="mt-1 text-xs text-[var(--text-muted)]">
+          الدرس النصي والتمارين مكتملة ومتاحة دون الحاجة إلى هذا المورد.
+        </p>
+      )}
       {state === 'approved' && (
         <a
           className={linkClass}
@@ -76,3 +91,4 @@ export function ExternalVideoResource({ video, resource, topicTitle = 'المو�
     </section>
   );
 }
+
