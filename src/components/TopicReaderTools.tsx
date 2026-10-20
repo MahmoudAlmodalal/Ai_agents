@@ -170,7 +170,7 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
     }
   };
 
-  const buttonClass = 'inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] transition-colors cursor-pointer';
+  const buttonClass = 'inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-bold text-[var(--text-main)] hover:border-[var(--brand-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-primary)] transition-colors cursor-pointer';
 
   return (
     <div className="mt-6 flex flex-wrap items-center gap-2 no-print" aria-label="أدوات قراءة الموضوع">
@@ -250,7 +250,7 @@ export function TopicReaderTools({ topic }: { topic: TopicItem }) {
 
       {offlineStatus === 'unsupported' && (
         <span
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-3 text-xs font-medium text-[var(--text-muted)]"
           title="المتصفح الحالي لا يوفر دعم Service Worker أو Storage API"
         >
           الحفظ غير متاح في هذا المتصفح
