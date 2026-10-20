@@ -8,9 +8,9 @@ Technical review of the remaining MVP queue: issues #47, #49, #51–#70. The par
 
 - Product source: `d1e136ce7a0bbeb14c9ee13567af970db6c8188e`.
 - Production build ID: `FvbL4S3b3evkSU2VIIDoP`.
-- [Build identity and digests](remaining-issues-build-2026-10-20.json): 850 build-output files, SHA-256 `a81177a397432017fba724e542afe48c80679311472cf2bfbabb80bf7545d721`. The digest excludes `.next/cache/**` and `.next/trace`; its algorithm is recorded in the identity file.
+- [Build identity and digests](remaining-issues-build-2026-10-20.json): 850 build-output files, SHA-256 `a81177a397432017fba724e542afe48c80679311472cf2bfbabb80bf7545d721`. The digest excludes `.next/cache/**`, `.next/trace`, and runtime `.next/server/route-cache/**`; its algorithm is recorded in the identity file.
 - [Canonical release manifest](remaining-issues-manifest-2026-10-20.json): 58 Topics in 19 groups; 58 candidate videos, zero approved videos, zero improved groups. Regenerate with `npx tsx scripts/release_manifest.ts` at the product revision.
-- Browser: Playwright bundled Chromium, headless, one worker; main suite port 3260. Production artifacts were built before browser testing. Documentation-only follow-up commits do not change this product source/build.
+- Browser: Playwright bundled Chromium, headless, one worker; main suite port 3260. Production artifacts were built before browser testing. Documentation/test-only follow-up commits do not change this product source/build. After all browser runs, the original 850-file digest was reproduced exactly while excluding newly created runtime route-cache files.
 
 ## Changes reviewed
 

@@ -7,8 +7,11 @@
   "buildOutputFiles": 850,
   "buildDigestExclusions": [
     ".next/cache/**",
-    ".next/trace"
+    ".next/trace",
+    ".next/server/route-cache/**"
   ],
   "buildDigestAlgorithm": "SHA-256 of sorted relative paths + NUL + file bytes + NUL",
-  "capturedAt": "2026-10-20T17:43:41.031338+00:00"
+  "capturedAt": "2026-10-20T17:43:41.031338+00:00",
+  "verifiedAfterBrowserAt": "2026-10-20T20:43:17.687387+00:00",
+  "runtimeCacheNote": "The pre-run build had no server/route-cache files. Browser execution added 288 runtime route-cache files; excluding them reproduces the original 850-file build digest exactly."
 }
