@@ -18,11 +18,21 @@ Sources: [official Y Combinator announcement](https://www.ycombinator.com/blog/s
 
 **Authoring assessment:** Plausible candidate for Topic 01. It directly covers MVP feature scope, iteration, and early-user learning. It does not replace the lesson’s work to distinguish observed facts from assumptions, name the user and problem, or create `docs/PROJECT_CONTEXT.md`. The transcript mirror includes broad startup advice; the learner should use only the linked segments and compare them with the lesson’s complete-journey criterion.
 
-**Independent educational review:** Not run. **Course-owner acceptance:** Pending. **Approval state:** Proposed. **Availability state:** Candidate; not a live reachability claim.
+**Educational fit review (manual check):**
+- **Alignment with Topic 01 objectives:** The video aligns well with the objective of defining a lean MVP and deferring non-essential features (segments 00:08–02:24 on building quickly and learning from users; 07:17–10:00 on limited functionality for focused users; 14:12–15:49 on writing and pruning feature specs).
+- **Curriculum boundaries:** The video does NOT replace the written lesson's specific deliverables: writing `docs/PROJECT_CONTEXT.md`, explicitly labeling unverified assumptions, or preparing open questions for the Grill Me interview in Topic 02.
+- **Supplemental status:** The lesson, worked example, and hands-on exercises are completely self-contained and usable without watching this video.
+- **Accessibility & playback:** Spoken language is English. While search metadata confirms the canonical URL and publisher, live player playback reachability, official captions/transcript quality, and keyboard player controls have not been verified by a human reviewer.
+
+**Independent educational review:** Not run.
+**Course-owner disposition:** **Deferred** (2026-10-20 by MahmoudAlmodalal, `docs/edu-review/owner-decision-package-70.md` Decision 44). Per-video approval remains deferred until a human reviews playback, captions, accessibility, and lesson fit.
+**Approval state:** Proposed (`state: 'proposed'`, non-actionable).
+**Availability state:** Candidate (`availability: 'candidate'`); not a live reachability claim.
 
 ## Required next review actions
 
 - [ ] Reviewer opens the canonical video and confirms current playback, duration, language, captions/transcript, and visually conveyed information.
 - [ ] Reviewer watches the cited sections and records direct notes and timestamps.
 - [ ] Reviewer confirms the video reinforces rather than contradicts the complete-journey and evidence-labeling guidance in Topic 01.
-- [ ] Course owner approves the acceptance checklist and this specific resource, or requests a replacement.
+- [ ] Course owner approves this specific resource or requests a replacement (checklist itself is accepted under DEC-70 Decision 44).
+
