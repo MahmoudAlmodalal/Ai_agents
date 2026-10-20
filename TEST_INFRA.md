@@ -39,4 +39,4 @@ If Google Chrome is already installed, `E2E_BROWSER_CHANNEL=chrome npm run test:
 
 Run focused files during development; run the full suite after integration. Repeat only affected tests after a correction. Typechecking and build success are complementary checks, not educational or browser evidence.
 
-Record **Passed**, **Failed**, or **Not Run** with the command and actual observation. Speech API stubs do not prove audible Arabic playback. Capturing `window.print` does not verify a native print dialog or paper output. Content-owner approval remains separate from automated and agent educational reviews; parent issue #33 remains open pending that approval.
+Record **Passed**, **Failed**, or **Not Run** with the command and actual observation. Speech API stubs do not prove audible Arabic playback. Capturing `window.print` does not verify a native print dialog or paper output. Content-owner approval remains separate from automated and agent educational reviews; the already-closed pilot #33 remains unchanged, and no new acceptance is inferred from this verification.
