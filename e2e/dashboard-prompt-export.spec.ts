@@ -511,4 +511,278 @@ test.describe('Learner dashboard and export', () => {
     await expect(page.getByTestId('section-badges')).toBeVisible();
     await expect(page.getByTestId('section-storage-status')).toBeVisible();
   });
+
+  test('empty profile displays explainable approved badge rules with unearned states and no accreditation meaning', async ({ page }) => {
+    await page.goto('/dashboard');
+    const badgeSection = page.getByTestId('section-badges');
+    await expect(badgeSection).toBeVisible();
+    await expect(badgeSection.getByRole('heading', { level: 2, name: 'شارات الإنجاز المحلية المعتمدة' })).toBeVisible();
+    await expect(badgeSection).toContainText('التقييم مفعّل بقرار موثق');
+    await expect(badgeSection).toContainText('لا تدل على اعتماد رسمي أو شهادة أو تحقق خارجي من جودة المشروع');
+
+    // Rule 1: explore-topics
+    const cardExplore = page.getByTestId('badge-card-explore-topics');
+    await expect(cardExplore).toBeVisible();
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('0 / 3 (غير مكتملة)');
+    await expect(cardExplore).toContainText('زيارة 3 موضوعات مختلفة على الأقل في هذا المتصفح.');
+    await expect(cardExplore).toContainText('سجل الزيارات الأخيرة المحفوظ محليًا');
+    await expect(cardExplore).toContainText('لا يقيس إتمام القراءة ولا يعتمد مدة زمنية ولا يمنح اعتمادًا أو شهادة');
+
+    // Rule 2: practice-quizzes
+    const cardQuiz = page.getByTestId('badge-card-practice-quizzes');
+    await expect(cardQuiz).toBeVisible();
+    await expect(page.getByTestId('badge-state-practice-quizzes')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-practice-quizzes')).toContainText('0 / 3 (غير مكتملة)');
+    await expect(cardQuiz).toContainText('تسجيل 3 محاولات فحص ذاتي موضوعية محفوظة على الأقل.');
+    await expect(cardQuiz).toContainText('سجلات محاولات الفحص الذاتي المحفوظة محليًا');
+    await expect(cardQuiz).toContainText('لا يثبت إتقان المادة ولا يمنح اعتمادًا رسميًا');
+
+    // Rule 3: reflect-on-practice
+    const cardReflect = page.getByTestId('badge-card-reflect-on-practice');
+    await expect(cardReflect).toBeVisible();
+    await expect(page.getByTestId('badge-state-reflect-on-practice')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-reflect-on-practice')).toContainText('0 / 3 (غير مكتملة)');
+    await expect(cardReflect).toContainText('تسجيل تقييم ذاتي حالي مكتمل بواقع حكم واحد على الأقل لثلاثة موضوعات مختلفة.');
+    await expect(cardReflect).toContainText('سجلات التقييم العملي الذاتي الحالية المحفوظة محليًا');
+    await expect(cardReflect).toContainText('لا تمثل تدقيقًا مستقلًا أو اعتمادًا لصحة المخرج');
+
+    // Verify storage has not written dummy award events on empty profile
+    const badgeEventsRaw = await page.evaluate(() => localStorage.getItem('ai-agents-badge-awards-v1'));
+    if (badgeEventsRaw) {
+      const doc = JSON.parse(badgeEventsRaw);
+      expect(doc.events).toEqual([]);
+    }
+  });
+
+  test('boundary verification for explore-topics rule: just below, at threshold, above threshold, revision on drop, and reload idempotency', async ({ page }) => {
+    // 1. Boundary: Just below threshold (2 topics)
+    await page.goto('/dashboard');
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp', 'discovery-grill-me']));
+    });
+    await page.reload();
+    const cardExplore = page.getByTestId('badge-card-explore-topics');
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('2 / 3 (غير مكتملة)');
+    await expect(cardExplore).toContainText('2 من 3 أدلة مؤهلة وفق قاعدة استكشاف موضوعات الإصدار 1.');
+
+    // 2. Boundary: Exactly at threshold (3 topics)
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp', 'discovery-grill-me', 'prd-specification']));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('3 / 3 (مكتملة وممنوحة)');
+    await expect(cardExplore).toContainText('اكتملت قاعدة استكشاف موضوعات وفق الإصدار 1 وقرار docs/edu-review/owner-decision-package-70.md.');
+    await expect(cardExplore).toContainText('تاريخ التسجيل:');
+    await expect(cardExplore).toContainText('3 أدلة مؤهلة مسجلة');
+
+    const firstAwardsDoc = await page.evaluate(() => JSON.parse(localStorage.getItem('ai-agents-badge-awards-v1')!));
+    expect(firstAwardsDoc.events.length).toBe(1);
+    expect(firstAwardsDoc.events[0].badgeId).toBe('explore-topics');
+    expect(firstAwardsDoc.events[0].status).toBe('awarded');
+    const originalAwardId = firstAwardsDoc.events[0].awardId;
+    const originalAwardedAt = firstAwardsDoc.events[0].awardedAt;
+
+    // 3. Boundary: Just above threshold (4 topics)
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp', 'discovery-grill-me', 'prd-specification', 'user-stories-mvp']));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('4 / 3 (مكتملة وممنوحة)');
+
+    // Verify reload idempotency: no duplicate award event is created
+    const aboveDoc = await page.evaluate(() => JSON.parse(localStorage.getItem('ai-agents-badge-awards-v1')!));
+    expect(aboveDoc.events.length).toBe(1);
+    expect(aboveDoc.events[0].awardId).toBe(originalAwardId);
+    expect(aboveDoc.events[0].awardedAt).toBe(originalAwardedAt);
+
+    // 4. Evidence revision: drop evidence below threshold (from 4 down to 1 topic)
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp']));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('1 / 3 (غير مكتملة)');
+
+    // Verify historical audit log fold appears with revoked event details
+    const historyFold = page.getByTestId('section-badges').locator('details');
+    await expect(historyFold).toBeVisible();
+    await expect(historyFold.locator('summary')).toContainText('سجل تغييرات الشارات السابقة (1)');
+    await historyFold.locator('summary').click();
+    await expect(historyFold).toContainText('استكشاف موضوعات · أُلغيت بعد تغير الأدلة (انخفاض الأدلة دون الحد المطلوب) · إصدار القاعدة 1');
+
+    const revokedDoc = await page.evaluate(() => JSON.parse(localStorage.getItem('ai-agents-badge-awards-v1')!));
+    expect(revokedDoc.events.length).toBe(1);
+    expect(revokedDoc.events[0].status).toBe('revoked');
+    expect(revokedDoc.events[0].endReason).toBe('evidence-below-threshold');
+
+    // 5. Re-earning: restore evidence back to threshold (3 topics)
+    await page.evaluate(() => {
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp', 'discovery-grill-me', 'prd-specification']));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-progress-explore-topics')).toContainText('3 / 3 (مكتملة وممنوحة)');
+    const restoredDoc = await page.evaluate(() => JSON.parse(localStorage.getItem('ai-agents-badge-awards-v1')!));
+    expect(restoredDoc.events.length).toBe(2);
+    expect(restoredDoc.events[0].status).toBe('revoked');
+    expect(restoredDoc.events[1].status).toBe('awarded');
+  });
+
+  test('boundary verification for practice-quizzes and reflect-on-practice rules, preview exclusion, and rating changes', async ({ page }) => {
+    await page.goto('/dashboard');
+    // Seed 3 preview-only quiz attempts -> must be excluded from award eligibility
+    await page.evaluate(() => {
+      function mkPreview(id: string, slug: string) {
+        return {
+          attemptId: id, topicSlug: slug, quizId: 'q-check', quizVersion: 1,
+          policyId: 'p1', policyVersion: 1,
+          answers: [{ questionId: 'q1', questionVersion: 1, selectedOptionId: 'a', correctness: 'correct' as const }],
+          correctCount: 1, incorrectCount: 0, unansweredCount: 0,
+          score: 1, maxScore: 1, submittedAt: '2026-10-20T10:00:00.000Z', selfCheck: true, previewOnly: true,
+        };
+      }
+      localStorage.setItem('ai-agents-quiz-attempts-v1', JSON.stringify({
+        schemaVersion: 1,
+        byTopic: {
+          'project-idea-mvp': [mkPreview('prev-1', 'project-idea-mvp')],
+          'discovery-grill-me': [mkPreview('prev-2', 'discovery-grill-me')],
+          'prd-specification': [mkPreview('prev-3', 'prd-specification')],
+        },
+      }));
+    });
+
+    await page.reload();
+    // Preview-only records must not earn the practice-quizzes badge
+    await expect(page.getByTestId('badge-state-practice-quizzes')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-practice-quizzes')).toContainText('0 / 3 (غير مكتملة)');
+
+    // Seed 2 non-preview quiz attempts (just below threshold)
+    await page.evaluate(() => {
+      function mkAppr(id: string, slug: string) {
+        return {
+          attemptId: id, topicSlug: slug, quizId: 'q-check', quizVersion: 1,
+          policyId: 'p1', policyVersion: 1,
+          answers: [{ questionId: 'q1', questionVersion: 1, selectedOptionId: 'a', correctness: 'correct' as const }],
+          correctCount: 1, incorrectCount: 0, unansweredCount: 0,
+          score: 1, maxScore: 1, submittedAt: '2026-10-20T10:00:00.000Z', selfCheck: true, previewOnly: false,
+        };
+      }
+      localStorage.setItem('ai-agents-quiz-attempts-v1', JSON.stringify({
+        schemaVersion: 1,
+        byTopic: {
+          'project-idea-mvp': [mkAppr('appr-1', 'project-idea-mvp')],
+          'discovery-grill-me': [mkAppr('appr-2', 'discovery-grill-me')],
+        },
+      }));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-practice-quizzes')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-practice-quizzes')).toContainText('2 / 3 (غير مكتملة)');
+
+    // Seed 3rd non-preview quiz attempt (exactly at threshold)
+    await page.evaluate(() => {
+      const doc = JSON.parse(localStorage.getItem('ai-agents-quiz-attempts-v1')!);
+      doc.byTopic['prd-specification'] = [{
+        attemptId: 'appr-3', topicSlug: 'prd-specification', quizId: 'q-check', quizVersion: 1,
+        policyId: 'p1', policyVersion: 1,
+        answers: [{ questionId: 'q1', questionVersion: 1, selectedOptionId: 'a', correctness: 'correct' as const }],
+        correctCount: 1, incorrectCount: 0, unansweredCount: 0,
+        score: 1, maxScore: 1, submittedAt: '2026-10-20T10:00:00.000Z', selfCheck: true, previewOnly: false,
+      }];
+      localStorage.setItem('ai-agents-quiz-attempts-v1', JSON.stringify(doc));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-practice-quizzes')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-progress-practice-quizzes')).toContainText('3 / 3 (مكتملة وممنوحة)');
+
+    // Test reflect-on-practice:
+    // Seed 2 topics with practical assessment ratings (below threshold)
+    await page.evaluate(() => {
+      function mkPractical(slug: string, id: string, hasRatings: boolean) {
+        return {
+          topicSlug: slug, assessmentId: id, assessmentVersion: 1,
+          scaleId: 'descriptive-three-level', scaleVersion: 1,
+          criteria: [{ criterionId: 'c1', criterionVersion: 1 }],
+          ratings: hasRatings ? [{ criterionId: 'c1', criterionVersion: 1, scaleId: 'descriptive-three-level', scaleVersion: 1, ratingId: 'ready-for-review', ratedAt: '2026-10-20T10:00:00.000Z' }] : [],
+          history: [], updatedAt: '2026-10-20T10:00:00.000Z', selfAssessment: true, previewOnly: false,
+        };
+      }
+      localStorage.setItem('ai-agents-practical-assessments-v1', JSON.stringify({
+        schemaVersion: 1,
+        byTopic: {
+          'project-idea-mvp': mkPractical('project-idea-mvp', 'a1', true),
+          'discovery-grill-me': mkPractical('discovery-grill-me', 'a2', true),
+        },
+      }));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-reflect-on-practice')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-reflect-on-practice')).toContainText('2 / 3 (غير مكتملة)');
+
+    // Add 3rd topic with ratings (exactly at threshold)
+    await page.evaluate(() => {
+      const doc = JSON.parse(localStorage.getItem('ai-agents-practical-assessments-v1')!);
+      doc.byTopic['prd-specification'] = {
+        topicSlug: 'prd-specification', assessmentId: 'a3', assessmentVersion: 1,
+        scaleId: 'descriptive-three-level', scaleVersion: 1,
+        criteria: [{ criterionId: 'c1', criterionVersion: 1 }],
+        ratings: [{ criterionId: 'c1', criterionVersion: 1, scaleId: 'descriptive-three-level', scaleVersion: 1, ratingId: 'ready-for-review', ratedAt: '2026-10-20T10:00:00.000Z' }],
+        history: [], updatedAt: '2026-10-20T10:00:00.000Z', selfAssessment: true, previewOnly: false,
+      };
+      localStorage.setItem('ai-agents-practical-assessments-v1', JSON.stringify(doc));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-reflect-on-practice')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-progress-reflect-on-practice')).toContainText('3 / 3 (مكتملة وممنوحة)');
+
+    // Revise self-assessment: clear ratings on 1 topic (drop below threshold)
+    await page.evaluate(() => {
+      const doc = JSON.parse(localStorage.getItem('ai-agents-practical-assessments-v1')!);
+      doc.byTopic['prd-specification'].ratings = [];
+      localStorage.setItem('ai-agents-practical-assessments-v1', JSON.stringify(doc));
+    });
+    await page.reload();
+    await expect(page.getByTestId('badge-state-reflect-on-practice')).toHaveText('لم تُمنح · v1');
+    await expect(page.getByTestId('badge-progress-reflect-on-practice')).toContainText('2 / 3 (غير مكتملة)');
+
+    // Confirm that repeatedly reloading the page preserves deterministic states
+    await page.reload();
+    await expect(page.getByTestId('badge-state-practice-quizzes')).toHaveText('ممنوحة · v1');
+    await expect(page.getByTestId('badge-state-reflect-on-practice')).toHaveText('لم تُمنح · v1');
+  });
+
+  test('rule version transition retires previous award and evaluates fresh version under audit trail', async ({ page }) => {
+    await page.goto('/dashboard');
+    await page.evaluate(() => {
+      // Seed a retired award event from version 99
+      localStorage.setItem('ai-agents-badge-awards-v1', JSON.stringify({
+        schemaVersion: 1,
+        events: [{
+          awardId: 'learner-activity-badges:1:explore-topics:99:1',
+          policyId: 'learner-activity-badges',
+          policyVersion: 1,
+          approvalDecisionReference: 'docs/edu-review/owner-decision-package-70.md',
+          badgeId: 'explore-topics',
+          ruleVersion: 99,
+          status: 'awarded',
+          evidenceKeys: ['project-idea-mvp'],
+          awardedAt: '2026-10-19T10:00:00.000Z',
+        }],
+      }));
+      // Only 1 topic in recent views (below threshold for current v1)
+      localStorage.setItem('engineering_guide_recently_viewed', JSON.stringify(['project-idea-mvp']));
+    });
+
+    await page.reload();
+    // The previous rule version 99 award must be retired because ruleVersion does not match current v1
+    await expect(page.getByTestId('badge-state-explore-topics')).toHaveText('لم تُمنح · v1');
+    const historyFold = page.getByTestId('section-badges').locator('details');
+    await expect(historyFold).toBeVisible();
+    await historyFold.locator('summary').click();
+    await expect(historyFold).toContainText('استكشاف موضوعات · أُحيلت إلى سجل الإصدارات السابقة (تغير إصدار السياسة أو القاعدة) · إصدار القاعدة 99');
+  });
 });
