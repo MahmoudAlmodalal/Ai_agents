@@ -9,6 +9,8 @@
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+
 ## `frontend-architecture-planning`
 
 **Inputs and lesson walk-through:** اجمع المراجع قبل تقسيم الملفات → مثال محلول: فهرس وتفصيل → برومبت تخطيط ومخرج. Steps:
@@ -19,7 +21,7 @@ The original wave2/wave3 lessons remain in place. The typed module adds objectiv
 **Sample project output (worked example `route-map-example`):** خريطة قائمة موارد — المستندات تصف فهرساً وفتح سجل.
 
 ```text
-Route /items → SearchBar + ItemList؛ route /items/[id] → ItemDetail. الرابط يحمل id، وبقية الحقول مصدرها محدد في الخريطة.
+Route /equipment → SearchBar + EquipmentList؛ route /equipment/[id] → EquipmentDetail. الرابط يحمل id، وبقية الحقول مصدرها محدد في الخريطة.
 ```
 
 **Handoff:** برومبت: «استخرج route/component map من هذه المراجع. اربط كل عنصر بمصدره، وافصل القرارات عن الأسئلة، ثم اقترح مهام صغيرة بقبول ملاحظ. لا تنشئ Backend أو شاشة غير موجودة». سلّم الخريطة إلى مراجعة UX التالية.

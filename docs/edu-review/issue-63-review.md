@@ -9,17 +9,19 @@
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+
 ## `python-backend-foundation`
 
-**Inputs and lesson walk-through:** نسخة Python وحدود الإعداد → مثال محلول: هيكل صغير → برومبت تأسيس وتسليم. Steps:
+**Inputs and lesson walk-through:** نسخة Python وحدود الإعداد → مثال مفاهيمي محايد للإطار → برومبت تأسيس وتسليم. يستقبل مخرجي الموضوع 37 `ui-slice` و`slice-evidence` لتحديد حاجة Backend؛ يؤجل هيكل Django/FastAPI حتى اختيار الإطار. Steps:
   - سجل إصدار Python وأنشئ venv محلية مستبعدة من Git. → `README يذكر النسخة والمسار؛ لا يدخل مجلد البيئة للمستودع.`
   - ثبت أقل التبعيات اللازمة واحفظ lockfile/إصدارات متوافقة. → `ملف تبعيات يعيد البيئة ونتيجة compileall أو فحص موثق.`
   - أنشئ إعداداً يفحص المتغيرات المطلوبة وقالباً بلا أسرار. → `.env.example أسماء فقط و.gitignore يستبعد .env.`
 
-**Sample project output (worked example `python-skeleton`):** هيكل خدمة — مشروع سيختار Django أو FastAPI لاحقاً.
+**Sample project output (worked example `python-skeleton`):** خريطة تحضير محايدة للإطار — مشروع سيختار Django أو FastAPI لاحقاً.
 
 ```text
-backend/app/config.py, main.py, services/ و.env.example. الهيكل لا يثبت اتصال قاعدة بيانات.
+backend/README.md، وdocs/BACKEND_RESPONSIBILITIES.md لمسؤوليات config/domain/tests مفاهيمياً، و.env.example بأسماء متغيرات فقط. أجّل entry point وملفات إطار بعينه حتى الاختيار؛ لا يثبت هذا اتصال قاعدة بيانات.
 ```
 
 **Handoff:** برومبت: «افحص نسخة Python وملفات المشروع، وجهز هيكلاً صغيراً وإعداداً يتحقق من المتغيرات. لا تعرض الأسرار ولا تختَر إطاراً خارج القرار». الناتج يهيئ PostgreSQL.
@@ -46,26 +48,26 @@ Criteria:
 
 ## `postgresql-database-setup`
 
-**Inputs and lesson walk-through:** حدد البيئة والاتصال → مثال محلول: اتصال محلي → برومبت ومخرج التسليم. Steps:
+**Inputs and lesson walk-through:** حدد البيئة والاتصال → مثال محلول: سجل اتصال غير منفذ → برومبت ومخرج التسليم. يستقبل مخرجي الموضوع 38 `python-env` و`config-template`؛ يوثق هذا الموضوع استراتيجية migration ولا يطبقها قبل اختيار ORM. Steps:
   - وثق طريقة تشغيل قاعدة تطوير وإصدارها ومتطلبات الاتصال. → `docs/POSTGRES_SETUP.md يصف البيئة والمتغيرات بالاسم فقط.`
   - حدد دور تطبيق بالامتيازات اللازمة واترك الإدارة منفصلة. → `جدول دور/امتيازات بلا كلمة مرور محفوظة في Git.`
-  - طبق migration على dev ثم افحص الاتصال وطابق الجداول مع ERD. → `نتيجة فعلية لـ SELECT 1 واختلافات المخطط أو Not Run.`
+  - سجل حالة SELECT 1 على dev وطابق حدود التخطيط مع التنفيذ دون تطبيق migration قبل اختيار ORM. → `نتيجة SELECT 1 الفعلية أو Not Run؛ migration=Deferred حتى وجود ORM/models في الموضوع 41 أو 42.`
 
 **Sample project output (worked example `postgres-check`):** سجل اتصال — قاعدة تطوير لكيان Item وRequest.
 
 ```text
-Environment=local-dev; migration=applied; SELECT 1 returned 1. Production connectivity and restore drill=Not Run.
+Environment=not-recorded; SELECT 1=Not Run; migration=Deferred until ORM/models are selected in topic 41 or 42. Production connectivity and restore drill=Not Run.
 ```
 
-**Handoff:** برومبت: «طابق تهيئة PostgreSQL مع ERD، وافصل حساب الإدارة عن التطبيق. استخدم أسماء متغيرات دون قيم، وسجل أمر الفحص. لا تنفذ إسقاطاً أو ترحيلاً إنتاجياً». سلّم العقد إلى موضوع API.
+**Handoff:** برومبت: «طابق تهيئة PostgreSQL مع ERD، وافصل حساب الإدارة عن التطبيق. استخدم أسماء متغيرات دون قيم، وسجل أمر الفحص. لا تنفذ إسقاطاً أو ترحيلاً إنتاجياً». سلّم مخرجي `pg-setup` و`pg-check` إلى موضوع 40 كي يراعي عقد API سياق قاعدة التطوير؛ موضوع 40 هو الذي ينتج `api-contract` و`api-layers` لموضوع 41 أو 42.
 
 **Objective quiz:** v1; stable question IDs `postgresql-database-setup-least-privilege-db-role`, `postgresql-database-setup-dev-connection-evidence`.
   - `postgresql-database-setup-least-privilege-db-role` (postgresql-database-setup-objective-1): أي حساب تستخدمه خدمة التطبيق عادة؟ — مفتاح postgresql-database-setup-least-privilege-db-role-b; التعليل: أقل صلاحية تحد أثر خطأ أو اختراق التطبيق.
   - `postgresql-database-setup-dev-connection-evidence` (postgresql-database-setup-objective-2): نجح SELECT 1 على جهازك. ماذا يثبت؟ — مفتاح postgresql-database-setup-dev-connection-evidence-b; التعليل: الفحص محدد ببيئته؛ الإنتاج والمخطط والاستعادة تحتاج أدلة مستقلة.
 
 **Practical assessment:** scale `postgresql-database-setup-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
-  - `pg-setup`: خطوات وقالب اتصال تطويري بلا أسرار.
-  - `pg-check`: نتيجة اتصال/ترحيل ومراجعة مخطط حسب البيئة.
+  - `pg-setup`: خطوات وقالب اتصال تطويري بلا أسرار واستراتيجية ترحيل مؤجلة.
+  - `pg-check`: نتيجة SELECT 1 ببيئة محددة أو Not Run؛ تطبيق migration ومراجعتها مؤجلان إلى ما بعد اختيار ORM/models.
 
 Criteria:
   - `postgresql-database-setup-db-role` → `pg-setup`: حساب محدود. التوثيق يميز حساب التطبيق عن الإدارة. دليل المراجعة: أظهر اسم الدور ومستوى امتيازه دون سر.

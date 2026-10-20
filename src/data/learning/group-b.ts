@@ -428,7 +428,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
       'ضع الحالة في أقرب أب مشترك واعرض التحميل والنجاح والفراغ والخطأ ببيانات معلومة.',
     ],
     sections: [
-      { id: 'inputs', heading: 'من العقود إلى مكونات', body: 'ابدأ بعقود TypeScript وجرد الشاشات وبيانات تجريبية. المكون الذي يعرض props فقط أسهل للفحص؛ الحدث يصعد كـ callback. لا تعدل prop ولا تحفظ نسختين متعارضتين من الحالة.' },
+      { id: 'inputs', heading: 'من العقود إلى مكونات', body: 'ابدأ بمخرجي الموضوع 30 types-file وtype-evidence، وجرد الشاشات وبيانات تجريبية. المكون الذي يعرض props فقط أسهل للفحص؛ الحدث يصعد كـ callback. لا تعدل prop ولا تحفظ نسختين متعارضتين من الحالة.' },
       { id: 'example', heading: 'مثال محلول: بحث قائمة', body: 'احتفظ query في CatalogPage، ومرر items وonSelect إلى CatalogList. اشتق النتائج من items وquery. اعرض loading وsuccess وempty وerror، وعلّم مصدر البيانات إن كان fixture محلياً.' },
       { id: 'exercise', heading: 'مهمة وبرومبت وتسليم', body: 'برومبت: «قسّم الشاشة إلى عرض ومالك حالة، واستخدم الأنواع، وبيّن أربع حالات ببيانات محلية. لا تضف طلب شبكة، واذكر أين يلزم use client ولماذا». سلّم خريطة المكونات إلى التنسيق في الموضوع 32.' },
     ],
@@ -459,7 +459,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
       'استخدم الخصائص المنطقية وافحص RTL/LTR عند عروض مختلفة بلا overflow أفقي.',
     ],
     sections: [
-      { id: 'inputs', heading: 'من الرمز إلى الفئة', body: 'المدخل DESIGN.md ومكونات React. Utility-first لا يعني اختيار قيمة بلا ضابط. اربط tokens بمتغير أو فئة، وتحقق من إصدار Tailwind لأن إعداد theme يختلف بين النسخ.' },
+      { id: 'inputs', heading: 'من الرمز إلى الفئة', body: 'المدخل DESIGN.md ومخرجا الموضوع 31 component-map وstate-fixtures، ثم مكونات React التي تريد تنسيقها. Utility-first لا يعني اختيار قيمة بلا ضابط. اربط tokens بمتغير أو فئة، وتحقق من إصدار Tailwind لأن إعداد theme يختلف بين النسخ.' },
       { id: 'example', heading: 'مثال محلول: بطاقة ثنائية الاتجاه', body: 'بطاقة تستخدم ps-4 وtext-start وms-auto عوض padding-left وmargin-left. يتغير ترتيبها مع dir. افحص العنصر المسبب لأي overflow قبل إخفائه.' },
       { id: 'exercise', heading: 'مهمة وبرومبت وتسليم', body: 'برومبت: «طبّق الرموز على هذا المكون، واستخدم خصائص منطقية، واعرض الفحص عند 390/768/1024/1366/1440px. لا تضف لوناً خارج DESIGN.md». سلّم جدول الرموز إلى هيكلة المسارات في الموضوع 33.' },
     ],
@@ -490,7 +490,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
       'حدد حدود مكونات الخادم والعميل وسمّ البيانات المحلية fixtures بوضوح.',
     ],
     sections: [
-      { id: 'inputs', heading: 'من الجرد إلى الملفات', body: 'المدخل SCREEN_INVENTORY.md وعقود البيانات وخريطة المكونات. مجلدات app تمثل مسارات؛ page محتوى المسار وlayout هيكل مشترك. [id] يلتقط مساراً؛ loading/not-found يعالجان حالات منفصلة.' },
+      { id: 'inputs', heading: 'من الجرد إلى الملفات', body: 'المدخل SCREEN_INVENTORY.md وعقود البيانات وخريطة المكونات، مع token-map من الموضوع 32 عند تنسيق shell؛ راجع responsive-report كحدود فحص موثقة. مجلدات app تمثل مسارات؛ page محتوى المسار وlayout هيكل مشترك. [id] يلتقط مساراً؛ loading/not-found يعالجان حالات منفصلة.' },
       { id: 'example', heading: 'مثال محلول: قائمة وتفصيل BorrowHub', body: 'في مثال BorrowHub المسار /equipment يكون app/equipment/page.tsx والتفصيل /equipment/[id] يكون app/equipment/[id]/page.tsx؛ يعرضان معدات من fixtures محلية. استخدم Link للتنقل الداخلي. اتبع مسارات جرد مشروعك إذا اختلفت، والبيانات المحلية لا تثبت وجود API أو قاعدة حية.' },
       { id: 'exercise', heading: 'مهمة وبرومبت وتسليم', body: 'برومبت: «حوّل الجرد إلى شجرة App Router، وسم كل ملف ومصدر البيانات. حافظ على RTL، وضع use client عند hook/حدث فقط. لا تدّع وجود Backend». سلّم الشجرة لتخطيط المشروع التالي.' },
     ],
@@ -518,7 +518,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'frontend-architecture-planning',
     objectives: ['اشتق شجرة الصفحات والمكونات والعقود من PRD/SRS وجرد الشاشات وERD.', 'حوّل رحلة استخدام واحدة إلى مهام مرتبة ذات مدخل ومخرج قابل للفحص.'],
     sections: [
-      { id: 'inputs', heading: 'اجمع المراجع قبل تقسيم الملفات', body: 'ابدأ بـ PRD وSRS وجرد الشاشات وDESIGN.md وERD ومخرج route-spec من الموضوع 33 (docs/NEXTJS_ROUTING_SPEC.md). طابق كل ملف ومسار هناك قبل إضافة مكونات أو مهام. سجل ما يطلبه المستخدم وما تعرضه كل route، ثم اربط المكونات بالكيانات. لا تضف شاشة أو دوراً لأنه شائع في منتج آخر.' },
+      { id: 'inputs', heading: 'اجمع المراجع قبل تقسيم الملفات', body: 'ابدأ بـ PRD وSRS وجرد الشاشات وDESIGN.md وERD ومخرجي الموضوع 33 route-spec وroute-shell (docs/NEXTJS_ROUTING_SPEC.md). طابق كل ملف ومسار هناك قبل إضافة مكونات أو مهام. سجل ما يطلبه المستخدم وما تعرضه كل route، ثم اربط المكونات بالكيانات. لا تضف شاشة أو دوراً لأنه شائع في منتج آخر.' },
       { id: 'example', heading: 'مثال محلول: فهرس وتفصيل', body: 'في BorrowHub المسار /equipment يعرض AppShell وSearchBar وEquipmentCard؛ /equipment/[id] يعرض التفاصيل. العقد يمرر EquipmentSummary للفهرس وEquipmentRecord للتفصيل، وأي حقل غير محسوم يبقى سؤالاً.' },
       { id: 'exercise', heading: 'برومبت تخطيط ومخرج', body: 'برومبت: «استخرج route/component map من هذه المراجع. اربط كل عنصر بمصدره، وافصل القرارات عن الأسئلة، ثم اقترح مهام صغيرة بقبول ملاحظ. لا تنشئ Backend أو شاشة غير موجودة». سلّم الخريطة إلى مراجعة UX التالية.' },
     ],
@@ -543,7 +543,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'ui-ux-pro-max-review',
     objectives: ['راجع توصيات UI/UX مقابل المستخدم والمتطلب ونظام التصميم قبل قبولها.', 'سجل قرارات تصميم وأسبابها بحيث يستطيع المطور تطبيقها واختبارها.'],
     sections: [
-      { id: 'inputs', heading: 'حدد السياق قبل تشغيل الأداة', body: 'المدخل خريطة الشاشات وDESIGN.md ومهمة المستخدم والعرض والاتجاه، ومنها route/component map ومهمة الشريحة الناتجة من تخطيط الواجهة في الموضوع 34. أداة التوصية لا تعتمد القرارات نيابة عن مالك المشروع. احذف البيانات الشخصية ولا ترسل أسراراً.' },
+      { id: 'inputs', heading: 'حدد السياق قبل تشغيل الأداة', body: 'المدخل DESIGN.md ومخرجا تخطيط الواجهة في الموضوع 34 front-map وtask-slice، مع مهمة المستخدم والعرض والاتجاه. أداة التوصية لا تعتمد القرارات نيابة عن مالك المشروع. احذف البيانات الشخصية ولا ترسل أسراراً.' },
       { id: 'example', heading: 'مثال محلول: اقتراح يخالف الرمز', body: 'إذا اقترحت الأداة لون زر غير موجود في DESIGN.md، احتفظ باللون المعتمد أو افتح قرار تغيير. افحص تباين ومساحة النقر عند الحاجة؛ لا تدّع WCAG compliant من رأي آلي.' },
       { id: 'exercise', heading: 'برومبت مراجعة ومخرج', body: 'برومبت: «لكل توصية اذكر العنصر والدليل والأثر. ميّز الاقتراح عن معيار الوصولية، ولا تعدل الكود. أخرج قرار قبول/رفض وسؤالاً مفتوحاً». سلّم جدول القرار إلى Spec Kit.' },
     ],
@@ -568,7 +568,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'spec-kit-workflow',
     objectives: ['حوّل طلب ميزة إلى مواصفة وأسئلة وسياق قبل توليد خطة التنفيذ.', 'راجع clarify/plan/tasks مقابل مصادر المشروع وتوقف عند سؤال أو تعارض جوهري.'],
     sections: [
-      { id: 'inputs', heading: 'المواصفة تسلسل قرارات', body: 'المدخل Constitution وPRD/SRS وخريطة الواجهة، ومخرج الموضوع 35 docs/UX_REVIEW_DECISIONS.md بسياق المراجعة وقرارات القبول/الرفض والأسئلة المفتوحة. يمر العمل من spec إلى توضيح الأسئلة ثم plan وtasks، مع حمل القرارات المقبولة فقط إلى معايير التنفيذ. أسماء أوامر Spec Kit قد تتغير؛ افحص إصدار المستودع ولا تنسخ أمراً بلا تحقق.' },
+      { id: 'inputs', heading: 'المواصفة تسلسل قرارات', body: 'المدخل Constitution وPRD/SRS وخريطة الواجهة، ومخرجا الموضوع 35 ux-context وux-decisions في docs/UX_REVIEW_CONTEXT.md وdocs/UX_REVIEW_DECISIONS.md، بما فيهما القرارات والأسئلة المفتوحة. يمر العمل من spec إلى توضيح الأسئلة ثم plan وtasks، مع حمل القرارات المقبولة فقط إلى معايير التنفيذ. أسماء أوامر Spec Kit قد تتغير؛ افحص إصدار المستودع ولا تنسخ أمراً بلا تحقق.' },
       { id: 'example', heading: 'مثال محلول: استعادة مسودة', body: 'حدد حقول المسودة ومتى تحفظ وما يحدث عند تعارض جهازين. لا تجعل الخطة تضيف مزامنة سحابية إذا كان نطاق MVP محلياً؛ اكتب السؤال واطلب قراراً.' },
       { id: 'exercise', heading: 'برومبت ومخرج مرحلي', body: 'برومبت: «اقرأ Constitution وPRD/SRS. صغ spec لهذه الميزة، أظهر الأسئلة بلا افتراض، ثم اقترح خطة ومهام مرتبطة بمعايير قبول. لا تنفذ الكود». الناتج يهيئ التنفيذ التدريجي.' },
     ],
@@ -593,7 +593,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'frontend-incremental-implementation',
     objectives: ['نفذ شرائح صغيرة من الواجهة ترتبط بمعيار قبول ومصدر بيانات معلوم.', 'اعرض حالات الفشل والفراغ ودوّن نتائج الفحص قبل بدء الشريحة التالية.'],
     sections: [
-      { id: 'inputs', heading: 'من المهام إلى شريحة رأسية', body: 'المدخل spec ومهام صغيرة وعقود بيانات، ومخرج الموضوع 35 docs/UX_REVIEW_DECISIONS.md بما فيه قرارات UX المقبولة ومعايير فحصها والأسئلة التي لا تزال مفتوحة. الشريحة تغطي تفاعلاً واحداً من المستخدم إلى نتيجة، وتوضح هل المصدر fixture أم API. لا تنفذ توصية UX غير محسومة ولا تفتح تغييرات واسعة قبل فهم المخرج.' },
+      { id: 'inputs', heading: 'من المهام إلى شريحة رأسية', body: 'المدخل مخرجا الموضوع 36 feature-spec وfeature-plan، ومخرج الموضوع 35 ux-decisions، وعقود البيانات. الشريحة تغطي تفاعلاً واحداً من المستخدم إلى نتيجة، وتوضح هل المصدر fixture أم API. لا تنفذ توصية UX غير محسومة ولا تفتح تغييرات واسعة قبل فهم المخرج.' },
       { id: 'example', heading: 'مثال محلول: صفحة تفاصيل', body: 'ابدأ ببيانات fixture وحالة not-found، ثم أضف التحميل عند توفر المصدر، ثم معالجة خطأ. سجل كل فحص وأي طبقة لم تدخل التجربة؛ لا تسم fixture تكاملاً.' },
       { id: 'exercise', heading: 'برومبت تنفيذ محدود', body: 'برومبت: «نفّذ هذه المهمة وحدها وفق spec. اعرض الملفات والافتراضات ثم diff والاختبارات التي شغلتها فعلاً. لا تغير API أو التصميم خارج القبول». سلّم الشريحة إلى مرحلة Backend.' },
     ],
@@ -618,7 +618,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'python-backend-foundation',
     objectives: ['جهز بيئة Python معزولة وتبعيات قابلة للإعادة دون حفظ أسرار في Git.', 'قسّم إعداد الخادم ووظائفه واستخدم type hints مع تحقق إدخال عند الحدود.'],
     sections: [
-      { id: 'inputs', heading: 'نسخة Python وحدود الإعداد', body: 'اختر إطار Backend وراجع نسخة Python المدعومة. أنشئ venv وسجل التبعيات بقفل يناسب الأداة. .env محلي مستبعد من Git و.env.example يحوي أسماء متغيرات بلا قيم حساسة.' },
+      { id: 'inputs', heading: 'نسخة Python وحدود الإعداد', body: 'ابدأ بسياق الشريحة والمخرجات في الموضوع 37 ui-slice وslice-evidence لتحدد الحاجة إلى Backend، ثم اختر إطار Backend وراجع نسخة Python المدعومة. أنشئ venv وسجل التبعيات بقفل يناسب الأداة. .env محلي مستبعد من Git و.env.example يحوي أسماء متغيرات بلا قيم حساسة.' },
       { id: 'example', heading: 'مثال محلول: هيكل مفاهيمي محايد للإطار', body: 'قبل اختيار Django أو FastAPI، وثق مسؤوليات الإعداد والمنطق والاختبارات من دون إنشاء ملفات إطار بعينه. هذا رسم مفاهيمي؛ لا تنشئ app/config.py أو main.py أو مسارات framework حتى يسجل قرار الإطار في الموضوع 41 أو 42. Type hints توضح التواقيع لكنها لا تتحقق وحدها من كل طلب خارجي.' },
       { id: 'exercise', heading: 'برومبت تأسيس وتسليم', body: 'برومبت: «افحص نسخة Python وملفات المشروع، وجهز هيكلاً صغيراً وإعداداً يتحقق من المتغيرات. لا تعرض الأسرار ولا تختَر إطاراً خارج القرار». الناتج يهيئ PostgreSQL.' },
     ],
@@ -643,7 +643,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'postgresql-database-setup',
     objectives: ['جهز قاعدة PostgreSQL تطويرية بحساب تطبيق محدود وإعداد اتصال لا يكشف الأسرار.', 'سجل فحص الاتصال ببيئة محددة، وافصل استراتيجية الترحيل عن تطبيقها حتى اختيار ORM في الموضوع 41 أو 42.'],
     sections: [
-      { id: 'inputs', heading: 'حدد البيئة والاتصال', body: 'المدخل ERD ومخرج الموضوع 38: نسخة Python وvenv وملف .env.example مع تجاهل .env في Git، إضافة إلى إطار Backend الذي سيُختار. سجل إصدار PostgreSQL وطريقة تشغيله محلياً أو لدى المزود؛ أسماء الخدمات والمنافذ تختلف. افصل دور التطبيق عن superuser واحفظ كلمة المرور خارج Git. لا تفترض أن ORM أو models أو migrations موجودة بعد.' },
+      { id: 'inputs', heading: 'حدد البيئة والاتصال', body: 'المدخل ERD ومخرجا الموضوع 38 python-env وconfig-template (نسخة Python وvenv و.env.example مع تجاهل .env في Git)، إضافة إلى إطار Backend الذي سيُختار. سجل إصدار PostgreSQL وطريقة تشغيله محلياً أو لدى المزود؛ أسماء الخدمات والمنافذ تختلف. افصل دور التطبيق عن superuser واحفظ كلمة المرور خارج Git. لا تفترض أن ORM أو models أو migrations موجودة بعد.' },
       { id: 'example', heading: 'مثال محلول: سجل اتصال غير منفذ', body: 'قالب الدليل يطلب SELECT 1 ويسجل البيئة والتاريخ بعد تنفيذه؛ هنا النتيجة Not Run إلى أن ينفذ المتعلم الاستعلام ويحفظ مخرجه. استراتيجية migration توثق فقط؛ تطبيق schema مؤجل حتى اختيار ORM وإعداد models في الموضوع 41 أو 42. نجاح استعلام لاحق يثبت الاتصال بتلك البيئة فقط، ولا يثبت الإنتاج أو النسخة الاحتياطية.' },
       { id: 'exercise', heading: 'برومبت ومخرج التسليم', body: 'برومبت: «طابق تهيئة PostgreSQL مع ERD، وافصل حساب الإدارة عن التطبيق. استخدم أسماء متغيرات دون قيم، وسجل أمر SELECT 1 ونتيجته الفعلية أو Not Run. وثق استراتيجية migration بلا تطبيقها قبل اختيار ORM وبناء models. لا تنفذ إسقاطاً أو ترحيلاً إنتاجياً». سلّم سجل الاتصال إلى موضوع API.' },
     ],
@@ -668,7 +668,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'backend-architecture-api-contracts',
     objectives: ['حوّل رحلة مستخدم إلى عقد API يحدد المورد والطلب والاستجابة والأخطاء.', 'افصل حدود HTTP عن قواعد العمل واربط كل قاعدة بمصدر متطلبات.'],
     sections: [
-      { id: 'inputs', heading: 'العقد يسبق route', body: 'المدخل PRD/SRS وERD ورحلة المستخدم. ثبت method/path/request/response/auth/errors. لا تنسخ قاعدة أو دور BorrowHub إلى مشروع الطالب ما لم تنص وثائقه عليه.' },
+      { id: 'inputs', heading: 'العقد يسبق route', body: 'المدخل PRD/SRS وERD ورحلة المستخدم، ومخرجا الموضوع 39 pg-setup وpg-check بحدود اتصال وتخطيط قاعدة التطوير وحالة SELECT 1 أو Not Run. استخدم هذه المعلومات لتحديد قيود التخزين ذات الصلة فقط؛ لا تفترض أن migration طُبقت. ثبت method/path/request/response/auth/errors. لا تنسخ قاعدة أو دور BorrowHub إلى مشروع الطالب ما لم تنص وثائقه عليه.' },
       { id: 'example', heading: 'مثال محلول: إنشاء مورد', body: 'POST /api/items يستقبل name وcategoryId؛ النجاح 201 مع id؛ قيمة غير صالحة تعيد خطأ منظماً. قواعد pagination أو idempotency تدخل فقط إذا تطلبها المصدر.' },
       { id: 'exercise', heading: 'برومبت ومخرج', body: 'برومبت: «استخرج endpoints من هذه الرحلة، واذكر method/path/request/response/errors/auth ومصدر كل قاعدة. أظهر التعارضات كأسئلة ولا تختر إطاراً». العقد يغذي اختيار Django أو FastAPI.' },
     ],
@@ -693,7 +693,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'django-backend',
     objectives: ['حوّل ERD إلى نماذج Django وترحيلات قابلة للمراجعة.', 'افحص أثر migration في تطوير قبل أي تطبيق ذي بيانات مهمة.'],
     sections: [
-      { id: 'inputs', heading: 'Django خيار مستقل', body: 'المدخل ERD وعقد API وبيئة Python. Django ORM وmigrations مدمجان؛ FastAPI مسار بديل ولا يلزم تنفيذ الإطارين. اختر واحداً وافحص إصدار المكتبات.' },
+      { id: 'inputs', heading: 'Django خيار مستقل', body: 'المدخل ERD ومخرجا الموضوع 38 python-env/config-template، مخرجا الموضوع 39 pg-setup/pg-check، ومخرجا الموضوع 40 api-contract/api-layers. استخدم حالة قاعدة التطوير كما سُجلت، ولا تدّع أن migration منفذة قبل إعداد ORM. Django ORM وmigrations مدمجان؛ FastAPI مسار بديل ولا يلزم تنفيذ الإطارين. اختر واحداً وافحص إصدار المكتبات.' },
       { id: 'example', heading: 'مثال محلول: قيد uniqueness', body: 'إذا كان الاسم فريداً داخل organization، فالقيد المركب يوضع عند قاعدة البيانات بعد التحقق من المتطلب. فحص الواجهة وحده لا يحمي كتابات متزامنة.' },
       { id: 'exercise', heading: 'برومبت مراجعة migration', body: 'برومبت: «طابق models مع ERD والقيود. أنشئ migration وافحص أثرها وrollback في dev؛ لا تطبقها على الإنتاج». الناتج يغذي المصادقة في الموضوع 43.' },
     ],
@@ -718,7 +718,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'fastapi-backend',
     objectives: ['افصل Pydantic request/response schemas عن SQLAlchemy models.', 'جهز جلسة قاعدة البيانات وراجع Alembic upgrade/downgrade في التطوير.'],
     sections: [
-      { id: 'inputs', heading: 'FastAPI خيار مستقل', body: 'المدخل ERD وعقد API وقرار الإطار. Pydantic يتحقق من الرسائل وSQLAlchemy يمثل التخزين؛ Alembic يدير الترحيلات. اختره أو Django ولا تبنِ الاثنين للمشروع نفسه.' },
+      { id: 'inputs', heading: 'FastAPI خيار مستقل', body: 'المدخل ERD وقرار الإطار، ومخرجا الموضوع 38 python-env/config-template، مخرجا الموضوع 39 pg-setup/pg-check، ومخرجا الموضوع 40 api-contract/api-layers. استخدم حالة اتصال التطوير الموثقة ولا تدّع migration منفذة قبل إعداد ORM. Pydantic يتحقق من الرسائل وSQLAlchemy يمثل التخزين؛ Alembic يدير الترحيلات. اختره أو Django ولا تبنِ الاثنين للمشروع نفسه.' },
       { id: 'example', heading: 'مثال محلول: schema مقابل ORM', body: 'CreateItemRequest يحتوي name/category_id، وصف ORM يمثل الصف، وItemResponse يعيد id وname فقط. لا ترجع حقلاً داخلياً من ORM لمجرد أنه موجود.' },
       { id: 'exercise', heading: 'برومبت ومخرج', body: 'برومبت: «راجع فصل schema/ORM وربط Alembic metadata. اعرض migration وفرق الترقية والتراجع، ولا تطبقها حتى تفحص dev». الناتج يهيئ auth الموحد.' },
     ],
@@ -743,7 +743,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'auth-permissions',
     objectives: ['فرّق authentication عن authorization وارسم الصلاحيات من SRS.', 'اختبر مستخدماً مجهولاً ومستخدماً بلا صلاحية ومالكاً مسموحاً عند API.'],
     sections: [
-      { id: 'inputs', heading: 'المتطلب مصدر الإذن', body: 'المدخل عقد API وSRS وإطار Backend المختار, ومعه User model ومigrations الناتجة عن المسار المختار وحده: مخرج Django في الموضوع 41 أو schemas/ORM والمigration record في الموضوع 42. Authentication يثبت الهوية؛ authorization يقرر الفعل. سجل الدور وملكية المورد وفق النموذج المختار. طريقة JWT أو session تتبع التهديدات ومتطلبات المشروع.' },
+      { id: 'inputs', heading: 'المتطلب مصدر الإذن', body: 'المدخل عقد API وSRS وإطار Backend المختار، ومعه مخرجا الموضوع 41 django-models/django-migration أو الموضوع 42 api-schemas/alembic-record، بحسب المسار المنفذ وحده. Authentication يثبت الهوية؛ authorization يقرر الفعل. سجل الدور وملكية المورد وفق النموذج المختار. طريقة JWT أو session تتبع التهديدات ومتطلبات المشروع.' },
       { id: 'example', heading: 'مثال محلول: تعديل سجل', body: 'المستخدم authenticated لكن owner_id مختلف. المصادقة نجحت والتفويض يرفض؛ إخفاء زر الواجهة لا يحمي endpoint. اختَر 403 أو 404 حسب العقد وسياسة الخصوصية.' },
       { id: 'exercise', heading: 'برومبت ومخرج أمني', body: 'برومبت: «اشتق مصفوفة permission من SRS. اختبر anonymous وrole-missing وowner. لا تطبع token أو كلمة مرور». الناتج يضبط حدود طبقة الخدمة في الموضوع 44.' },
     ],
@@ -768,7 +768,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'services-selectors',
     objectives: ['ضع الكتابة وقاعدة العمل في service داخل حد transaction واجعل selectors للقراءة.', 'اختبر invariant عند التنافس وقس query count قبل أي تحسين.'],
     sections: [
-      { id: 'inputs', heading: 'وزع المسؤولية', body: 'المدخل models وعقد API وقواعد PRD/SRS، إضافة إلى مخرج الموضوع 43 docs/AUTH_PERMISSIONS_SPEC.md ونتائج auth-tests التي تحدد الهوية والدور والملكية ونتيجة الرفض. Controller يتعامل مع HTTP، service تنسق الكتابة والمعاملة، selector يقرأ دون أثر جانبي. النمط وسيلة تنظيم تتبع المشروع لا قاعدة مكتبية مطلقة.' },
+      { id: 'inputs', heading: 'وزع المسؤولية', body: 'المدخل models وعقد API وقواعد PRD/SRS، إضافة إلى مخرجي الموضوع 43 permission-matrix وauth-tests في docs/AUTH_PERMISSIONS_SPEC.md وسجل الاختبارات. استخدم نتيجة الفحص كما هي، بما فيها Not Run. Controller يتعامل مع HTTP، service تنسق الكتابة والمعاملة، selector يقرأ دون أثر جانبي. النمط وسيلة تنظيم تتبع المشروع لا قاعدة مكتبية مطلقة.' },
       { id: 'example', heading: 'مثال محلول: حجز مورد', body: 'صادق على الهوية ثم نفذ فحص تفويض لا يكشف حالة المورد لمستخدم غير مصرح، وفق مصفوفة الموضوع 43. داخل transaction اقفل/اقرأ المورد المصرح به، وأعد فحص شرط التوفر الحساس للتنافس، ثم اكتب الطلب والتزم؛ عند التعارض rollback. selector يجلب القراءة؛ eager loading يستخدم إذا ظهر N+1 في القياس.' },
       { id: 'exercise', heading: 'برومبت ومخرج', body: 'برومبت: «استخرج قاعدة الكتابة من PRD. اقترح service وselector، واختبر التنافس وقس query count قبل/بعد. لا تعمم قاعدة BorrowHub». الناتج يهيئ تكامل الواجهة.' },
     ],
@@ -793,7 +793,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'frontend-backend-integration',
     objectives: ['اربط الواجهة بعقد API typed وتعامل مع pending/empty/error حسب حالة الشبكة.', 'اضبط CORS ومتغيرات المصدر من دون كشف سر خادم في المتصفح.'],
     sections: [
-      { id: 'inputs', heading: 'العقد يربط الطرفين', body: 'المدخل API_CONTRACTS.md والخادم المنفذ وبيئة الواجهة. أنشئ client صغيراً مطابقاً للطلب/الاستجابة، وافحص status قبل تحليل body. NEXT_PUBLIC_ يصل للمتصفح، فلا تضع فيه اعتماد قاعدة بيانات.' },
+      { id: 'inputs', heading: 'العقد يربط الطرفين', body: 'المدخل مخرجا الموضوع 39 pg-setup/pg-check، ومخرجا المسار المختار من الموضوع 41 django-models/django-migration أو الموضوع 42 api-schemas/alembic-record، ومخرجا الموضوع 40 api-contract/api-layers، ومخرجا الموضوع 43 permission-matrix/auth-tests، ومخرجا الموضوع 44 service-map/invariant-evidence مع حالة تنفيذ الخادم الفعلية. أنشئ client صغيراً مطابقاً للطلب/الاستجابة، وافحص status قبل تحليل body. NEXT_PUBLIC_ يصل للمتصفح، فلا تضع فيه اعتماد قاعدة بيانات.' },
       { id: 'example', heading: 'مثال محلول: قائمة عناصر', body: 'GET /items مع 200 [] يعرض empty؛ 401 يتبع سياسة الدخول؛ network failure يعرض رسالة عامة. لا تسجل token أو stack trace للمستخدم.' },
       { id: 'exercise', heading: 'برومبت ومصفوفة تكامل', body: 'برومبت: «طابق client مع العقد واختبر 200/empty/401/validation/network. افحص CORS وbundle بحثاً عن أسرار. لا تسم mock اتصالاً حقيقياً». سلّم matrix الرحلة إلى اختبارات full-stack.' },
     ],
@@ -818,7 +818,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'full-stack-journey-testing',
     objectives: ['اختبر رحلة مستخدم عبر واجهة وAPI وstorage ببيانات اختبار معزولة.', 'سجل البيئة والأمر والطبقات والنتائج كي يعيد المراجع الاختبار.'],
     sections: [
-      { id: 'inputs', heading: 'اختر مستوى الاختبار', body: 'Unit يختبر وحدة، integration يختبر اتصال طبقتين، E2E يختبر رحلة متصفح. المدخل عقد API وطريقة إعداد test. لا تسم mock اختبار قاعدة بيانات حقيقية.' },
+      { id: 'inputs', heading: 'اختر مستوى الاختبار', body: 'Unit يختبر وحدة، integration يختبر اتصال طبقتين، E2E يختبر رحلة متصفح. استخدم مخرجي الموضوع 45 api-client وintegration-config مع عقد API وطريقة إعداد test؛ سمّ لكل تجربة fixture أو خدمة فعلية. لا تسم mock اختبار قاعدة بيانات حقيقية.' },
       { id: 'example', heading: 'مثال محلول: إنشاء مورد', body: 'مستخدم test يفتح نموذجاً، يرسل قيمة صالحة، يرى السجل، ثم يرسل قيمة غير صالحة ويرى رسالة. seed/cleanup صريحان فلا يعتمد الترتيب على اختبار سابق.' },
       { id: 'exercise', heading: 'برومبت وخطة إثبات', body: 'برومبت: «اكتب الرحلة من شروط البداية للنتيجة. حدد مستوى الاختبار ومصدر البيانات والتنظيف. شغّل success/failure/reload وسجل الأمر والنتيجة بلا بيانات شخصية». سلّم gaps إلى الأداء وQA.' },
     ],
@@ -843,7 +843,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'database-performance-engineering',
     objectives: ['حدد استعلاماً بطيئاً من قياس قابل لإعادة الفحص قبل اقتراح تحسين.', 'قارن query plan/count قبل وبعد ووازن الفهرس بكلفة الكتابة.'],
     sections: [
-      { id: 'inputs', heading: 'قِس قبل التعديل', body: 'المدخل استعلام وبيانات ممثلة وبيئة آمنة. سجل الزمن والحجم وعدد الصفوف. EXPLAIN يوضح الخطة؛ EXPLAIN ANALYZE ينفذ العبارة، فاستخدمه على قراءة آمنة أو dev.' },
+      { id: 'inputs', heading: 'قِس قبل التعديل', body: 'المدخل مسار القراءة وبياناته من مخرجي الموضوع 46 journey-spec وjourney-log، مع استعلام وبيانات ممثلة وبيئة آمنة. سجل الزمن والحجم وعدد الصفوف. EXPLAIN يوضح الخطة؛ EXPLAIN ANALYZE ينفذ العبارة، فاستخدمه على قراءة آمنة أو dev.' },
       { id: 'example', heading: 'مثال محلول: فلترة حسب الحالة', body: 'افحص استعلام status وcreated_at. قد يفيد index مركب إذا وافق pattern الفلترة والترتيب، لكنه يزيد مساحة وكلفة الكتابة. لا تضفه لمجرد ظهور العمود في WHERE.' },
       { id: 'exercise', heading: 'برومبت مقارنة', body: 'برومبت: «اجمع query والخطة والحجم من test، اقترح تغييراً واحداً وقارن قبل/بعد. لا تنفذ كتابة ولا تعلن تحسناً من الخطة وحدها». سلّم القياس إلى قرار Redis.' },
     ],
@@ -868,7 +868,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'redis-optional-infrastructure',
     objectives: ['قرر Redis وفق مشكلة مقاسة ومتطلبات تبرر خدمة إضافية.', 'إن اعتمد cache فحدد TTL والإبطال ومصدر الحقيقة واختبر stale/failure.'],
     sections: [
-      { id: 'inputs', heading: 'قرار مشروط', body: 'المدخل قياس الوصول ومتطلبات التوافر. قارن Redis بتحسين SQL أو cache داخل العملية أو عدم cache، مع كلفة التشغيل والمراقبة والخصوصية.' },
+      { id: 'inputs', heading: 'قرار مشروط', body: 'المدخل مخرجا الموضوع 47 db-baseline وdb-change وقياس الوصول ومتطلبات التوافر. قارن Redis بتحسين SQL أو cache داخل العملية أو عدم cache، مع كلفة التشغيل والمراقبة والخصوصية.' },
       { id: 'example', heading: 'مثال محلول: cache-aside', body: 'افحص key مع TTL؛ عند miss اقرأ المصدر ثم خزّن. عند التحديث أبطل key أو اتبع TTL محدداً. في هذا النمط تبقى قاعدة البيانات المعتمدة مصدر الكتابة، وRedis نسخة cache قابلة لإعادة البناء. لا تخبئ بيانات أشخاص بلا عزل.' },
       { id: 'exercise', heading: 'برومبت قرار', body: 'برومبت: «استخدم القياس لتقرر هل يلزم Redis. قارن البدائل وكلفة التشغيل. إن أوصيت به فحدد key/TTL/invalidation/failure behavior واختبر stale data». قد يكون القرار تأجيله.' },
     ],
@@ -893,7 +893,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'integrated-project-qa',
     objectives: ['اربط المتطلبات الحرجة بمستويات اختبار وأدلة قابلة للإعادة.', 'راجع الوظائف والأمان والوصولية والتوافق مع حالات Passed/Failed/Not Run.'],
     sections: [
-      { id: 'inputs', heading: 'ابدأ بالمتطلب والمخاطر', body: 'المدخل PRD/SRS وAPI contract والفحوص السابقة. حدد رحلة ومخاطر ثم اختر فحصاً مناسباً. build ناجح لا يثبت الوصولية أو كل الرحلات.' },
+      { id: 'inputs', heading: 'ابدأ بالمتطلب والمخاطر', body: 'المدخل PRD/SRS وAPI contract والفحوص السابقة، ومنها مخرجا الموضوع 48 redis-decision/cache-policy ونتيجة فحص cache إن اعتمده المشروع. حدد رحلة ومخاطر ثم اختر فحصاً مناسباً. build ناجح لا يثبت الوصولية أو كل الرحلات.' },
       { id: 'example', heading: 'مثال محلول: عزل بيانات', body: 'متطلب "يرى المستخدم بياناته فقط" يرتبط باختبار API يطلب سجل غيره، وE2E يفحص رسالة الرفض، ومراجعة يدوية تمنع تسرب الاسم. لكل تجربة بيئة test.' },
       { id: 'exercise', heading: 'برومبت تقرير', body: 'برومبت: «راجع traceability matrix والنتائج. لا تحول Not Run إلى Passed. أضف خطوات الإعادة والبيئة والتاريخ وأثر الفشل». سلّم الفجوات إلى خيار التشغيل التالي.' },
     ],
@@ -918,7 +918,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'docker-container-workflow',
     objectives: ['قرر هل يتطلب مسار النشر صورة حاوية أم أن البناء المُدار يفي بالحاجة.', 'عند اختيار Docker اربط Dockerfile بسياق البناء وإصدار runtime وأمر التشغيل مع حماية الأسرار.'],
     sections: [
-      { id: 'inputs', heading: 'حدد من يبني الصورة', body: 'المدخل مستودع المشروع وإصدار Node أو Python ومزود النشر. بعض المنصات تبني من Git مباشرة؛ لا تضف Docker لمجرد أنه شائع. صورة الحاوية artifact قابل للنقل، والحاوية عملية تشغيل منها؛ Compose خيار تطوير لخدمات متعددة وليس شرطاً.' },
+      { id: 'inputs', heading: 'حدد من يبني الصورة', body: 'المدخل مستودع المشروع وإصدار Node أو Python ومزود النشر ومخرجا الموضوع 49 qa-matrix وqa-gaps لتحديد الرحلة والمخاطر التي يجب أن تبقى مرئية. بعض المنصات تبني من Git مباشرة؛ لا تضف Docker لمجرد أنه شائع. صورة الحاوية artifact قابل للنقل، والحاوية عملية تشغيل منها؛ Compose خيار تطوير لخدمات متعددة وليس شرطاً.' },
       { id: 'example', heading: 'مثال محلول: خادم يحتاج صورة', body: 'اختر Dockerfile يطابق lockfile ونسخة runtime، وانسخ ملفات التشغيل فقط، واجعل مجلد الأسرار خارج build context عبر .dockerignore. شغل العملية بمستخدم غير root، ومرر الإعداد عبر آلية أسرار runtime لا ARG أو طبقة صورة.' },
       { id: 'exercise', heading: 'مهمة وبرومبت ومخرج', body: 'برومبت: «افحص المنصة وإعداد المشروع؛ قارن البناء المُدار وصورة OCI. إن اخترت Docker فسجل السياق والنسخ والأمر والمستخدم ومصدر الأسرار، ولا تبنِ أو تنشر صورة بإعداد إنتاجي». سلّم قرار التشغيل إلى فحص Linux أو سجّل سبب تجاوز إدارته.' },
     ],
@@ -943,7 +943,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'linux-server-operations',
     objectives: ['حدد ما إذا كانت إدارة Linux اليدوية ضمن مسؤولية الطالب أو أن المنصة تدير النظام.', 'عند إدارة الخادم، فسّر المستخدم والملكية وrwx واختر أقل صلاحية لازمة قبل أي تغيير.'],
     sections: [
-      { id: 'inputs', heading: 'ابدأ بحدود مسؤولية الاستضافة', body: 'المدخل منصة النشر أو إعداد VPS وعملية Django/FastAPI ومجلدات الكتابة المطلوبة. الخادم المُدار لا يمنح الطالب حق تغيير نظام التشغيل. في بيئة تملكها، افحص id وstat وpwd وps كقراءة أولاً؛ لا تستخدم sudo أو chmod -R على production.' },
+      { id: 'inputs', heading: 'ابدأ بحدود مسؤولية الاستضافة', body: 'المدخل منصة النشر أو إعداد VPS وعملية Django/FastAPI ومخرجا الموضوع 50 container-decision وcontainer-runtime-evidence، ومجلدات الكتابة المطلوبة. إذا اختير بناء مُدار فسجل أن إعدادات Linux غير متاحة بدلاً من افتراضها. في بيئة تملكها، افحص id وstat وpwd وps كقراءة أولاً؛ لا تستخدم sudo أو chmod -R على production.' },
       { id: 'example', heading: 'مثال محلول: مجلد رفع محدود', body: 'إذا احتاجت الخدمة مجلد uploads، عرّف مستخدم خدمة ومجموعة ومجلداً واحداً تملكه العملية. اشرح rwx للمالك والمجموعة والآخرين؛ 755 للمجلد لا يمنح الكتابة لكل أحد. إن لم تكن المنصة تسمح بهذه الإدارة، اتبع وثائقها وسجل التجاوز.' },
       { id: 'exercise', heading: 'مهمة وبرومبت وتسليم', body: 'برومبت: «استخرج حدود مزود الاستضافة وهوية العملية ومجلداتها. اقترح أضيق صلاحية مع تحقق قراءة فقط؛ لا تشغّل أوامر تغيير ولا تتصل بالخادم. اذكر مالك القرار وخطة التراجع المطلوبة قبل تعديل مأذون». سلّم ملاحظات التشغيل إلى runbook الموضوع 55.' },
     ],
@@ -993,7 +993,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'netlify-frontend-deployment',
     objectives: ['حدد صلاحية Netlify لمسار الواجهة وقيود framework/build بحسب الوثائق الحالية.', 'أنشئ خطة preview أو deploy قابلة للفحص تحمي الإعدادات وتوضح أن backend يحتاج نشرًا منفصلاً.'],
     sections: [
-      { id: 'inputs', heading: 'افهم نوع المشروع', body: 'المدخل framework ونسخة Next.js وإعداد build/output وGit provider والدومين. تتحرك مزايا Next.js مع إصدارات adapter والمنصة؛ اقرأ دليل framework الحالي ولا تفترض أن كل routing أو runtime مدعوم بإعداد قديم.' },
+      { id: 'inputs', heading: 'افهم نوع المشروع', body: 'المدخل framework ونسخة Next.js وإعداد build/output وGit provider والدومين. إذا كنت تقارن المضيفين فابدأ بمخرجي الموضوع 52 vercel-config-record وvercel-preview-evidence وحدد ما ينطبق على المشروع وما يحتاج تحققاً جديداً. تتحرك مزايا Next.js مع إصدارات adapter والمنصة؛ اقرأ دليل framework الحالي ولا تفترض أن كل routing أو runtime مدعوم بإعداد قديم.' },
       { id: 'example', heading: 'مثال محلول: اختيار بديل مستضاف', body: 'اربط فرعاً تجريبياً، تحقق من build command وbase directory والمتغيرات دون عرض أسرار، ثم راجع deploy preview ومساراً ديناميكياً. إن كان مشروع الدورة على Vercel، Netlify بديل منفصل لا نسخة إنتاج ثانية بلا داع.' },
       { id: 'exercise', heading: 'مهمة مقارنة ومخرج', body: 'برومبت: «قارن احتياج الواجهة بدليل Netlify الحالي والإعداد المعروض. اذكر framework/version وميزة لازمة وأي قيد مجهول، ثم جهز خطوات deploy preview. لا تضغط Deploy ولا تنسخ الأسرار». سلّم اختيار المضيف إلى استضافة API/قاعدة الموضوع 54.' },
     ],
@@ -1018,7 +1018,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'backend-database-deployment',
     objectives: ['اختر target واحداً لـ Backend وPostgreSQL وراجع مسؤولية الشبكة والنسخ والأسرار.', 'اختبر health وAPI باستخدام قاعدة غير إنتاجية أو بيانات آمنة قبل إعلان الرحلة المنشورة.'],
     sections: [
-      { id: 'inputs', heading: 'اربط عناصر النشر بالعقد', body: 'المدخل API contract وإطار Django أو FastAPI ونسخة قاعدة البيانات وخطة المضيفين. انشر API وقاعدة على خدمات معلومة، واضبط TLS وشبكة خاصة حسب المزود. عنوان قاعدة البيانات وسرها لا يذهبان إلى bundle الواجهة ولا Git.' },
+      { id: 'inputs', heading: 'اربط عناصر النشر بالعقد', body: 'المدخل API contract وإطار Django أو FastAPI ومخرجا المسار المختار من الموضوع 41/42، ومخرجا PostgreSQL في الموضوع 39، ونتيجة مضيف الواجهة المختار: vercel-config-record/vercel-preview-evidence من الموضوع 52 أو netlify-compatibility-record/netlify-preview-report من الموضوع 53. طابق origins والعقود مع الأدلة الفعلية وسم المكونات غير المنفذة. انشر API وقاعدة على خدمات معلومة، واضبط TLS وشبكة خاصة حسب المزود. عنوان قاعدة البيانات وسرها لا يذهبان إلى bundle الواجهة ولا Git.' },
       { id: 'example', heading: 'مثال محلول: ترحيل آمن', body: 'أنشئ staging database منفصلة، واضبط connection string كسرّ في إعدادات وقت التشغيل. شغّل migrations وفق خطة الإطار، ثم افحص health وreadiness وقراءة/كتابة test. وثق ما يعيده الرجوع إذا تغير schema؛ العودة لنسخة تطبيق قديمة لا تعكس البيانات تلقائياً.' },
       { id: 'exercise', heading: 'مهمة نشر ومخرج', body: 'برومبت: «راجع الوثائق الرسمية لخدمات API وPostgreSQL المختارة. أنشئ مخططاً يبين الشبكة والسّر والنسخ والترحيل والفحص والرجوع. لا تنشئ خدمة ولا تنفذ migration إنتاجية». سلّم الـ endpoints ونتيجة الرحلة إلى runbook.' },
     ],
@@ -1043,7 +1043,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'project-operations-runbook',
     objectives: ['اكتب إجراءات تشغيل مرتبطة بقدرات خطة الاستضافة المثبتة لا بميزات متوقعة.', 'افصل تحديث التطبيق وتراجعه عن نسخ البيانات واستعادتها مع مالك وخطوات تحقق.'],
     sections: [
-      { id: 'inputs', heading: 'افحص البيئة المختارة', body: 'المدخل خطة الواجهة والخادم وقاعدة البيانات ونتائج QA. تحقق من مصادر CI والسجلات والتنبيه والنسخ وحدود الاحتفاظ. اسم زر backup لا يثبت أن نسخة قابلة للاستعادة؛ لا تخترع RPO/RTO.' },
+      { id: 'inputs', heading: 'افحص البيئة المختارة', body: 'المدخل مخرجا الموضوع 54 backend-topology/backend-smoke-report، ومخرجا مضيف الواجهة المختار: الموضوع 52 vercel-config-record/vercel-preview-evidence أو الموضوع 53 netlify-compatibility-record/netlify-preview-report، ومخرجا الموضوع 51 linux-ownership/linux-change-plan عند انطباقه، ومخرجا الموضوع 49 qa-matrix/qa-gaps. تحقق من مصادر CI والسجلات والتنبيه والنسخ وحدود الاحتفاظ. اسم زر backup لا يثبت أن نسخة قابلة للاستعادة؛ لا تخترع RPO/RTO.' },
       { id: 'example', heading: 'مثال محلول: تراجع التطبيق', body: 'إذا فشل إصدار واجهة، أعد آخر إصدار محفوظاً، ثم اختبر landing والroute الحرجة وسجل version. تغيير قاعدة بيانات منفصل: راجع compatibility migration وخطة restore مجربة خارج الإنتاج. لا تعكس كتابة البيانات بمجرد الرجوع إلى code.' },
       { id: 'exercise', heading: 'برومبت تشغيل', body: 'برومبت: «استخدم إعدادات ووثائق المزود الفعلية. سجّل CI وlogs/alerts/backup/restore/deploy/rollback كـ verified أو available-not-tested أو unavailable أو unknown. احمِ الأسرار، ولا تغير production». سلّم الإجراءات إلى حزمة handoff في الموضوع 56.' },
     ],
@@ -1068,7 +1068,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'project-handoff-package',
     objectives: ['اجمع نقطة بدء وروابط ومتطلبات ومخططات وتعليمات تشغيل يمكن لمراجع اتباعها.', 'اربط نتيجة QA بإصدار وبيئة وطريقة وتاريخ، وأظهر النواقص والأسرار المحذوفة.'],
     sections: [
-      { id: 'inputs', heading: 'حدد من يستلم ولماذا', body: 'المدخل مستندات PRD/SRS وERD وAPI وUX وQA وrunbook. حزمة التسليم مؤشر للموجود لا مخزن نسخ مضطربة؛ اربط النسخة المعتمدة ولا تنشئ ملفاً أو رابطاً افتراضياً. لا تضع .env أو بيانات مستخدم.' },
+      { id: 'inputs', heading: 'حدد من يستلم ولماذا', body: 'المدخل مستندات PRD/SRS وERD وAPI وUX وQA، ومخرجا الموضوع 55 operations-capabilities وrestore-rollback-plan. حزمة التسليم مؤشر للموجود لا مخزن نسخ مضطربة؛ اربط النسخة المعتمدة ولا تنشئ ملفاً أو رابطاً افتراضياً. لا تضع .env أو بيانات مستخدم.' },
       { id: 'example', heading: 'مثال محلول: README موجز', body: 'يبدأ README بالمشكلة والحالة والميزات المنفذة، ثم quick start ومتغيرات البيئة بأسمائها فقط ورابط HANDOFF. تقرير QA يسجل commit وcommand وdate وPassed/Failed/Not Run. إذا API يستخدم fixtures فأظهر ذلك.' },
       { id: 'exercise', heading: 'مهمة تسليم', body: 'برومبت: «أنشئ فهرس الحزمة من الملفات الموجودة. لكل رابط تحقق من المسار والصلاحية، ولكل نتيجة أرفق الأمر والنسخة. اذكر القيود والمالك والخطوة التالية. لا تنسخ الأسرار». سلّم نسخة مختصرة قابلة للعرض في Demo Day.' },
     ],
@@ -1093,7 +1093,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'project-demo-day',
     objectives: ['ابنِ قصة عرض قصيرة حول مشكلة مستخدم ورحلة قابلة للإعادة وقرار موثق.', 'جهز fallback آمن وسمّه بوضوح، واربط ادعاءات الأثر بالدليل المتوفر.'],
     sections: [
-      { id: 'inputs', heading: 'حدد الجمهور والنسخة', body: 'المدخل README والنسخة المنشورة أو التشغيل المحلي والبيانات الآمنة. اكتب الهدف والمدة والجمهور. لا تبدأ برسم معماري طويل ولا تدّع مقابلات أو عدد مستخدمين لم يُقَس.' },
+      { id: 'inputs', heading: 'حدد الجمهور والنسخة', body: 'المدخل README ومخرجا الموضوع 56 handoff-index وhandoff-evidence، والنسخة المنشورة أو التشغيل المحلي والبيانات الآمنة. استخدم حالة الإصدار والأدلة كما سُجلت. اكتب الهدف والمدة والجمهور. لا تبدأ برسم معماري طويل ولا تدّع مقابلات أو عدد مستخدمين لم يُقَس.' },
       { id: 'example', heading: 'مثال محلول: طلب مورد', body: 'اعرض إضافة طلب واحد من حساب test ثم حالة مراجعته، واربط القرار بعقد API. وضح إذا المشهد mock أو live. إذا فشل الرابط، اعرض تسجيل الشاشة كبديل مسمى وليس كتفاعل مباشر.' },
       { id: 'exercise', heading: 'مهمة وبرومبت تدريب', body: 'برومبت: «استخدم README والأدلة الحالية فقط. اكتب مقدمة ومشهد رحلة وقراراً وقيداً، ووقت اختبار الرابط وخطة fallback. لا تخترع مقياساً أو مستخدماً». جرّب النص والبيانات قبل العرض، ثم صغ بطاقة portfolio.' },
     ],
@@ -1118,7 +1118,7 @@ export const LEARNING_CONTENT_GROUP_B: Record<string, TopicLearningContent> = {
     slug: 'project-portfolio-entry',
     objectives: ['اكتب بطاقة مشروع تصف حالته ومساهمتك الفردية والتعاون ومساعدة الأدوات بدقة.', 'ادعم نتيجة قابلة للقياس بطريقة ومصدر وعينة، أو صرح بأن الأثر لم يقس.'],
     sections: [
-      { id: 'inputs', heading: 'اجمع الأثر قبل الصياغة', body: 'المدخل repo وREADME وسجل مساهمات وQA ورابط/لقطة نسخة. تحقق من حقوق المشاركة ونظف البيانات والأسرار. فرّق بين prototype وlocal وpublished وبين ما صنعه الطالب وما شارك فيه.' },
+      { id: 'inputs', heading: 'اجمع الأثر قبل الصياغة', body: 'المدخل repo وREADME ومخرجا الموضوع 57 demo-script وdemo-readiness، وسجل مساهمات وQA ورابط/لقطة النسخة. استخدم حالة العرض والفجوات كما هي. تحقق من حقوق المشاركة ونظف البيانات والأسرار. فرّق بين prototype وlocal وpublished وبين ما صنعه الطالب وما شارك فيه.' },
       { id: 'example', heading: 'مثال محلول: مساهمة قابلة للتحديد', body: 'اكتب «نفذت نموذج الحجز في src/...، وراجعت سياسة الصلاحيات مع الفريق. العرض يستخدم fixtures؛ لم نقس الاستخدام بعد». لا تحول اجتياز اختبار محلي إلى ادعاء أثر تجاري أو نجاح مستخدم.' },
       { id: 'exercise', heading: 'مهمة كتابة ومراجعة', body: 'برومبت: «استخدم الأدلة المرفقة فقط. اكتب المشكلة ومساهمتي والقرار والنتائج والقيود. راجع كل رقم ورابط وادعاء عمل جماعي. إن لم يوجد قياس، اذكر ذلك. احذف أي بيانات خاصة». سلّم البطاقة وأدلة الروابط.' },
     ],
