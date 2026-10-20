@@ -48,8 +48,8 @@ export const topic24CodingAgentHtml = `
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>لا يُفرض تبديل وكيل البرمجة:</strong> يحق للطالب اختيار أي وكيل برمجي تدعمه بيئته ومحرره المفضل، سواء كان Antigravity CLI/IDE، أو Cursor، أو Claude Code، أو GitHub Copilot، أو Aider، أو محرر محلي كـ VS Code مع ملحقات مفتوحة المصدر مثل Continue. المفاهيم الهندسية الواردة هنا تنطبق على أي وكيل.</li>
-      <li><strong>لا افتراض لاشتراكات مدفوعة:</strong> لا يفترض المسار التعليمي شراء أي باقة احترافية أو اشتراك مدفوع. جميع التطبيقات مصممة للعمل بنماذج مجانية، أو باقات تجريبية، أو استدعاءات API خفيفة.</li>
-      <li><strong>غياب ضمانات حدود الاستخدام:</strong> الحسابات المجانية أو التجريبية تخضع لسياسات الشركات المزودة وحدود استدعاء (Rate Limits) متغيرة. يتعلم الطالب كيفية إدارة استهلاك الـ Tokens والتوقف الذكي، دون بناء اعتماده على حصص استدعاء مضمونة.</li>
+      <li><strong>لا افتراض لاشتراكات مدفوعة:</strong> لا يفترض المسار شراء باقة أو استخدام نموذج بعينه. يمكن إنجاز تمارين التوثيق والبيانات محلياً؛ الوصول إلى خدمة أو API يتبع شروط الحساب والتوفر الحالية.</li>
+      <li><strong>غياب ضمانات حدود الاستخدام:</strong> تختلف الإتاحة والأسعار والحدود حسب المزود والحساب والمنطقة والوقت. لا تبنِ التمرين على حصة مجانية أو تجربة مضمونة؛ استخدم المسار المحلي عند تعذر الوصول.</li>
     </ul>
 
     <div class="table-container my-4">
@@ -247,7 +247,7 @@ export const topic25AiStudioHtml = `
   <div class="step-header">
     <div class="step-title-wrap">
       <h2 class="step-title">استخدام Google AI Studio في استكشاف النماذج وتوليد الأصول</h2>
-      <div class="step-subtitle">بيئة تجربة نماذج Gemini، إدارة المفاتيح والتعليمات، وتوليد البيانات التمثيلية (Mock Data) دون تشتيت متطلبات المشروع</div>
+      <div class="step-subtitle">تجربة اختيارية للنماذج المتاحة، ومراجعة البيانات التمثيلية (Mock Data)؛ مفتاح API مطلوب فقط لتكامل خادمي منفصل</div>
     </div>
   </div>
 
@@ -258,10 +258,10 @@ export const topic25AiStudioHtml = `
       تم وضع <strong>Google AI Studio</strong> في هذه المحطة (بجانب أدوات الواجهة والتنفيذ) وليس في بداية المسار؛ لأن استخدامه الأساسي في مشروع الطالب يتركز على:
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
-      <li>التجربة السريعة للبرومبتات المعقدة واختبار سلوك نماذج Gemini (مثل Gemini 1.5 Flash وGemini 1.5 Pro).</li>
+      <li>التجربة السريعة للبرومبتات ومقارنة السلوك؛ اختر من النماذج المتاحة حالياً وسجّل اسم النموذج وتاريخ التجربة لأن القوائم تتغير.</li>
       <li>ضبط تعليمات النظام (System Instructions) ومعاملات التوليد (Temperature وSafety Settings).</li>
-      <li>توليد البيانات التمثيلية الأولية (Mock Data) بصيغة JSON النقية استناداً إلى مخطط قاعدة البيانات المعتمد في <code>docs/ERD.md</code> وشاشات <code>docs/SCREEN_INVENTORY.md</code>.</li>
-      <li>استخراج وتأمين مفتاح API لاستخدامه لاحقاً في الميزات الذكية للواجهة.</li>
+      <li>صياغة بيانات تمثيلية صغيرة بصيغة JSON ومراجعة حقولها ومفاتيحها يدوياً مقابل <code>docs/ERD.md</code> و<code>docs/SCREEN_INVENTORY.md</code>؛ خرج JSON لا يثبت مطابقة المخطط.</li>
+      <li>إعداد مفتاح API فقط إذا اخترت لاحقاً استدعاء Gemini من خادم مشروعك؛ لا يحتاج تمرين الواجهة والبيانات التمثيلية مفتاحاً.</li>
     </ul>
     <p class="leading-8 text-[var(--text-muted)] mt-2">
       تأجيل هذه الخطوة حمى المتدرّب من التشتت في ضبط معاملات الذكاء الاصطناعي أثناء مرحلة كشف المتطلبات وتوثيق PRD، حيث كان التركيز منصباً بالكامل على الفهم البشري والتحليل المنطقي.
@@ -284,9 +284,9 @@ export const topic25AiStudioHtml = `
         <tbody>
           <tr>
             <td><strong>Google AI Studio</strong></td>
-            <td>منصة الويب الرسمية لتجربة نماذج Gemini وضبط System Instructions واستخراج API Keys</td>
+            <td>منصة ويب لتجربة النماذج وضبط System Instructions؛ إنشاء مفتاح API خطوة اختيارية لتكامل برمجي منفصل</td>
             <td><a href="https://aistudio.google.com/" target="_blank" rel="noreferrer" class="text-emerald-600 dark:text-emerald-400 font-bold underline">aistudio.google.com</a></td>
-            <td><span class="badge-available">متاح رسميًا</span> (يتطلب حساب Google؛ يوفر باقة استخدام مجانية خاضعة لمعدلات الطلب)</td>
+            <td>قد يتطلب حساباً مؤهلاً؛ الإتاحة والحدود تتغير حسب الحساب والمنطقة والوقت، ولا يفترض الدرس حصة مجانية.</td>
           </tr>
           <tr>
             <td><strong>Gemini API Documentation</strong></td>
@@ -301,10 +301,10 @@ export const topic25AiStudioHtml = `
     <div class="callout warning my-4">
       <div class="callout-header">
         <span class="callout-icon">⚠️</span>
-        <span>حدود الاستخدام المجاني (Rate Limits) وغياب الضمانات المطلقة</span>
+        <span>حدود الإتاحة ومعدلات الطلب تتغير؛ لا تفترض حصة مجانية</span>
       </div>
       <p class="leading-7">
-        توفر Google باقة مجانية (Free Tier) للاستخدام المكتبي والتجريبي لنماذج Gemini بمعدلات طلب محددة (مثل عدد الطلبات في الدقيقة RPM والتوكنز في الدقيقة TPM). يجب أن يدرك الطالب أن <strong>هذه الحصص المجانية غير مضمونة الأبدية</strong> وقد تختلف باختلاف النطاق الجغرافي. لا يشترط المسار شراء أي اشتراك؛ بل يوجّه المتعلّم إلى ترشيد الاستعلامات واستخدام البيانات التمثيلية المحلية (Local Mock Data) كمسار احتياطي موثوق.
+      قد تختلف إمكانية الوصول والأسعار وحدود الطلب باختلاف الحساب والمنطقة والنموذج والوقت. لا يفترض المسار وجود حصة مجانية أو اشتراك؛ إذا تعذر استخدام المنصة، استخدم بيانات محلية تعليمية وسجل التجربة الخارجية <strong>Not Run</strong>.
       </p>
     </div>
   </div>
@@ -313,7 +313,7 @@ export const topic25AiStudioHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. ضبط تعليمات النظام وتوليد Mock Data بنمط JSON</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      تحتاج الواجهة الأمامية (Frontend) في مرحلة البداية إلى بيانات واقعية لاختبار الشاشات والمكونات دون انتظار اكتمال الباك إند (Backend). يوفر Google AI Studio ميزة <strong>Structured Outputs (JSON Mode)</strong> التي تجبر النموذج على إرجاع كائنات JSON دقيقة تتوافق 100% مع مخطط ERD المعتمد:
+      تحتاج الواجهة الأمامية (Frontend) إلى بيانات تمثيلية لاختبار الشاشات دون بيانات مستخدمين حقيقية. يمكن لبعض النماذج تقديم خرج مقيد أو JSON، لكن هذا لا يضمن مطابقة ERD؛ افحص الحقول والأنواع والمراجع يدوياً قبل الاستخدام:
     </p>
 
     <!-- Copyable Prompt Container -->
@@ -336,15 +336,15 @@ Return ONLY valid raw JSON array without markdown formatting, introductions, or 
     </div>
 
     <p class="leading-8 text-[var(--text-muted)]">
-      احفظ الناتج المولّد في مشروعك داخل ملف <code>src/data/mock-data.json</code> لتغذية مكونات Next.js خلال بناء واجهات MVP.
+      إذا أنشأت بيانات، احفظها داخل مشروعك في <code>src/data/mock-data.json</code> بعد مطابقتها مع ERD وعقود البيانات. بيانات المقالة أو الأمثلة المحلية تفي بتمرين التحقق؛ تشغيل AI Studio اختياري.
     </p>
   </div>
 
   <!-- 4. API Key Security and Isolation -->
   <div class="content-block mt-8">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. تأمين مفتاح Gemini API وعزله عن المتصفح</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. إذا استخدمت Gemini API: أمّن المفتاح واعزله عن المتصفح</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      عند الحصول على مفتاح API من زر <code>Get API key</code> في Google AI Studio:
+      لا يحتاج تمرين البيانات إلى مفتاح. إذا قررت بصورة منفصلة استدعاء Gemini API من مشروعك، راجع وثائق Google الحالية وتحقق من متطلبات حسابك ثم:
     </p>
     <ol class="list-decimal list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li>احفظ المفتاح فوراً في ملف <code>.env.local</code> تحت اسم <code>GEMINI_API_KEY</code>.</li>
@@ -367,7 +367,7 @@ Return ONLY valid raw JSON array without markdown formatting, introductions, or 
           <rect x="50" y="160" width="180" height="30" rx="4" fill="#0f172a"/>
           <text x="140" y="180" fill="#34d399" font-size="11" text-anchor="middle">JSON Output Mode</text>
           <rect x="50" y="200" width="180" height="30" rx="4" fill="#0f172a"/>
-          <text x="140" y="220" fill="#fcd34d" font-size="11" text-anchor="middle">Get API Key (Free Quota)</text>
+          <text x="140" y="220" fill="#fcd34d" font-size="11" text-anchor="middle">Optional server API key</text>
 
           <!-- Arrow 1: Mock Data Export -->
           <path d="M 260 145 L 340 145" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)"/>
@@ -519,13 +519,13 @@ export const topic26SkillsHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. مهارة معايير الفرونت إند لمشروع الطالب</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      يقوم الطالب بكتابة مسودة تعليمات في <code>docs/skills/frontend-standards.md</code>. هذا مسار توثيق فقط؛ لا يعني أن الوكيل اكتشف المهارة أو ثبّتها. لتحميلها فعليًا اتبع دليل وكيلك للإصدار المثبت، أو أرفق الملف يدويًا بالسياق إذا لم يدعم المهارات. لا يوجد أمر استدعاء موحد مضمون لكل الوكلاء. المثال التالي مرتبط بإصدارات الدورة؛ طابقه مع package.json بعد تهيئة مشروعك:
+      يكتب الطالب مصدراً للمهارة في <code>docs/skills/frontend-standards/SKILL.md</code> باستخدام حقلي <code>name</code> و<code>description</code> في مقدمة YAML. هذا المسار داخل docs لا يعني أن الوكيل اكتشف المهارة أو ثبّتها؛ اتبع دليل وكيلك وإصداره لموقع التحميل وصيغته، أو أرفق الملف يدوياً إذا لم يدعم مهارات. لا يوجد أمر استدعاء موحد مضمون لكل الوكلاء. المثال التالي توضيحي؛ طابق إصداراته وقواعده مع مشروعك الفعلي و<code>package.json</code>:
     </p>
 
     <!-- Copyable Skill Snippet -->
     <div class="code-container my-4" dir="ltr">
       <div class="code-header">
-        <span class="code-lang">docs/skills/frontend-standards.md (Reusable Project Skill)</span>
+        <span class="code-lang">docs/skills/frontend-standards/SKILL.md (source; host loading is separate)</span>
         <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ المهارة';},2000);})" aria-label="نسخ المهارة">نسخ المهارة</button>
       </div>
       <pre class="code-content"><code>---
@@ -540,8 +540,8 @@ When generating or modifying frontend code:
 2. React: React 19 standards, no deprecated hooks or APIs.
 3. Language: TypeScript in strict mode. All component props and data models MUST have explicit interfaces.
 4. Direction & Accessibility: Complete RTL support by default using logical Tailwind classes (ms-*, me-*, ps-*, pe-*).
-5. Colors & Spacing: Adhere strictly to DESIGN.md and the 8px grid scale. Never invent random hex colors.
-6. Mock Data: Import initial data from src/data/mock-data.json; never hardcode ad-hoc records in JSX.
+5. Colors & Spacing: Follow values confirmed in DESIGN.md. If a token or spacing rule is unknown, record UNKNOWN or ask; do not invent one.
+6. Mock Data: Use the repository's existing fixtures when present; check the path and schema before referencing them. Never hardcode ad-hoc records in JSX.
 7. Verification: Run 'npm run lint' (tsc --noEmit) after every file creation to ensure zero type errors.</code></pre>
     </div>
 
@@ -607,10 +607,10 @@ export const topic27McpHtml = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. ما هو بروتوكول سياق النموذج (MCP) ولماذا ندرسه الآن؟</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      <strong>بروتوكول سياق النموذج (Model Context Protocol - MCP)</strong> هو معيار مفتوح المصدر أنشئ لتوحيد الطريقة التي تتصل بها تطبيقات الذكاء الاصطناعي بالبيانات والأدوات الخارجية. قبل MCP، كان كل وكيل وكل أداة يحتاج تكاملاً مخصصاً (Custom Integration)؛ أما مع MCP، فقد أصبح للأدوات بروتوكول موحد يشبه تماماً منفذ <code>USB</code> القياسي في عتاد الحواسيب.
+      <strong>بروتوكول سياق النموذج (Model Context Protocol - MCP)</strong> هو معيار مفتوح يحدد طريقة تواصل المضيف مع خوادم تعرض أدوات أو موارد أو قوالب prompts. يساعد على توحيد واجهة التكامل، لكنه لا يجعل كل مضيف أو خادم متوافقاً تلقائياً ولا يلغي مراجعة الصلاحيات ومصدر البيانات.
     </p>
     <p class="leading-8 text-[var(--text-muted)] mt-2">
-      <strong>التمهيد الهندسي قبل الموضوع 28 (Stitch MCP):</strong> في الموضوع التالي سنقوم بربط خادم Stitch MCP لجلب تفاصيل الشاشات المعتمدة آلياً. لا يمكن للمتعلّم ربط Stitch بنجاح وفهم ما يحدث خلف الكواليس دون أن يستوعب أولاً كيف تعمل معمارية MCP، وكيف تُدار الصلاحيات، وأين تُحفظ إعدادات الخوادم، وكيف يُفصل بين المضيف والعميل والخادم.
+      <strong>التمهيد الهندسي قبل الموضوع 28 (Stitch MCP):</strong> يشرح هذا الموضوع الأدوار والصلاحيات قبل أي تكامل اختياري. يستطيع المتعلّم مواصلة المسار اليدوي إذا لم يكن لديه مضيف يدعم MCP أو لم يرد تثبيت خادم.
     </p>
 
     <div class="callout info my-4">
@@ -649,7 +649,7 @@ export const topic27McpHtml = `
           </tr>
           <tr>
             <td><strong>الخادم (MCP Server)</strong></td>
-            <td>برنامج خفيف يقدّم قدرات محددة (أدوات، موارد، برومبتات) عبر اتصال محلي (stdio) أو عبر الشبكة (SSE)</td>
+            <td>برنامج يقدّم قدرات محددة (أدوات، موارد، برومبتات) عبر وسيلة نقل يدعمها المضيف والخادم في إصداريهما</td>
             <td>خادم Stitch MCP، خادم قراءة نظام الملفات، خادم قاعدة البيانات PostgreSQL</td>
           </tr>
         </tbody>
@@ -664,7 +664,7 @@ export const topic27McpHtml = `
       <div class="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4">
         <div class="text-emerald-600 dark:text-emerald-400 font-bold mb-1">1. الأدوات (Tools)</div>
         <div class="text-xs text-[var(--text-muted)] leading-6">
-          دوال تنفيذية يطلب الوكيل تشغيلها مع تمرير بارامترات محددة (مثل: <code>list_screens</code> أو <code>run_query</code>). تتطلب عادةً موافقة المستخدم.
+          عمليات يعرّفها الخادم ويطلب المضيف تشغيلها بمدخلات محددة (مثل <code>list_screens</code> أو <code>run_query</code>). تختلف مراجعة المستخدم وسياسة الموافقة حسب المضيف؛ لا تفترض أن كل أداة آمنة أو أن التأكيد مفعّل.
         </div>
       </div>
       <div class="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4">
@@ -686,7 +686,7 @@ export const topic27McpHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. أمان التكوين وحماية الأسرار في MCP</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      لربط أي خادم MCP في بيئتك، يُستخدم ملف تكوين محلي (Local JSON Configuration). تفرض معاييرنا الهندسية القواعد التالية:
+      يتبع شكل ملف MCP وموقعه المضيف وإصداره؛ مثال JSON أدناه يوضح حقولاً شائعة في بعض المضيفات فقط، وليس صيغة عامة أو جاهزة للنسخ إلى كل أداة. راجع وثائق المضيف والخادم قبل الإعداد:
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>عزل ملفات تكوين MCP:</strong> إعدادات خوادم MCP التي تحتوي على مفاتيح API أو توكنز تُحفظ في مجلد الإعدادات المحلي الخاص بالمحرر (وليس داخل المستودع العام المرفوع إلى GitHub).</li>
@@ -697,7 +697,7 @@ export const topic27McpHtml = `
     <!-- LTR Code Snippet: MCP Configuration Example -->
     <div class="code-container my-4" dir="ltr">
       <div class="code-header">
-        <span class="code-lang">Standard Local MCP Configuration Template (JSON)</span>
+        <span class="code-lang">Illustrative JSON shape only — verify the selected host schema</span>
         <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ التكوين';},2000);})" aria-label="نسخ التكوين">نسخ التكوين</button>
       </div>
       <pre class="code-content"><code>{
@@ -714,9 +714,9 @@ export const topic27McpHtml = `
 }</code></pre>
     </div>
 
-    <!-- Visual Diagram: MCP Architecture & Permission Handshake -->
+    <!-- Visual Diagram: MCP Architecture & Host-Specific Permission Review -->
     <div class="diagram-box my-6">
-      <h4 class="font-bold text-[var(--text-main)] mb-3">الشكل (15): معمارية بروتوكول سياق النموذج ومصافحة الصلاحيات (Permission Handshake)</h4>
+      <h4 class="font-bold text-[var(--text-main)] mb-3">الشكل (15): معمارية MCP ومراجعة الصلاحيات بحسب سياسة المضيف</h4>
       <div style="text-align: center; overflow-x: auto; padding: 1rem 0;">
         <svg viewBox="0 0 800 320" style="width: 100%; height: auto; max-width: 800px; background: #0f172a; border-radius: 8px; font-family: Cairo, system-ui, sans-serif;" role="img" aria-label="معمارية بروتوكول سياق النموذج">
           <!-- Left: User / Host -->
@@ -730,13 +730,13 @@ export const topic27McpHtml = `
           <rect x="50" y="225" width="170" height="35" rx="4" fill="#1e1e38"/>
           <text x="135" y="247" fill="#a78bfa" font-size="11" text-anchor="middle">MCP Client Engine</text>
 
-          <!-- Middle: Security Handshake Gateway -->
+          <!-- Middle: Host-specific security and permission review -->
           <rect x="290" y="60" width="180" height="200" rx="8" fill="#1e1e38" stroke="#f59e0b" stroke-width="2"/>
           <text x="380" y="95" fill="#fbbf24" font-size="13" font-weight="bold" text-anchor="middle">بوابة الصلاحيات</text>
           <text x="380" y="125" fill="#e2e8f0" font-size="11" text-anchor="middle">1. استكشاف القدرات</text>
           <text x="380" y="150" fill="#38bdf8" font-size="10" text-anchor="middle">(Tools / Resources)</text>
-          <text x="380" y="180" fill="#e2e8f0" font-size="11" text-anchor="middle">2. طلب إذن التنفيذ</text>
-          <text x="380" y="205" fill="#34d399" font-size="10" text-anchor="middle">✓ موافقة المطور</text>
+          <text x="380" y="180" fill="#e2e8f0" font-size="11" text-anchor="middle">2. مراجعة حسب سياسة المضيف</text>
+          <text x="380" y="205" fill="#34d399" font-size="10" text-anchor="middle">التأكيد حسب سياسة المضيف</text>
           <text x="380" y="235" fill="#f87171" font-size="10" text-anchor="middle">عزل الأسرار محلياً</text>
 
           <!-- Arrows -->
@@ -767,7 +767,7 @@ export const topic27McpHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. مخرجات الموضوع والجاهزية لموضوع Stitch MCP</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      يوثّق الطالب فهمه لبروتوكول MCP، وخريطة الصلاحيات، ونموذج التكوين المحلي في ملف <code>docs/MCP_FOUNDATIONS.md</code>. بهذه المعرفة الصلبة، يصبح الطالب مؤهلاً بالكامل للانتقال إلى الموضوع 28 لربط خادم Stitch MCP مع Antigravity IDE واستخراج أصول التصميم بثقة وأمان.
+      يوثّق الطالب فهمه لبروتوكول MCP ومصفوفة الصلاحيات ومصدر مخطط التكوين في <code>docs/MCP_FOUNDATIONS.md</code> و<code>docs/MCP_CONFIG_REVIEW.md</code>. ملف الاتصال الفعلي ومفاتيحه يبقيان محليين وفق دليل المضيف. يستطيع المتعلم متابعة الموضوع 28 بالمسار اليدوي حتى إذا لم يشغّل خادماً.
     </p>
   </div>
 </section>
@@ -840,7 +840,7 @@ export const t09Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'أدوات التنفيذ البرمجي',
-    summary: 'موقع Google AI Studio في مسار التنفيذ بجانب أدوات الواجهة، لمنع تشتيت المراحل المبكرة من اكتشاف المتطلبات. شرح استخدام المنصة لاختبار نماذج Gemini (مثل Gemini 1.5 Pro وFlash)، ضبط تعليمات النظام (System Instructions)، استخراج البيانات التمثيلية (Mock Data) بصيغة JSON وفق معطيات ERD وجرد الشاشات، وإدارة مفاتيح API بأمان، مع إيضاح حدود الاستخدام المجاني ومعدلات الطلبات (Rate Limits) دون افتراض اشتراكات أو ضمانات غير مشروطة.',
+    summary: 'تجربة موثقة لنموذج متاح في Google AI Studio وضبط تعليماته، ثم التحقق من البيانات التمثيلية JSON مقابل ERD وجرد الشاشات. عند تعذر الوصول يمكن إعداد البيانات محلياً، لكن تجربة المنصة تبقى Not Run وغير مكتملة. لا يفترض مفتاح API إلا لتكامل خادمي منفصل.',
     tags: ['Google AI Studio', 'Gemini API', 'System Instructions', 'Mock Data', 'JSON Mode', 'API Keys', 'Rate Limits', 'No Subscription Assumption'],
     contentTypes: ['code', 'checklist', 'prompt'],
     diagramCount: 1,
@@ -850,35 +850,35 @@ export const t09Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic25AiStudioHtml),
     htmlContent: topic25AiStudioHtml,
 
-    goal: 'استخدام Google AI Studio كمنصة سريعة لاختبار النماذج، وضبط تعليمات النظام، وتوليد البيانات التمثيلية (Mock Data) لمشروع الطالب بصيغة JSON مطابقة لـ ERD، واستخراج مفتاح API وتأمينه محلياً مع إدراك حدود الاستخدام المجاني.',
+    goal: 'إجراء تجربة موثقة في Google AI Studio ومراجعة بيانات JSON التمثيلية مقابل ERD. إذا تعذر الوصول، أنجز التوثيق والبيانات محلياً وسجّل تجربة المنصة Not Run وغير مكتملة؛ لا يفترض التمرين توليداً مطابقاً أو مفتاح API.',
     prerequisites: [
-      'حساب Google للوصول إلى Google AI Studio',
+      'حساب Google فقط إذا اختار المتعلم تجربة Google AI Studio؛ يمكن إكمال التمرين ببيانات اصطناعية محلية دون حساب أو مفتاح',
       'مخطط الكيانات والعلاقات docs/ERD.md (الموضوع 14)',
       'جرد الشاشات docs/SCREEN_INVENTORY.md (الموضوع 20)',
       'وكيل البرمجة المهيأ (الموضوع 24)'
     ],
     steps: [
-      '1. افتح منصة Google AI Studio الرسمية (aistudio.google.com) وسجّل الدخول بحساب Google دون الحاجة لشراء أي اشتراك.',
-      '2. تعرّف على واجهة المنصة: اختيار النموذج (Gemini 1.5 Flash / Pro)، نافذة التعليمات (System Instructions)، ومعاملات التوليد (Temperature وSafety Settings).',
-      '3. أدخل وصف دور النظام وهيكل البيانات المستخرج من docs/ERD.md لتوليد بيانات تمثيلية واقعية (Mock Data) لمشروعك (مثل معدات وتصنيفات BorrowHub).',
-      '4. فعّل نمط الإخراج الهيكلي (Structured Outputs / JSON Mode) لضمان الحصول على كائنات JSON نقية قابلة للاستهلاك المباشر في واجهة Next.js.',
-      '5. أنشئ مفتاح API جديداً من لوحة Get API key، واحفظه مباشرة في ملف .env.local محلياً، ولا تضعه في أي ملف ترفعه لـ Git.',
-      '6. احفظ عينة البيانات المولدة في src/data/mock-data.json، ووثق سير العمل في docs/AI_STUDIO_WORKFLOW.md مع توضيح حدود الاستخدام المجاني.'
+      '1. اختر نموذجاً من القائمة الحالية في Google AI Studio وسجل اسمه وتاريخ التجربة؛ إذا تعذر الوصول، استخدم المدخل المحلي لإكمال بقية العمل وسجل تجربة المنصة Not Run وغير مكتملة.',
+      '2. راجع إعدادات النموذج والتعليمات الظاهرة في إصدارك؛ لا تعتمد اسماً أو معاملاً قديماً من مثال ثابت.',
+      '3. اطلب بيانات اصطناعية صغيرة وفق docs/ERD.md وdocs/SCREEN_INVENTORY.md، أو اكتبها يدوياً كتمرين؛ اترك الحقول غير المحددة سؤالاً ولا تستخدم بيانات شخصية.',
+      '4. استخدم إخراجاً مقيداً أو JSON mode فقط إذا كان متاحاً للنموذج المختار؛ افحص الناتج الخام نحوياً ثم طابق الحقول والأنواع والمراجع مع ERD قبل استخدامه.',
+      '5. لا تنشئ مفتاحاً لمجرد استخدام واجهة الويب؛ أنشئه فقط لتكامل API مقصود، ثم احفظه على الخادم وفق وثائق Next.js وGoogle وتأكد أن ملفه المحلي مستبعد من Git.',
+      '6. احفظ البيانات بعد فحص JSON ومطابقة كل حقل ومفتاح مرجعي مع ERD في src/data/mock-data.json، ووثق اسم النموذج وإعداداته ومصدر البيانات أو سبب Not Run في docs/AI_STUDIO_WORKFLOW.md.'
     ],
     promptRefs: [
       'prompt-02-generate-prd-after-grill-me',
       'prompt-24-frontend-only-next-js-plan'
     ],
     outputs: [
-      'docs/AI_STUDIO_WORKFLOW.md',
+      'docs/AI_STUDIO_WORKFLOW.md يتضمن تجربة المنصة الفعلية وإعداداتها؛ إذا لم تُشغّل فسجل Not Run وغير مكتمل',
       'src/data/mock-data.json'
     ],
     checklist: [
       'فهم موضع Google AI Studio كأداة تنفيذ مساعدة بجانب الواجهة وليس شرطاً لمراحل المتطلبات الأولى.',
-      'الوصول للمنصة الرسمية عبر aistudio.google.com دون افتراض أي اشتراك مدفوع.',
-      'استخدام System Instructions ونمط JSON لتوليد Mock Data واقعية لمشروع الطالب.',
-      'توليد مفتاح API وتأمينه حصرياً داخل .env.local مع الحظر التام لرفعه إلى GitHub.',
-      'استيعاب حدود الاستخدام المجاني ومعدلات الطلب (Rate Limits: RPM/TPM) وإعداد معالجة الأخطاء.',
+      'توثيق تجربة Google AI Studio الفعلية وإعداداتها؛ إذا تعذر الوصول فسجل Not Run وغير مكتملة ولا تعتبر البديل المحلي دليلاً على تشغيل المنصة.',
+      'فحص JSON والحقول والمراجع مقابل ERD؛ خرج النموذج لا يثبت المطابقة.',
+      'إنشاء مفتاح API فقط عند تكامل برمجي مقصود، وعزله على الخادم واستبعاد ملفه المحلي من Git.',
+      'تسجيل حدود الإتاحة والأسعار ومعدلات الطلب المعلنة وقت التجربة دون افتراض حصة، وإعداد بديل محلي عند تعذر الوصول.',
       'توثيق تجربة الاستكشاف والبيانات التمثيلية في docs/AI_STUDIO_WORKFLOW.md.'
     ],
     publicationStatus: 'unified-complete',
@@ -893,7 +893,7 @@ export const t09Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'أدوات التنفيذ البرمجي',
-    summary: 'مفهوم المهارات البرمجية المخصصة (Skills) كتعليمات تخصصية إجرائية ترشد الوكيل لطريقة إنجاز مهام معينة وفق أفضل الممارسات. ترسيخ القاعدة الذهبية: «الوكيل ينفّذ، والمهارة ترشده، وMCP يوصله بالأدوات، وPRD يحدد المطلوب». شرح الفرق بين البرومبت العابر والمهارة الدائمة، كيفية تنظيم المهارات في ملفات المشروع دون استنزاف السياق، وتوضيح أن مهارات مثل Grill Me أو UI/UX Pro Max ليست عائق تثبيت مسبق لاكتشاف المتطلبات.',
+    summary: 'مفهوم المهارات البرمجية المخصصة (Skills) كتعليمات تخصصية إجرائية ترشد الوكيل لطريقة إنجاز مهام معينة وفق أفضل الممارسات. ترسيخ القاعدة الذهبية: «الوكيل ينفّذ، والمهارة ترشده، وMCP يوصله بالأدوات، وPRD يحدد المطلوب». يوضح الدرس بنية SKILL.md ومقدمة name/description، ويفصل ملف المصدر عن موقع التحميل الخاص بكل وكيل، كما يبين أن وجود الملف لا يثبت اكتشافه أو استخدامه.',
     tags: ['Agent Skills', 'Custom Skills', 'Golden Rule', 'Context Efficiency', 'Skill Architecture', 'Reusable Instructions', 'No Subscription Assumption'],
     contentTypes: ['code', 'checklist', 'prompt'],
     diagramCount: 1,
@@ -903,19 +903,19 @@ export const t09Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic26SkillsHtml),
     htmlContent: topic26SkillsHtml,
 
-    goal: 'بناء وتفعيل مهارة مخصصة (Custom Skill) لمشروع الطالب ترشد وكيل البرمجة إلى معايير التطوير (Next.js 15, TypeScript, Tailwind, RTL) وإدارة تفعيل المهارات حسب الحاجة لمنع تشتت نافذة السياق، وفق القاعدة الذهبية للمسار.',
+    goal: 'كتابة مصدر مهارة (Custom Skill) لمشروع الطالب وتوثيق طريقة تحميله الخاصة بالوكيل المختار، ثم اختبار مهمة صغيرة في ذلك الوكيل. إذا تعذر الوصول، سجّل الاختبار Not Run وغير مكتمل؛ القواعد تتبع ملفات المشروع لا افتراضات المثال.',
     prerequisites: [
       'وكيل البرمجة المهيأ (الموضوع 24)',
       'وثيقة متطلبات المنتج docs/PRD.md (الموضوع 03)',
-      'نظام التصميم المعتمد (الموضوع 22)',
+      'قواعد التصميم ومصادرها أو أسئلتها المفتوحة (الموضوع 22؛ إرشاد لا قفل وصول)',
       'توضيح: استخدام Grill Me في الموضوع 02 كان أسلوباً استجوابياً ولا يشترط تثبيت مهارات تقنية مسبقة'
     ],
     steps: [
       '1. استوعب القاعدة الذهبية للمسار الهندسي: Agent ينفّذ، Skill يرشده، MCP يوصله بالأدوات، وPRD يحدد المطلوب.',
       '2. ميّز بين البرومبت (توجيه لحظي لمرة واحدة) والمهارة (Skill: معرفة إجرائية متكررة تُستدعى عند الحاجة لنوع محدد من المهام).',
       '3. حلّل مشكلة «تخمة المهارات» (Skill Bloat): تجنب تفعيل عشرات المهارات غير ذات الصلة حتى لا تستنزف نافذة السياق وتشتت دقة الوكيل.',
-      '4. أنشئ مهارة مخصصة لمشروعك (مثلاً docs/skills/frontend-standards.md أو .project-rules.md) تتضمن: بنية المشروع، قواعد TypeScript الصارمة، مكونات Tailwind، ودعم RTL.',
-      '5. اختبر استدعاء المهارة مع وكيلك عبر توجيه مهمة فرعية (مثل توليد مكون بطاقة المعدة وفق المعايير الموثقة).',
+      '4. أنشئ مصدر مهارة بصيغة docs/skills/frontend-standards/SKILL.md يتضمن name وdescription ومشغلاً واضحاً ومدخلات وقواعد ومخرجاً قابلاً للفحص؛ طابق القواعد مع ملفات المشروع الفعلية.',
+      '5. اتبع دليل الوكيل وإصداره لموقع التحميل أو أرفق المصدر يدوياً، ثم جرّب مهمة صغيرة وسجل النتيجة؛ إن تعذر الاختبار فسجله Not Run وغير مكتمل.',
       '6. وثّق المهارات وطريقة التحميل الفعلية في وكيلك داخل docs/PROJECT_AGENT_SKILLS.md؛ استخدم إرفاق الملف يدويًا عند غياب دعم المهارات، ولا تدّع أنها مثبّتة لمجرد حفظها في docs.'
     ],
     promptRefs: [
@@ -924,7 +924,7 @@ export const t09Entries: TopicItem[] = [
     ],
     outputs: [
       'docs/PROJECT_AGENT_SKILLS.md',
-      'docs/skills/frontend-standards.md'
+      'docs/skills/frontend-standards/SKILL.md'
     ],
     checklist: [
       'استيعاب دور المهارة (Skill) كمرشد إجرائي للوكيل وتمييزها عن البرومبت الفردي.',
@@ -946,8 +946,8 @@ export const t09Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'أدوات التنفيذ البرمجي',
-    summary: 'تأسيس فهم بروتوكول سياق النموذج (Model Context Protocol - MCP) كمعيار مفتوح يربط وكلاء البرمجة بمصادر البيانات والأدوات الخارجية (مثل أنظمة الملفات، وقواعد البيانات، وStitch MCP لاحقاً). شرح معمارية Client-Host-Server، أنواع القدرات (Tools, Resources, Prompts)، حوكمة الصلاحيات (Permission Handshake)، وإدارة أسرار خوادم MCP في ملفات الإعداد المحلية، مع التأكيد على المسار البديل اليدوي في حال تعذر تشغيل MCP.',
-    tags: ['MCP', 'Model Context Protocol', 'MCP Architecture', 'Tools & Resources', 'Permissions Handshake', 'Local Config', 'Security Boundaries', 'No Vendor Lock-in'],
+    summary: 'تأسيس فهم بروتوكول سياق النموذج (Model Context Protocol - MCP) كمعيار مفتوح يربط المضيف بخوادم تعرض أدوات أو موارد (مثل أنظمة الملفات وقواعد البيانات وStitch MCP لاحقاً). يشرح معمارية Host-Client-Server والقدرات واختلاف سياسات الموافقة وصيغ الإعداد بين المضيفات وحفظ أسرار MCP محلياً، مع مسار يدوي عند تعذر تشغيل MCP.',
+    tags: ['MCP', 'Model Context Protocol', 'MCP Architecture', 'Tools & Resources', 'Host Permission Policy', 'Local Config', 'Security Boundaries', 'No Vendor Lock-in'],
     contentTypes: ['code', 'checklist', 'prompt'],
     diagramCount: 1,
     promptCount: 1,
@@ -960,29 +960,29 @@ export const t09Entries: TopicItem[] = [
     prerequisites: [
       'وكيل البرمجة المهيأ (الموضوع 24)',
       'مهارات الوكيل وقواعد المشروع (الموضوع 26)',
-      'بيئة تشغيل Node.js وnpx لأدوات MCP',
+      'بيئة تشغيل Node.js وnpx فقط إذا اختار المتعلم خادماً يحتاجهما؛ قراءة الدرس والمسار اليدوي لا يتطلبان تثبيتاً',
       'إيضاح: لا يُشترط إعداد MCP في المواضيع السابقة (1–23)؛ المسار كان مستقلاً تماماً'
     ],
     steps: [
       '1. استوعب معمارية MCP: المضيف (Host: وكيل البرمجة أو المحرر)، العميل (MCP Client)، والخادم (MCP Server) الذي يوفر أدوات وموارد عبر بروتوكول موحد.',
       '2. تعرّف على قدرات MCP الثلاث: الأدوات (Tools: دوال تنفيذية)، الموارد (Resources: بيانات للقراءة)، والبرومبتات (Prompts: قوالب استدعاء جاهزة).',
-      '3. ادرس حوكمة الصلاحيات (Security & Permissions): كيف يطلب الخادم الإذن قبل تشغيل أي أداة تؤثر على النظام أو تجلب بيانات حساسة.',
-      '4. افهم إدارة الأسرار: إدخال المفاتيح والتوكنز في ملف إعدادات المضيف المحلي (مثل mcp_settings.json أو .env)، والامتناع البات عن حفظها في ملفات المستودع.',
-      '5. تدرّب على قراءة ملف إعدادات خادم MCP محلي قياسي (مثل خادم قراءة نظام الملفات أو الذاكرة) واختبار التحقق من الاتصال.',
-      '6. وثّق فهم معمارية MCP ومصفوفة الصلاحيات في docs/MCP_FOUNDATIONS.md مع تجهيز بيئتك للموضوع التالي (Stitch MCP).'
+      '3. راجع ما الذي تعرضه الأدوات ومصدر البيانات والأثر المحتمل؛ موافقة المستخدم وسياسة التشغيل يحددهما المضيف ولا يضمنهما البروتوكول وحده.',
+      '4. احفظ الاعتمادات محلياً وفق دليل المضيف، ولا تضعها في المستودع أو prompt أو سجل نتائج.',
+      '5. راجع مخطط الإعداد الحالي للمضيف والخادم وأنشئ ملفاً محلياً بعناصر placeholder آمنة؛ إذا تعذر إعداد المضيف، سجل config Not Run وغير مكتمل. لا يلزم تشغيل الاتصال كي تراجع الملف.',
+      '6. وثّق الأدوار والقدرات والصلاحيات ومصدر مخطط الإعداد وموقع الملف المحلي في docs/MCP_FOUNDATIONS.md وdocs/MCP_CONFIG_REVIEW.md؛ جهز مساراً يدوياً للموضوع التالي.'
     ],
     promptRefs: [
       'prompt-22-stitch-mcp-connection-verification'
     ],
     outputs: [
       'docs/MCP_FOUNDATIONS.md',
-      'نموذج إعداد خادم محلي تجريبي (MCP Config Template)'
+      'ملف إعداد محلي فعلي خاص بالمضيف يحوي placeholders آمنة، مع docs/MCP_CONFIG_REVIEW.md الذي يسجل المضيف والإصدار ومصدر المخطط ونطاق الصلاحيات؛ Not Run يعني غير مكتمل'
     ],
     checklist: [
       'استيعاب معمارية MCP المفتوحة ودورها كجسر قياسي بين الوكيل والأدوات الخارجية.',
       'التأكيد الصارم على أن المتطلبات والتصميمات السابقة لم تشترط وجود MCP لتنفيذها.',
       'فحص قدرات MCP الثلاث: Tools وResources وPrompts ونموذج الصلاحيات المرافق لها.',
-      'تطبيق سياسة عزل الأسرار وعدم رفع ملفات تكوين MCP الحاوية على مفاتيح إلى Git.',
+      'تطبيق سياسة عزل الأسرار وعدم رفع ملفات تكوين MCP الحاوية على مفاتيح إلى Git، وتوثيق المضيف ومصدر مخططه.',
       'توفر المسار البديل اليدوي في حال لم تدعم بيئة الطالب بروتوكول MCP دون إيقاف المسار.',
       'توثيق أسس ومعمارية البروتوكول في docs/MCP_FOUNDATIONS.md تمهيداً لربط Stitch MCP.'
     ],

@@ -43,12 +43,12 @@ export const TOPIC_DRAFTS_GROUP_A_09: TopicDraft[] = [
         { heading: 'مفتاح API منفصل', body: 'إذا جربت API، خزن المفتاح محلياً خارج Git، وضع الاسم فقط في `.env.example`. لا تضع المفتاح داخل prompt أو سجل النتائج.' },
     ],
     practicalSteps: [
-        { instruction: 'سجل الهدف والتعليمات والنموذج والإعدادات المرئية والنتيجة التي تريد اختبارها.', expectedOutput: '`docs/AI_STUDIO_WORKFLOW.md` يحفظ خطوات قابلة للتكرار دون قيمة مفتاح.' },
+        { instruction: 'نفّذ تجربة نموذج في Google AI Studio وسجل الهدف والتعليمات والنموذج والإعدادات المرئية والنتيجة؛ إذا تعذر الوصول، أكمل بقية التمرين محلياً وسجل تجربة المنصة Not Run وغير مكتملة.', expectedOutput: '`docs/AI_STUDIO_WORKFLOW.md` يحفظ التجربة الفعلية وخطواتها دون قيمة مفتاح، أو Not Run وسببها دون ادعاء تشغيل.' },
         { instruction: 'اطلب بيانات اصطناعية قليلة وافحص JSON ثم قارن كل حقل وعلاقة بERD.', expectedOutput: '`src/data/mock-data.json` بيانات اختبارية متوافقة وموسومة بأنها غير حقيقية.' },
     ],
     workedExample: { title: 'بيانات استعارة اصطناعية', context: 'ERD يتضمن طالباً ومعدة وطلباً مع مفاتيح مرجعية.', result: 'ثلاث سجلات بأسماء وهمية وقيم معرّفات متطابقة بين الطلب والطرفين؛ لا توجد بيانات شخصية أو قاعدة جديدة غير موجودة في ERD.' },
     outputs: [
-        { id: 'studio-workflow', description: '`docs/AI_STUDIO_WORKFLOW.md` غرض التجربة وإعداداتها والنتيجة.' },
+        { id: 'studio-workflow', description: '`docs/AI_STUDIO_WORKFLOW.md` دليل تجربة Google AI Studio الفعلية وإعداداتها؛ Not Run يعني أن هذا المخرج لم يكتمل.' },
         { id: 'mock-data', description: '`src/data/mock-data.json` بيانات اصطناعية صالحة ومتوافقة مع ERD.' },
     ],
     questions: [
@@ -68,17 +68,17 @@ export const TOPIC_DRAFTS_GROUP_A_09: TopicDraft[] = [
     ],
     sections: [
         { heading: 'المدخل: قاعدة متكررة قابلة لإعادة الاستخدام', body: 'اختر إرشاداً يتكرر في مهام متعددة مثل RTL أو سياسات الاختبار؛ لا تنقل كل وثائق المشروع إلى Skill.' },
-        { heading: 'تعليمات وإشارة استخدام', body: 'حدد متى تُستخدم المهارة، ما المدخلات التي تحتاجها، القواعد الإلزامية، وما الذي يجب أن يعيده الوكيل أو يتحقق منه.' },
-        { heading: 'فعّل عند الحاجة', body: 'اجعل أسماء ومجالات المهارات واضحة. فعّلها للمهمة المناسبة ولا تفترض أن الوكيل قرأ كل المهارات أو أن وجود الملف يعني امتثالاً.' },
+        { heading: 'تعليمات وإشارة استخدام', body: 'حدد متى تُستخدم المهارة، ما المدخلات التي تحتاجها، القواعد الإلزامية، وما الذي يجب أن يعيده الوكيل أو يتحقق منه. في صيغة SKILL.md استخدم حقلي name وdescription في مقدمة YAML، ثم التعليمات؛ تحقق من صيغة وموقع التحميل اللذين يدعمهما الوكيل المستهدف.' },
+        { heading: 'فعّل عند الحاجة', body: 'اجعل أسماء ومجالات المهارات واضحة. وثّق الوكيل وإصداره وموقع التحميل أو الإرفاق اليدوي، ثم اختبر طلباً صغيراً. لا تفترض أن الوكيل قرأ كل المهارات أو أن وجود ملف في docs يعني اكتشافه أو امتثاله.' },
     ],
     practicalSteps: [
-        { instruction: 'اكتب وصف المهارة ومعايير الواجهة أو المشروع ونطاق المهام التي تغطيها.', expectedOutput: '`docs/PROJECT_AGENT_SKILLS.md` يشرح المهارات ومتى يستدعي كل منها.' },
-        { instruction: 'أضف Skill فرعية للمعايير الأكثر تكراراً واختبرها بطلب صغير يقتضي القاعدة.', expectedOutput: '`docs/skills/frontend-standards.md` يتضمن تعليمات قابلة للمراجعة لا سيرة عامة.' },
+        { instruction: 'اختر ودوّن الوكيل وإصداره وموقع المهارة أو طريقة إرفاقها، ثم اكتب إشارة استخدام واضحة.', expectedOutput: '`docs/PROJECT_AGENT_SKILLS.md` يشرح المهارات ومشغلاتها وموقع التحميل أو الإرفاق وطريقة التحقق.' },
+        { instruction: 'أنشئ مهارة فرعية بصيغة SKILL.md مع name وdescription ومهمة محددة ومدخلات وقواعد ومخرج يمكن فحصه؛ جرّب طلباً صغيراً على الوكيل المستهدف.', expectedOutput: '`docs/skills/frontend-standards/SKILL.md` وتعليمات تحقق صغيرة مع النتيجة الفعلية؛ إن تعذر تشغيل الوكيل فسجل `Not Run` وغير مكتمل.' },
     ],
-    workedExample: { title: 'معايير واجهة RTL', context: 'الفريق يكرر طلب واجهات Next.js عربية بأزرار قابلة للوحة المفاتيح.', result: 'Skill قصيرة تحدد تشغيل RTL للنص العربي وإبقاء الكود LTR وفحص التركيز المرئي. لا تحمل تفاصيل سياسة بيانات الخلفية إلى مهمة CSS.' },
+    workedExample: { title: 'معايير واجهة RTL', context: 'الفريق يكرر طلب واجهات عربية بأزرار قابلة للوحة المفاتيح.', result: 'تسجل SKILL.md مشغلها ومدخلاتها، وتحدد RTL للنص العربي وLTR للمقاطع التقنية وفحص التركيز المرئي. يتبع المتعلم موقع التحميل وصيغته الموثقين لوكيله؛ حفظ الملف وحده لا يفعّله. لا تحمل تفاصيل سياسة بيانات الخلفية إلى مهمة CSS.' },
     outputs: [
         { id: 'skill-index', description: '`docs/PROJECT_AGENT_SKILLS.md` فهرس يشرح نطاق واستدعاء كل مهارة.' },
-        { id: 'frontend-skill', description: '`docs/skills/frontend-standards.md` قواعد مشروع محددة مع تحقق مقترح.' },
+        { id: 'frontend-skill', description: '`docs/skills/frontend-standards/SKILL.md` تعليمات بمشغل ومدخلات ومخرج وفحص محددين؛ التحميل يتبع الوكيل المختار.' },
     ],
     questions: [
         { id: 'skills-q-scope', objectiveId: 'skills-objective-selection', prompt: 'طلب المهمة متعلق بمخطط PostgreSQL، لكن Skill الوحيدة لديك تخص CSS. ماذا تفعل؟', options: ['تحملها رغم عدم الصلة', 'تختار إرشادات قاعدة البيانات المناسبة أو تنفذ دون Skill غير ملائمة', 'تطلب من Skill تعديل ألوان المخطط', 'تدمج كل المهارات في prompt'], correct: 1, explanation: 'تفعيل المهارات بحسب الحاجة يقلل الضوضاء ويمنع تحميل توجيهات لا تخص المهمة.' },
@@ -98,16 +98,16 @@ export const TOPIC_DRAFTS_GROUP_A_09: TopicDraft[] = [
     sections: [
         { heading: 'المدخل: حاجة لتكامل محدد', body: 'حدد ما الذي يحتاجه الوكيل قبل إضافة خادم MCP. لا تضف الخادم لمجرد أن البروتوكول متاح.' },
         { heading: 'الأدوار والرسائل', body: 'Host يضم تجربة الوكيل، client يتولى اتصال MCP، وserver يعرض أدوات أو موارد أو prompts. يكتشف المضيف ما يتيحه الخادم ويتفاعل معه بحسب الإعداد.' },
-        { heading: 'الأمان محلي أولاً', body: 'راجع العمليات والأذونات والمصادر قبل التشغيل، واحفظ الاعتمادات محلياً خارج Git. استخدم خادماً تجريبياً محدوداً وتجنب منح صلاحيات كتابة غير ضرورية.' },
+        { heading: 'الأمان محلي أولاً', body: 'راجع العمليات والأذونات والمصادر قبل التشغيل، واحفظ الاعتمادات محلياً خارج Git. صيغة إعداد الخادم وموقعها يتبعان المضيف وإصداره؛ لا يوجد ملف إعداد واحد صالح لكل وكلاء MCP. استخدم خادماً تجريبياً محدوداً وتجنب منح صلاحيات كتابة غير ضرورية.' },
     ],
     practicalSteps: [
         { instruction: 'ارسم مكونات MCP المطلوبة لتكامل تجريبي واكتب تبادل الأدوار والقدرات التي تحتاجها فقط.', expectedOutput: '`docs/MCP_FOUNDATIONS.md` يشرح host/client/server والقدرات المطلوبة.' },
-        { instruction: 'اكتب إعداداً نموذجياً بلا أسرار حقيقية مع قائمة صلاحيات ونطاق ومخاطر.', expectedOutput: 'نموذج config محلي بعناصر placeholder وملاحظة أنه لا يرفع للمستودع.' },
+        { instruction: 'اختر مضيفاً وإصداراً، راجع مخطط الإعداد الرسمي له، وأنشئ ملف إعداد محلياً بعناصر placeholder آمنة ثم قيّم الأوامر والنقل والصلاحيات ومصادر الأسرار. لا ترفع الملف المحلي إلى Git.', expectedOutput: '`docs/MCP_CONFIG_REVIEW.md` يسجل المضيف والإصدار ومصدر المخطط والصلاحيات وموقع ملف الإعداد المحلي؛ إنشاء الملف Not Run يعني أن المخرج غير مكتمل.' },
     ],
-    workedExample: { title: 'قراءة شاشة تصميم', context: 'مضيف الوكيل يحتاج قراءة معرفات شاشات من خادم تصميم.', result: 'الـhost يدير الواجهة، والـclient يتصل بالخادم، والخادم يعرض أدوات قراءة محددة. يمنح الوكيل صلاحية القراءة فقط إن كانت كافية للمهمة.' },
+    workedExample: { title: 'قراءة شاشة تصميم', context: 'مضيف الوكيل يحتاج قراءة معرفات شاشات من خادم تصميم.', result: 'الـhost يدير الواجهة، والـclient يتصل بالخادم، والخادم يعرض أدوات قراءة محددة. يوثق المتعلم صيغة المضيف وإصداره ومصدر الإعداد، ويمنح صلاحية القراءة فقط إن كانت كافية للمهمة؛ لا ينشئ config عاماً أو يدّعي اتصالاً لم يختبره.' },
     outputs: [
         { id: 'mcp-foundations', description: '`docs/MCP_FOUNDATIONS.md` تعريف الأدوار والقدرات ومسار الاتصال.' },
-        { id: 'mcp-config', description: 'نموذج config بلا أسرار يبين الأذونات المطلوبة ومصدرها.' },
+        { id: 'mcp-config', description: '`docs/MCP_CONFIG_REVIEW.md` مع ملف إعداد فعلي خاص بالمضيف يحوي placeholders فقط وخارج Git؛ Not Run يعني أن المخرج غير مكتمل، والاتصال الفعلي يسجل منفصلاً.' },
     ],
     questions: [
         { id: 'mcp-q-roles', objectiveId: 'mcp-objective-roles', prompt: 'أي وصف يميز أطراف اتصال MCP؟', options: ['Host يضم الوكيل، client يتصل، server يعرض قدرات', 'Server هو المتصفح دائماً', 'Client هو قاعدة البيانات فقط', 'الأدوار أسماء لنفس العملية'], correct: 0, explanation: 'توزيع الأدوار يساعد على فهم أين تعمل التجربة وأين ينفذ الاتصال وأين تعرض الأدوات أو الموارد.' },
@@ -120,5 +120,12 @@ export const TOPIC_DRAFTS_GROUP_A_09: TopicDraft[] = [
 }
 ];
 
-export const LEARNING_CONTENT_GROUP_A_09: Record<string, TopicLearningContent> =
-  buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_09);
+const groupA09Content = buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_09);
+
+export const LEARNING_CONTENT_GROUP_A_09: Record<string, TopicLearningContent> = {
+  ...groupA09Content,
+  'ai-coding-agent': { ...groupA09Content['ai-coding-agent'], contentVersion: 2 },
+  'google-ai-studio': { ...groupA09Content['google-ai-studio'], contentVersion: 2 },
+  'agent-skills': { ...groupA09Content['agent-skills'], contentVersion: 2 },
+  'mcp-protocol': { ...groupA09Content['mcp-protocol'], contentVersion: 2 },
+};

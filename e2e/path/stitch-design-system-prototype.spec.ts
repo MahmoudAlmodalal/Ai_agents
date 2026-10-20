@@ -10,7 +10,8 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     const header = page.locator('header.rounded-3xl');
     await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/STITCH_MASTER_PROMPT.md');
-    await expect(header).toContainText('الشاشة المرجعية المعتمدة في Google Stitch');
+    await expect(header).toContainText('docs/STITCH_SCREEN_REFERENCES.md');
+    await expect(header).toContainText('تعذر إنشاء الشاشة يسجل Not Run وغير مكتمل');
 
     // Verifies directionality: RTL root layout
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
@@ -251,6 +252,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     await expect(steps21.nth(0)).toContainText('اختر شاشة من Screen Inventory');
     await expect(steps21.nth(0)).toContainText('docs/STITCH_MASTER_PROMPT.md');
     await expect(steps21.nth(1)).toContainText('سجل نتيجة التصميم أو تعذر إنشائها');
+    await expect(steps21.nth(1)).toContainText('docs/STITCH_SCREEN_REFERENCES.md');
 
     // Copy PROMPT 16
     const prompt16Container = page.locator('.code-container').filter({ hasText: 'PROMPT 16' });
@@ -264,6 +266,7 @@ test.describe('Sequential Project Path - Ticket 08: Google Stitch, Design System
     const steps22 = page.locator('.learning-activities section[aria-labelledby*="-steps"] ol > li');
     await expect(steps22).toHaveCount(2);
     await expect(steps22.nth(0)).toContainText('استخرج قيماً قابلة للتأكيد');
+    await expect(steps22.nth(0)).toContainText('docs/DESIGN_SYSTEM_EVIDENCE.md');
     await expect(steps22.nth(1)).toContainText('docs/STITCH_SCREEN_PROMPTS.md');
 
     // Copy PROMPT 18
