@@ -429,7 +429,7 @@ export const topic26SkillsHtml = `
 
   <!-- 1. The Golden Rule -->
   <div class="content-block">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. القاعدة الذهبية لمسار سلاح العصر</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. القاعدة الذهبية لمسار Ai_agents</h3>
     <p class="leading-8 text-[var(--text-muted)]">
       يرتكز التعامل الهندسي مع أدوات الذكاء الاصطناعي في مشروعنا على معادلة رباعية حاسمة تمنع الفوضى وتحدد المسؤوليات بدقة:
     </p>
