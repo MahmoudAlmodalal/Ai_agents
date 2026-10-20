@@ -116,6 +116,28 @@ test('a revised rubric scale archives old-scale judgments instead of interpretin
   assert.equal(revised.record?.history[0].scaleVersion, 1);
 });
 
+test('a replaced practical assessment archives its ratings even when criterion IDs overlap', () => {
+  const storage = mockStorage();
+  const store = createLearningRecordsStore(() => storage);
+  store.savePracticalAssessment(practical());
+
+  const replaced = store.savePracticalAssessment(practical({
+    assessmentId: 'rubric-project-delivery',
+    assessmentVersion: 1,
+    ratings: [],
+    updatedAt: '2026-10-19T12:10:00.000Z',
+  }));
+
+  assert.equal(replaced.record?.ratings.length, 0);
+  assert.equal(replaced.record?.history.length, 1);
+  assert.equal(replaced.record?.history[0].criterionId, 'problem-evidence');
+  assert.equal(replaced.record?.history[0].ratingId, 'in-progress');
+
+  const restored = createLearningRecordsStore(() => storage).getPracticalAssessment('project-idea-mvp');
+  assert.equal(restored.record?.assessmentId, 'rubric-project-delivery');
+  assert.equal(restored.record?.history.length, 1);
+});
+
 test('blocked writes keep session records and honestly restore them when persistence recovers', () => {
   const map = new Map<string, string>();
   let blockWrites = true;

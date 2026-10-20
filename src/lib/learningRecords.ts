@@ -303,8 +303,9 @@ export function createLearningRecordsStore(getStorage: () => RecordStorage) {
     if (previous) {
       addUniqueRatings(history, previous.history);
       const nextCriteria = new Set(record.criteria.map((criterion) => `${criterion.criterionId}:${criterion.criterionVersion}`));
+      const assessmentChanged = previous.assessmentId !== record.assessmentId;
       const scaleChanged = previous.scaleId !== record.scaleId || previous.scaleVersion !== record.scaleVersion;
-      addUniqueRatings(history, previous.ratings.filter((rating) => scaleChanged || !nextCriteria.has(`${rating.criterionId}:${rating.criterionVersion}`)));
+      addUniqueRatings(history, previous.ratings.filter((rating) => assessmentChanged || scaleChanged || !nextCriteria.has(`${rating.criterionId}:${rating.criterionVersion}`)));
     }
     const saved: PracticalAssessmentRecord = { ...record, ratings: [...record.ratings], history };
     const next = { ...result.document, byTopic: { ...result.document.byTopic, [saved.topicSlug]: saved } };

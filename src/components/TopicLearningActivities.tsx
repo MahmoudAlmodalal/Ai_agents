@@ -44,7 +44,8 @@ function oldRubricRatings(record: PracticalAssessmentRecord | null, content: Top
   const criteria = new Map(content.practicalAssessment.criteria.map((criterion) => [criterion.id, criterion.version]));
   return [
     ...record.history,
-    ...record.ratings.filter((rating) => record.scaleId !== content.practicalAssessment.scale.id
+    ...record.ratings.filter((rating) => record.assessmentId !== content.practicalAssessment.id
+      || record.scaleId !== content.practicalAssessment.scale.id
       || record.scaleVersion !== content.practicalAssessment.scale.version
       || criteria.get(rating.criterionId) !== rating.criterionVersion),
   ];
