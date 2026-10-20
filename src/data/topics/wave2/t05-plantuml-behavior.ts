@@ -411,7 +411,7 @@ System --&gt; UC_MarkOverdue
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. البرومبت المعتمد لتوليد حالات الاستخدام (PROMPT 07)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لتوجيه وكيل الذكاء الاصطناعي إلى استخراج حالات الاستخدام وضبط علاقات include وextend وفق PRD:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لتوجيه وكيل الذكاء الاصطناعي إلى استخراج حالات الاستخدام وضبط علاقات include وextend وفق PRD:
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -556,7 +556,7 @@ export const topic12Html = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. البرومبت المعتمد لتوليد مخطط النشاط (PROMPT 08)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لإنشاء مخطط النشاط وسير العمليات بصيغة Mermaid flowchart TD:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لإنشاء مخطط النشاط وسير العمليات بصيغة Mermaid flowchart TD:
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -818,7 +818,7 @@ export const topic13Html = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">6. البرومبت المعتمد لتوليد مخطط الحالات (PROMPT 10)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لتحليل دورة حياة الكيانات وتوليد كود Mermaid stateDiagram-v2 سليم:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لتحليل دورة حياة الكيانات وتوليد كود Mermaid stateDiagram-v2 سليم:
     </p>
 
     <div class="code-container my-4" dir="ltr">

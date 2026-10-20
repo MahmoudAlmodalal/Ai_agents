@@ -261,4 +261,196 @@ test.describe('Ticket 05: PlantUML, Use Case, Activity & State Diagrams E2E', ()
     await page.keyboard.press('Escape');
     await expect(modal).not.toBeVisible();
   });
+
+  test('Group 05 topics render learning activities: objectives, sections, worked examples, and video candidates', async ({ page }) => {
+    const topics = [
+      { slug: 'plantuml', title: 'أداة ومحرر PlantUML', firstSection: 'المدخل: رسم هندسي يحتاج إلى ترميز' },
+      { slug: 'use-case-diagram', title: 'مخطط حالات الاستخدام', firstSection: 'المدخل: أدوار وأهداف من PRD' },
+      { slug: 'activity-diagram', title: 'مخطط النشاط وسير العمليات', firstSection: 'المدخل: عملية لها قرار' },
+      { slug: 'state-diagram', title: 'مخطط الحالات ودورة حياة الكيانات', firstSection: 'المدخل: كيان تتغير حالته' },
+    ];
+
+    for (const t of topics) {
+      await page.goto(`/learn/${t.slug}`);
+      const activity = page.locator('.learning-activities');
+      await expect(activity).toBeVisible();
+
+      // Objectives section
+      await expect(activity.getByRole('heading', { name: 'أهداف التعلّم' })).toBeVisible();
+
+      // Authored sections
+      await expect(activity.getByRole('heading', { name: t.firstSection })).toBeVisible();
+
+      // Practical steps and expected outputs
+      await expect(activity.getByRole('heading', { name: 'خطوات التطبيق ومخرجاتها' })).toBeVisible();
+      await expect(activity.getByText('المخرج المتوقع:').first()).toBeVisible();
+
+      // Worked examples
+      await expect(activity.getByRole('heading', { name: 'أمثلة محلولة' })).toBeVisible();
+
+      // External video candidate section
+      await expect(activity.getByRole('heading', { name: 'موارد فيديو خارجية' })).toBeVisible();
+    }
+  });
+
+  test('Practical steps and expected outputs are present and copyable across Group 05', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+
+    // Topic 10: PlantUML
+    await page.goto('/learn/plantuml');
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/README-plantuml.md' }).first()).toBeVisible();
+    const t10CodeContainer = page.locator('.code-container').first();
+    const t10ExpectedCode = await t10CodeContainer.locator('code').textContent();
+    const t10CopyBtn = t10CodeContainer.locator('button.copy-btn');
+    await t10CopyBtn.click();
+    await expect(t10CopyBtn).toContainText('تم النسخ');
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(t10ExpectedCode);
+
+    // Topic 11: Use Case
+    await page.goto('/learn/use-case-diagram');
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/use-case.puml' }).first()).toBeVisible();
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/use-case.md' }).first()).toBeVisible();
+    const t11CodeContainer = page.locator('.code-container').first();
+    const t11ExpectedCode = await t11CodeContainer.locator('code').textContent();
+    const t11CopyBtn = t11CodeContainer.locator('button.copy-btn');
+    await t11CopyBtn.click();
+    await expect(t11CopyBtn).toContainText('تم النسخ');
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(t11ExpectedCode);
+
+    // Topic 12: Activity
+    await page.goto('/learn/activity-diagram');
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/activity-diagram.md' }).first()).toBeVisible();
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/activity-diagram.mmd' }).first()).toBeVisible();
+
+    // Topic 13: State
+    await page.goto('/learn/state-diagram');
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/state-diagrams.md' }).first()).toBeVisible();
+    await expect(page.locator('code').filter({ hasText: 'docs/diagrams/state-diagrams.mmd' }).first()).toBeVisible();
+  });
+
+  test('Interactive quiz grades answers, provides explanations, and supports retries', async ({ page }) => {
+    await page.goto('/learn/plantuml');
+    const activity = page.locator('.learning-activities');
+    const quiz = activity.locator('section').filter({ hasText: 'فحص ذاتي للمفاهيم' }).first();
+    await expect(quiz).toBeVisible();
+
+    // Answer Q1 correctly: option 2 (@startuml و@enduml)
+    const q1Group = quiz.locator('fieldset').filter({ hasText: 'ما الغلاف الأساسي لعينة PlantUML؟' });
+    await q1Group.getByRole('radio', { name: /@startuml.*@enduml/ }).check();
+
+    // Answer Q2 incorrectly: option 3 (أن كل العلاقات صحيحة تلقائياً)
+    const q2Group = quiz.locator('fieldset').filter({ hasText: 'المحرر يعرض الرسم بلا خطأ. ماذا تفحص بعد ذلك؟' });
+    await q2Group.getByRole('radio', { name: 'أن كل العلاقات صحيحة تلقائياً' }).check();
+
+    // Submit
+    await quiz.getByRole('button', { name: 'إرسال الإجابات' }).click();
+
+    // Verification of scoring: 1 correct, 1 incorrect
+    await expect(quiz.getByText(/صحيح: 1 · غير صحيح: 1 · بلا إجابة: 0/)).toBeVisible();
+    await expect(q1Group.getByRole('status')).toContainText('إجابة صحيحة في هذا الفحص الذاتي');
+    await expect(q1Group.getByRole('status')).toContainText('هاتان علامتا بداية ونهاية مخطط PlantUML');
+    await expect(q2Group.getByRole('status')).toContainText('الإجابة تحتاج إلى مراجعة');
+    await expect(q2Group.getByRole('status')).toContainText('المصيّر يتحقق من الصياغة');
+
+    // Retry
+    const retryBtn = quiz.getByRole('button', { name: 'إعادة المحاولة' });
+    await expect(retryBtn).toBeVisible();
+    await retryBtn.click();
+
+    // Fix Q2: answer correctly (أن المعنى والأدوار يستندان إلى المتطلبات)
+    await q1Group.getByRole('radio', { name: /@startuml.*@enduml/ }).check();
+    await q2Group.getByRole('radio', { name: 'أن المعنى والأدوار يستندان إلى المتطلبات' }).check();
+    await quiz.getByRole('button', { name: 'إرسال الإجابات' }).click();
+
+    // Verification: 2 correct
+    await expect(quiz.getByText(/صحيح: 2 · غير صحيح: 0 · بلا إجابة: 0/)).toBeVisible();
+    await expect(q2Group.getByRole('status')).toContainText('إجابة صحيحة في هذا الفحص الذاتي');
+  });
+
+  test('Practical rubric and checklist can be edited, reversed, and survive reload', async ({ page }) => {
+    await page.goto('/learn/plantuml');
+    const activity = page.locator('.learning-activities');
+    const rubric = activity.locator('section').filter({ hasText: 'مراجعة ذاتية لمخرجات التمرين' }).first();
+    await expect(rubric).toBeVisible();
+
+    // Edit rubric ratings
+    const criterion1 = rubric.locator('fieldset').filter({ hasText: 'العينة قابلة للمعاينة' });
+    const criterion2 = rubric.locator('fieldset').filter({ hasText: 'توثيق الاستخدام' });
+
+    await criterion1.locator('select').selectOption('ready-for-review');
+    await criterion2.locator('select').selectOption('in-progress');
+
+    // Edit application checklist
+    const checklistSection = page.locator('aside').filter({ hasText: 'قائمة تحقق التطبيق' }).first();
+    const firstCheckItem = checklistSection.locator('input[type="checkbox"]').first();
+    await firstCheckItem.check();
+    await expect(firstCheckItem).toBeChecked();
+
+    // Reload page
+    await page.reload();
+
+    // Verify persistence after reload
+    const reloadedRubric = page.locator('.learning-activities').locator('section').filter({ hasText: 'مراجعة ذاتية لمخرجات التمرين' }).first();
+    const reloadedCrit1 = reloadedRubric.locator('fieldset').filter({ hasText: 'العينة قابلة للمعاينة' });
+    const reloadedCrit2 = reloadedRubric.locator('fieldset').filter({ hasText: 'توثيق الاستخدام' });
+    await expect(reloadedCrit1.locator('select')).toHaveValue('ready-for-review');
+    await expect(reloadedCrit2.locator('select')).toHaveValue('in-progress');
+
+    const reloadedChecklist = page.locator('aside').filter({ hasText: 'قائمة تحقق التطبيق' }).first();
+    const reloadedFirstItem = reloadedChecklist.locator('input[type="checkbox"]').first();
+    await expect(reloadedFirstItem).toBeChecked();
+
+    // Reverse changes
+    await reloadedCrit1.locator('select').selectOption('');
+    await reloadedCrit2.locator('select').selectOption('');
+    await reloadedFirstItem.uncheck();
+    await expect(reloadedFirstItem).not.toBeChecked();
+
+    // Reload again to verify reversal survived
+    await page.reload();
+    const finalRubric = page.locator('.learning-activities').locator('section').filter({ hasText: 'مراجعة ذاتية لمخرجات التمرين' }).first();
+    await expect(finalRubric.locator('fieldset').filter({ hasText: 'العينة قابلة للمعاينة' }).locator('select')).toHaveValue('');
+    await expect(finalRubric.locator('fieldset').filter({ hasText: 'توثيق الاستخدام' }).locator('select')).toHaveValue('');
+    const finalChecklist = page.locator('aside').filter({ hasText: 'قائمة تحقق التطبيق' }).first();
+    await expect(finalChecklist.locator('input[type="checkbox"]').first()).not.toBeChecked();
+  });
+
+  test('RTL prose and LTR code blocks render with correct directions across Group 05', async ({ page }) => {
+    const slugs = ['plantuml', 'use-case-diagram', 'activity-diagram', 'state-diagram'];
+
+    for (const slug of slugs) {
+      await page.goto(`/learn/${slug}`);
+
+      // Check root direction is RTL
+      const pageDir = await page.locator('div[dir="rtl"]').first().getAttribute('dir');
+      expect(pageDir).toBe('rtl');
+
+      // Check main heading direction is RTL
+      const h1 = page.locator('h1').first();
+      const h1Dir = await h1.evaluate((el) => window.getComputedStyle(el).direction);
+      expect(h1Dir).toBe('rtl');
+
+      // Check code containers have dir="ltr"
+      const codeContainers = page.locator('.code-container');
+      const count = await codeContainers.count();
+      for (let i = 0; i < count; i++) {
+        const dir = await codeContainers.nth(i).getAttribute('dir');
+        expect(dir).toBe('ltr');
+        const computedDir = await codeContainers.nth(i).evaluate((el) => window.getComputedStyle(el).direction);
+        expect(computedDir).toBe('ltr');
+      }
+    }
+  });
+
+  test('Mobile viewport (390px) renders without horizontal scroll overflow across all Group 05 topics', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const slugs = ['plantuml', 'use-case-diagram', 'activity-diagram', 'state-diagram'];
+
+    for (const slug of slugs) {
+      await page.goto(`/learn/${slug}`);
+      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
+      expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 1);
+    }
+  });
 });
