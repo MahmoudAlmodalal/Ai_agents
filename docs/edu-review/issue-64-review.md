@@ -9,9 +9,11 @@
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+
 ## `django-backend`
 
-**Inputs and lesson walk-through:** Django خيار مستقل → مثال محلول: قيد uniqueness → برومبت مراجعة migration. Steps:
+**Inputs and lesson walk-through:** Django خيار مستقل → مثال محلول: قيد uniqueness → برومبت مراجعة migration. يستخدم مخرجات Python/PostgreSQL/API من الموضوعات 38–40 قبل إنشاء ORM؛ Django وFastAPI مساران بديلان. Steps:
   - سجل اختيار Django أو FastAPI وسبباً؛ إذا اخترت Django تجاوز بناء FastAPI. → `docs/BACKEND_FRAMEWORK_DECISION.md يذكر الإطار والبديل الذي لم ينفذ.`
   - أنشئ models من الكيانات والعلاقات والقيود المعتمدة. → `نماذج تتبع ERD مع كل اختلاف كقرار أو سؤال.`
   - ولّد migration وراجعها على قاعدة تطوير قبل التطبيق. → `ملف migration ونتيجة أمر الفحص؛ الإنتاج Not Run.`
@@ -46,7 +48,7 @@ Criteria:
 
 ## `fastapi-backend`
 
-**Inputs and lesson walk-through:** FastAPI خيار مستقل → مثال محلول: schema مقابل ORM → برومبت ومخرج. Steps:
+**Inputs and lesson walk-through:** FastAPI خيار مستقل → مثال محلول: schema مقابل ORM → برومبت ومخرج. يستخدم مخرجات Python/PostgreSQL/API من الموضوعات 38–40 قبل إنشاء ORM؛ FastAPI وDjango مساران بديلان. Steps:
   - أنشئ request وresponse منفصلين عن ORM واختبر قيمة طلب غير صالحة. → `مخططان يوضحان حقول الإدخال والمخرج؛ لا يتسرب internal field.`
   - حدد دورة session عبر dependency؛ استخدم async فقط مع driver مناسب. → `اختبار/مخطط يوضح فتح الجلسة وإغلاقها لكل طلب.`
   - اربط metadata وولّد migration تجريبية وافحص upgrade/downgrade على dev. → `رأس Alembic ونتيجة تطبيق على dev؛ الإنتاج لم يتغير.`
@@ -81,7 +83,7 @@ Criteria:
 
 ## `auth-permissions`
 
-**Inputs and lesson walk-through:** المتطلب مصدر الإذن → مثال محلول: تعديل سجل → برومبت ومخرج أمني. Steps:
+**Inputs and lesson walk-through:** المتطلب مصدر الإذن → مثال محلول: تعديل سجل → برومبت ومخرج أمني. يستخدم مخرجات المسار المختار من الموضوع 41 أو 42 (Django models/migration أو FastAPI schemas/Alembic) قبل بناء مصفوفة الصلاحية. Steps:
   - اربط كل endpoint بدور وشرط ملكية ونتيجة رفض من متطلبات المشروع. → `docs/AUTH_PERMISSIONS_SPEC.md يحدد route/role/owner/action ومراجع SRS.`
   - نفذ فحص هوية ثم تفويض على الخادم وفق الإطار المختار. → `endpoint يرفض العملية عند غياب الصلاحية؛ الواجهة ليست الحارس الوحيد.`
   - اكتب اختبار مجهول/مسجل بلا دور/مسموح وسجل HTTP status. → `نتائج تطابق العقد ولا تطبع اعتماداً أو سراً.`
@@ -116,7 +118,7 @@ Criteria:
 
 ## `services-selectors`
 
-**Inputs and lesson walk-through:** وزع المسؤولية → مثال محلول: حجز مورد → برومبت ومخرج. Steps:
+**Inputs and lesson walk-through:** وزع المسؤولية → مثال محلول: حجز مورد → برومبت ومخرج. يستخدم `permission-matrix` و`auth-tests` من الموضوع 43 عند تصميم الخدمة وحد المعاملة. Steps:
   - اختر قراءة وكتابة وارسم مسؤولية endpoint/service/selector. → `مخطط يوضح أن selector read-only وأن service تملك حد transaction.`
   - حدد invariant من وثيقة المشروع واكتب اختباراً يعيد إنتاج التعارض. → `اختبار يثبت أن المحاولات لا تنتج حالة ممنوعة وأن الفشل يسبب rollback.`
   - سجل عدد الاستعلامات قبل التحسين ثم قارن بعده إذا ظهر دليل N+1. → `قبل/بعد أو Not Run؛ لا يذكر رقماً غير مقاس.`
@@ -124,7 +126,7 @@ Criteria:
 **Sample project output (worked example `atomic-request`):** طلب ذري — قاعدة مشروع تسمح بحجز مورد متاح مرة واحدة.
 
 ```text
-transaction → lock/check availability → validate owner rule → create → commit; conflict → rollback. selector يقرأ القائمة دون كتابة.
+authenticate → authorize ownership/action without disclosing availability → begin transaction → lock authorized row → re-check authorization and race-sensitive availability → create → commit; conflict/denial → rollback and policy-consistent response. selector يقرأ القائمة دون كتابة.
 ```
 
 **Handoff:** برومبت: «استخرج قاعدة الكتابة من PRD. اقترح service وselector، واختبر التنافس وقس query count قبل/بعد. لا تعمم قاعدة BorrowHub». الناتج يهيئ تكامل الواجهة.

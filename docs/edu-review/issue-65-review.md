@@ -9,6 +9,8 @@
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+
 ## `frontend-backend-integration`
 
 **Inputs and lesson walk-through:** العقد يربط الطرفين → مثال محلول: قائمة عناصر → برومبت ومصفوفة تكامل. Steps:

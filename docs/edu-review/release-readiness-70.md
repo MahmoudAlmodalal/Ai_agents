@@ -10,7 +10,7 @@ The release candidate has not yet been supplied by the integration owner. The ch
 
 The existing issue scope is 58 canonical Topics in 19 groups. The existing lessons remain available while drafts are reviewed. A group may be announced as improved only after its complete evidence packet and explicit course-owner acceptance are recorded. Curriculum B's author-review packets for #61–#69 are linked below; they do not represent course-owner acceptance. Every video remains a researched candidate with playback, captions, accessibility and owner approval not run/pending.
 
-Issues #38 and #33 must remain unchanged during this work. #38 is the open product specification; #33 is the already-closed pilot and does not constitute approval of new assessment or video policy. This matrix covers every open issue supplied in the working issue snapshot (32 issues); it does not change issue state.
+Issues #38 and #33 must remain unchanged during this work. #38 is the product specification; #33 is the closed pilot and does not constitute approval of new assessment or video policy. This matrix covers the 31 open issues supplied in `/workspace/scratch/review/open-issues-start.json`; #75 is omitted because it was closed through PR #76 before this snapshot. This record does not change issue state.
 
 ## Open-issue coverage
 
@@ -47,7 +47,6 @@ Issues #38 and #33 must remain unchanged during this work. #38 is the open produ
 | #69 | Runbook/handoff/demo/portfolio: four topic packets, evidence-preserving handoff and candidate resource evidence. | Curriculum B packet: [issue 69](issue-69-review.md). Author review recorded; owner approval and RC journey pending. |
 | #70 | Full production journey, 58-topic availability, compatibility, storage/offline/accessibility checks, and staged rollout. | This evidence matrix and [draft rollout/rollback procedure](rollout-rollback-70.md) are prepared. RC verification and launch decision are Not Run. |
 | #74 | Fresh-tab `/saved` offline bootstrap; complete cache-bundle commit/rollback; validate actual cached HTML/assets; production SW failure tests. | Known unresolved baseline report in issue #74; retest and fix verification on RC are required. Not Run here. |
-| #75 | Repair accessible status semantics/selectors/membership and retain roadmap coverage; run six production roadmap checks. | Known three-failure baseline report in issue #75; RC suite not run here. Not Run. |
 
 ## Required production-candidate journey
 

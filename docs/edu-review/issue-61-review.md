@@ -9,19 +9,23 @@
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+
 ## `typescript-types`
 
 **Inputs and lesson walk-through:** ابدأ من البيانات المعتمدة → مثال محلول: حالة طلب → مهمة وبرومبت ومخرج. Steps:
   - أنشئ src/types/project.ts وعرّف كياناً وحالاته من ERD. → `Equipment له id/name وRequestStatus محصور بالقيم الموثقة؛ لا يوجد any أو status? بلا سبب.`
-  - أضف عينة صالحة وأخرى تحتوي قيمة حالة غير معتمدة. → `العينة الصحيحة تطابق العقد؛ status: "waiting" يفشل بفحص النوع أو تحقق وقت التشغيل.`
+  - افصل فحص النوع الساكن عن اختبار JSON وقت التشغيل وسجل نتيجة كل واحد. → `إسناد TypeScript معلّم بقيمة status: "waiting" يفشل في tsc؛ JSON الخام لا يرفضه TypeScript ويحتاج schema validator مستقل. غير المنفذ يوسم Not Run.`
   - اربط كل نوع بمصدره وسجل الحقول غير المحسومة. → `docs/TYPESCRIPT_GUIDELINES.md يحوي مرجع ERD وأسئلة مفتوحة، بلا قواعد مخترعة.`
 
-**Sample project output (worked example `request-union-example`):** عقد حالة طلب — بيانات محلية لمورد في مشروع الطالب.
+**Sample project output (worked example `request-union-example`):** عقد حالة طلب توضيحي من أربع حالات، وليس قائمة BorrowHub ذات الحالات الخمس ولا نتيجة فحص منفذ.
 
 ```text
 type RequestStatus = 'draft' | 'submitted' | 'accepted' | 'cancelled';
 interface Request { id: string; status: RequestStatus }
 const sample: Request = { id: 'req-104', status: 'submitted' };
+// Compile-time example: const invalid: RequestStatus = 'waiting'; // tsc error
+// Raw JSON still needs a separately implemented runtime schema check.
 ```
 
 **Handoff:** برومبت: «اشتق الأنواع من ERD والعينة؛ اعرض كل افتراض كسؤال، واكتب اختباراً يرفض حالة غير مدرجة، ولا تستخدم any». سلّم العقود وفحص البيانات إلى بناء المكونات في الموضوع 31.
@@ -86,7 +90,7 @@ Criteria:
 **Inputs and lesson walk-through:** من الرمز إلى الفئة → مثال محلول: بطاقة ثنائية الاتجاه → مهمة وبرومبت وتسليم. Steps:
   - اربط لوناً ومسافة ونصف قطر من DESIGN.md بمتغير/فئة حسب إصدار Tailwind. → `docs/TAILWIND_DESIGN_MAPPING.md يذكر المصدر والأسئلة غير المحسومة.`
   - نسق بطاقة بخصائص منطقية وافحص العربية والإنجليزية. → `لا تعتمد المحاذاة على ml/mr أو left/right إذا كان المقصود اتجاه النص.`
-  - افحص العروض الخمسة وسجل overflow مع العنصر ونتيجة RTL/LTR. → `مصفوفة تسجل العروض التي فحصت فعلاً؛ غير المفحوص ليس Passed.`
+  - افحص العروض الخمسة وحدد سبب overflow وأصلحه قبل إعادة فحص RTL/LTR. → `مصفوفة تسجل العرض والاتجاه والعنصر والسبب والإصلاح والنتيجة الفعلية؛ لا تخف التدفق على مستوى الصفحة.`
 
 **Sample project output (worked example `logical-layout`):** بطاقة اتجاهية — بطاقة لها عنوان وزر إجراء.
 
@@ -108,7 +112,7 @@ Criteria:
   - `tailwind-css-responsive-token-source` → `token-map`: مصدر الرمز. الفئات المخصصة مرتبطة بمصدر أو سؤال مفتوح. دليل المراجعة: أشر إلى مصدر لون ومسافة وفئتهما.
   - `tailwind-css-responsive-direction-check` → `responsive-report`: فحص الاتجاه والعرض. يذكر العرض والاتجاه والعنصر المتأثر لا ادعاء تجاوب عام. دليل المراجعة: أرفق أصغر عرض فحصته ونتيجة RTL/LTR.
 
-**Author finding:** راجع المؤلف فرق الخصائص المنطقية عن إخفاء overflow وربط الفئات بمصدر التصميم. جدول الفحص لا يسجل عروضاً غير معاينة.
+**Author finding:** راجع المؤلف الدرس الأصلي والمكمل معاً: الجدول والخطوة القديمة لم يعودا يوصيان بإخفاء تدفق الصفحة، بل بتحديد العنصر المسبب وإعادة فحصه؛ القص محلي ومقصود فقط. ربط الفئات بمصدر التصميم وعروض الفحص الفعلية موضحان.
 
 **External video candidate:** [Tailwind CSS: From Zero to Production](https://tailwindcss.com/blog/tailwindcss-from-zero-to-production) (`candidate`, approval `proposed`). مرشح من سلسلة Tailwind الرسمية ذات 8 أجزاء؛ الجزء الثالث responsive design والسابع تخصيص design system. السلسلة تعلم Tailwind v2.0، لذا تصلح للمبادئ فقط ويجب عدم نسخ صياغة الإعداد أو الفئات قبل التحقق من الإصدار.
 
@@ -123,10 +127,10 @@ Criteria:
   - أنشئ layout بlang/dir وتنقلاً داخلياً إلى مسارين موجودين. → `تخطيط lang="ar" وdir="rtl" وروابط لمسارات قائمة.`
   - حدد لكل صفحة هل مصدرها fixture أو API منفذ فعلاً. → `مصفوفة route/source/client-boundary بلا ادعاء API عند استخدام fixtures.`
 
-**Sample project output (worked example `route-files`):** شجرة مسارات — مشروع يعرض قائمة موارد وتفاصيلها.
+**Sample project output (worked example `route-files`):** شجرة مسارات BorrowHub تطابق مساري `/equipment` و`/equipment/[id]` من الدرس الأصلي; استخدم مسارات جرد مشروعك إذا اختلفت.
 
 ```text
-src/app/layout.tsx; src/app/items/page.tsx; src/app/items/[id]/page.tsx. صفحة التفصيل تعرض not-found لقيمة id غير موجودة.
+src/app/layout.tsx; src/app/equipment/page.tsx; src/app/equipment/[id]/page.tsx. صفحة التفصيل تعرض not-found لقيمة id غير موجودة. مصدر السجلات fixtures محلية حتى يثبت API منفذ.
 ```
 
 **Handoff:** برومبت: «حوّل الجرد إلى شجرة App Router، وسم كل ملف ومصدر البيانات. حافظ على RTL، وضع use client عند hook/حدث فقط. لا تدّع وجود Backend». سلّم الشجرة لتخطيط المشروع التالي.
