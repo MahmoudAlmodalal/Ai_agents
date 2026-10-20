@@ -1,5 +1,6 @@
 import type {
   LearningRecordStorageStatus,
+  HistoricalRubricRating,
   PracticalAssessmentRecord,
   QuizAttemptRecord,
   VersionedRubricRating,
@@ -100,6 +101,17 @@ function isVersionedRating(value: unknown): value is VersionedRubricRating {
     && isValidTimestamp(value.ratedAt);
 }
 
+function isHistoricalRubricRating(value: unknown): value is HistoricalRubricRating {
+  if (!isVersionedRating(value)) return false;
+  const candidate = value as unknown as Record<string, unknown>;
+  const hasAssessmentId = candidate.assessmentId !== undefined;
+  const hasAssessmentVersion = candidate.assessmentVersion !== undefined;
+  return (!hasAssessmentId && !hasAssessmentVersion)
+    || (hasAssessmentId && hasAssessmentVersion
+      && isNonEmptyString(candidate.assessmentId)
+      && isNonNegativeInteger(candidate.assessmentVersion));
+}
+
 function isPracticalAssessmentRecord(value: unknown): value is PracticalAssessmentRecord {
   if (!isObject(value)) return false;
   const criteria = value.criteria;
@@ -126,7 +138,7 @@ function isPracticalAssessmentRecord(value: unknown): value is PracticalAssessme
       && criteriaById.get(rating.criterionId) === rating.criterionVersion
       && rating.scaleId === value.scaleId && rating.scaleVersion === value.scaleVersion)
     && Array.isArray(value.history)
-    && value.history.every(isVersionedRating)
+    && value.history.every(isHistoricalRubricRating)
     && isValidTimestamp(value.updatedAt)
     && value.selfAssessment === true
     && typeof value.previewOnly === 'boolean';
@@ -166,9 +178,19 @@ function parsePracticalDocument(raw: string | null): PracticalDocument | null {
 }
 
 function addUniqueRatings(target: PracticalAssessmentRecord['history'], source: PracticalAssessmentRecord['history']) {
-  const seen = new Set(target.map((rating) => `${rating.criterionId}:${rating.criterionVersion}:${rating.ratedAt}`));
+  const keyFor = (rating: HistoricalRubricRating) => JSON.stringify([
+    rating.assessmentId ?? null,
+    rating.assessmentVersion ?? null,
+    rating.criterionId,
+    rating.criterionVersion,
+    rating.scaleId,
+    rating.scaleVersion,
+    rating.ratingId,
+    rating.ratedAt,
+  ]);
+  const seen = new Set(target.map(keyFor));
   for (const rating of source) {
-    const key = `${rating.criterionId}:${rating.criterionVersion}:${rating.ratedAt}`;
+    const key = keyFor(rating);
     if (!seen.has(key)) {
       target.push(rating);
       seen.add(key);
@@ -305,7 +327,9 @@ export function createLearningRecordsStore(getStorage: () => RecordStorage) {
       const nextCriteria = new Set(record.criteria.map((criterion) => `${criterion.criterionId}:${criterion.criterionVersion}`));
       const assessmentChanged = previous.assessmentId !== record.assessmentId;
       const scaleChanged = previous.scaleId !== record.scaleId || previous.scaleVersion !== record.scaleVersion;
-      addUniqueRatings(history, previous.ratings.filter((rating) => assessmentChanged || scaleChanged || !nextCriteria.has(`${rating.criterionId}:${rating.criterionVersion}`)));
+      addUniqueRatings(history, previous.ratings
+        .filter((rating) => assessmentChanged || scaleChanged || !nextCriteria.has(`${rating.criterionId}:${rating.criterionVersion}`))
+        .map((rating) => ({ ...rating, assessmentId: previous.assessmentId, assessmentVersion: previous.assessmentVersion })));
     }
     const saved: PracticalAssessmentRecord = { ...record, ratings: [...record.ratings], history };
     const next = { ...result.document, byTopic: { ...result.document.byTopic, [saved.topicSlug]: saved } };

@@ -65,7 +65,7 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
 
   const refreshQuiz = React.useCallback(() => {
     const snapshot = getQuizAttempts(topic.slug);
-    setQuizAttempts(snapshot.attempts.filter((attempt) => attempt.quizId === content.quiz.id));
+    setQuizAttempts(snapshot.attempts);
     setQuizStorageStatus(snapshot.storageStatus);
   }, [topic.slug, content.quiz.id]);
 
@@ -184,7 +184,8 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
   }
 
   const currentQuestionVersions = new Map(content.quiz.questions.map((question) => [question.id, question.version]));
-  const isCurrentAttempt = (attempt: QuizAttemptRecord) => attempt.quizVersion === content.quiz.version
+  const isCurrentAttempt = (attempt: QuizAttemptRecord) => attempt.quizId === content.quiz.id
+    && attempt.quizVersion === content.quiz.version
     && attempt.policyId === content.quiz.scoringPolicy.id
     && attempt.policyVersion === content.quiz.scoringPolicy.version
     && attempt.answers.length === content.quiz.questions.length
@@ -321,12 +322,12 @@ export function TopicLearningActivities({ topic, content }: { topic: TopicItem; 
           <p className="mt-1 text-xs text-[var(--text-muted)]">نسخة الاختبار {latestAttempt.quizVersion} · {formatTimestamp(latestAttempt.submittedAt)}{latestAttempt.previewOnly ? ' · معاينة' : ''}</p>
         </div>}
         {quizAttempts.length > 0 && <div className="border-t border-[var(--border-color)] pt-2">
-          {olderAttempts.length > 0 && <p className="mb-1 text-xs leading-6 text-[var(--text-muted)]">توجد محاولات من نسخ سابقة؛ تبقى محفوظة مع نسختها ولا تُحتسب كإجابات للنسخة الحالية.</p>}
+          {olderAttempts.length > 0 && <p className="mb-1 text-xs leading-6 text-[var(--text-muted)]">توجد محاولات من اختبارات أو نسخ سابقة؛ تبقى محفوظة بهويتها وإصداراتها ولا تُحتسب كإجابات للنسخة الحالية.</p>}
           <details className="text-sm text-[var(--text-muted)]">
             <summary className="min-h-11 cursor-pointer py-2 font-semibold">عرض سجل المحاولات ({quizAttempts.length})</summary>
             <ul className="space-y-1 ps-5">
               {[...quizAttempts].reverse().map((attempt) => <li key={attempt.attemptId}>
-                {attempt.score}/{attempt.maxScore} · نسخة الاختبار {attempt.quizVersion} · {isCurrentAttempt(attempt) ? 'النسخة الحالية' : 'نسخة سابقة'} · {formatTimestamp(attempt.submittedAt)}{attempt.previewOnly ? ' · معاينة' : ''}
+                {attempt.score}/{attempt.maxScore} · {attempt.quizId === content.quiz.id ? 'نسخة الاختبار' : `اختبار سابق: ${attempt.quizId}`} {attempt.quizVersion} · {isCurrentAttempt(attempt) ? 'النسخة الحالية' : 'نسخة سابقة'} · {formatTimestamp(attempt.submittedAt)}{attempt.previewOnly ? ' · معاينة' : ''}
               </li>)}
             </ul>
           </details>

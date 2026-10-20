@@ -92,6 +92,8 @@ test('a revised rubric keeps retired ratings recoverable without applying them t
   assert.equal(revised.record?.ratings[0].criterionVersion, 2);
   assert.equal(revised.record?.history.length, 1);
   assert.equal(revised.record?.history[0].ratingId, 'in-progress');
+  assert.equal(revised.record?.history[0].assessmentId, 'rubric-project-context');
+  assert.equal(revised.record?.history[0].assessmentVersion, 1);
 
   const reloaded = createLearningRecordsStore(() => storage).getPracticalAssessment('project-idea-mvp');
   assert.equal(reloaded.record?.history[0].criterionVersion, 1);
@@ -114,6 +116,7 @@ test('a revised rubric scale archives old-scale judgments instead of interpretin
   assert.equal(revised.record?.history.length, 1);
   assert.equal(revised.record?.history[0].scaleId, 'descriptive-three-level');
   assert.equal(revised.record?.history[0].scaleVersion, 1);
+  assert.equal(revised.record?.history[0].assessmentId, 'rubric-project-context');
 });
 
 test('a replaced practical assessment archives its ratings even when criterion IDs overlap', () => {
@@ -132,10 +135,32 @@ test('a replaced practical assessment archives its ratings even when criterion I
   assert.equal(replaced.record?.history.length, 1);
   assert.equal(replaced.record?.history[0].criterionId, 'problem-evidence');
   assert.equal(replaced.record?.history[0].ratingId, 'in-progress');
+  assert.equal(replaced.record?.history[0].assessmentId, 'rubric-project-context');
+  assert.equal(replaced.record?.history[0].assessmentVersion, 1);
 
   const restored = createLearningRecordsStore(() => storage).getPracticalAssessment('project-idea-mvp');
   assert.equal(restored.record?.assessmentId, 'rubric-project-delivery');
   assert.equal(restored.record?.history.length, 1);
+  assert.equal(restored.record?.history[0].assessmentId, 'rubric-project-context');
+});
+
+test('legacy rubric history without parent assessment identity remains readable', () => {
+  const legacy = practical({ history: [{
+    criterionId: 'retired-criterion',
+    criterionVersion: 0,
+    scaleId: 'old-scale',
+    scaleVersion: 0,
+    ratingId: 'legacy-rating',
+    ratedAt: '2026-10-18T12:00:00.000Z',
+  }] });
+  const storage = mockStorage({
+    [PRACTICAL_ASSESSMENTS_STORAGE_KEY]: JSON.stringify({ schemaVersion: 1, byTopic: { [legacy.topicSlug]: legacy } }),
+  });
+
+  const restored = createLearningRecordsStore(() => storage).getPracticalAssessment(legacy.topicSlug);
+  assert.equal(restored.storageStatus, 'available');
+  assert.equal(restored.record?.history[0].criterionId, 'retired-criterion');
+  assert.equal(restored.record?.history[0].assessmentId, undefined);
 });
 
 test('blocked writes keep session records and honestly restore them when persistence recovers', () => {

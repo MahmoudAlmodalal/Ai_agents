@@ -141,11 +141,11 @@ test.describe('objective quiz and practical self-assessment', () => {
     const priorAttempt = {
       attemptId: 'prior-version-attempt',
       topicSlug,
-      quizId: `${topicSlug}-objective-quiz`,
-      quizVersion: 0,
-      policyId: `${topicSlug}-quiz-scoring-policy`,
-      policyVersion: 0,
-      answers: [{ questionId: 'idea-mvp-q-evidence', questionVersion: 0, selectedOptionId: 'old-option', correctness: 'correct' }],
+      quizId: `${topicSlug}-previous-objective-quiz`,
+      quizVersion: 1,
+      policyId: `${topicSlug}-previous-quiz-scoring-policy`,
+      policyVersion: 1,
+      answers: [{ questionId: 'idea-mvp-q-evidence', questionVersion: 1, selectedOptionId: 'old-option', correctness: 'correct' }],
       correctCount: 1,
       incorrectCount: 0,
       unansweredCount: 0,
@@ -157,7 +157,7 @@ test.describe('objective quiz and practical self-assessment', () => {
     };
     const oldCriterionRating = {
       criterionId: 'idea-mvp-r-problem',
-      criterionVersion: 0,
+      criterionVersion: 1,
       scaleId: `${topicSlug}-rubric-scale`,
       scaleVersion: 1,
       ratingId: 'ready-for-review',
@@ -176,8 +176,8 @@ test.describe('objective quiz and practical self-assessment', () => {
       localStorage.setItem(practicalKey, JSON.stringify({ schemaVersion: 1, byTopic: {
         [slug]: {
           topicSlug: slug,
-          assessmentId: `${slug}-practical-assessment`,
-          assessmentVersion: 1,
+          assessmentId: `${slug}-previous-practical-assessment`,
+          assessmentVersion: 0,
           scaleId: `${slug}-rubric-scale`,
           scaleVersion: 1,
           criteria: [{ criterionId: rating.criterionId, criterionVersion: rating.criterionVersion }],
@@ -192,9 +192,10 @@ test.describe('objective quiz and practical self-assessment', () => {
 
     await page.goto(`/learn/${topicSlug}`);
     const quiz = quizSection(page);
-    await expect(quiz.getByText(/محاولات من نسخ سابقة/)).toBeVisible();
+    await expect(quiz.getByText(/محاولات من اختبارات أو نسخ سابقة/)).toBeVisible();
     await expect(quiz.getByText(/آخر نتيجة محفوظة|آخر نتيجة في هذه الجلسة/)).toHaveCount(0);
     await quiz.getByText(/عرض سجل المحاولات \(1\)/).click();
+    await expect(quiz.getByText(new RegExp(`اختبار سابق: ${topicSlug}-previous-objective-quiz`))).toBeVisible();
     await expect(quiz.getByText(/نسخة سابقة/)).toBeVisible();
     await expect(page.locator(activitySelector).getByText(/أحكام من نسخة rubric سابقة/)).toBeVisible();
     await expect(page.locator(activitySelector).getByRole('group', { name: 'صياغة المشكلة ودليلها' }).getByLabel('اختيارك للتقييم الذاتي')).toHaveValue('');
