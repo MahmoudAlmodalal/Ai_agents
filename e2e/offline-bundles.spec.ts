@@ -380,7 +380,7 @@ test.describe('production offline bundles', () => {
     const saved = await activeBundle(page);
     expect(saved?.payload.learningContent.quiz.questions.length).toBeGreaterThan(0);
     expect(saved?.payload.metadata.quiz?.approvalState).toBe('approved');
-    expect(saved?.payload.learningContent.quiz.scoringPolicy.approval.state).toBe('proposed');
+    expect(saved?.payload.learningContent.quiz.scoringPolicy.approval.state).toBe('approved');
 
     await page.close();
     await context.setOffline(true);
