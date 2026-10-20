@@ -36,6 +36,21 @@ Manual fallback:
 ```
 
 ```markdown
+---
+name: "Study-group scheduling exercise"
+status: "draft"
+source_status: "no reference screen inspected"
+references: []
+direction: "RTL prose; LTR identifiers and code"
+tokens:
+  colors:
+    primary: "UNKNOWN"
+  typography:
+    body: "UNKNOWN"
+  spacing:
+    base: "UNKNOWN"
+---
+
 # DESIGN.md — Study-group exercise
 
 Status: draft; no screenshot or Stitch screen was inspected.
@@ -48,6 +63,12 @@ product behavior, roles, and requirements remain in the PRD.
 ## Direction
 Arabic prose should be RTL when supported by the layout. Keep code, IDs, and
 technical identifiers LTR. Verify direction on an actual rendered screen.
+
+## Token evidence
+The YAML frontmatter is a structured token placeholder for this exercise. No
+color, font, or spacing value is asserted without a source screen. Add a
+reference and confidence for each token after an approved screen is inspected;
+keep unsupported values as `UNKNOWN`.
 ```
 
 **Review state:** The files are example documentation outputs, not evidence that an MCP connection, screen export, design review, or accessibility test succeeded.

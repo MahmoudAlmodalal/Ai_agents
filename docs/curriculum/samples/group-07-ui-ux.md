@@ -25,14 +25,14 @@ A candidate navigation map is `Home → Session → Options → Preference → C
 
 ## `docs/UX_STATES_MATRIX.md` — Topic 19
 
-| State | Participant options screen: observable behavior and next action | Organizer review screen: observable behavior and next action | Review evidence |
+| Category | Participant options screen: observable behavior and next action | Organizer review screen: observable behavior and next action | Review evidence |
 |---|---|---|---|
 | Loading | Show a labeled skeleton for session/options; keep the page title stable. | Show a labeled skeleton for response counts; keep review actions unavailable until data resolves. | Draft only; no screen exists. Verify layout shift and announced status in a prototype. |
 | Empty | Explain that no options are listed and point back to the organizer/contact route; do not show a technical error. | Explain that no preferences have arrived; selection remains unavailable. | Draft copy/behavior; confirm empty-session policy with owner. |
 | Error | State that options could not be loaded and offer retry or return to the session. | State that responses could not be loaded and offer retry; do not show stale counts as current. | Draft recovery actions; no network/error behavior was run. |
 | Success | Show the selected preference and a clear confirmation; editability is an open product question. | Show the selected time and confirmation after organizer choice; tie handling remains open. | Draft success outcomes; persistence and notification are not claimed. |
-| Responsive | At a narrow viewport, stack option rows and keep the primary action reachable without horizontal scrolling. | Stack response summaries and keep the selection action reachable. | Design check to perform at 390px and wide viewport; **Not Run**. |
-| Accessibility | Give controls names, visible keyboard focus, logical RTL reading order, and LTR treatment for IDs/times. | Make response counts and validation perceivable without color alone; preserve keyboard order and RTL/LTR handling. | Accessibility checklist only; keyboard, contrast, screen-reader and direction checks **Not Run**. |
+| Cross-cutting: responsive | At a narrow viewport, stack option rows and keep the primary action reachable without horizontal scrolling. | Stack response summaries and keep the selection action reachable. | Design check to perform at 390px and wide viewport; **Not Run**. This applies across UI states. |
+| Cross-cutting: accessibility | Give controls names, visible keyboard focus, logical RTL reading order, and LTR treatment for IDs/times. | Make response counts and validation perceivable without color alone; preserve keyboard order and RTL/LTR handling. | Accessibility checklist only; keyboard, contrast, screen-reader and direction checks **Not Run**. This applies across UI states. |
 
 This matrix is a proposal for the exercise, not evidence of a built interface.
 

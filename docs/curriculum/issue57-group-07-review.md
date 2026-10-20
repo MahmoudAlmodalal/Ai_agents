@@ -21,9 +21,9 @@ The existing reader content remains available for every canonical Topic. This su
 ### `ux-blueprint`
 
 - **Suggested input / handoff:** A user journey and service touchpoints from the learner’s project; BorrowHub remains an optional example.
-- **Objectives:** توثيق الرحلات وخريطة الموقع والحالات الست لكل تجربة أساسية. / مراعاة الاستجابة وإمكانية الوصول في حالات النجاح والخطأ والفراغ.
-- **Authored learning path:** المدخل: مهمة ونقاط تلامس → الحالات الست → التحقق. The section bodies, two Practical Steps, example, quiz and rubric are stored in `src/data/learning/group-a-rest.ts`.
-- **Learner outputs:** `ux-blueprint` — `docs/UX_BLUEPRINT.md` يشرح الرحلة وخريطة الموقع.; `states-matrix` — مصفوفة تغطي الحالات الست مع سلوك المستخدم ونقاط الفحص.
+- **Objectives:** توثيق الرحلات وخريطة الموقع وحالات الواجهة الأربع الأساسية. / مراجعة الاستجابة وإمكانية الوصول كفحصين عابرين للحالات.
+- **Authored learning path:** المدخل: مهمة ونقاط تلامس → أربع حالات واجهة وفحصان عابران → التحقق. The section bodies, two Practical Steps, example, quiz and rubric are stored in `src/data/learning/group-a-rest.ts`.
+- **Learner outputs:** `ux-blueprint` — `docs/UX_BLUEPRINT.md` يشرح الرحلة وخريطة الموقع.; `states-matrix` — مصفوفة لأربع حالات واجهة وفحصي الاستجابة وإمكانية الوصول.
 - **Assessment draft:** questions `uxbp-q-empty`, `uxbp-q-a11y` (two four-option questions with keyed rationales); criteria `uxbp-r-states` → `states-matrix`, `uxbp-r-journey` → `ux-blueprint`. Root independently reviewed the two keyed answers/rationales and two artifact-bound criteria named above on 2026-10-20; those narrow items passed. The scoring and self-assessment policy approvals remain proposed.
 - **Worked-example excerpt:** حالة الفراغ تشرح ما الذي يظهر الآن وتتيح العودة للمهمة أو تعديل البحث؛ لا تعرض خطأ تقنياً ولا تدعي أن النظام تعطل. (fictional/example reasoning; not an executed learner artifact or independent verification).
 - **External-video candidate:** [Service Blueprinting FAQ](https://www.nngroup.com/videos/service-blueprinting-faq/). Nielsen Norman Group: a service-blueprint explanation candidate for separating visible touchpoints from backstage people and systems. Current availability, playback, captions/transcript language, accessibility and owner approval remain unverified.
@@ -50,7 +50,7 @@ The existing reader content remains available for every canonical Topic. This su
 
 ## Sample correction review — 2026-10-20
 
-- **Topic 19 (`ux-blueprint`): Passed, static state-coverage inspection only.** `samples/group-07-ui-ux.md` now supplies `docs/UX_STATES_MATRIX.md` with loading, empty, error, success, responsive, and accessibility rows, each tied to an observable behavior or explicit question. Responsive, keyboard, contrast, screen-reader, and direction checks are **Not Run**; no interface exists.
+- **Topic 19 (`ux-blueprint`): Passed, static artifact coverage only.** `samples/group-07-ui-ux.md` supplies `docs/UX_STATES_MATRIX.md` with loading, empty, error, and success UI-state rows plus separate responsive and accessibility cross-cutting checks. Responsive, keyboard, contrast, screen-reader, and direction checks are **Not Run**; no interface exists.
 - **Topic 20 (`screen-inventory`): Passed, static handoff/trace inspection only.** The inventory now includes path, role/permission, goal, components, data, actions/validation, error/state coverage, and requirement source. A bidirectional placeholder trace identifies unresolved privacy/authentication/notification gaps instead of inventing screens. IDs and routes are exercise placeholders, not approved PRD requirements or implemented routes.
 
 These narrow results do not establish lesson acceptance, template approval, complete student handoff, or group release.
