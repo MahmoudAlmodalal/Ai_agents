@@ -144,6 +144,60 @@ test.describe('Learner dashboard and export', () => {
     await isolatedPage.close();
   });
 
+  test('dashboard marks attempts prior when their saved policy or question versions no longer match', async ({ page }) => {
+    type FixtureAnswer = { questionId: string; questionVersion: number; selectedOptionId: string | null; correctness: 'correct' | 'incorrect' | 'unanswered' };
+    const currentAnswers = [
+      { questionId: 'idea-mvp-q-evidence', questionVersion: 1, selectedOptionId: 'answer-a', correctness: 'correct' as const },
+      { questionId: 'idea-mvp-q-journey', questionVersion: 1, selectedOptionId: 'answer-b', correctness: 'incorrect' as const },
+    ] satisfies FixtureAnswer[];
+    const makeAttempt = (attemptId: string, overrides: Record<string, unknown> = {}) => {
+      const answers = (overrides.answers as FixtureAnswer[] | undefined) ?? currentAnswers;
+      const correctCount = answers.filter((answer) => answer.correctness === 'correct').length;
+      const incorrectCount = answers.filter((answer) => answer.correctness === 'incorrect').length;
+      const unansweredCount = answers.filter((answer) => answer.correctness === 'unanswered').length;
+      return {
+        attemptId,
+        topicSlug: 'project-idea-mvp',
+        quizId: 'project-idea-mvp-objective-quiz',
+        quizVersion: 1,
+        policyId: 'project-idea-mvp-quiz-scoring-policy',
+        policyVersion: 1,
+        answers,
+        correctCount,
+        incorrectCount,
+        unansweredCount,
+        score: correctCount,
+        maxScore: answers.length,
+        submittedAt: '2026-10-20T10:00:00.000Z',
+        selfCheck: true,
+        previewOnly: true,
+        ...overrides,
+      };
+    };
+    const current = makeAttempt('current-attempt');
+    const policyIdChanged = makeAttempt('policy-id-changed', { policyId: 'retired-policy' });
+    const policyVersionChanged = makeAttempt('policy-version-changed', { policyVersion: 0 });
+    const questionIdChanged = makeAttempt('question-id-changed', {
+      answers: [{ ...currentAnswers[0], questionId: 'retired-question' }, currentAnswers[1]],
+    });
+    const questionVersionChanged = makeAttempt('question-version-changed', {
+      answers: [currentAnswers[0], { ...currentAnswers[1], questionVersion: 0 }],
+    });
+    const questionCountChanged = makeAttempt('question-count-changed', { answers: [currentAnswers[0]] });
+    await page.addInitScript(({ attempts }) => {
+      localStorage.setItem('ai-agents-quiz-attempts-v1', JSON.stringify({
+        schemaVersion: 1,
+        byTopic: { 'project-idea-mvp': attempts },
+      }));
+    }, { attempts: [current, policyIdChanged, policyVersionChanged, questionIdChanged, questionVersionChanged, questionCountChanged] });
+
+    await page.goto('/dashboard');
+    const quizRows = page.getByTestId('quiz-attempt-row');
+    await expect(quizRows).toHaveCount(6);
+    await expect(quizRows.filter({ hasText: 'فحص ذاتي للمفاهيم' })).toHaveCount(1);
+    await expect(quizRows.filter({ hasText: 'اختبار محفوظ لإصدار سابق' })).toHaveCount(5);
+  });
+
   test('malformed browser data is marked unconfirmed in the dashboard and exported manifest', async ({ page }) => {
     await page.addInitScript(() => {
       localStorage.setItem('engineering_guide_recently_viewed', '{ broken history');

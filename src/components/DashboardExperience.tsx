@@ -303,7 +303,16 @@ export function DashboardExperience({ prompts }: { prompts: PromptLibraryRecord[
         {sortedAttempts.length ? <ol className="space-y-3">{sortedAttempts.map((attempt) => {
           const topic = topicBySlug.get(attempt.topicSlug);
           const currentQuiz = learningContentBySlug.get(attempt.topicSlug)?.quiz;
-          const quizMatchesCurrent = Boolean(currentQuiz && currentQuiz.id === attempt.quizId && currentQuiz.version === attempt.quizVersion);
+          const currentQuestionVersions = currentQuiz
+            ? new Map(currentQuiz.questions.map((question) => [question.id, question.version]))
+            : null;
+          const quizMatchesCurrent = Boolean(currentQuiz && currentQuestionVersions
+            && currentQuiz.id === attempt.quizId
+            && currentQuiz.version === attempt.quizVersion
+            && currentQuiz.scoringPolicy.id === attempt.policyId
+            && currentQuiz.scoringPolicy.version === attempt.policyVersion
+            && attempt.answers.length === currentQuiz.questions.length
+            && attempt.answers.every((answer) => currentQuestionVersions.get(answer.questionId) === answer.questionVersion));
           const quizTitle = quizMatchesCurrent ? currentQuiz!.title : `اختبار محفوظ لإصدار سابق (${attempt.quizId})`;
           return <li key={`${attempt.topicSlug}-${attempt.quizId}-${attempt.attemptId}`} data-testid="quiz-attempt-row" className="rounded-2xl bg-[var(--bg-card-subtle)] p-4">
             <div className="flex flex-wrap items-start justify-between gap-2"><div><TopicLink topic={topic} prefix={topic ? '' : attempt.topicSlug} /><p className="mt-1 text-xs text-[var(--text-muted)]">{quizTitle} · نسخة الاختبار {attempt.quizVersion}</p></div><strong className="text-lg font-black" dir="ltr">{attempt.score} / {attempt.maxScore}</strong></div>
