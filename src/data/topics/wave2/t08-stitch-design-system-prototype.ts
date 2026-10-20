@@ -123,7 +123,7 @@ Save docs/STITCH_MASTER_PROMPT.md.</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. دراسة حالة BorrowHub: تشريح الشاشة المرجعية (Browse Equipment)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      في مشروع BorrowHub، تم اختيار شاشة <strong>تصفح المعدات (Browse Equipment)</strong> كشاشة مرجعية؛ لأنها تجمع أهم مكونات المنصة وقواعد العمل الموثقة في وثيقة PRD:
+      في مشروع BorrowHub (وهو دراسة حالة استرشادية واختيارية توضح طريقة التحليل، ويمكنك استبدالها بشاشة تمثيلية في مشروعك الخاص دون أي قيود)، تم اختيار شاشة <strong>تصفح المعدات (Browse Equipment)</strong> كشاشة مرجعية؛ لأنها تجمع أهم مكونات المنصة وقواعد العمل الموثقة في وثيقة PRD:
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>الشريط العلوي (Navbar):</strong> يوضح هوية المنصة، ودور المستخدم (طالب معتمد)، ومؤشر الاستعارات النشطة الحالية (حد أقصى جهازين - PRD Rule 3).</li>
@@ -410,7 +410,7 @@ Do not generate frontend code.</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. تطبيق عملي: تفكيك برومبتات شاشات BorrowHub</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      في ملف <code>docs/STITCH_SCREEN_PROMPTS.md</code> لمشروع BorrowHub، تم ترتيب برومبتات الشاشات وفق تسلسل مسار تدفق المستخدم (User Flow Order):
+      في ملف <code>docs/STITCH_SCREEN_PROMPTS.md</code> لمشروع BorrowHub (كدراسة حالة تطبيقية استرشادية واختيارية؛ تطبق نفس الهيكلية المنفصلة على شاشات مشروعك الخاص دون التقيد ببيانات هذا المثال)، تم ترتيب برومبتات الشاشات وفق تسلسل مسار تدفق المستخدم (User Flow Order):
     </p>
 
     <div class="table-container my-4">
@@ -504,7 +504,7 @@ export const topic23PrototypeHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. مصفوفة فحص الرحلات والحالات التفاعلية (Journey Verification Matrix)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      لا يقتصر فحص النموذج على مسار النجاح السهل (Happy Path)؛ بل يجب إخضاع النموذج لاختبارات الحالات الحدية والاعتذار. يوضح الجدول التالي مصفوفة الفحص الشاملة المعتمدة لمشروع BorrowHub:
+      لا يقتصر فحص النموذج على مسار النجاح السهل (Happy Path)؛ بل يجب إخضاع النموذج لاختبارات الحالات الحدية والاعتذار. يوضح الجدول التالي مصفوفة الفحص الشاملة المعتمدة لمشروع BorrowHub (وهي دراسة حالة إيضاحية واختيارية توضح آلية تدقيق الانتقالات لتقيس عليها مسارات مشروعك الخاص):
     </p>
 
     <div class="table-container my-4">
@@ -654,7 +654,7 @@ export const t08Entries: TopicItem[] = [
       'حساب Google Stitch على https://stitch.withgoogle.com/ (أو أداة تصميم بديلة عند عدم التوفر)'
     ],
     steps: [
-      '1. اختر الشاشة الأكثر تمثيلاً لجوهر المنتج ونطاق الـ MVP (مثل شاشة Browse Equipment في BorrowHub).',
+      '1. اختر الشاشة الأكثر تمثيلاً لجوهر المنتج ونطاق الـ MVP (مثل شاشة Browse Equipment في مشروع BorrowHub الاسترشادي الاختياري، أو شاشة مكافئة في مشروعك الخاص).',
       '2. افتح منصة Google Stitch عبر الرابط المعتمد https://stitch.withgoogle.com/ وسجّل الدخول بحساب Google.',
       '3. اقرأ وثائق PRD.md وUX_BLUEPRINT.md وSCREEN_INVENTORY.md لاستخراج سياق المشروع والأدوار والشاشة المرجعية فقط.',
       '4. استخدم برومبت مولّد البرومبت الرئيسي (PROMPT 16) لصياغة برومبت مخصص لمشروعك، واطلب توليد شاشة مرجعية واحدة أولاً، وامتنع صراحةً عن توليد جميع الشاشات معاً.',
@@ -769,7 +769,7 @@ export const t08Entries: TopicItem[] = [
       '4. امتنع تماماً عن الاكتفاء بـ "زر تجربة وهمي" (Fake Demo Button) أو روابط فارغة؛ يجب أن يؤدي كل زر إجراء (Action Button) إلى وجهة حقيقية أو استجابة واضحة لحالة النظام.',
       '5. اربط واختبر سلوك التراجع والإلغاء (Back / Cancel / Close) في كل نافذة منبثقة أو شاشة فرعية لضمان عودة المستخدم إلى حالته السابقة دون ضياع بياناته.',
       '6. اختبر مسار النجاح (Happy Path) كاملاً من تصفح الخدمة، وتعبئة النموذج، حتى شاشة التأكيد بنجاح.',
-      '7. اختبر مسارات الاعتذار والحالات الحدية (Failure & Boundary Paths): ماذا يحدث عند تجاوز الحد الأقصى (مثل حجز أكثر من جهازين)؟ ماذا يُعرض عند عدم توفر المعدة؟ وماذا يرى المستخدم غير المصرح له؟',
+      '7. اختبر مسارات الاعتذار والحالات الحدية (Failure & Boundary Paths): ماذا يحدث عند تجاوز الحد الأقصى (مثل حجز أكثر من جهازين في نموذج BorrowHub الاختياري)؟ ماذا يُعرض عند عدم توفر المعدة؟ وماذا يرى المستخدم غير المصرح له؟',
       '8. أجرِ التدقيق البصري الشامل لتجربة الاستخدام (PROMPT 21: Visual UX Audit) لفحص التسلسل الهرمي، استجابة الشاشات (Responsive)، تباين الألوان، دعم RTL، وسهولة الوصول، ووثق التقرير في docs/PROTOTYPE_JOURNEYS_AUDIT.md.'
     ],
     promptRefs: [
