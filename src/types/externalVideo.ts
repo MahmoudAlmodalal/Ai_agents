@@ -4,16 +4,22 @@ import { isExternalVideoApproved } from '@/src/lib/learningPolicy.ts';
 /** A resource is actionable only after both link availability and owner approval. */
 export type ExternalVideoDisplayState = 'missing' | 'candidate' | 'approved' | 'unavailable';
 
-export function isApprovedExternalVideo(video: CandidateExternalVideo): boolean {
-  return isExternalVideoApproved(video);
+export function isApprovedExternalVideo(
+  video: CandidateExternalVideo,
+  topicSlug?: string,
+  contentVersion?: number,
+): boolean {
+  return isExternalVideoApproved(video, topicSlug, contentVersion);
 }
 
 export function getExternalVideoDisplayState(
   video: CandidateExternalVideo | undefined,
+  topicSlug?: string,
+  contentVersion?: number,
 ): ExternalVideoDisplayState {
   if (!video) return 'missing';
   if (video.availability === 'unavailable') return 'unavailable';
-  return isApprovedExternalVideo(video) ? 'approved' : 'candidate';
+  return isApprovedExternalVideo(video, topicSlug, contentVersion) ? 'approved' : 'candidate';
 }
 
 export function getExternalSourceLabel(url: string): string {

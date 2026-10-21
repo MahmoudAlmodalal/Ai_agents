@@ -8,6 +8,8 @@ interface ExternalVideoResourceProps {
   video?: CandidateExternalVideo;
   resource?: CandidateExternalVideo;
   topicTitle?: string;
+  topicSlug?: string;
+  contentVersion?: number;
 }
 
 const shellClass =
@@ -16,9 +18,15 @@ const linkClass =
   'mt-3 inline-flex min-h-11 items-center rounded-lg border border-[var(--border-color)] px-4 py-2 font-semibold text-[var(--brand-primary)] underline underline-offset-4 transition-colors hover:bg-[var(--bg-card-subtle)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2';
 
 /** Renders honest external video states without promising offline playback. */
-export function ExternalVideoResource({ video, resource, topicTitle = 'الموضوع' }: ExternalVideoResourceProps) {
+export function ExternalVideoResource({
+  video,
+  resource,
+  topicTitle = 'الموضوع',
+  topicSlug,
+  contentVersion,
+}: ExternalVideoResourceProps) {
   const candidate = video ?? resource;
-  const state = getExternalVideoDisplayState(candidate);
+  const state = getExternalVideoDisplayState(candidate, topicSlug, contentVersion);
 
   if (!candidate || state === 'missing') {
     return (

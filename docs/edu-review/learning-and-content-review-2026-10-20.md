@@ -1,5 +1,7 @@
 # Learning assessment and curriculum review — 2026-10-20
 
+> Historical review record. References below to proposed or pending shared policies describe the earlier baseline. The [course-owner package](owner-decision-package-70.md#course-owner-decisions) records their accepted dispositions and the per-video human-review deferral. Current candidate checks and limits are recorded in [the remaining-issues verification](remaining-issues-verification-2026-10-20.md); historical test results are not transferred to that candidate.
+
 ## Assessment implementation (#42 and #43)
 
 The full reader and home preview use the same Topic learning-content source and browser-local records. Quiz attempts retain question, quiz, and scoring-policy versions. Rubric ratings retain criterion and scale identity/version; edits retire prior meanings instead of applying them to the current scale. Malformed or inconsistent saved records are rejected without erasing valid unrelated records. Storage failures keep the current interaction session-only and say so in the UI.

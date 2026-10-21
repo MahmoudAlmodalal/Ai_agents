@@ -197,6 +197,68 @@ function contentVersionFromHtml(html: string): string | null {
   return match ? match[1] : null;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isNonNegativeInteger(value: unknown): value is number {
+  return Number.isInteger(value) && Number(value) >= 0;
+}
+
+function hasUsableOfflineQuiz(value: unknown): boolean {
+  if (!isRecord(value) || !isNonEmptyString(value.id) || !isNonEmptyString(value.title) ||
+      !isNonNegativeInteger(value.version) || !Array.isArray(value.questions) || value.questions.length === 0 ||
+      !isRecord(value.scoringPolicy)) return false;
+
+  const policy = value.scoringPolicy;
+  if (!isNonEmptyString(policy.id) || !isNonNegativeInteger(policy.version) ||
+      policy.correctAnswerPoints !== 1 || policy.incorrectAnswerPoints !== 0 || policy.unansweredAnswerPoints !== 0 ||
+      policy.retryPolicy !== 'unlimited' || policy.feedbackTiming !== 'after-submit' ||
+      policy.retainedAttempts !== 'all' || !isNonEmptyString(policy.summary) || !isRecord(policy.approval) ||
+      (policy.approval.state !== 'proposed' && policy.approval.state !== 'approved')) return false;
+
+  const questionIds = new Set<string>();
+  for (const question of value.questions) {
+    if (!isRecord(question) || !isNonEmptyString(question.id) || !isNonNegativeInteger(question.version) ||
+        !isNonEmptyString(question.objectiveId) || !isNonEmptyString(question.prompt) ||
+        !Array.isArray(question.options) || question.options.length < 2 ||
+        !isNonEmptyString(question.correctOptionId) || !isNonEmptyString(question.explanation) ||
+        questionIds.has(question.id)) return false;
+
+    const optionIds = new Set<string>();
+    for (const option of question.options) {
+      if (!isRecord(option) || !isNonEmptyString(option.id) || !isNonEmptyString(option.text) || optionIds.has(option.id)) {
+        return false;
+      }
+      optionIds.add(option.id);
+    }
+    if (!optionIds.has(question.correctOptionId)) return false;
+    questionIds.add(question.id);
+  }
+  return true;
+}
+
+function hasCoherentSavedQuiz(payload: OfflineTopicPayload): boolean {
+  const learningContent = payload.learningContent;
+  const metadataQuiz = payload.metadata.quiz;
+  if (!learningContent) return metadataQuiz == null;
+
+  const quiz = learningContent.quiz;
+  const approvalState = quiz?.scoringPolicy?.approval?.state;
+  return hasUsableOfflineQuiz(quiz) && !!metadataQuiz
+    && Number.isInteger(metadataQuiz.questionCount) &&
+    (approvalState === 'proposed' || approvalState === 'approved')
+    && metadataQuiz.id === quiz.id
+    && metadataQuiz.version === quiz.version
+    && metadataQuiz.title === quiz.title
+    && metadataQuiz.questionCount === quiz.questions.length
+    && metadataQuiz.approvalState === approvalState;
+}
+
 export type BundleVerificationResult =
   | { status: 'valid'; bundle: VerifiedBundle }
   | { status: 'missing' }
@@ -261,6 +323,10 @@ async function verifyBundleSafe(
       )) {
         return { status: 'corrupt', reason: 'missing-diagram-snapshots' };
       }
+    }
+
+    if (!hasCoherentSavedQuiz(payload)) {
+      return { status: 'corrupt', reason: 'inconsistent-quiz-payload' };
     }
 
     if (payload.learningContent && (payload.learningContent.topicSlug !== slug ||

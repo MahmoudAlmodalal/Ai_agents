@@ -35,21 +35,21 @@ export const TOPIC_DRAFTS_GROUP_A_06: TopicDraft[] = [
     topicSlug: 'dbml-dbdiagram-io',
     objectives: [
         { id: 'dbml-objective-translate', text: 'كتابة مخطط DBML يعكس ERD المعتمد مع أنواع الحقول والمراجع.' },
-        { id: 'dbml-objective-export', text: 'تصيير ومراجعة المخطط وتصدير SQL مع فهم اختلافه عن DBML.' },
+        { id: 'dbml-objective-export', text: 'تصيير DBML ومراجعة المخطط وتصدير DDL فعلي مع فهم الفرق بينه وبين DBML.' },
     ],
     sections: [
         { heading: 'المدخل: ERD قبل الصياغة', body: 'DBML وصف للمخطط وليس بديلاً عن قرار المجال أو SQL المنفذ. انقل الجداول والعلاقات بعد اعتماد المصدر.' },
         { heading: 'تعريف الجداول والمراجع', body: 'اكتب `Table` وحقوله وخصائص المفاتيح، ثم أضف `Ref` للعلاقات. حافظ على أسماء وأنواع متسقة مع ERD.' },
-        { heading: 'مراجعة التصدير', body: 'اعرض DBML في dbdiagram.io إذا كان الوصول متاحاً، وافحص العلاقات قبل تصدير DDL. رابط المحرر التفاعلي مورد خارجي ويحتاج اتصالاً؛ احتفظ بنسخة محلية.' },
+        { heading: 'التصيير والتصدير', body: 'احتفظ بمصدر DBML محلياً، ثم استخدم أداة تدعمه لعرض العلاقات وتصدير DDL ومراجعته. إذا تعذر تشغيل الأداة، سجّل التصيير والتصدير Not Run وغير مكتملين، ولا تستبدل تصديرها بترجمة يدوية.' },
     ],
     practicalSteps: [
         { instruction: 'حوّل ERD المعتمد إلى DBML محلياً مع مفاتيح ومراجع مطابقة للأسماء والقيود.', expectedOutput: '`docs/database.dbml` يعكس الجداول والعلاقات الموثقة.' },
-        { instruction: 'عاين المخطط وراجع رابط العمل ثم صدّر SQL وافحص الفرق عن DBML.', expectedOutput: '`docs/database.sql` مع رابط dbdiagram.io إن أنشئ فعلاً، وملاحظة بما يحتاج مراجعة.' },
+        { instruction: 'صير DBML بأداة تدعمه، وراجع المخطط وDDL والرابط الذي أنشأته فعلاً مقابل ERD؛ إذا تعذر الوصول، سجّل الخطوات Not Run وغير مكتملة.', expectedOutput: 'مراجعة `docs/database.dbml` ومخرجات فعلية في `docs/database.sql` ورابط الأداة، أو Not Run وغير مكتملة إذا لم تتوفر الخدمة.' },
     ],
     workedExample: { title: 'علاقة الطالب بالطلب', context: 'ERD يحدد جدول الطالب وجدول الطلب، ويشير الطلب إلى صاحبه بمفتاح أجنبي.', result: 'يصف DBML الجدولين ثم `Ref` من حقل صاحب الطلب إلى مفتاح الطالب؛ لا يضيف حقولاً غير موجودة لمجرد تسهيل العرض.' },
     outputs: [
         { id: 'dbml-source', description: '`docs/database.dbml` نموذج DBML محلي للمخطط.' },
-        { id: 'sql-export', description: '`docs/database.sql` نسخة DDL مولدة ومراجعة مقابل DBML.' },
+        { id: 'sql-export', description: '`docs/database.sql` ملف DDL مصدّر فعلياً ومراجع مقابل DBML؛ إذا لم يُنفذ، سجل Not Run وغير مكتمل ولا تنسب الترجمة اليدوية إلى الأداة.' },
     ],
     questions: [
         { id: 'dbml-q-language', objectiveId: 'dbml-objective-translate', prompt: 'ما الوصف الأدق لعلاقة DBML بـSQL؟', options: ['DBML صيغة وصف للمخطط؛ SQL صيغة أوامر/تعريف قاعدة يمكن تصديرها', 'هما أسماء مختلفة للغة واحدة', 'DBML هو خادم قاعدة البيانات', 'SQL ملف صورة'], correct: 0, explanation: 'DBML يصف بنية البيانات بصيغة متخصصة؛ أداة العرض قد تصدر منها DDL بصيغة SQL.' },
@@ -57,7 +57,7 @@ export const TOPIC_DRAFTS_GROUP_A_06: TopicDraft[] = [
     ],
     criteria: [
         { id: 'dbml-r-fidelity', outputId: "dbml-source", name: 'مطابقة ERD', description: 'الجداول والمراجع والحقول متوافقة مع المخطط المعتمد.', evidencePrompt: 'قارن جدولاً وعلاقة بين ERD وDBML.' },
-        { id: 'dbml-r-export', outputId: "sql-export", name: 'فحص DDL', description: 'SQL مصدّر ومراجع ويُعرف أنه مشتق من DBML.', evidencePrompt: 'أظهر أمر التصدير وقارن مفتاحاً أو مرجعاً مع المصدر.' }
+        { id: 'dbml-r-export', outputId: "sql-export", name: 'فحص DDL', description: 'يراجع DDL مصدراً فعلياً من DBML مقابل المصدر؛ Not Run يعني أن المعيار لم يتحقق بعد.', evidencePrompt: 'أظهر ملف DDL الناتج من التصدير الفعلي وقارن مفتاحاً أو مرجعاً مع المصدر. إذا لم يُنفذ، سجّل Not Run ولا تدّعِ الجاهزية.' }
     ],
 },
 {
@@ -120,5 +120,9 @@ export const TOPIC_DRAFTS_GROUP_A_06: TopicDraft[] = [
 }
 ];
 
-export const LEARNING_CONTENT_GROUP_A_06: Record<string, TopicLearningContent> =
-  buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_06);
+const groupA06Content = buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_06);
+
+export const LEARNING_CONTENT_GROUP_A_06: Record<string, TopicLearningContent> = {
+  ...groupA06Content,
+  'dbml-dbdiagram-io': { ...groupA06Content['dbml-dbdiagram-io'], contentVersion: 2 },
+};

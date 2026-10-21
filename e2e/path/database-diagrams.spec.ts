@@ -72,7 +72,7 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     await expect(page.locator('text=PROMPT 13').first()).toBeVisible();
   });
 
-  test('Topic 15 (DBML): Renders dbdiagram.io distinction, syntax, and DDL export guide', async ({ page, context }) => {
+  test('Topic 15 (DBML): Renders the DBML draft, required tool export workflow, and Not Run state', async ({ page, context }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto('/learn/dbml-dbdiagram-io');
 
@@ -89,7 +89,11 @@ test.describe('Ticket 06: ERD, DBML, Sequence & Class Diagrams E2E Journey', () 
     // Crucial distinction: DBML is NOT Mermaid
     const dangerCallout = page.locator('.callout.danger');
     await expect(dangerCallout).toBeVisible();
-    await expect(dangerCallout).toContainText('DBML ليست صيغة رسم عامة ولا تتبع Mermaid.js');
+    await expect(dangerCallout).toContainText('DBML وMermaid صيغتان مختلفتان');
+    await expect(dangerCallout).toContainText('يمكن حفظ DBML ومراجعته كنص محلياً');
+    const dbmlArticle = page.locator('article').first();
+    await expect(dbmlArticle).toContainText('Not Run');
+    await expect(dbmlArticle).toContainText('غير مكتمل');
 
     // Link to dbdiagram.io exists and has target="_blank"
     const dbdiagramLink = page.locator('a[href="https://dbdiagram.io"]').first();

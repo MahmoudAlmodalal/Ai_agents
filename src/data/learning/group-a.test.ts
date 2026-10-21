@@ -16,7 +16,7 @@ function assertDraftIsCoherent(slug: string) {
   assert.ok(content, `${slug} has a supplemental learning draft`);
   assert.equal(content.topicSlug, topic.slug);
   assert.equal(content.reviewState, 'draft');
-  assert.equal(content.contentVersion, 1);
+  assert.ok(Number.isInteger(content.contentVersion) && content.contentVersion > 0, `${slug} has a positive content version`);
   assert.equal(content.objectives.length, 2);
   assert.equal(content.sections.length, 3);
   assert.equal(content.practicalSteps.length, 2);

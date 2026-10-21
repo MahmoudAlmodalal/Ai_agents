@@ -105,14 +105,16 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     // Content: Official platform link and rate limits
     const studioLink = page.locator('a[href="https://aistudio.google.com/"]');
     await expect(studioLink).toBeVisible();
-    await expect(content).toContainText('حدود الاستخدام المجاني (Rate Limits) وغياب الضمانات المطلقة');
+    await expect(content).toContainText('حدود الإتاحة ومعدلات الطلب تتغير؛ لا تفترض حصة مجانية');
 
     // Content: System Instructions and structured JSON mock data matching ERD
     await expect(content).toContainText('ضبط تعليمات النظام وتوليد Mock Data بنمط JSON');
-    await expect(content).toContainText('Structured Outputs (JSON Mode)');
+    await expect(content).toContainText('يمكن لبعض النماذج تقديم خرج مقيد أو JSON');
+    await expect(content).toContainText('هذا لا يضمن مطابقة ERD');
 
     // Content: API key security and isolation
-    await expect(content).toContainText('تأمين مفتاح Gemini API وعزله عن المتصفح');
+    await expect(content).toContainText('إذا استخدمت Gemini API: أمّن المفتاح واعزله عن المتصفح');
+    await expect(content).toContainText('لا يحتاج تمرين البيانات إلى مفتاح');
     await expect(content).toContainText('NEXT_PUBLIC_');
 
     // SVG workflow diagram
@@ -169,7 +171,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
 
     // Content: Frontend standards skill snippet
     await expect(content).toContainText('مهارة معايير الفرونت إند لمشروع الطالب');
-    await expect(content).toContainText('docs/skills/frontend-standards.md');
+    await expect(content).toContainText('docs/skills/frontend-standards/SKILL.md');
 
     // SVG Golden Rule Quadrant diagram
     const skillSvg = page.locator('.diagram-box svg');
@@ -185,7 +187,7 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(activities).toContainText('فعّل عند الحاجة');
     await expect(activities).toContainText('خطوات التطبيق ومخرجاتها');
     await expect(activities).toContainText('docs/PROJECT_AGENT_SKILLS.md');
-    await expect(activities).toContainText('docs/skills/frontend-standards.md');
+    await expect(activities).toContainText('docs/skills/frontend-standards/SKILL.md');
     await expect(activities).toContainText('أمثلة محلولة');
     await expect(activities).toContainText('معايير واجهة RTL');
     await expect(activities).toContainText('موارد فيديو خارجية');
@@ -246,7 +248,8 @@ test.describe('Sequential Project Path - Ticket 09: Frontend Execution Tools (AI
     await expect(activities).toContainText('الأمان محلي أولاً');
     await expect(activities).toContainText('خطوات التطبيق ومخرجاتها');
     await expect(activities).toContainText('docs/MCP_FOUNDATIONS.md');
-    await expect(activities).toContainText('نموذج config محلي بعناصر placeholder');
+    await expect(activities).toContainText('docs/MCP_CONFIG_REVIEW.md');
+    await expect(activities).toContainText('ملف إعداد فعلي خاص بالمضيف يحوي placeholders فقط وخارج Git');
     await expect(activities).toContainText('أمثلة محلولة');
     await expect(activities).toContainText('قراءة شاشة تصميم');
     await expect(activities).toContainText('موارد فيديو خارجية');

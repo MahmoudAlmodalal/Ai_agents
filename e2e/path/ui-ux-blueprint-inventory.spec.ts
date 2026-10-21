@@ -235,7 +235,8 @@ test.describe('Sequential Project Path - Ticket 07: UI/UX, UX Blueprint & Screen
     await expect(steps18.nth(0)).toContainText('حوّل الأدوار والمهام المعتمدة إلى مصفوفة');
     await expect(steps18.nth(0)).toContainText('docs/UI_UX_REQUIREMENTS.md');
     await expect(steps18.nth(1)).toContainText('رتب الوجهات في نموذج تنقل');
-    await expect(steps18.nth(1)).toContainText('نموذج تنقل واضح');
+    await expect(steps18.nth(1)).toContainText('docs/UI_UX_REQUIREMENTS.md');
+    await expect(steps18.nth(1)).toContainText('نموذج تنقل يربط الوجهة بالمهمة والدور ومتطلب المصدر');
 
     // Copy PROMPT 14
     const prompt14Box = page.locator('.code-container').filter({ hasText: 'PROMPT 14 — UI/UX Grill Me' });

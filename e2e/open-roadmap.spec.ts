@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
   test('clean profile opens an arbitrary late topic directly without progress locks or prerequisite blocking', async ({ page }) => {
-    // This late topic belongs to proposed Group 15 and remains directly readable.
+    // This late topic belongs to Group 15 with accepted boundaries and remains directly readable.
     await page.goto('/learn/full-stack-journey-testing');
 
     await expect(page).toHaveURL(/\/learn\/full-stack-journey-testing\/?$/);
@@ -15,7 +15,7 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
     const improvementBadge = page.getByText('حالة التحسين: بانتظار المراجعة التعليمية الجديدة', { exact: true });
     await expect(improvementBadge).toBeVisible();
 
-    // The reader identifies this topic's actual proposed group and approval state.
+    // The reader identifies this topic's actual group and approval state.
     await expect(page.getByText(/المجموعة 15: Frontend\/API integration and journey testing/)).toBeVisible();
 
     // Prerequisites remain guidance and every topic link stays open.
@@ -27,7 +27,7 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
     await expect(navigation.getByRole('link', { name: /الموضوع التالي/ })).toBeVisible();
   });
 
-  test('Project Path on /start presents 19 proposed groups covering all 58 topics without locks', async ({ page }) => {
+  test('Project Path on /start presents 19 approved group boundaries covering all 58 topics without locks', async ({ page }) => {
     await page.goto('/start#project-path');
 
     const projectPath = page.getByRole('region', { name: 'مسار مشروعك' });
@@ -37,12 +37,12 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
     const groupArticles = projectPath.getByRole('article');
     await expect(groupArticles).toHaveCount(19);
 
-    // Group 01 and its proposal state are identified in the public article content.
+    // Group 01 and its accepted boundaries are identified in the public article content.
     const firstGroup = groupArticles.first();
     await expect(firstGroup).toContainText('المجموعة 01');
     await expect(firstGroup.getByRole('heading', { level: 3 })).toHaveText('الفكرة ونطاق النسخة الأولى (Idea and MVP)');
-    await expect(firstGroup).toContainText('المجموعة الأولى المقترحة');
-    await expect(firstGroup).toContainText('مقترح بانتظار الاعتماد');
+    await expect(firstGroup).toContainText('المجموعة الأولى — حدود معتمدة');
+    await expect(firstGroup).not.toContainText('مقترح بانتظار الاعتماد');
 
     // Exactly 58 topic listitems within the path
     const topicItems = projectPath.getByRole('listitem');
@@ -54,6 +54,9 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
       await expect(topicLink).toBeEnabled();
       await expect(topicLink).toHaveAttribute('href', /^\/learn\/[a-z0-9-]+$/);
     }
+
+    // Every group has accepted boundaries; educational improvement remains pending.
+    await expect(projectPath.getByText(/حدود معتمدة|حدود مجموعة معتمدة/, { exact: false })).toHaveCount(19);
 
     // Honest improvement status displayed across groups
     const pendingStatuses = projectPath.getByText('بانتظار المراجعة التعليمية الجديدة');
@@ -67,7 +70,7 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
     const firstCard = page.locator('article.topic-card').first();
     await expect(firstCard.getByText('محتوى متاح (منشور)', { exact: true })).toBeVisible();
     await expect(firstCard.getByText('بانتظار المراجعة التعليمية الجديدة', { exact: true })).toBeVisible();
-    await expect(firstCard.getByText('المجموعة الأولى (مقترحة)', { exact: true })).toBeVisible();
+    await expect(firstCard.getByText('المجموعة الأولى (حدود معتمدة)', { exact: true })).toBeVisible();
 
     // Preview modal
     await firstCard.getByRole('button', { name: 'معاينة سريعة' }).click();
@@ -75,7 +78,7 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.getByText('حالة التوفر: محتوى متاح (منشور)', { exact: true })).toBeVisible();
     await expect(dialog.getByText('حالة التحسين: بانتظار المراجعة التعليمية الجديدة', { exact: true })).toBeVisible();
-    await expect(dialog.getByText(/المجموعة الأولى المقترحة: Idea and MVP/)).toBeVisible();
+    await expect(dialog.getByText(/المجموعة الأولى: Idea and MVP/)).toBeVisible();
 
     // Close preview via Escape
     await page.keyboard.press('Escape');

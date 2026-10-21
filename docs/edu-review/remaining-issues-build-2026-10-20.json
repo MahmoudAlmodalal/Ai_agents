@@ -1,0 +1,17 @@
+{
+  "sourceRevision": "d1e136ce7a0bbeb14c9ee13567af970db6c8188e",
+  "buildId": "FvbL4S3b3evkSU2VIIDoP",
+  "lockfileSha256": "6f7ee6cf368e294debb4471ab6b5a50cb758eda2b6f072e35cb7f2c57e215324",
+  "serviceWorkerSha256": "6cfa81f401263d866c15d4d6ee77d5fafafd9d27bd6f961d162b359958e19189",
+  "buildOutputSha256": "a81177a397432017fba724e542afe48c80679311472cf2bfbabb80bf7545d721",
+  "buildOutputFiles": 850,
+  "buildDigestExclusions": [
+    ".next/cache/**",
+    ".next/trace",
+    ".next/server/route-cache/**"
+  ],
+  "buildDigestAlgorithm": "SHA-256 of sorted relative paths + NUL + file bytes + NUL",
+  "capturedAt": "2026-10-20T17:43:41.031338+00:00",
+  "verifiedAfterBrowserAt": "2026-10-20T20:43:17.687387+00:00",
+  "runtimeCacheNote": "The pre-run build had no server/route-cache files. Browser execution added 288 runtime route-cache files; excluding them reproduces the original 850-file build digest exactly."
+}

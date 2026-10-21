@@ -5,27 +5,40 @@
 **Curriculum Group:** `group-11-tech-stack`  
 **Topics (4 canonical slugs):** `typescript-types` (30), `react-components-state` (31), `tailwind-css-responsive` (32), `nextjs-app-router` (33)  
 **Implementation Source:** `src/data/learning/group-b-11-tech-stack.ts` and `src/data/topics/wave2/t11-tech-stack.ts`  
-**Status:** evidence complete and awaiting course-owner sign-off  
+**Status:** static educational re-review complete for all four Topics; content remains `review-ready`. DEC-70 v2 accepts the template, group membership, quiz policy, and practical self-assessment policy. Per-video human approval is deferred by the course owner, and group-specific acceptance is not recorded. No Topic is marked approved and Group 11 is not announced as improved.
 
 > [!IMPORTANT]
 > In accordance with project policies (DEC-50, DEC-70 v2, 2026-10-20) and central orchestrator requirements:
 > - Review state in the content model remains unchanged (`draft` / `review-ready`).
-> - Quiz scoring policy and rubric scale approvals reflect the owner-approved baseline without premature approval claims.
-> - Video resources are explicitly classified as **CANDIDATES** with `proposed` approval; video playback, captions, and accessibility remain **Not Run**.
+> - DEC-70 v2 accepts the quiz scoring and descriptive self-assessment policies; this does not constitute group-specific release acceptance.
+> - Video resources are explicitly classified as **CANDIDATES** with `proposed` approval. DEC-70 v2 defers each approval until human review of lesson fit, playback, captions, and accessibility; those checks remain **Not Run**.
 > - BorrowHub remains an **OPTIONAL** case study; no Topic is gated behind prerequisite access locks.
 > - The product identity is consistently **Ai_agents** (no legacy MET Academy / سلاح العصر naming in group files).
-> - Group status is **evidence complete and awaiting course-owner sign-off** (not marked approved or improved).
+> - Group status is **curriculum review complete, release evidence incomplete** (not marked approved or improved).
 
 ---
 
 ## 1. Group Review Summary and Traceability
 
-| Topic Slug | Sequence Position | Objectives & Sections | Practical Steps & Outputs | Objective Quiz | Rubric Criteria | Candidate Video | Walkthrough Status |
+| Topic Slug | Sequence Position | Objectives & Sections | Practical Steps & Outputs | Objective Quiz | Rubric Criteria | Candidate Video | Static Walkthrough Status |
 |---|---|---|---|---|---|---|---|
-| `typescript-types` | 30 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`types-file`, `type-evidence`) | Matt Pocock Crash Course (`candidate`) | **Passed** (Video Not Run) |
-| `react-components-state` | 31 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`component-map`, `state-fixtures`) | Five Things About State (`candidate`) | **Passed** (Video Not Run) |
-| `tailwind-css-responsive` | 32 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`token-map`, `responsive-report`) | Tailwind v2 Series (`candidate`) | **Passed** (Video Not Run) |
-| `nextjs-app-router` | 33 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`route-spec`, `route-shell`) | Vercel Next.js 13 Demo (`candidate`) | **Passed** (Video Not Run) |
+| `typescript-types` | 30 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`types-file`, `type-evidence`) | Matt Pocock Crash Course (`candidate`) | **Passed (static)**; video checks Not Run |
+| `react-components-state` | 31 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`component-map`, `state-fixtures`) | Five Things About State (`candidate`) | **Passed (static)**; video checks Not Run |
+| `tailwind-css-responsive` | 32 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`token-map`, `responsive-report`) | Tailwind v2 Series (`candidate`) | **Passed (static)**; video checks Not Run |
+| `nextjs-app-router` | 33 | 2 objectives, 3 sections | 3 steps, 2 outputs | 2 questions (v1) | 2 criteria (`route-spec`, `route-shell`) | Vercel Next.js 13 Demo (`candidate`) | **Passed (static)**; video checks Not Run |
+
+## Independent lesson-flow re-review
+
+**Verdict:** Passed for authored lesson sequence and output/handoff coherence by static review on 2026-10-20. This verdict covers the curriculum design only. The sample outputs below are illustrative examples checked for consistency; none was produced by running the learner project. Learner tool execution and actual project outputs are **Not Run**.
+
+| Topic | Independent walkthrough finding | Result |
+|---|---|---|
+| `typescript-types` | Reviewed all three steps: derive the contract from ERD, distinguish compile-time errors from runtime JSON validation, and document unresolved fields. The illustrative four-state union is explicitly not BorrowHub's five-state `LoanStatus`; handoff passes the contract and boundary evidence to React. | **Passed (static)**; execution **Not Run** |
+| `react-components-state` | Reviewed all three steps: map one owner for shared state, show four fixture-backed UI states, and place `use client` only at the interactive boundary. The search-flow example matches the declared `component-map` and `state-fixtures`; handoff to Tailwind carries both outputs. | **Passed (static)**; execution **Not Run** |
+| `tailwind-css-responsive` | Reviewed token mapping, logical-direction styling, and the five required viewport/RTL-LTR records. The card example matches logical utilities and does not hide page-level overflow; handoff to Next.js carries the token map and responsive evidence. Actual viewport inspection is **Not Run**. | **Passed (static)**; viewport checks **Not Run** |
+| `nextjs-app-router` | Reviewed route/layout mapping, Arabic `lang`/`dir` and internal navigation, and fixture-versus-live-API labeling. The example correctly treats local fixtures as non-API evidence; handoff to frontend planning supplies `route-spec` and `route-shell`. | **Passed (static)**; execution **Not Run** |
+
+This is an independent curriculum-flow review, not course-owner acceptance or video review. All four candidate videos remain unapproved pending the human checks accepted in DEC-70 v2.
 
 ---
 
@@ -47,7 +60,7 @@
 | **Assessment Criteria** | Criterion `contract-source` references `types-file` with ERD traceability prompt. Criterion `runtime-boundary` references `type-evidence` with negative test failure prompt. | **Passed** |
 | **External Video Candidate** | [TypeScript Crash Course with Matt Pocock](https://learn.microsoft.com/en-us/shows/vs-code-livestreams/typescript-crash-course-with-matt-pocock). Reviews types, unions, and tests (chapters 14:40 and 51:00). Stays `candidate` with `proposed` approval. Playback, captions, and accessibility remain Not Run. | **Candidate Recorded / Playback Not Run** |
 
-#### Real Sample Project Output (`request-union-example`)
+#### Illustrative sample (`request-union-example`; not executed)
 
 ```typescript
 // src/types/project.ts (Sample Output)
@@ -88,7 +101,7 @@ export interface EquipmentRequest {
 | **Assessment Criteria** | Criterion `state-owner` references `component-map` with state ownership prompt. Criterion `state-coverage` references `state-fixtures` with 4-state local data prompt. | **Passed** |
 | **External Video Candidate** | [S01 E16: Five Things About State in React](https://learn.microsoft.com/en-us/shows/5-things/episode-16-five-things-about-state-in-react). Discusses state flow and props. Stays `candidate` with `proposed` approval. Playback, captions, and accessibility remain Not Run. | **Candidate Recorded / Playback Not Run** |
 
-#### Real Sample Project Output (`search-flow`)
+#### Illustrative sample (`search-flow`; not executed)
 
 ```tsx
 // src/components/common/StatusBadge.tsx (Sample Output)
@@ -139,7 +152,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className = ''
 | **Assessment Criteria** | Criterion `token-source` references `token-map` with token origin prompt. Criterion `direction-check` references `responsive-report` with 5-width measurement prompt. | **Passed** |
 | **External Video Candidate** | [Tailwind CSS: From Zero to Production](https://tailwindcss.com/blog/tailwindcss-from-zero-to-production). Series covering responsive design and design system customization. Stays `candidate` with `proposed` approval. Playback, captions, and accessibility remain Not Run. | **Candidate Recorded / Playback Not Run** |
 
-#### Real Sample Project Output (`logical-layout`)
+#### Illustrative sample (`logical-layout`; not executed)
 
 ```css
 /* src/app/globals.css (Tailwind v4 @theme Sample Output) */
@@ -185,7 +198,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className = ''
 | **Assessment Criteria** | Criterion `screen-trace` references `route-spec` with screen inventory coverage prompt. Criterion `source-label` references `route-shell` with truthful data origin prompt. | **Passed** |
 | **External Video Candidate** | [Less code, better UX: Fetching data faster with the Next.js 13 App Router](https://vercel.com/blog/nextjs-app-router-data-fetching). Demonstrates Server Components, nested layouts, and loading states. Stays `candidate` with `proposed` approval. Playback, captions, and accessibility remain Not Run. | **Candidate Recorded / Playback Not Run** |
 
-#### Real Sample Project Output (`route-files`)
+#### Illustrative sample (`route-files`; not executed)
 
 ```tsx
 // src/app/layout.tsx (Sample Shell)
@@ -221,7 +234,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ---
 
-## 3. Verification Gates and Exact Results
+## 3. Historical group-specific checks
+
+The following results were recorded in an earlier Group 11 review. This packet does not identify their source commit or production build, so they are historical checks only and do not establish evidence for the current exact release candidate. Current integrated build and browser evidence is owned by the root release review.
 
 ### Gate 1: TypeScript Check and Lint
 ```sh
@@ -365,8 +380,9 @@ Running 15 tests using 1 worker
 
 ---
 
-## 4. Course Owner Gates and Next Steps
+## 4. Remaining acceptance conditions
 
-1. **Course Owner Sign-off:** Educational author review evidence is recorded for all 4 Topics in Group 11. Final release flip of `reviewState` to `approved` is reserved for the course owner and central orchestrator.
-2. **External Video Review:** Candidate resources are cataloged with review evidence; individual video playback, captions, and accessibility remain **Not Run** until independent verification is performed.
-3. **Committed Content Baseline:** Hash baselines in `src/data/learning/learning-content-hashes.json` remain untouched and intact for central orchestrator reconciliation.
+1. **Group status:** DEC-70 v2 accepts the template and membership, while group-specific owner acceptance remains pending. Keep all four Topics `review-ready`; do not mark Group 11 improved until its complete evidence packet is independently verified and included in the owner sign-off list.
+2. **External videos:** DEC-70 v2 defers each candidate's approval to human review of lesson fit, playback, captions, accessibility, and user-facing unavailable/offline behavior. Candidate videos remain unapproved; these checks are **Not Run**.
+3. **Current technical evidence:** exact-candidate build, full browser journey, persistence, RTL/LTR, keyboard, and mobile checks remain with the root release review. The historical checks above are not current-candidate evidence.
+4. **Content baseline:** `src/data/learning/learning-content-hashes.json` remains outside this group review for central orchestrator reconciliation.

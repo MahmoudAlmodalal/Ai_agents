@@ -195,8 +195,8 @@ export const TopicCard: React.FC<TopicCardProps> = ({
               title={status.groupProposalLabel}
             >
               {status.isFirstGroupProposal
-                ? 'المجموعة الأولى (مقترحة)'
-                : `المجموعة ${status.group.number} (حدود مقترحة)`}
+                ? `المجموعة الأولى (${status.boundariesApproved ? 'حدود معتمدة' : 'مقترحة'})`
+                : `المجموعة ${status.group.number} (${status.boundariesApproved ? 'حدود معتمدة' : 'حدود مقترحة'})`}
             </span>
           )}
         </div>

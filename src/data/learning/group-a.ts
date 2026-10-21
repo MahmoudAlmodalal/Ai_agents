@@ -34,19 +34,19 @@ const topicDrafts: TopicDraft[] = [
         prompt: 'لم تتحدث بعد مع مستخدمين، لكنك تتوقع أن الطلاب يتأخرون بسبب ضياع الطلبات. كيف تسجل هذه العبارة؟',
         options: ['حقيقة مثبتة لأن المشكلة شائعة', 'افتراض يحتاج تحققاً مع ذكر من يمكن سؤاله', 'قرار منتج نهائي', 'متطلب وظيفي مؤكد'], correct: 1,
         explanation: 'التوقع الذي لم يختبر بعد يظل افتراضاً. وسمه يمنع تحويل قصة مقنعة إلى حقيقة أو قاعدة نظام دون دليل.',
-        reviewEvidence: [{ area: 'question', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed the answer key and rationale are correct: an unverified prediction remains an assumption. Full lesson, quiz-policy, and owner approval remain pending.' }],
+        reviewEvidence: [{ area: 'question', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed the answer key and rationale are correct: an unverified prediction remains an assumption. The course owner accepted the shared quiz policy under DEC-70 issue #42; this narrow question review does not complete the Topic lesson review or group sign-off.' }],
       },
       {
         id: 'idea-mvp-q-journey', objectiveId: 'idea-mvp-objective-scope',
         prompt: 'أي اقتراح يصف MVP مفيداً لتطبيق حجز موعد؟',
         options: ['ثلاث شاشات جميلة بلا حجز مكتمل', 'رحلة حجز واحدة من اختيار وقت إلى تأكيد واضح، مع تأجيل التوصيات', 'كل أفكار لوحة الإدارة والتقارير دفعة واحدة', 'نموذج إدخال بلا نتيجة بعد الإرسال'], correct: 1,
         explanation: 'الرحلة ذات قيمة عندما تصل إلى نتيجة مفهومة للمستخدم. عدد الشاشات لا يثبت أن المهمة اكتملت، والتوصية يمكن تأجيلها إذا لم تمنع الحجز الأساسي.',
-        reviewEvidence: [{ area: 'question', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed the answer key and rationale are correct: the booking journey reaches confirmation and defers recommendations without breaking the core value. Full lesson, quiz-policy, and owner approval remain pending.' }],
+        reviewEvidence: [{ area: 'question', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed the answer key and rationale are correct: the booking journey reaches confirmation and defers recommendations without breaking the core value. The course owner accepted the shared quiz policy under DEC-70 issue #42; this narrow question review does not complete the Topic lesson review or group sign-off.' }],
       },
     ],
     criteria: [
-      { id: 'idea-mvp-r-problem', outputId: 'project-context', name: 'صياغة المشكلة ودليلها', description: 'يسمي المستخدم والموقف والمهمة والعائق ويفصل المشاهدة عن الافتراض.', evidencePrompt: 'أشر إلى جملة المشكلة وإلى المصدر أو الوسم الذي يبين ما لم يتحقق بعد.', reviewEvidence: [{ area: 'rubric', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed this criterion asks for observable evidence in the project-context artifact and does not infer mastery. Full rubric-policy and owner approval remain pending.' }] },
-      { id: 'idea-mvp-r-scope', outputId: 'project-context', name: 'اكتمال رحلة MVP وحدودها', description: 'يمكن اتباع الرحلة حتى نتيجتها، وتبرر الوثيقة تأجيل الميزات دون قطع الرحلة.', evidencePrompt: 'تتبع الرحلة خطوة بخطوة، ثم اذكر ميزة مؤجلة وسبب بقاء الرحلة مفيدة من دونها.', reviewEvidence: [{ area: 'rubric', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed this criterion requests artifact evidence for a complete useful journey and its deferred scope without inferring mastery. Full rubric-policy and owner approval remain pending.' }] },
+      { id: 'idea-mvp-r-problem', outputId: 'project-context', name: 'صياغة المشكلة ودليلها', description: 'يسمي المستخدم والموقف والمهمة والعائق ويفصل المشاهدة عن الافتراض.', evidencePrompt: 'أشر إلى جملة المشكلة وإلى المصدر أو الوسم الذي يبين ما لم يتحقق بعد.', reviewEvidence: [{ area: 'rubric', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed this criterion asks for observable evidence in the project-context artifact and does not infer mastery. The course owner accepted the shared descriptive rubric policy under DEC-70 issue #43; this narrow criterion review does not complete the Topic lesson review or group sign-off.' }] },
+      { id: 'idea-mvp-r-scope', outputId: 'project-context', name: 'اكتمال رحلة MVP وحدودها', description: 'يمكن اتباع الرحلة حتى نتيجتها، وتبرر الوثيقة تأجيل الميزات دون قطع الرحلة.', evidencePrompt: 'تتبع الرحلة خطوة بخطوة، ثم اذكر ميزة مؤجلة وسبب بقاء الرحلة مفيدة من دونها.', reviewEvidence: [{ area: 'rubric', outcome: 'passed', reviewer: 'root', reviewedAt: '2026-10-20', evidence: 'Independent narrow review confirmed this criterion requests artifact evidence for a complete useful journey and its deferred scope without inferring mastery. The course owner accepted the shared descriptive rubric policy under DEC-70 issue #43; this narrow criterion review does not complete the Topic lesson review or group sign-off.' }] },
     ],
     candidateVideos: getExternalVideoCandidates('project-idea-mvp'),
   }
@@ -59,3 +59,8 @@ export const LEARNING_CONTENT_GROUP_A: Record<string, import('@/src/types/learni
     ...Object.entries(LEARNING_CONTENT_GROUP_A_REST),
   ],
 );
+
+// Refresh saved snapshots when the supplement or its underlying lesson changes.
+for (const slug of ['project-idea-mvp', 'srs', 'git-project-docs', 'github-docs-collaboration', 'plantuml', 'state-diagram']) {
+  LEARNING_CONTENT_GROUP_A[slug].contentVersion = 2;
+}

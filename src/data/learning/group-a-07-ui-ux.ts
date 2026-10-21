@@ -15,12 +15,12 @@ export const TOPIC_DRAFTS_GROUP_A_07: TopicDraft[] = [
     ],
     practicalSteps: [
         { instruction: 'حوّل الأدوار والمهام المعتمدة إلى مصفوفة من يستطيع رؤية أو تنفيذ كل إجراء.', expectedOutput: '`docs/UI_UX_REQUIREMENTS.md` يشرح احتياجات الواجهة ومصفوفة صلاحيات الأدوار.' },
-        { instruction: 'رتب الوجهات في نموذج تنقل، ثم راجع أن كل عنصر له هدف ومصدر في نطاق MVP.', expectedOutput: 'نموذج تنقل واضح يطابق متطلبات الأدوار ولا يضيف شاشة غير مطلوبة.' },
+        { instruction: 'رتب الوجهات في نموذج تنقل، ثم راجع أن لكل مسار هدفاً ودوراً ومصدراً في نطاق MVP.', expectedOutput: '`docs/UI_UX_REQUIREMENTS.md` يتضمن نموذج تنقل يربط الوجهة بالمهمة والدور ومتطلب المصدر، مع تسجيل الأسئلة المفتوحة.' },
     ],
     workedExample: { title: 'BorrowHub اختياري: طالب ومسؤول معمل', context: 'الدوران في قصة BorrowHub لهما أفعال مختلفة.', result: 'الطالب يتابع طلبه، والمسؤول يراجعه ويسجل التسليم والإرجاع. لا يظهر إجراء مسؤول المعمل للطالب لمجرد أنه يستطيع فتح الصفحة.', caseStudy: 'borrowhub-optional' },
     outputs: [
-        { id: 'uiux-requirements', description: '`docs/UI_UX_REQUIREMENTS.md` أدوار ومهام وتنقل بمصادر.' },
-        { id: 'role-ui-matrix', description: 'مصفوفة الأدوار توضح الرؤية والإجراء والصلاحية.' },
+        { id: 'uiux-requirements', description: '`docs/UI_UX_REQUIREMENTS.md` يوثق الأدوار والمهام والتنقل بين الوجهات مع متطلب المصدر وحالة القرار.' },
+        { id: 'role-ui-matrix', description: 'مصفوفة الأدوار توضح الرؤية والإجراء والصلاحية ومصدر كل قرار.' },
     ],
     questions: [
         { id: 'uiux-q-role', objectiveId: 'uiux-objective-roles', prompt: 'كيف تحدد من يرى إجراء مراجعة الطلب؟', options: ['تطابقه مع صلاحيات الدور المعتمدة في PRD', 'تجعله متاحاً للجميع لتقليل الشاشات', 'تخمن من شكل الواجهة', 'تمنع كل الأدوار'], correct: 0, explanation: 'الواجهة تعرض الصلاحية المقررة؛ لا ينبغي أن تتجاوز أو تخترع قاعدة الوصول.' },
@@ -91,5 +91,9 @@ export const TOPIC_DRAFTS_GROUP_A_07: TopicDraft[] = [
 }
 ];
 
-export const LEARNING_CONTENT_GROUP_A_07: Record<string, TopicLearningContent> =
-  buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_07);
+const groupA07Content = buildReviewedGroup(TOPIC_DRAFTS_GROUP_A_07);
+
+export const LEARNING_CONTENT_GROUP_A_07: Record<string, TopicLearningContent> = {
+  ...groupA07Content,
+  'ui-ux-roles-navigation': { ...groupA07Content['ui-ux-roles-navigation'], contentVersion: 2 },
+};

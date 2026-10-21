@@ -351,6 +351,6 @@ to those questions.
 | Selected-option storage and result visibility | Q-05 | Not specified; no acceptance rule or schema field |
 ```
 
-**Review state:** These are worked sample artifacts only. They were not run through the learner UI, tested with users, or independently reviewed. Topic questions/rubrics remain draft and policy approval is pending.
+**Review state:** These are fictional worked sample artifacts only. They were not run through the learner UI, tested with users, or validated as product behavior. Topic questions/rubrics remain in draft review state. DEC-70 accepted the shared quiz and rubric policies; that policy decision does not approve these sample rules or the complete group.
 
 **Sample correction note:** The PRD now contains all 27 headings listed in the canonical Topic 03 prompt, source-labeled requirements with priorities, and a seven-finding critical review. The SRS includes option creation/selection, valid and invalid input, duplicate, concurrent-invariant, and storage-unavailable cases with trace rows. Selected-option storage/access remains Q-05. These are static fictional examples, not user decisions or executed behavior.

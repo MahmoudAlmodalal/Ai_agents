@@ -20,7 +20,7 @@ test.describe('objective quiz and practical self-assessment', () => {
   test('grades answers, keeps retries and restores the latest attempt and rubric choices', async ({ page }) => {
     await page.goto(`/learn/${topicSlug}`);
     const activity = page.locator(activitySelector);
-    await expect(activity).toHaveAttribute('data-offline-content-version', '1');
+    await expect(activity).toHaveAttribute('data-offline-content-version', '2');
 
     const quiz = quizSection(page);
     const evidenceQuestion = quiz.getByRole('group', { name: /لم تتحدث بعد/ });
@@ -83,7 +83,7 @@ test.describe('objective quiz and practical self-assessment', () => {
     const topicCard = page.locator('article.topic-card').filter({ hasText: 'اختيار فكرة المشروع' }).first();
     await topicCard.getByRole('button', { name: 'معاينة سريعة', exact: true }).click();
     const dialog = page.getByRole('dialog');
-    await expect(dialog.locator(activitySelector)).toHaveAttribute('data-offline-content-version', '1');
+    await expect(dialog.locator(activitySelector)).toHaveAttribute('data-offline-content-version', '2');
     const previewQuiz = quizSection(page);
     await expect(previewQuiz.getByText(/صحيح: 1 · غير صحيح: 0 · بلا إجابة: 1/)).toBeVisible();
     await expect(previewQuiz.getByText(/آخر نتيجة محفوظة في هذا المتصفح/)).toBeVisible();

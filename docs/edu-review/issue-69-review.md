@@ -1,15 +1,17 @@
-# Issue #69: Operations, handoff, Demo Day, and portfolio — author review evidence
+# Issue #69: Operations, handoff, Demo Day, and portfolio — educational review evidence
 
 **Recorded:** 2026-10-20
-**Implementation:** complete draft in `src/data/learning/group-b.ts` for the 4 canonical Topics.
-**Educational author review:** lesson, question, and rubric records carry a specific Curriculum B author review. Each record remains `review-ready`.
-**Release decision:** blocked pending course-owner template/scoring/rubric/video acceptance. No owner approval is recorded. Candidate videos are not approved; playback, captions, accessibility, and user-facing availability remain Not Run.
+
+**Implementation:** original wave3 lessons plus the typed module in `src/data/learning/group-b-19-operations-delivery.ts` for 4 canonical Topics.
+**Independent educational review:** Passed (static) on 2026-10-20 for lesson sequences, worked examples, questions/keys/rationales, criterion-to-output links, practical outputs, and handoffs; topic-specific findings follow. Learner execution, media review, and browser journeys are outside this pass. Each record remains `review-ready` pending final group acceptance.
+**Course-owner policies:** accepted on 2026-10-20 in issue #70: the template and 19-group membership; quiz scoring of 1 point correct and 0 for incorrect/unanswered, unlimited retries, feedback after submit, and retention of all attempts with question and policy versions; learner-reported levels not-yet/in-progress/ready-for-review with no mastery threshold or independent correctness claim; and the candidate-video checklist. These decisions do not approve an individual video or this complete group.
+**Release status:** this group remains `review-ready` and is not marked improved. Human review of each candidate video and exact-candidate browser/integration evidence remain pending; final group-specific owner sign-off is not recorded.
 
 **Independent narrow assessment review:** root passed all 58 B question/key/rationale and artifact-bound criterion/output references on 2026-10-20; see [scope and limits](group-b-narrow-review-2026-10-20.md).
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
-The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; it does not claim learner execution. Owner policies are accepted in issue #70, while individual human video reviews, browser validation, and final group-specific acceptance remain pending.
 
 ## `project-operations-runbook`
 
@@ -30,7 +32,7 @@ Backup status=unknown, restore drill=Not Run. المالك يراجع صفحة �
   - `project-operations-runbook-backup-vs-restore-drill` (project-operations-runbook-objective-1): لوحة الخطة تعرض backup لكن لم تجر restore. ماذا تسجل؟ — مفتاح project-operations-runbook-backup-vs-restore-drill-b; التعليل: وجود ميزة لا يثبت نجاح استعادة أو زمنها.
   - `project-operations-runbook-application-rollback-vs-schema` (project-operations-runbook-objective-2): رجع التطبيق لإصدار أقدم بعد migration أحدثت عموداً. ماذا يجب مراجعة؟ — مفتاح project-operations-runbook-application-rollback-vs-schema-a; التعليل: الكود والبيانات لهما إجراءات استعادة مختلفة وقد تكون migration غير عكسية.
 
-**Practical assessment:** scale `project-operations-runbook-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `project-operations-runbook-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `operations-capabilities`: جرد قدرات الاستضافة مع مصدر وحالة ومالك.
   - `restore-rollback-plan`: إجراءات اختبار لاستعادة البيانات وتراجع التطبيق منفصلان.
 
@@ -38,13 +40,15 @@ Criteria:
   - `project-operations-runbook-capability-evidence` → `operations-capabilities`: قدرة بدليل. كل ادعاء تشغيل مرتبط بصفحة/إعداد ومصنف بصدق. دليل المراجعة: أرفق قدرة واحدة ومصدرها وما بقي غير متحقق.
   - `project-operations-runbook-data-application-separation` → `restore-rollback-plan`: فصل الإجراءين. الرجوع للكود لا يوصف باستعادة قاعدة البيانات. دليل المراجعة: أشر إلى خطوة تطبيق وخطوة بيانات وشرط كل منهما.
 
-**Author finding:** راجع المؤلف حالات القدرة الأربع وفصل rollback عن restore. الدليل التعليمي يتطلب اختباراً خارج الإنتاج أو يسجل Not Run صريحاً؛ قبول المالك ما زال مطلوباً.
+**Author finding:** راجع المؤلف حالات القدرة الأربع وفصل rollback عن restore. الدليل التعليمي يتطلب اختباراً خارج الإنتاج أو يسجل Not Run صريحاً؛ قبول المجموعة النهائي ما زال مطلوباً.
+
+**Independent educational review:** Passed (static): the lesson distinguishes available capability from verified behavior, application rollback from DB restore, and schema compatibility from code rollback. `operations-capabilities` and `restore-rollback-plan` feed the handoff index. Restore remains Not Run.
 
 **External video candidate:** [Deployments Going Deeper — Vercel Foundations](https://vercel.com/academy/vercel-foundations/deployments) (`candidate`, approval `proposed`). مرشح لخطة التشغيل، حيث تسرد سلسلة الفيديو rollback فورياً وفحوص النشر والسجلات وobservability. تضبط الخطوات وفق قدرات الحساب الفعلية؛ لا تفترض أن backup قد استعيد.
 
 **Resource evidence:** فهرس Vercel Foundations يصف درس Deployments Going Deeper بفحوص deployment وinstant rollback، كما يدرج دروس Logs وObservability. صفحة الدورة تؤكد أنها تسعة مقاطع فيديو. الدرس خاص بـ Vercel ولا يغطي restore قاعدة البيانات. لم يُختبر التشغيل/captions/accessibility ولم يوافق المالك. [Publisher/source page](https://vercel.com/academy/vercel-foundations).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `project-handoff-package`
 
@@ -65,7 +69,7 @@ README: واجهة نموذجية ببيانات محلية؛ QA: build Passed �
   - `project-handoff-package-missing-resource-traceability` (project-handoff-package-objective-1): الحزمة تشير إلى docs/ERD.md لكن الملف غير موجود. ماذا تفعل؟ — مفتاح project-handoff-package-missing-resource-traceability-a; التعليل: المراجع يحتاج ملفاً واقعياً أو فجوة واضحة لا رابطاً متخيلاً.
   - `project-handoff-package-test-commit-provenance` (project-handoff-package-objective-2): نتيجة build تخص commit سابقاً. كيف تعرضها؟ — مفتاح project-handoff-package-test-commit-provenance-b; التعليل: النتيجة مرتبطة بالنسخة التي شُغلت عليها.
 
-**Practical assessment:** scale `project-handoff-package-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `project-handoff-package-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `handoff-index`: README وفهرس docs بروابط موجودة وإصدارات.
   - `handoff-evidence`: تقرير فحوص وقيود ونتائج مرتبطة بcommit.
 
@@ -75,11 +79,13 @@ Criteria:
 
 **Author finding:** راجع المؤلف نقطة بدء README وتسلسل الوثائق وصدق الادعاءات المرتبطة بالنسخة. السطر المثال معلّم placeholder ولا يمثل فحصاً فعلياً.
 
+**Independent educational review:** Passed (static): the lesson requires real links and version-bound QA evidence, and labels the placeholder build record as illustrative. `handoff-index` and `handoff-evidence` feed Demo Day. The placeholder is not an executed build.
+
 **External video candidate:** [Best Practices for Knowledge Transfer and Software Project Handoff](https://praxent.com/blog/knowledge-transfer-best-practices-software-project-handoff) (`candidate`, approval `proposed`). مرشح يلخص مشاركة الفريق الداخلي والتوثيق المعماري وREADME ومراجعات الكود وhandoff sprint. المورد من شركة تعهيد، لذا يراجع المتعلم الخطة بما يناسب فريق مشروعه.
 
 **Resource evidence:** صفحة الفيديو ونص Praxent يذكران مشاركة الفريق في القرارات، جودة الكود، README للتشغيل/المساهمة/النشر، توثيق البنية وhandoff sprint. مطابقة مباشرة لحزمة التسليم؛ سياقها تعهيد. لم يُختبر الفيديو/captions/accessibility ولم توجد موافقة مالك. [Publisher/source page](https://praxent.com/blog/knowledge-transfer-best-practices-software-project-handoff).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `project-demo-day`
 
@@ -100,7 +106,7 @@ Criteria:
   - `project-demo-day-reproducible-demo-flow` (project-demo-day-objective-1): أي عرض يقنع المراجع بسلوك محدد؟ — مفتاح project-demo-day-reproducible-demo-flow-a; التعليل: رحلة قابلة لإعادة الفحص أوضح من التقنيات أو أرقام بلا دليل.
   - `project-demo-day-live-vs-recorded-evidence` (project-demo-day-objective-2): انقطع الاتصال وتعرض فيديو تسجيل للرحلة. كيف تقدمه؟ — مفتاح project-demo-day-live-vs-recorded-evidence-b; التعليل: نوع الدليل وحالته يظلان واضحين للجمهور.
 
-**Practical assessment:** scale `project-demo-day-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `project-demo-day-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `demo-script`: نص عرض قصير لرحلة وقرار وقيود مع مصادر.
   - `demo-readiness`: قائمة فحص نسخة وبيانات وروابط وخطة احتياط.
 
@@ -110,11 +116,13 @@ Criteria:
 
 **Author finding:** راجع المؤلف الفرق بين رحلة حية ولقطة fallback، وقيّد الأثر بما يقيسه الدليل. المشهد لا يختلق نتائج استخدام واقعي.
 
+**Independent educational review:** Passed (static): the lesson grounds the story in one reproducible journey and labels live, mock and fallback evidence accurately. `demo-script` and `demo-readiness` feed the portfolio entry. No live demo or user-impact result was run.
+
 **External video candidate:** [Tips on better Demo Presentation Skills and StoryTelling](https://learn.microsoft.com/en-us/shows/regular-it-guy/tips-on-better-demo-presentation-skills-storytelling) (`candidate`, approval `proposed`). مرشح لتسلسل العرض وصياغة القصة لجمهور؛ صفحة Microsoft Learn تصف نصائح لعرض demo لمجموعة مدربين. المورد قديم وعام، فلا يثبت صحة عرض التطبيق أو ادعاءاته ويجب تسميته في عرض المتعلم كمصدر للتقديم فقط.
 
 **Resource evidence:** صفحة Microsoft Learn تسمي فيديو نصائح العرض والسرد وتقول إنه قُدّم لمجموعة Microsoft Certified Trainers. يغطي أسلوب التقديم العام لا فحص سلوك منتج؛ المحتوى قديم. لم يُختبر التشغيل/captions/accessibility أو موافقة المالك. [Publisher/source page](https://learn.microsoft.com/en-us/shows/regular-it-guy/tips-on-better-demo-presentation-skills-storytelling).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `project-portfolio-entry`
 
@@ -135,7 +143,7 @@ State=prototype, not published. Contribution: built filter UI and added empty-st
   - `project-portfolio-entry-individual-contribution-attribution` (project-portfolio-entry-objective-1): أنجز فريق ميزة وأنت كتبت صفحة واحدة. أي صياغة عادلة؟ — مفتاح project-portfolio-entry-individual-contribution-attribution-b; التعليل: المساهمة المحددة تمثل الواقع وتتيح للمراجع تتبعها.
   - `project-portfolio-entry-measured-impact-claim` (project-portfolio-entry-objective-2): تظهر اختباراتك محلياً لكن لا يوجد بحث مستخدم أو مقياس. ماذا تقول عن الأثر؟ — مفتاح project-portfolio-entry-measured-impact-claim-b; التعليل: دليل فحص البرمجية لا يساوي قياس أثر المستخدم.
 
-**Practical assessment:** scale `project-portfolio-entry-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `project-portfolio-entry-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `portfolio-narrative`: بطاقة مشكلة/حالة/مساهمة/قرار/قيود.
   - `portfolio-evidence-map`: روابط وclaims وطريقة قياس أو تصريح غياب قياس.
 
@@ -145,16 +153,17 @@ Criteria:
 
 **Author finding:** راجع المؤلف الفرق بين مساهمة شخصية وأثر منتج، واشتراط خط أساس ووسيلة قياس لأي نسبة. المثال prototype توضيحي وليس سيرة أو إنجازاً فعلياً.
 
+**Independent educational review:** Passed (static): the lesson separates personal contribution from team work, checks sharing/privacy, and requires a baseline and method for impact claims. The example is explicitly a prototype, not a real achievement. No portfolio artifact was executed or published.
+
 **External video candidate:** [Building A Portfolio Website That Will Get You Hired — Udacity Project Walkthrough](https://www.udacity.com/video/project-walkthrough-portfolio) (`candidate`, approval `proposed`). مرشح لتنظيم موقع portfolio وحكاية مشروع؛ توضح صفحة Udacity أنه موجّه للمستقل/المتعاقد/الاستشاري/المبدع. يُستخدم لترتيب الحالة فقط، لا كدليل على جودة الشيفرة أو أثرها.
 
 **Resource evidence:** صفحة Udacity تسمي فيديو Project Walkthrough عن بناء موقع portfolio للمستقلين والمتعاقدين والاستشاريين والمبدعين. ملائم لبنية العرض العامة مع فرق سياق عن portfolio مهندس برمجيات؛ لا يبرر ادعاءات تقنية/أثر غير موثقة. تشغيل/captions/accessibility وowner signoff لم تُفحص. [Publisher/source page](https://www.udacity.com/video/project-walkthrough-portfolio).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
-## Owner gates
+## Remaining group acceptance conditions
 
-- Approve or revise the first-group/template and this membership before any group is marked improved.
-- Decide the proposed quiz scoring and descriptive rubric scale; all scoring/rubric policy approvals remain `proposed`.
-- Review each candidate against the actual lesson, approve/reject each resource, and confirm captions/accessibility/playback before release. A publisher listing alone is not approval.
-- Record course-owner acceptance for the complete group and the independent evidence required by the parent release issue.
-- Browser journey, persisted history, RTL/LTR, keyboard/mobile, and integrated build checks remain for root-coordinated integration.
+- The course owner accepted the template, 19-group membership, quiz-scoring policy, descriptive self-assessment policy, and candidate-video checklist in [owner decision package #70](owner-decision-package-70.md). Those policy decisions do not constitute approval of this complete group.
+- Each linked external resource remains a candidate until a human reviews playback, captions, accessibility, and fit with its lesson. No video in this group is approved or reported as playback-tested.
+- Learner project execution and exact-candidate browser checks for full-reader/preview, persistence, RTL/LTR, keyboard, mobile and relevant diagrams remain Not Run or are owned by the root-coordinated integration review.
+- Keep every canonical Topic available. Do not mark this group improved until the remaining evidence is complete and the course owner records this group in the final sign-off list.

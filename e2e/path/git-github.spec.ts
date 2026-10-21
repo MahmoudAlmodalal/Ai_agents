@@ -126,7 +126,7 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await expect(stepsSection).toContainText('commit أولي يضم الملفات المقصودة فقط');
 
     // Copy bash code block from topic content
-    const codeContainer = page.locator('.code-container').filter({ hasText: 'git config --global user.name' }).first();
+    const codeContainer = page.locator('.code-container').filter({ hasText: 'git config --local user.name' }).first();
     await expect(codeContainer).toBeVisible();
     const copyBtn = codeContainer.locator('button.copy-btn');
     await expect(copyBtn).toBeVisible();
@@ -134,8 +134,8 @@ test.describe('Sequential Project Path - Ticket 03 (Git & GitHub)', () => {
     await expect(copyBtn).toContainText('✓ تم النسخ!');
 
     const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
-    expect(clipboardText).toContain('git config --global user.name');
-    expect(clipboardText).toContain('git config --list');
+    expect(clipboardText).toContain('git config --local user.name');
+    expect(clipboardText).toContain('git config --local --get user.email');
   });
 
   test('Topic 05 (/learn/git-project-docs): quiz grades answers, provides explanations, supports unlimited retries and retains attempts', async ({ page }) => {

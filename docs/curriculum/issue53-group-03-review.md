@@ -1,6 +1,7 @@
 # Issue #53 — Educational Review & Release Evidence: Git and GitHub Documentation Group (Group 03)
 
-**State:** Evidence complete and awaiting course-owner sign-off.
+**State:** Static educational review recorded; Group 03 remains draft and is not announced as improved.
+(DEC-70 accepts the common template, curriculum boundaries, and assessment policies. This packet does not record the complete-group release sign-off. Both external videos remain candidates pending individual human review.)
 **Scope:** Group 03 — Git and GitHub documentation (2 Topics: `git-project-docs`, `github-docs-collaboration`).
 **Sample Artifact Packet:** [Git and GitHub documentation sample project outputs](samples/group-03-git-github.md).
 **Reviewer:** Educational Curriculum Author & Reviewer
@@ -20,7 +21,7 @@
 
 ## 2. Topic-by-Topic Walkthrough & Evidence
 
-### Topic 01 / 05: `git-project-docs`
+### Topic 05: `git-project-docs`
 
 #### Walkthrough Elements & Verdicts
 
@@ -28,14 +29,16 @@
 | :--- | :--- | :--- | :--- |
 | **Lesson Inputs** | Project directory with existing context/requirements (`docs/PROJECT_CONTEXT.md` / `docs/PRD.md`), terminal environment with Git 2.23+. | **Passed** | Verified input requirements in lesson header and prerequisites section. Does not require front-end toolchain or AI agents. |
 | **Explanation** | Multi-section Arabic text (RTL) explaining Git rationale for docs, developer identity setup (`git config`), `.git` initialization, `.gitignore` secret protection, staging/commit lifecycle, and non-destructive branching (`git switch -c`). | **Passed** | Explanations are conceptually rigorous, distinguished from code development, and explain *why* Git is vital for architectural docs. |
-| **Worked Example** | Title: `حفظ وثائق MVP` (Case study: `learner-project`). Context: `docs/PROJECT_CONTEXT.md` ready with local `.env.local`. Result: ignores secret file before staging, verifies with `git status` and `git diff --cached`, commits docs cleanly. | **Passed** | Follows learner project context. Demonstrates correct handling of secrets before staging. BorrowHub remains explicitly optional. |
-| **Practical Steps (Exercise)** | Step 1: Initialize repository and configure `.gitignore` for secrets and build artifacts.<br>Step 2: Inspect diff and staging, commit documentation, create feature branch for docs. | **Passed** | Step 1 output directly supplies the clean local workspace required for Step 2. Commands are modern and verified (`git switch -c`, `git diff --staged`). |
+| **Worked Example** | Fictional Topic 05 walkthrough (`learner-project`): a project might contain `.env.local`, so a learner should exclude it before staging. | **Passed — static** | The linked packet supplies an illustrative `.gitignore` and commands, not a repository, command output, or commit. BorrowHub remains optional. |
+| **Practical Steps (Exercise)** | Step 1: Initialize a repository and configure `.gitignore` for secrets and build artifacts.<br>Step 2: Inspect the actual diff and staging area, commit documentation, and create a documentation branch. | **Passed — instructional shape** | The handoff is coherent, but commands were not run here. The lesson now configures repository-local identity after `git init`; actual Git version/command behavior remains untested in this review. |
 | **Prompt** | PROMPT 04: "GitHub Documentation Setup" (`/prompts/prompt-04-github-documentation-setup`). Mentor prompt instructing AI to structure `README.md` and `docs/` safely without destructive operations. | **Passed** | Available in prompt library; copyable with verified clipboard payload and feedback banner. |
 | **Expected Outputs** | `local-repository`: مستودع Git محلي مع `.gitignore` وتاريخ commit مفهوم.<br>`tracked-docs`: وثائق `docs/` و`README.md` محفوظة من دون ملفات أسرار. | **Passed** | Concrete, verifiable artifacts. Concrete targets referenced by rubric criteria. |
 | **Objective Questions** | `gitdocs-q-ignore`: Accidental commit of secret then added to `.gitignore` -> Leaked, must rotate secret; `.gitignore` does not rewrite Git history (Option 1).<br>`gitdocs-q-commit`: Where to inspect files prior to commit -> `git diff --cached` with `git status` (Option 0). | **Passed** | Answers, options, and explanations reviewed. Pedagogically sound, single correct answer per question, full rationales provided. |
 | **Practical Rubric Criteria** | `gitdocs-r-ignore` (bound to `local-repository`): Secrets check prior to commit.<br>`gitdocs-r-history` (bound to `tracked-docs`): Reviewable commit history. | **Passed** | Criteria bind strictly to declared `outputId`s. Evaluation scale uses approved descriptive levels (`ready-for-review`, `in-progress`, `not-yet`) with no mastery threshold. |
 
-#### Real Sample Output Produced
+#### Illustrative Sample and Commands (No Repository Actions Executed)
+
+The following `.gitignore` content and commands are examples only; no local repository or GitHub action was performed, and no command output is claimed.
 
 ```gitignore
 # .gitignore
@@ -54,21 +57,10 @@ build/
 ```
 
 ```bash
-$ git status --short
-A  .gitignore
-A  README.md
-A  docs/PROJECT_CONTEXT.md
-A  docs/PRD.md
-
-$ git diff --cached --stat
- .gitignore              | 12 ++++++++++++
- README.md               | 35 +++++++++++++++++++++++++++++++++++
- docs/PROJECT_CONTEXT.md | 28 ++++++++++++++++++++++++++++
- docs/PRD.md             | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 120 insertions(+)
-
-$ git log --oneline -1
-7f3a91b (HEAD -> main) docs: initialize repository with project context and PRD requirements
+# Run these checks in the learner's repository; no output is claimed here.
+git status --short
+git diff --cached --stat
+git log --oneline -1
 ```
 
 #### External Video Candidate
@@ -101,38 +93,38 @@ $ git log --oneline -1
 | **Objective Questions** | `githubdocs-q-pr`: Purpose of PR in documentation -> Requests peer review of branch diff prior to merge into target branch (Option 1).<br>`githubdocs-q-remote`: Check before first push to prevent publishing to wrong destination -> Review `git remote -v`, current branch, and staging (Option 0). | **Passed** | Answers, options, and explanations reviewed. Pedagogically sound, single correct answer per question, full rationales provided. |
 | **Practical Rubric Criteria** | `githubdocs-r-remote` (bound to `remote-repository`): Remote destination verified.<br>`githubdocs-r-review` (bound to `review-pull-request`): Collaborative PR review before merge. | **Passed** | Strict outputId binding maintained. Self-assessment scale applies approved 3-level rubric. |
 
-#### Real Sample Output Produced
+#### Fictional README and PR Draft (Not Published or Reviewed)
 
 ```markdown
-<!-- README.md excerpt -->
-# Study-Group Scheduler (Ai_agents Student Project)
+<!-- Fictional README excerpt; its claims and links were not verified. -->
+# Study-Group Scheduler exercise
 
 > نظام ذكي لتنسيق مواعيد المجموعات الدراسية وحجز القاعات.
 
 ## 📌 نبذة عن المشروع
-- **المشكلة:** صعوبة تنسيق أوقات الفراغ المشتركة بين طلاب المجموعة الدراسية.
+- **فرضية التمرين:** قد يحتاج أعضاء مجموعة دراسية إلى مقارنة أوقات متاحة. لا توجد مقابلات أو نتائج بحث مستخدمين.
 - **المستخدم المستهدف:** طلاب الجامعات ومنسقو الأنشطة الأكاديمية.
 - **نطاق النسخة الأولى (MVP):** تسجيل الطلاب، إدخال الأوقات المتاحة، واقتراح أفضل نافذة زمنية.
 
-## 📂 وثائق المشروع المعتمدة
+## 📂 وثائق التمرين
 - [سياق المشروع والفكرة](docs/PROJECT_CONTEXT.md)
 - [وثيقة متطلبات المنتج (PRD)](docs/PRD.md)
 - [مواصفات النظام (SRS)](docs/SRS.md)
 
-## 🛡️ سياسة الأمان والأسرار
-- هذا المستودع لا يحتوي على أي مفاتيح أو أسرار حقيقية.
-- المتغيرات المطلوبة موضحة في القالب التوضيحي `.env.example`.
+## 🛡️ مراجعة الأمان قبل النشر
+- افحص الملفات وكل commits الخارجة بحثاً عن أسرار وبيانات شخصية قبل النشر.
+- إذا احتاج المشروع متغيرات بيئة، وثّق أسماءها فقط في `.env.example` بعد إنشاء القالب؛ هذا الملف غير موجود أو متحقق منه في العينة.
 ```
 
 ```markdown
-<!-- Pull Request Description excerpt -->
+<!-- Fictional Pull Request draft; no PR or review exists. -->
 ## Purpose
 Add initial project documentation: PROJECT_CONTEXT.md, PRD.md, and system requirements.
 
 ## Review Checklist for Peer Reviewer
-- [x] Does the MVP scope avoid unvalidated assumptions?
-- [x] Are all secret files (.env, .env.local) ignored and absent from diff?
-- [x] Are links in README.md pointing to valid paths in docs/?
+- [ ] Does the MVP scope avoid unvalidated assumptions? Record evidence and unresolved questions.
+- [ ] Are all secret files (.env, .env.local) ignored and absent from the actual outgoing commits?
+- [ ] Do links in README.md point to valid paths in docs/?
 ```
 
 #### External Video Candidate
@@ -205,7 +197,7 @@ Result: Exited with code 0.
 
 1. **Content Model Review State Policy:**
    - As directed by Scope Rule 4a, `reviewState` remains `draft` in the content model (`group-a-03-git-github.ts`).
-   - The state transition to `improved` / `approved` will be executed centrally by the orchestrator after independent course-owner review.
+   - DEC-70's shared-policy acceptance does not approve this group. Any later status update depends on complete evidence, independent verification, and explicit inclusion in the course-owner sign-off list; it is not an automatic state transition.
 2. **Video Approval Status:**
    - Both external video resources remain candidate status (`candidateVideos`), reflecting owner deferral DEC-70 Decision 44. No playback or offline capability is claimed.
 3. **Old Product Name Occurrences in Unowned Files:**
@@ -221,5 +213,17 @@ Result: Exited with code 0.
 
 ## 5. Release Status
 
-**Status:** Evidence complete and awaiting course-owner sign-off.
-The educational review and end-to-end verification have been successfully conducted. The group remains in draft/candidate state in the codebase pending central sign-off and state synchronization by the course orchestrator.
+**Status:** Group 03 remains draft and is not announced as improved.
+The prior E2E result is an author-reported reader test, not evidence of Git or GitHub actions. DEC-70 accepts the shared curriculum and assessment policies; this packet does not record complete-group sign-off. Both candidate videos still require individual human review, and the current source corrections need integrated verification.
+
+## 6. Independent Educational Review Update — 2026-10-20
+
+This static review checked the Topic 05/06 instructions and fictional sample packet for Git safety, conceptual sequence, and artifact handoffs. No Git command, remote repository, GitHub account, pull request, secret scan, or learner workflow was executed. The historical Playwright result above is an author report about the reader and learning controls only.
+
+| Topic or handoff | Status | Finding and remaining evidence |
+|---|---|---|
+| Topic 05 `git-project-docs` | **Pass — instructional/static** | The sequence establishes local repository identity, ignore rules, staged-diff review, commits, and a documentation branch. Identity is now repository-local and configured after `git init`. The sample gives illustrative commands and warns that `.gitignore` does not erase an already committed secret. Actual command behavior and repository state were not checked. |
+| Topic 05 → Topic 06 | **Pass — documented artifact shape** | A local repository, README, and `docs/` outputs are named as suggested inputs; the sample itself created none. |
+| Topic 06 `github-docs-collaboration` | **Pass — instructional/static** | Remote destination review and pull-request review are taught. Secret Scanning/Push Protection are correctly framed as conditional extra layers; the lesson directs review of all outgoing commits and rotation of any committed secret. No GitHub feature availability or security scan was tested. |
+| Topic 06 → Topic 07 | **Pass — suggested handoff** | Reviewed documentation is a possible input to later diagram work; no remote, merge, or gate is implied. |
+| Candidate videos | **Not reviewed** | Both candidate records require individual human review of playback, captions, accessibility, and lesson fit under DEC-70. |

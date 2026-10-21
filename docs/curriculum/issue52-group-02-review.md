@@ -1,8 +1,8 @@
 # Issue #52 — Release the complete Discovery, PRD, and SRS group
 
-**State:** Evidence complete and awaiting course-owner sign-off. Group 02 educational review and verification are completed; group release and status advancement remain pending course-owner sign-off.
+**State:** Static educational review recorded; Group 02 remains draft and is not announced as improved. DEC-70 accepted the common template, boundaries, and assessment policies; this packet does not record a complete-group release sign-off. Individual video approval remains deferred.
 **Sample artifact packet:** [Discovery, PRD, and SRS fictional project outputs](samples/group-02-discovery-prd-srs.md).
-**Proposed boundary:** 3 Topics in Discovery, PRD, and SRS (`discovery-grill-me`, `prd-specification`, `srs`). Membership matches the proposed roadmap and preserves the complete 58-Topic scope.
+**Accepted boundary:** 3 Topics in Discovery, PRD, and SRS (`discovery-grill-me`, `prd-specification`, `srs`), within the accepted 19-group, 58-Topic curriculum.
 
 The existing reader content remains available for every canonical Topic. Learning records are keyed by those stable slugs. No Topic is locked behind a prerequisite; all prerequisites serve as pedagogical guidance only. BorrowHub worked examples are explicitly optional across all topics.
 
@@ -68,7 +68,7 @@ The existing reader content remains available for every canonical Topic. Learnin
   | المخرجات المتوقعة | **Passed** | توليد `docs/DECISIONS_LOG.md` وقائمة الأسئلة المفتوحة وتطابق معرفاتها. |
   | بنك الأسئلة والتقييم الذاتي | **Passed** | السؤالان مربوطان بالأهداف التعليمية، والإجابات الصحيحة وشروحها دقيقة وتربوية. |
   | معايير التقييم الذاتي (Rubric) | **Passed** | المعياران مرتبطان بمخرجي `decisions-log` و`open-questions` بدقة وبمستويات مقياس معتمد. |
-  | مورد الفيديو الخارجي | **Passed** | مسجل كمرشح فقط مع إخلاء مسؤولية صريح وعدم ادعاء التحقق من التشغيل. |
+  | مورد الفيديو الخارجي | **Candidate record only** | مسجل كمرشح فقط. الملاءمة الدقيقة للمحتوى، والتشغيل، والتسميات التوضيحية، وإمكانية الوصول لم تراجع بشرياً؛ لا توجد موافقة. |
 
 ---
 
@@ -131,7 +131,7 @@ The existing reader content remains available for every canonical Topic. Learnin
   | المخرجات المتوقعة | **Passed** | `docs/PRD.md` و`docs/PRD_REVIEW.md` مع قابلية التتبع. |
   | بنك الأسئلة والتقييم الذاتي | **Passed** | السؤالان والخيارات ومفاتيح الإجابة والشروح دقيقة وتربوية. |
   | معايير التقييم الذاتي (Rubric) | **Passed** | ربط دقيق بمعرفات `prd` و`prd-review` مع أسئلة تأملية للمتعلم. |
-  | مورد الفيديو الخارجي | **Passed** | مسجل كمرشح خارجي مع بيان مصدره والقيود الزمنية لواجهته. |
+  | مورد الفيديو الخارجي | **Candidate record only** | بيانات المصدر مسجلة؛ التشغيل، والتسميات التوضيحية، وإمكانية الوصول، والملاءمة الدقيقة للدرس لم تراجع بشرياً. |
 
 ---
 
@@ -193,13 +193,13 @@ The existing reader content remains available for every canonical Topic. Learnin
   | المخرجات المتوقعة | **Passed** | توليد `docs/SRS.md` ومصفوفة تتبع المتطلبات مع مطابقة المعرفات. |
   | بنك الأسئلة والتقييم الذاتي | **Passed** | السؤالان والمفاتيح والشروح دقيقة وتؤكد عدم اختراع القواعد. |
   | معايير التقييم الذاتي (Rubric) | **Passed** | ربط صريح بمعرفي `srs` و`requirements-traceability`. |
-  | مورد الفيديو الخارجي | **Passed** | تسجيل المرشح مع إخلاء مسؤولية التشغيل والترجمة. |
+  | مورد الفيديو الخارجي | **Candidate record only** | المرشح مسجل؛ التشغيل، والترجمة/التسميات التوضيحية، وإمكانية الوصول، والملاءمة الدقيقة للدرس لم تراجع بشرياً. |
 
 ---
 
-## Sample Outputs Produced for Group 02
+## Static Fictional Sample Artifacts for Group 02
 
-The sample artifacts produced for this group are fully documented in `docs/curriculum/samples/group-02-discovery-prd-srs.md` for a representative study-group scheduling exercise:
+The constructed artifacts in `docs/curriculum/samples/group-02-discovery-prd-srs.md` demonstrate one fictional study-group scheduling exercise. They do not record an interview, learner execution, runtime/database behavior, or owner-approved product decisions:
 
 1. **`docs/DECISIONS_LOG.md` (Topic 02):**
    - Decisions: D-01 (propose three candidate meeting times), D-02 (participant records one preferred option).
@@ -248,5 +248,18 @@ The sample artifacts produced for this group are fully documented in `docs/curri
 
 ## Release Status for Group 02
 
-**Evidence complete and awaiting course-owner sign-off.**
-All curriculum elements for Group 02 (`discovery-grill-me`, `prd-specification`, `srs`) have undergone comprehensive educational review, walkthrough verification, sample output production, and automated browser testing. Content review states remain `draft` in accordance with the orchestrator workflow pending final sign-off by the course owner.
+Group 02 (`discovery-grill-me`, `prd-specification`, `srs`) remains **draft; not announced as improved**. Static review of the authored lesson and fictional artifacts does not establish learner execution or validate the fictional product rules. The reported browser suite covers the reader and assessment UI only. A complete-group release decision, per-video human review, and exact-candidate technical evidence remain outstanding.
+
+## Independent Educational Review Update — 2026-10-20
+
+This static review checked the three authored topics and the fictional sample packet for objective alignment, uncertainty preservation, source traceability, and handoff shape. It did not run an interview, product implementation, database, learner journey, browser suite, or external video review. Previously recorded browser and build outcomes are author-reported historical results, not results of this review.
+
+| Topic or handoff | Status | Finding and remaining evidence |
+|---|---|---|
+| Topic 02 `discovery-grill-me` | **Pass — static** | The question-at-a-time interview method separates confirmed decisions, assumptions, and unresolved questions. The sample's D/A/Q log is fictional and does not represent an interview. |
+| Topic 02 → Topic 03 | **Pass — documented artifact shape** | The PRD example carries source IDs and unresolved questions forward. It remains exercise-only; no product owner validated the decisions. |
+| Topic 03 `prd-specification` | **Pass — static** | The sample contains all 27 requested sections, source-labeled exercise requirements, and seven review findings with next steps. Priorities and product rules are sample-author choices, not approved product scope. |
+| Topic 03 → Topic 04 | **Pass — documented trace shape** | The 10 SRS scenarios map to PRD IDs, preserve unresolved tie, timezone, identity, and selected-result access questions, and label unrun concurrency/storage behavior as design examples. |
+| Topic 04 `srs` | **Pass — static** | The scenario set covers normal input, validation failures, duplicates/concurrency invariants, selection, selected-result display, and storage failure. No runtime or persistence test was performed. Topic 04 no longer links Prompt 02, which generates a PRD; its SRS prompt is embedded in the lesson. |
+| Group 02 → Group 03 | **Pass — suggested handoff** | PRD/SRS artifacts can inform later Git documentation practice, but the lesson does not enforce completion or establish that a repository exists. |
+| Candidate videos | **Not reviewed** | Candidate records remain unapproved. Playback, captions, accessibility, and lesson fit require individual human review under DEC-70. |

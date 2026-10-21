@@ -1,7 +1,7 @@
 # Issue #51 — Group 01: Idea and MVP
 
-**Status:** Evidence complete and awaiting course-owner sign-off.
-(This group is neither released nor marked improved until course-owner sign-off is completed. No curriculum author or agent review constitutes course-owner acceptance.)
+**Status:** Static topic evidence recorded; Group 01 remains draft and is not announced as improved.
+(The course owner accepted the common template, group boundaries, and assessment policies in DEC-70. That decision does not record a complete Group 01 release sign-off. Its candidate video still requires individual human review.)
 
 **Group membership:** `project-idea-mvp` (Topic 01 only). Canonical identity preserved. No access gates or prerequisite locks are introduced, and the published Topic remains accessible at `/learn/project-idea-mvp` and in `scripts/topics/topic01.ts`.
 
@@ -11,12 +11,12 @@
 
 | Item | Subject | Owner Disposition (2026-10-20) | Implementation Status |
 |---|---|---|---|
-| 1 | Group boundary & 58-Topic preservation | **Accepted** by MahmoudAlmodalal: 19 groups, all 58 canonical Topics preserved. | Confirmed: Group 01 is Topic 01 (`project-idea-mvp`). |
+| 1 | Group boundary & 58-Topic preservation | **Accepted** by MahmoudAlmodalal in DEC-70: 19 groups, all 58 canonical Topics preserved. | Group 01 is Topic 01 (`project-idea-mvp`); this packet does not record the separate complete-group release sign-off. |
 | 2 | Lesson template | **Accepted** by MahmoudAlmodalal: template in `docs/curriculum/` confirmed. | Confirmed: all required template elements audited and present. |
 | 3 | Quiz scoring policy | **Accepted** by MahmoudAlmodalal: 1 point correct, 0 incorrect/unanswered, unlimited retries, feedback after submit, all attempts retained with versions. | Applied globally via shared builder and verified in browser e2e. |
-| 4 | Practical self-assessment policy | **Accepted** by MahmoudAlmodalal: self-reported levels `not-yet`, `in-progress`, `ready-for-review`, no mastery threshold, no independent correctness claim. | Rubric scale matches policy; builder default is proposed until centralized sign-off. |
-| 5 | External video candidates | **Deferred** by MahmoudAlmodalal: candidate representation accepted, but individual video approval deferred pending human check of playback/captions/accessibility. | Candidate retained with discovery evidence; never marked approved. |
-| 6 | Group release / improved status | **Accepted** by MahmoudAlmodalal: group may be announced as improved only after complete evidence is recorded, independently verified, and included in owner sign-off. | Evidence complete; awaiting course-owner sign-off. |
+| 4 | Practical self-assessment policy | **Accepted** by MahmoudAlmodalal in DEC-70: self-reported levels `not-yet`, `in-progress`, `ready-for-review`, no mastery threshold, no independent correctness claim. | The shared builder records the accepted scale policy; this does not approve the lesson or group. |
+| 5 | External video candidates | **Deferred** by MahmoudAlmodalal in DEC-70: candidate representation accepted, but individual video approval deferred pending human review of playback, captions, accessibility, and lesson fit. | Candidate retained with discovery evidence; it is not approved. |
+| 6 | Group release / improved status | **Accepted** by MahmoudAlmodalal in DEC-70: only complete, independently verified groups included in the owner sign-off list may be announced as improved. | This packet does not record the required group sign-off; status remains draft. |
 
 ---
 
@@ -42,23 +42,23 @@ Review Date: 2026-10-20
 
 ---
 
-## 3. Real Sample Output (Learner Project Walkthrough)
+## 3. Fictional Sample Output (Not a Learner or Owner Record)
 
-The following real sample output was produced by walking through Topic 01's Practical Steps for an independent learner project (**StudySync: Study Group Session Coordinator**). It contains no bracketed placeholders, separates confirmed decisions from assumptions and open questions, and prepares the input for Topic 02 Grill Me.
+The following constructed example shows how a learner could apply Topic 01 to a fictional study-group scheduling exercise (**StudySync**). No learner project, interview, user observation, prototype, test, or product-owner decision was performed. Every rule and measurement below is an exercise choice or hypothesis, not a confirmed product fact. The sample illustrates the Topic 02 handoff only.
 
 ```markdown
 # سياق المشروع: StudySync — منسق جلسات المذاكرة الجماعية
 
 ## الحالة والمصدر
-مسودة أولية لتوثيق فكرة المشروع ونطاق النسخة الأولى، تمهيداً لمقابلة Grill Me في الموضوع الثاني.
-المصدر: تجربة تنظيم جلسات مذاكرة لطلاب الدفعة وملاحظة تشتت المواعيد في مجموعات المحادثة.
+مثال خيالي لمسودة سياق مشروع، تمهيداً لمقابلة Grill Me في الموضوع الثاني.
+المصدر: سيناريو تعليمي أنشأه كاتب العينة؛ لا يمثل تجربة مستخدم أو ملاحظة ميدانية.
 
 ## المشكلة والمستخدمون والقيمة
-- **الموقف والمشكلة:** يواجه منسق مجموعة المذاكرة صعوبة في حصر المواعيد المناسبة للطلاب وإعلان الموعد النهائي، حيث تضيع المقترحات وسط مئات الرسائل في مجموعات الدردشة، مما يؤدي إلى إلغاء الجلسات أو تغيب المشاركين.
+- **فرضية المشكلة:** قد يصعب على منسق مجموعة مذاكرة جمع المواعيد وإعلان اختيار نهائي. لم تُجمع رسائل أو ملاحظات أو مقابلات تثبت وجود هذه المشكلة أو أثرها.
 - **المستخدم الأساسي (منسق المجموعة):** ينشئ طلب جلسة مذاكرة، يحدد موضوعها و3 خيارات زمنية، يراجع تصويت الطلاب، ويعتمد موعداً واحداً نهائياً.
 - **المستخدم المساند (عضو المجموعة / الطالب):** يستعرض خيارات المواعيد للجلسة المطروحة، يختار الموعد الأنسب له، ويتلقى إشعاراً بتأكيد الموعد النهائي ومكانه أو رابطه.
-- **القيمة المستهدفة للاختبار:** قدرة المجموعة على الاتفاق على موعد نهائي مؤكد لجلسة مذاكرة خلال أقل من 12 ساعة من طرحها، دون تكرار النقاش في مجموعة الدردشة.
-- **تنبيه:** لم تجر مقابلات رسمية بعد؛ صياغة المشكلة مستندة إلى ملاحظة شخصية وتظل فرضية تتطلب التحقق مع 3 منسقين.
+- **فرضية قياس قابلة للمراجعة:** اختبار ما إذا كانت مجموعة تستطيع اختيار موعد خلال 12 ساعة. لم يعتمد صاحب مشروع هدفاً أو عتبة نجاح، ولم تُجر تجربة.
+- **تنبيه:** يلزم التحقق من المشكلة والسياق مع مستخدمين حقيقيين قبل التعامل مع هذه الفرضية كدليل.
 
 ## نطاق رحلة MVP (النسخة الأولى)
 1. يسجل المنسق عنوان موضوع المذاكرة ويطرح 3 فترات زمنية مقترحة.
@@ -72,9 +72,9 @@ The following real sample output was produced by walking through Topic 01's Prac
 2. **التذكير الآلي عبر الرسائل القصيرة أو البريد الإلكتروني:** مؤجل؛ يمكن للمنسق نسخ رسالة التأكيد ومشاركتها في قناة التواصل الحالية للمجموعة دون التأثير على قيمة تنسيق الموعد.
 3. **نظام الدردشة داخل التطبيق:** مؤجل؛ الغرض هو حسم الموعد وليس توفير منصة محادثة بديلة لما يستخدمه الطلاب بالفعل.
 
-## قرارات صاحب المشروع ومصادرها
-- **قرار المنسق:** مدة التصويت محددة بـ 24 ساعة من وقت الإنشاء لتفادي بقاء الجلسة معلقة دون قرار.
-- **قرار المنسق:** لا يلزم تسجيل كلمة مرور للطالب المصوت؛ الاسم والبريد الإلكتروني يكفيان لمنع التعطيل في هذه المرحلة.
+## اختيارات العينة (ليست قرارات صاحب مشروع)
+- **اختيار تمرين:** يعرض المثال مدة تصويت افتراضية قدرها 24 ساعة؛ لا يعتمدها منتج أو مستخدم.
+- **اختيار تمرين:** يستخدم المثال اسماً مستعاراً للمشارك؛ لم تُحدد هوية أو صلاحيات حقيقية، ولا يُدّعى أن الاسم أو البريد يمنعان التصويت المكرر.
 
 ## افتراضات تحتاج تحققاً
 - **افتراض 1:** سيقوم الطلاب بفتح رابط خارجي للتصويت بدلاً من التفاعل داخل استطلاع رأي سريع في تطبيق الدردشة. (طريقة التحقق: تجربة الرابط مع مجموعتين حقيقيتين ومقارنة نسبة الاستجابة).
@@ -85,8 +85,8 @@ The following real sample output was produced by walking through Topic 01's Prac
 2. كيف نمنع تصويت الطالب الواحد أكثر من مرة بالاسم نفسه دون إلزامه بإنشاء حساب كامل؟
 3. هل يحتاج المنسق إلى تحديد حد أقصى لعدد الحاضرين في الجلسة الواحدة إذا كانت القاعة محدودة السعة؟
 
-## معيار النجاح الأولي
-- تجربة سيناريو واقعي كامل: يقوم مراجع بإنشاء جلسة، ويصوت ثلاثة مستخدمين تجريبيين، ثم يحسم المنسق الجلسة، ويظهر الموعد النهائي المؤكد لكافة الأطراف بوضوح.
+## سيناريو تحقق مقترح (لم يُنفذ)
+- يمكن لاحقاً إعداد تجربة يختبر فيها مشاركون إنشاء جلسة والتصويت وعرض النتيجة. لا توجد جلسة أو مشاركون أو نتيجة فعلية في هذا المثال.
 - التالي: استخدام هذه الوثيقة كمدخل لجلسة المقابلة الاستكشافية في Topic 02 (`discovery-grill-me`).
 ```
 
@@ -100,15 +100,17 @@ The following real sample output was produced by walking through Topic 01's Prac
 2. **Browser Suite Coverage Extension:**
    - *Gap:* The existing browser spec `e2e/project-idea-lesson.spec.ts` only verified lesson rendering parity and code snippet copying (3 tests). It lacked end-to-end verification of structured activity sections, practical steps and expected output presence/copying, objective quiz grading and explanatory feedback, rubric and checklist persistence and reversal across page reload, RTL prose and LTR technical text direction, and mobile viewport (390px) horizontal overflow.
    - *Correction:* Extended `e2e/project-idea-lesson.spec.ts` with 6 comprehensive browser tests covering all required journeys while strictly retaining existing assertions. All 9 tests passed synchronously in 24.5s against the production build on port 3201.
-3. **Shared Baseline Manifests Isolation:**
-   - *Gap:* The shared unit test `src/data/learning/group-split.test.ts` (invoked via `src/lib/groupSplit.test.ts`) verifies that all 58 canonical Topics match the committed SHA-256 baseline in `src/data/learning/learning-content-hashes.json` and review summaries in `learning-content-review-summary.json`. Modifying `reviewState` to `'approved'` in `src/data/learning/group-a.ts` causes hash and summary mismatches against these baseline manifests. Furthermore, under `action_safety`, shared files cannot be modified by individual group workers, and course-owner release sign-off remains pending.
-   - *Correction:* Maintained truthful content state (`reviewState: 'draft'` in `group-a.ts` with root question/rubric review evidence recorded), while completing all lesson walkthroughs, sample outputs, corrections, and browser evidence in this documentation packet awaiting course-owner batch release.
+3. **Shared Baseline Manifest Reconciliation:**
+   - *Finding:* The shared hash test compares all 58 learning records against `learning-content-hashes.json`. The Topic 01 evidence-text correction changes its content hash; the review-summary projection is unchanged. The root integration owner will reconcile shared manifests centrally.
+   - *Status:* `reviewState` remains `draft`. Narrow question/rubric reviews and this static packet do not complete lesson or group approval. DEC-70 accepted the shared policies; complete exact-candidate evidence, individual video review, independent verification, and explicit owner sign-off remain outstanding.
 
 ---
 
-## 5. Verification Gate Outcomes
+## 5. Previously Reported Verification (Not Re-run in This Review)
 
-All verification gates were run synchronously and passed:
+The commands and outcomes below are retained from the earlier author report. They were not re-run during this static educational review and do not establish learner or product execution.
+
+The prior report recorded these gates as passed:
 
 1. **Typecheck and Lint:**
    ```sh
@@ -147,4 +149,14 @@ All verification gates were run synchronously and passed:
 
 ## 6. Release Recommendation
 
-Group 01 (`project-idea-mvp`) has completed all educational review walkthroughs, verified the coherent practical step handoff to Topic 02, corrected product branding to Ai_agents, verified candidate external video representation, and achieved full browser test coverage. The group is in **evidence complete and awaiting course-owner sign-off** status.
+Group 01 (`project-idea-mvp`) has a static lesson review and a coherent documented handoff to Topic 02. The StudySync artifact above is fictional, and the candidate video has not received the required human review. Shared policy decisions are accepted, but this packet is not a complete-group release decision. Group status remains **draft; not announced as improved** until complete evidence, independent verification, individual video disposition, and explicit owner sign-off are recorded.
+
+## 7. Independent Educational Review Update — 2026-10-20
+
+This review checked the authored Topic 01 learning record and the fictional sample for objective alignment, evidence labeling, and the documented handoff. It was static only; the previous browser results above are historical author-reported results and were not repeated here.
+
+| Topic or handoff | Status | Finding and remaining evidence |
+|---|---|---|
+| Topic 01 `project-idea-mvp` | **Pass — static** | Objectives align with problem/evidence classification and a complete MVP journey. The exercise distinguishes hypothesis from research evidence and proposes a concrete `PROJECT_CONTEXT.md` output. The StudySync example is fictional; no interview, prototype, or test occurred. |
+| Topic 01 → Topic 02 | **Pass — documented artifact shape** | Open questions and context are named as inputs to Grill Me. This is a suggested handoff, not an enforced prerequisite or proof of interview completion. |
+| Candidate video | **Not reviewed** | The URL and discovery record remain candidate metadata. Playback, captions, accessibility, and lesson fit require human review under DEC-70. |

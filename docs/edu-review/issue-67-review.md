@@ -1,15 +1,17 @@
-# Issue #67: Docker and Linux operations — author review evidence
+# Issue #67: Docker and Linux operations — educational review evidence
 
 **Recorded:** 2026-10-20
-**Implementation:** complete draft in `src/data/learning/group-b.ts` for the 2 canonical Topics.
-**Educational author review:** lesson, question, and rubric records carry a specific Curriculum B author review. Each record remains `review-ready`.
-**Release decision:** blocked pending course-owner template/scoring/rubric/video acceptance. No owner approval is recorded. Candidate videos are not approved; playback, captions, accessibility, and user-facing availability remain Not Run.
+
+**Implementation:** original wave3 lessons plus the typed module in `src/data/learning/group-b-17-docker-linux.ts` for 2 canonical Topics.
+**Independent educational review:** Passed (static) on 2026-10-20 for lesson sequences, worked examples, questions/keys/rationales, criterion-to-output links, practical outputs, and handoffs; topic-specific findings follow. Learner execution, media review, and browser journeys are outside this pass. Each record remains `review-ready` pending final group acceptance.
+**Course-owner policies:** accepted on 2026-10-20 in issue #70: the template and 19-group membership; quiz scoring of 1 point correct and 0 for incorrect/unanswered, unlimited retries, feedback after submit, and retention of all attempts with question and policy versions; learner-reported levels not-yet/in-progress/ready-for-review with no mastery threshold or independent correctness claim; and the candidate-video checklist. These decisions do not approve an individual video or this complete group.
+**Release status:** this group remains `review-ready` and is not marked improved. Human review of each candidate video and exact-candidate browser/integration evidence remain pending; final group-specific owner sign-off is not recorded.
 
 **Independent narrow assessment review:** root passed all 58 B question/key/rationale and artifact-bound criterion/output references on 2026-10-20; see [scope and limits](group-b-narrow-review-2026-10-20.md).
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
-The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; it does not claim learner execution. Owner policies are accepted in issue #70, while individual human video reviews, browser validation, and final group-specific acceptance remain pending.
 
 ## `docker-container-workflow`
 
@@ -30,7 +32,7 @@ Decision=managed build. لا يوجد Dockerfile أو Compose إضافي؛ سج�
   - `docker-container-workflow-container-needed-decision` (docker-container-workflow-objective-1): المنصة تدعم بناء Next.js مباشرة من Git ولا تحتاج image. ما المخرج المقبول؟ — مفتاح docker-container-workflow-container-needed-decision-a; التعليل: الحاوية قرار تشغيل؛ لا تضفها دون حاجة يثبتها المسار.
   - `docker-container-workflow-runtime-secret-injection` (docker-container-workflow-objective-2): أين تمرر قاعدة البيانات السرية إلى حاوية وقت التشغيل؟ — مفتاح docker-container-workflow-runtime-secret-injection-c; التعليل: الأسرار لا توضع في طبقات الصورة أو سجل البناء.
 
-**Practical assessment:** scale `docker-container-workflow-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `docker-container-workflow-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `container-decision`: قرار Docker أو التجاوز مع مصدر المنصة والحاجة.
   - `container-runtime-evidence`: Dockerfile اختياري وسجل build/run/user/port/secrets بنتيجة صادقة.
 
@@ -40,11 +42,13 @@ Criteria:
 
 **Author finding:** راجع المؤلف الفرق بين image وcontainer والبناء المُدار، وربط المثال بـ Next.js أو بديل Python. الإعداد المقترح لا يحمل أسراراً، واختبار البناء غير المنفذ لا يوصف بأنه ناجح.
 
+**Independent educational review:** Passed (static): the lesson distinguishes images from containers and managed builds, and scopes Dockerfile, build context, runtime secrets and non-root execution to a real need. `container-decision` and `container-runtime-evidence` feed the Linux ownership review. A build or container was not run.
+
 **External video candidate:** [Accelerating Development with Docker](https://www.docker.com/resources/accelerating-development-with-docker-on-demand-training/) (`candidate`, approval `proposed`). مرشح مسجل لإنشاء Dockerfile/Compose وبناء صورة وبيئة تطوير وتشغيل اختبارات. قد يتطلب الاشتراك للاستفادة الكاملة؛ إذا كان المضيف يبني مباشرة فلا حاجة للحاوية.
 
 **Resource evidence:** صفحة Docker تسميه recorded session وتذكر إنشاء Dockerfile/Compose وبناء صور وتشغيل اختبارات وتصحيح. الصفحة تنبه إلى أن الاشتراك مطلوب للاستفادة الكاملة. صلته عملية إذا اختيرت الحاوية؛ لم يُختبر تشغيله أو captions أو الوصولية ولم يوافق المالك. [Publisher/source page](https://www.docker.com/resources/accelerating-development-with-docker-on-demand-training/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `linux-server-operations`
 
@@ -65,7 +69,7 @@ Owner=provider. الطالب يوثق متغيرات البيئة ومسار ا�
   - `linux-server-operations-managed-host-boundary` (linux-server-operations-objective-1): الخدمة تعمل على منصة مُدارة لا تسمح بـ SSH. ما الخطوة السليمة؟ — مفتاح linux-server-operations-managed-host-boundary-a; التعليل: تتبع الإجراء حدود الاستضافة؛ الطالب لا يدير المضيف المُدار.
   - `linux-server-operations-least-privilege-file-access` (linux-server-operations-objective-2): ملف إعداد يحتاجه مستخدم خدمة واحد فقط. أي سياسة تبدأ بها؟ — مفتاح linux-server-operations-least-privilege-file-access-b; التعليل: الحد الأدنى من الصلاحيات يقلل أثر الخطأ أو الاختراق.
 
-**Practical assessment:** scale `linux-server-operations-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `linux-server-operations-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `linux-ownership`: خريطة مسؤولية المضيف والمستخدم والمجلدات أو سجل التجاوز.
   - `linux-change-plan`: اقتراح صلاحيات محدود بخطوة تحقق ورجوع دون تنفيذ إنتاجي.
 
@@ -75,16 +79,17 @@ Criteria:
 
 **Author finding:** راجع المؤلف التفريق بين Linux مُدار ويدوي، وميّز فحص القراءة من تغيير الملكية. المثال لا يوجه إلى تنفيذ أمر إداري قبل الإذن وخطة الرجوع.
 
+**Independent educational review:** Passed (static): the lesson distinguishes managed-host limits from learner-managed Linux and explains identity, ownership and least privilege before a change. `linux-ownership` and `linux-change-plan` feed the operations runbook. No server command was run.
+
 **External video candidate:** [How to Modify File Permissions in Bash (Part 12 of 20)](https://learn.microsoft.com/en-us/shows/bash-for-beginners/how-to-modify-file-permissions-in-bash-12-of-20-bash-for-beginners) (`candidate`, approval `proposed`). مرشح لشرح قراءة صلاحيات الملفات وchown/chgrp/chmod. يقتصر على مختبر أو مضيف مخوّل، ولا يثبت صلاحية الطالب لتغيير خادم مُدار.
 
 **Resource evidence:** صفحة Microsoft Learn تذكر فصول عرض الصلاحيات (00:00) وchown (02:25) وchgrp (04:35) وchmod (06:00). هذا يطابق فحص الصلاحيات مع ضرورة التقييد بمضيف مخوّل. لم يُختبر التشغيل/captions/accessibility ولم توجد موافقة مالك. [Publisher/source page](https://learn.microsoft.com/en-us/shows/bash-for-beginners/how-to-modify-file-permissions-in-bash-12-of-20-bash-for-beginners).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
-## Owner gates
+## Remaining group acceptance conditions
 
-- Approve or revise the first-group/template and this membership before any group is marked improved.
-- Decide the proposed quiz scoring and descriptive rubric scale; all scoring/rubric policy approvals remain `proposed`.
-- Review each candidate against the actual lesson, approve/reject each resource, and confirm captions/accessibility/playback before release. A publisher listing alone is not approval.
-- Record course-owner acceptance for the complete group and the independent evidence required by the parent release issue.
-- Browser journey, persisted history, RTL/LTR, keyboard/mobile, and integrated build checks remain for root-coordinated integration.
+- The course owner accepted the template, 19-group membership, quiz-scoring policy, descriptive self-assessment policy, and candidate-video checklist in [owner decision package #70](owner-decision-package-70.md). Those policy decisions do not constitute approval of this complete group.
+- Each linked external resource remains a candidate until a human reviews playback, captions, accessibility, and fit with its lesson. No video in this group is approved or reported as playback-tested.
+- Learner project execution and exact-candidate browser checks for full-reader/preview, persistence, RTL/LTR, keyboard, mobile and relevant diagrams remain Not Run or are owned by the root-coordinated integration review.
+- Keep every canonical Topic available. Do not mark this group improved until the remaining evidence is complete and the course owner records this group in the final sign-off list.

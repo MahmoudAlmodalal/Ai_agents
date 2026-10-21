@@ -16,8 +16,16 @@ const candidate: CandidateExternalVideo = {
   reviewEvidence: [],
 };
 
+const topicSlug = 'topic-test';
+const contentVersion = 4;
+
 function html(video?: CandidateExternalVideo): string {
-  return renderToStaticMarkup(createElement(ExternalVideoResource, { video, topicTitle: 'Topic test' }));
+  return renderToStaticMarkup(createElement(ExternalVideoResource, {
+    video,
+    topicTitle: 'Topic test',
+    topicSlug,
+    contentVersion,
+  }));
 }
 
 test('candidate and incomplete approval stay non-actionable', () => {
@@ -28,14 +36,27 @@ test('candidate and incomplete approval stay non-actionable', () => {
   ];
 
   for (const approval of invalidApprovals) {
-    const record = { ...candidate, approval } as unknown as CandidateExternalVideo;
-    assert.equal(getExternalVideoDisplayState(record), 'candidate');
+    const record = { ...candidate, availability: 'available', approval } as unknown as CandidateExternalVideo;
+    assert.equal(getExternalVideoDisplayState(record, topicSlug, contentVersion), 'candidate');
     const markup = html(record);
     assert.match(markup, /مرشح — بانتظار المراجعة/);
     assert.match(markup, /يتطلب المصدر الخارجي اتصالاً بالإنترنت، ولا يتوفر دون اتصال/);
     assert.match(markup, /example\.org/);
     assert.doesNotMatch(markup, /<a\b/);
   }
+
+  const approvalOnly: CandidateExternalVideo = {
+    ...candidate,
+    availability: 'available',
+    approval: {
+      state: 'approved',
+      approvedBy: 'Course owner',
+      approvedAt: '2026-10-20T12:00:00.000Z',
+      decisionReference: 'issue-47-review',
+    },
+  };
+  assert.equal(getExternalVideoDisplayState(approvalOnly, topicSlug, contentVersion), 'candidate');
+  assert.doesNotMatch(html(approvalOnly), /<a\b/);
 });
 
 test('complete approval enables an accessible external link and keeps the online-only message', () => {
@@ -49,9 +70,25 @@ test('complete approval enables an accessible external link and keeps the online
       approvedAt: '2026-10-20T12:00:00.000Z',
       decisionReference: 'issue-47-review',
     },
+    acceptanceReview: {
+      topicSlug,
+      contentVersion,
+      reviewer: 'Synthetic test fixture',
+      reviewedAt: '2026-10-20T12:00:00.000Z',
+      sourceUrl: 'https://www.youtube.com/watch?v=QRZ_l7cVzzU',
+      evidence: 'Synthetic test fixture only; this is not evidence of an actual video review.',
+      checklist: {
+        topicAlignment: 'passed',
+        educationalSuitability: 'passed',
+        playback: 'passed',
+        captions: 'passed',
+        accessibility: 'passed',
+        unavailableHandling: 'passed',
+      },
+    },
   };
 
-  assert.equal(getExternalVideoDisplayState(approved), 'approved');
+  assert.equal(getExternalVideoDisplayState(approved, topicSlug, contentVersion), 'approved');
   assert.equal(getExternalSourceLabel(approved.url), 'YouTube');
   const markup = html(approved);
   assert.match(markup, /مورد معتمد/);
@@ -64,6 +101,51 @@ test('complete approval enables an accessible external link and keeps the online
   assert.match(markup, /aria-label="فتح الفيديو المعتمد/);
   assert.match(markup, /المصدر خارجي ويتطلب اتصالاً بالإنترنت\. لا يعمل هذا الفيديو دون اتصال/);
   assert.doesNotMatch(markup, /data-offline-content-version/);
+});
+
+test('video review from another Topic version or an incomplete checklist stays non-actionable', () => {
+  const approvedShape: CandidateExternalVideo = {
+    ...candidate,
+    availability: 'available',
+    approval: {
+      state: 'approved',
+      approvedBy: 'Course owner',
+      approvedAt: '2026-10-20T12:00:00.000Z',
+      decisionReference: 'issue-47-review',
+    },
+    acceptanceReview: {
+      topicSlug,
+      contentVersion,
+      reviewer: 'Synthetic test fixture',
+      reviewedAt: '2026-10-20T12:00:00.000Z',
+      sourceUrl: candidate.url,
+      evidence: 'Synthetic test fixture only; this is not evidence of an actual video review.',
+      checklist: {
+        topicAlignment: 'passed',
+        educationalSuitability: 'passed',
+        playback: 'passed',
+        captions: 'passed',
+        accessibility: 'passed',
+        unavailableHandling: 'passed',
+      },
+    },
+  };
+  const stale = {
+    ...approvedShape,
+    acceptanceReview: { ...approvedShape.acceptanceReview!, contentVersion: contentVersion - 1 },
+  };
+  const incomplete = {
+    ...approvedShape,
+    acceptanceReview: {
+      ...approvedShape.acceptanceReview!,
+      checklist: { ...approvedShape.acceptanceReview!.checklist, captions: 'not-run' as const },
+    },
+  };
+
+  for (const record of [stale, incomplete]) {
+    assert.equal(getExternalVideoDisplayState(record, topicSlug, contentVersion), 'candidate');
+    assert.doesNotMatch(html(record), /<a\b/);
+  }
 });
 
 test('unavailable and missing resources have clear states and no outbound action', () => {

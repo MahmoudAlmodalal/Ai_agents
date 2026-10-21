@@ -1,0 +1,67 @@
+{
+  "productSource": "d1e136ce7a0bbeb14c9ee13567af970db6c8188e",
+  "buildId": "FvbL4S3b3evkSU2VIIDoP",
+  "fullRun": {
+    "startTime": "2026-10-20T17:43:41.677Z",
+    "duration": 555903.187,
+    "expected": 301,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "targetedRerun": {
+    "startTime": "2026-10-20T20:38:59.013Z",
+    "duration": 19984.689,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "resolvedCases": [
+    {
+      "file": "offline-bundles.spec.ts",
+      "title": "saves a quiz with its lesson, grades offline attempts, retries, and restores them after reload and reconnect",
+      "status": "unexpected"
+    },
+    {
+      "file": "path/execution-tools.spec.ts",
+      "title": "Topic 25 (Google AI Studio): Prototyping alongside frontend tools, JSON mock data, and rate limits",
+      "status": "unexpected"
+    },
+    {
+      "file": "path/stitch-design-system-prototype.spec.ts",
+      "title": "Topic 21 (Google Stitch): Starts with one reference screen before generating other screens",
+      "status": "unexpected"
+    },
+    {
+      "file": "path/stitch-design-system-prototype.spec.ts",
+      "title": "Topics 21, 22, 23 render structured learning activity sections",
+      "status": "unexpected"
+    },
+    {
+      "file": "path/stitch-design-system-prototype.spec.ts",
+      "title": "Practical steps and expected outputs are present and copyable across Group 08",
+      "status": "unexpected"
+    },
+    {
+      "file": "path/ui-ux-blueprint-inventory.spec.ts",
+      "title": "Group 07: Practical steps and expected outputs are present and copyable across all topics",
+      "status": "unexpected"
+    }
+  ],
+  "releaseJourney": {
+    "startTime": "2026-10-20T20:39:26.551Z",
+    "duration": 18239.724,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "export": {
+    "sha256": "8bfad298b1cacf511874f5f089c10af9f3083a76af4715e12ac7c9c0bd882027",
+    "members": 382,
+    "crc": "passed",
+    "lessonFiles": 58
+  },
+  "note": "Initial full run failed on six stale wording expectations; all six exact cases passed after test-only corrections. Product source/build was unchanged. Human manual, video, group-release, and deployment approval are separate."
+}

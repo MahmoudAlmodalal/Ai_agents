@@ -1,15 +1,17 @@
-# Issue #68: Cloud deployment — author review evidence
+# Issue #68: Cloud deployment — educational review evidence
 
 **Recorded:** 2026-10-20
-**Implementation:** complete draft in `src/data/learning/group-b.ts` for the 3 canonical Topics.
-**Educational author review:** lesson, question, and rubric records carry a specific Curriculum B author review. Each record remains `review-ready`.
-**Release decision:** blocked pending course-owner template/scoring/rubric/video acceptance. No owner approval is recorded. Candidate videos are not approved; playback, captions, accessibility, and user-facing availability remain Not Run.
+
+**Implementation:** original wave3 lessons plus the typed module in `src/data/learning/group-b-18-cloud-deployment.ts` for 3 canonical Topics.
+**Independent educational review:** Passed (static) on 2026-10-20 for lesson sequences, worked examples, questions/keys/rationales, criterion-to-output links, practical outputs, and handoffs; topic-specific findings follow. Learner execution, media review, and browser journeys are outside this pass. Each record remains `review-ready` pending final group acceptance.
+**Course-owner policies:** accepted on 2026-10-20 in issue #70: the template and 19-group membership; quiz scoring of 1 point correct and 0 for incorrect/unanswered, unlimited retries, feedback after submit, and retention of all attempts with question and policy versions; learner-reported levels not-yet/in-progress/ready-for-review with no mastery threshold or independent correctness claim; and the candidate-video checklist. These decisions do not approve an individual video or this complete group.
+**Release status:** this group remains `review-ready` and is not marked improved. Human review of each candidate video and exact-candidate browser/integration evidence remain pending; final group-specific owner sign-off is not recorded.
 
 **Independent narrow assessment review:** root passed all 58 B question/key/rationale and artifact-bound criterion/output references on 2026-10-20; see [scope and limits](group-b-narrow-review-2026-10-20.md).
 
 The original wave2/wave3 lessons remain in place. The typed module adds objectives, worked examples, practical project outputs, objective quizzes, self-assessment criteria, and a candidate resource for each Topic. BorrowHub stays optional and no Topic access gate was added.
 
-The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; learner tool execution, browser validation, video review, and course-owner decisions remain Not Run or pending.
+The current output-to-input traceability review for all Topics 30–58 is recorded in [Curriculum B output-to-input traceability](group-b-handoff-audit-2026-10-20.md). It covers static artifact references only; it does not claim learner execution. Owner policies are accepted in issue #70, while individual human video reviews, browser validation, and final group-specific acceptance remain pending.
 
 ## `vercel-frontend-deployment`
 
@@ -30,7 +32,7 @@ preview /items يعمل ويقرأ fixtures. تفاصيل route سجلت Passed 
   - `vercel-frontend-deployment-public-vs-runtime-env` (vercel-frontend-deployment-objective-1): تحتاج الواجهة public URL لـ API بينما قاعدة البيانات لها كلمة سر. أي قيمة يمكن تضمينها في bundle؟ — مفتاح vercel-frontend-deployment-public-vs-runtime-env-a; التعليل: كل قيمة عامة تصل للمتصفح؛ الأسرار تبقى server-side وخارج bundle.
   - `vercel-frontend-deployment-preview-scope` (vercel-frontend-deployment-objective-2): preview للواجهة يعرض بيانات fixture. ماذا أثبت؟ — مفتاح vercel-frontend-deployment-preview-scope-a; التعليل: نجاح الواجهة لا يثبت خدمات منفصلة أو رحلة تكامل.
 
-**Practical assessment:** scale `vercel-frontend-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `vercel-frontend-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `vercel-config-record`: سجل repo/build/runtime/env والنطاق مع مصادرها.
   - `vercel-preview-evidence`: نتيجة معاينة لمسارات الواجهة وخطة رجوع دون نشر غير مصرح.
 
@@ -40,11 +42,13 @@ Criteria:
 
 **Author finding:** راجع المؤلف الفصل بين الواجهة والخادم وقيمة NEXT_PUBLIC. المثال يمنع استنتاج نشر API أو بيانات فعلية من preview واجهة.
 
+**Independent educational review:** Passed (static): the lesson binds settings to the actual repo/build/runtime, separates preview from production and frontend evidence from API/DB evidence, and excludes secret values. `vercel-config-record` and `vercel-preview-evidence` feed a host comparison or runbook. No learner deployment was run.
+
 **External video candidate:** [Account Setup — Vercel Foundations](https://vercel.com/academy/vercel-foundations/vercel-account-setup) (`candidate`, approval `proposed`). مرشح من درس ضمن سلسلة فيديوهات Vercel Foundations؛ يغطي ربط repo وإعداد environments/regions. استخدمه لتعلم واجهة المنصة بعد مراجعة إعدادات المشروع الفعلية دون نشر غير مصرح.
 
 **Resource evidence:** صفحة Vercel Academy تصف Vercel Foundations كسلسلة فيديو 9 دروس وتذكر Account Setup لربط repo وإعداد البيئات. درس Account Setup ذو صلة بخطوات المشروع، لكن الفيديو/إتاحة الحساب/الإعدادات الخاصة لم تُفحص. لا playback/captions/accessibility أو owner approval. [Publisher/source page](https://vercel.com/academy/vercel-foundations).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `netlify-frontend-deployment`
 
@@ -65,7 +69,7 @@ Criteria:
   - `netlify-frontend-deployment-current-framework-support` (netlify-frontend-deployment-objective-1): تغير دعم framework بين مزودي الاستضافة وإصداراتهم. ما المصدر الأفضل للتحقق؟ — مفتاح netlify-frontend-deployment-current-framework-support-b; التعليل: الدعم يعتمد على الميزة والنسخة الحالية؛ المثال غير المطابق لا يكفي.
   - `netlify-frontend-deployment-preview-mock` (netlify-frontend-deployment-objective-2): نجح deploy preview لكن API يستخدم mock. ما الذي تسجله؟ — مفتاح netlify-frontend-deployment-preview-mock-a; التعليل: مخرج المعاينة يخص طبقة ومصدر البيانات اللذين جرى فحصهما.
 
-**Practical assessment:** scale `netlify-frontend-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `netlify-frontend-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `netlify-compatibility-record`: توافق framework وإعداد البناء بمصدر وتاريخ.
   - `netlify-preview-report`: مسار preview ونتيجة فحصه وحدود API/env.
 
@@ -75,11 +79,13 @@ Criteria:
 
 **Author finding:** راجع المؤلف طبيعة Netlify كبديل نشر للواجهة وحساسية الدعم لإصدار framework. لا يلزم الجمع بين مزودي واجهة، وتكامل API يبقى مستقلاً.
 
+**Independent educational review:** Passed (static): the lesson requires current framework/version support evidence and keeps preview, API and data source claims separate. `netlify-compatibility-record` and `netlify-preview-report` carry the source, date and unknowns forward. No learner deployment was run.
+
 **External video candidate:** [5 ways to deploy a new Netlify site](https://developers.netlify.com/videos/five-ways-to-deploy-a-new-netlify-site/) (`candidate`, approval `proposed`). مرشح يعرض Netlify Drop وDeploy button وGit وCLI. يغطي طرق نشر عامة لا صلاحية Next.js/App Router الحالية؛ يجب مراجعة مصفوفة دعم framework والإصدار أولاً.
 
 **Resource evidence:** صفحة Netlify Developers تعرض فيديو بخمس طرق نشر منها Git integration وCLI. تتناول إدارة deployment عامة فقط، ولا تسجل توافق Next.js الحالي أو features/runtime. التشغيل/captions/accessibility ومالك المقرر لم يراجعوه. [Publisher/source page](https://developers.netlify.com/videos/five-ways-to-deploy-a-new-netlify-site/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
 ## `backend-database-deployment`
 
@@ -100,7 +106,7 @@ frontend→https://api.staging.example (عنوان توضيحي)→private DB. �
   - `backend-database-deployment-runtime-secret-configuration` (backend-database-deployment-objective-1): أين تضع كلمة مرور PostgreSQL المستخدمة في production؟ — مفتاح backend-database-deployment-runtime-secret-configuration-b; التعليل: الأسرار تخص بيئة الخادم ولا تصل للمستودع أو المتصفح.
   - `backend-database-deployment-health-vs-database-check` (backend-database-deployment-objective-2): نجح health endpoint لكنه لا يتصل بقاعدة البيانات. ما الحالة؟ — مفتاح backend-database-deployment-health-vs-database-check-b; التعليل: كل فحص يثبت فقط ما شمله فعلاً.
 
-**Practical assessment:** scale `backend-database-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; scale approval is `proposed`. Outputs:
+**Practical assessment:** scale `backend-database-deployment-descriptive-scale` v1, completion rule `no-mastery-threshold`; the descriptive self-assessment policy is accepted by the course owner under issue #43 (per issue #70); final group sign-off remains pending. Outputs:
   - `backend-topology`: خريطة استضافة API وDB والشبكة والأسرار.
   - `backend-smoke-report`: نتائج migration/health/auth/DB أو قائمة Not Run مع سبب.
 
@@ -110,16 +116,17 @@ Criteria:
 
 **Author finding:** راجع المؤلف فصل API/DB عن الواجهة وسلامة migrations ومصدر الأسرار. المثال يصرح بوضوح أن hostname تجريبي وأن التحقق لم يحدث.
 
+**Independent educational review:** Passed (static): the lesson separates frontend, API and PostgreSQL, keeps secrets server-side, scopes migration checks to staging, and distinguishes health from auth/ownership/DB checks. `backend-topology` and `backend-smoke-report` feed operations. The example hostname is illustrative; no service or migration was created.
+
 **External video candidate:** [Deploy a FastAPI app to Render — Mastering REST APIs with FastAPI](https://www.oreilly.com/videos/mastering-rest-apis/9781835464694/) (`candidate`, approval `proposed`). مرشح من فصل فيديو بعنوان Deploy a FastAPI app to Render (6:09) وفصل منفصل لإضافة PostgreSQL مجانية (9:15). راجع عروض المنصة وحدود الخطط ونسخ الأدوات الحالية قبل إعداد مشروع حقيقي.
 
 **Resource evidence:** فهرس O’Reilly يعرض فصل Deploy a FastAPI app to Render (6:09) وفصل Add a free PostgreSQL database to your FastAPI app (9:15). يغطي التطبيق والقاعدة، لكن الأسعار/الخطط والنسخ تتغير وربما يحتاج اشتراكاً. playback/captions/accessibility وموافقة المالك غير منفذة. [Publisher/source page](https://www.oreilly.com/videos/mastering-rest-apis/9781835464694/).
 
-**Gaps:** owner decision is pending; video playback, captions, accessibility, and any user-facing connectivity state are Not Run. No owner approval or final video availability is claimed.
+**Remaining gaps:** All external resources remain `candidate` under the accepted issue #70 deferral. Human review of playback, captions, accessibility, and fit with the current lesson is Not Run, as is the exact user-facing state when a candidate cannot be reached. Learner-project commands, deployments, migrations, restore drills, and browser journeys are not implied by these static examples. The final group-specific owner sign-off is not recorded; the group remains `review-ready` and is not announced as improved.
 
-## Owner gates
+## Remaining group acceptance conditions
 
-- Approve or revise the first-group/template and this membership before any group is marked improved.
-- Decide the proposed quiz scoring and descriptive rubric scale; all scoring/rubric policy approvals remain `proposed`.
-- Review each candidate against the actual lesson, approve/reject each resource, and confirm captions/accessibility/playback before release. A publisher listing alone is not approval.
-- Record course-owner acceptance for the complete group and the independent evidence required by the parent release issue.
-- Browser journey, persisted history, RTL/LTR, keyboard/mobile, and integrated build checks remain for root-coordinated integration.
+- The course owner accepted the template, 19-group membership, quiz-scoring policy, descriptive self-assessment policy, and candidate-video checklist in [owner decision package #70](owner-decision-package-70.md). Those policy decisions do not constitute approval of this complete group.
+- Each linked external resource remains a candidate until a human reviews playback, captions, accessibility, and fit with its lesson. No video in this group is approved or reported as playback-tested.
+- Learner project execution and exact-candidate browser checks for full-reader/preview, persistence, RTL/LTR, keyboard, mobile and relevant diagrams remain Not Run or are owned by the root-coordinated integration review.
+- Keep every canonical Topic available. Do not mark this group improved until the remaining evidence is complete and the course owner records this group in the final sign-off list.
