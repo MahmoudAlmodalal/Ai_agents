@@ -32,6 +32,54 @@ test('tools guide delays coding setup and supports verified command copy and dir
   await expect(directory.getByRole('heading', { name: /كلود كود/ })).toHaveCount(0);
 });
 
+test('tools guide presents sixteen tools with usage stages, review dates, pitfalls, examples, and non-color-reliant verification badges', async ({ page }) => {
+  await page.goto('/tools');
+  const toolsSection = page.getByRole('region', { name: 'دليل أدوات المسار' });
+  const articles = toolsSection.locator('article');
+  await expect(articles).toHaveCount(16);
+
+  const expectedTools = [
+    'Grill Me',
+    'Google AI Studio',
+    'Git',
+    'GitHub',
+    'Mermaid Live',
+    'PlantUML / PlantText',
+    'dbdiagram.io',
+    'Google Stitch',
+    'Stitch MCP',
+    'DESIGN.md',
+    'Node.js + npm',
+    'Next.js',
+    'UI/UX Pro Max',
+    'GitHub Spec Kit',
+    'Python 3.11 + uv',
+    'Antigravity CLI / IDE',
+  ];
+
+  for (let i = 0; i < expectedTools.length; i++) {
+    const card = articles.nth(i);
+    await expect(card.getByRole('heading', { level: 2 })).toHaveText(expectedTools[i]);
+    await expect(card).toContainText('مرحلة الاستخدام');
+    await expect(card).toContainText('تاريخ مراجعة المصدر');
+    await expect(card).toContainText('أشهر عقبة عملية');
+    await expect(card).toContainText('مثال تطبيقي');
+    await expect(card).toContainText('متى تستخدمها');
+    await expect(card).toContainText('المدخلات');
+    await expect(card).toContainText('المخرجات');
+    await expect(card).toContainText('دورة الحياة');
+    await expect(card.getByRole('link', { name: 'المصدر الرسمي' })).toBeVisible();
+    await expect(card.getByRole('link', { name: 'موضوع الاستخدام' })).toBeVisible();
+
+    const badge = card.locator('[data-verification-status]');
+    await expect(badge).toBeVisible();
+    const statusText = await badge.innerText();
+    const validStatuses = ['موثّق من مصدر رسمي', 'اختياري', 'لم يُختبر التثبيت'];
+    expect(validStatuses.some((s) => statusText.includes(s))).toBe(true);
+    expect(/^[✓◇⚠]/.test(statusText.trim())).toBe(true);
+  }
+});
+
 test('diagrams guide displays eight diagrams with core questions, decision rules, inputs, and editor links', async ({ page }) => {
   await page.goto('/diagrams');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('مختبر المخططات الثمانية');

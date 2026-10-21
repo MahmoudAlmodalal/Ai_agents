@@ -243,15 +243,4 @@ export const AGENTS: AgentEntry[] = [
   },
 ];
 
-export const COURSE_TOOLS: { name: string; desc: string; url: string }[] = [
-  { name: 'Grill Me', desc: 'مقابلة متطلبات تدريجية', url: 'https://github.com/mattpocock/skills' },
-  { name: 'Git / GitHub', desc: 'تاريخ تغييرات وتوثيق', url: 'https://github.com/' },
-  { name: 'Mermaid Live', desc: 'مخططات نصية', url: 'https://mermaid.live' },
-  { name: 'PlantUML', desc: 'رسم Use Case قياسي', url: 'https://www.planttext.com/' },
-  { name: 'dbdiagram.io', desc: 'تحويل DBML إلى ERD', url: 'https://dbdiagram.io' },
-  { name: 'Google Stitch', desc: 'توليد واجهات من وصف', url: 'https://stitch.withgoogle.com/' },
-  { name: 'Google AI Studio', desc: 'تجربة نماذج Gemini مجانا', url: 'https://aistudio.google.com/' },
-  { name: 'Next.js', desc: 'تطوير Frontend', url: 'https://nextjs.org/docs' },
-  { name: 'UI/UX Pro Max', desc: 'مراجعة UI/UX', url: 'https://github.com/nextlevelbuilder/ui-ux-pro-max-skill' },
-  { name: 'DESIGN.md', desc: 'عقد النظام البصري', url: 'https://github.com/google-labs-code/design.md' },
-];
+
