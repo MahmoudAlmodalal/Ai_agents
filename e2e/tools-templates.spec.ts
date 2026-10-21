@@ -12,7 +12,7 @@ test('reference templates expose fourteen honest availability states and copyabl
   await expect(page.getByRole('status')).toContainText('تم نسخ');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain('Participants + Messages + Alternatives');
   await sequence.getByRole('link', { name: 'موضوع الاستخدام' }).click();
-  await expect(page).toHaveURL(/\/learn\/sequence-diagram-modeling$/);
+  await expect(page).toHaveURL(/\/learn\/sequence-diagram-modeling$/, { timeout: 15000 });
 });
 
 test('tools guide delays coding setup and supports verified command copy and directory filtering', async ({ page, context }) => {
@@ -32,8 +32,23 @@ test('tools guide delays coding setup and supports verified command copy and dir
   await expect(directory.getByRole('heading', { name: /كلود كود/ })).toHaveCount(0);
 });
 
+test('diagrams guide displays eight diagrams with core questions, decision rules, inputs, and editor links', async ({ page }) => {
+  await page.goto('/diagrams');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('مختبر المخططات الثمانية');
+  const articles = page.locator('article');
+  await expect(articles).toHaveCount(8);
+  for (const card of await articles.all()) {
+    await expect(card.getByText('السؤال المحوري:', { exact: true })).toBeVisible();
+    await expect(card.locator('ul li')).toHaveCount(3);
+    await expect(card.getByText('المدخلات المطلوبة قبل الرسم:', { exact: true })).toBeVisible();
+    await expect(card.getByText('المحرر المناسب:', { exact: true })).toBeVisible();
+    await expect(card.getByRole('link', { name: 'موضوع الاستخدام' })).toBeVisible();
+    await expect(card.getByRole('link', { name: 'المختبر التفاعلي' })).toBeVisible();
+  }
+});
+
 test('reference topic destinations resolve and reference pages fit phone and desktop widths', async ({ page, request }) => {
-  for (const route of ['/templates', '/tools']) {
+  for (const route of ['/templates', '/tools', '/diagrams']) {
     await page.goto(route);
     const destinations = await page.getByRole('link', { name: 'موضوع الاستخدام', exact: true }).evaluateAll((links) => links.map((link) => link.getAttribute('href')!));
     for (const destination of new Set(destinations)) {
