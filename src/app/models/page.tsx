@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { MODELS, BEST_PICKS, LAST_VERIFIED_MODELS } from '@/src/data/models';
 
-export const metadata = { title: 'مؤشر الموديلات | سلاح العصر', description: 'مقارنة الموديلات الحالية: البرمجة والعربية والاستدلال والتكلفة — دليل تكميلي محدث.' };
+export const metadata = { title: 'مؤشر الموديلات | Ai_agents', description: 'مقارنة الموديلات الحالية: البرمجة والعربية والاستدلال والتكلفة — دليل تكميلي محدث.' };
 
 const scoreColor: Record<string, string> = {
   'ممتاز': 'bg-emerald-600 dark:bg-emerald-800 text-white',

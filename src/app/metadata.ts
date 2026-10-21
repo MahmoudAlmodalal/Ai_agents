@@ -4,22 +4,21 @@ export const siteViewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#1e3a5f',
+  themeColor: '#17231f',
 };
 
 export const siteMetadata: Metadata = {
   title: {
-    default: "سلاح العصر — MET Academy | Don't Just Prompt. Engineer.",
-    template: '%s | سلاح العصر — MET Academy',
+    default: 'Ai_agents — هندسة البرمجيات بالذكاء الاصطناعي',
+    template: '%s | Ai_agents',
   },
   description:
-    'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy. من الفكرة ووثيقة PRD والمخططات الهندسية إلى فرونت إند احترافي قابل للإنتاج. لا تكن ملقناً بل مهندساً.',
+    'مسار عملي لتعلّم هندسة البرمجيات بمساعدة وكلاء الذكاء الاصطناعي: من فهم الفكرة وتوثيق المتطلبات إلى التصميم والبناء والاختبار. يضم 58 موضوعًا ويحفظ نشاطك في متصفحك.',
   keywords: [
-    'سلاح العصر',
-    'MET Academy',
+    'Ai_agents',
     'هندسة البرمجيات بالذكاء الاصطناعي',
     'AI Agents',
-    'Next.js 15 App Router',
+    'التعلم التطبيقي',
     'BorrowHub',
     'Mermaid Diagrams',
     'UML',
@@ -27,25 +26,22 @@ export const siteMetadata: Metadata = {
     'وثيقة PRD',
     'Google Stitch',
   ],
-  authors: [{ name: 'MET Academy' }],
-  creator: 'MET Academy',
-  publisher: 'MET Academy',
-  metadataBase: new URL('https://met-academy.com'),
-  alternates: {
-    canonical: '/',
-  },
+  authors: [{ name: 'Ai_agents' }],
+  creator: 'Ai_agents',
+  publisher: 'Ai_agents',
+  icons: { icon: [{ url: '/ai-agents-mark.svg', type: 'image/svg+xml' }] },
   openGraph: {
-    title: "سلاح العصر — MET Academy | Don't Just Prompt. Engineer.",
+    title: 'Ai_agents — هندسة البرمجيات بالذكاء الاصطناعي',
     description:
-      'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy. لا تكن ملقناً بل مهندساً.',
+      'حوّل فكرة مشروعك إلى متطلبات واضحة وتصميم وبرمجية يمكنك اختبارها وشرح قراراتها.',
     type: 'website',
     locale: 'ar_SA',
-    siteName: 'MET Academy — سلاح العصر',
+    siteName: 'Ai_agents',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'سلاح العصر — MET Academy',
+    title: 'Ai_agents — هندسة البرمجيات بالذكاء الاصطناعي',
     description:
-      'الدورة التطبيقية المتكاملة لبناء وهندسة برمجيات الويب بالذكاء الاصطناعي — MET Academy.',
+      'تعلّم هندسة البرمجيات بالتطبيق مع وكلاء الذكاء الاصطناعي.',
   },
 };

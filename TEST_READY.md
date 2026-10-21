@@ -1,5 +1,7 @@
 # TEST_READY — E2E Test Suite Readiness Declaration
 
+> Historical declaration for the retired source-text harness. The 204-assertion count and four-tier results below are not current browser evidence. Use [TEST_INFRA.md](TEST_INFRA.md) for the Playwright commands and [the current review ledger](docs/ISSUES_26_31_37_REVIEW.md) for actual results and limitations.
+
 > **Project:** MET Academy — Weapon of the Era (سلاح العصر)  
 > **Status:** **HARNESS OPERATIONAL & VERIFIED**  
 > **Authoritative Specification:** `Weapon_of_the_Era_Website_Content_AR.md`  

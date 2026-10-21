@@ -6,7 +6,8 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 10
  * ========================================================================= */
 export const topic10Html = `
-<section id="topic-10-plantuml" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-10-plantuml" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 10 · المحطة الأساسية</span>
     <span class="step-pill">أدوات النمذجة السلوكية ككود</span>
@@ -23,8 +24,8 @@ export const topic10Html = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. فلسفة أداة PlantUML في مسار هندسة البرمجيات</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      تُعد <strong>PlantUML</strong> من أقدم وأقوى الأدوات مفتوحة المصدر في عالم <em>Diagrams as Code</em>؛ حيث صُممت لتطبيق معايير اتحاد إدارة الكائنات (OMG UML Standard) بدقة بالغة.
-      بينما نعتمد على Mermaid في مسارات العمل السريعة داخل المتصفح، تبرز الحاجة الهندسية لأداة PlantUML عند نمذجة <strong>مخططات حالات الاستخدام (Use Case Diagrams)</strong>، حيث توفر تمثيلاً بيانياً قياسياً للفواعل (Actors) وحدود النظام (System Boundaries) والعلاقات الإلزامية والشرطية (include / extend) دون تشويه بصري.
+      تُعد <strong>PlantUML</strong> أداة مفتوحة المصدر لكتابة أنواع متعددة من المخططات بصيغة نصية ضمن منهجية <em>Diagrams as Code</em>. وهي توفر صياغة شائعة لمفاهيم UML مثل الفواعل وحالات الاستخدام وحدود النظام، لكن قبول الشيفرة من المصيّر لا يثبت التوافق مع كل أجزاء معيار UML أو صحة النموذج بالنسبة إلى المتطلبات.
+      بينما يمكن استخدام Mermaid لبعض الرسوم السريعة التي يدعمها المضيف، تتيح PlantUML صياغة مخططات UML-style وحفظ مصدرها النصي. راجع مرجع الأداة للأنواع والعلاقات المدعومة، ثم راجع معنى المخطط مقابل متطلبات المشروع.
     </p>
 
     <!-- Distinction from Mermaid Table -->
@@ -40,18 +41,18 @@ export const topic10Html = `
         <tbody>
           <tr>
             <td><strong>المعيار الهندسي</strong></td>
-            <td>امتثال صارم لمواصفات UML 2.x الرسمية (Actors, Use Cases, Boundaries)</td>
-            <td>تركيز على الرسوم الإجرائية السريعة (Flowcharts, Sequences, State)</td>
+            <td>صياغة نصية لمجموعة من عناصر UML-style مثل Actors وUse Cases وBoundaries؛ قبول المصيّر لا يثبت التوافق الكامل أو المعنى الصحيح</td>
+            <td>مكتبة JavaScript تصيّر أنواعاً مدعومة من الرسوم، مثل Flowcharts وSequences وState؛ يختلف الدعم باختلاف المضيف والنسخة</td>
           </tr>
           <tr>
             <td><strong>محرك التصيير (Rendering)</strong></td>
-            <td>يعتمد على محرك Java مع مكتبة Graphviz لتخطيط العقد وتوليد الصور</td>
-            <td>يعمل بنسبة 100% داخل المتصفح عبر JavaScript وتوليد SVG المباشر</td>
+            <td>يعالج مصدر PlantUML؛ وقد تعتمد بعض المخططات أو إعدادات الخادم على Graphviz</td>
+            <td>يعمل عبر JavaScript في المضيفات التي تدمج Mermaid، مع اختلاف الأنواع المدعومة حسب النسخة والمضيف</td>
           </tr>
           <tr>
             <td><strong>التوافق مع المحررات الحية</strong></td>
-            <td><strong class="text-amber-600 dark:text-amber-400">لا يعمل إطلاقاً داخل Mermaid Live!</strong> يتطلب محررات مخصصة</td>
-            <td>مدعوم مباشرة في Mermaid Live وGitHub Markdown دون إضافات</td>
+            <td>يحتاج محرراً أو مصيّراً يدعم صياغة PlantUML؛ Mermaid Live لا يفسرها</td>
+            <td>تدعمه أسطح GitHub Markdown المحددة، مع اختلاف الدعم حسب النسخة والمضيف</td>
           </tr>
           <tr>
             <td><strong>محررات الويب المعتمدة</strong></td>
@@ -92,10 +93,10 @@ export const topic10Html = `
       <div class="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-5">
         <div class="flex items-center justify-between mb-2">
           <h4 class="font-bold text-[var(--text-main)] text-base">خادم PlantUML الرسمي المرجعي</h4>
-          <span class="rounded bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-bold text-blue-800 dark:text-blue-300">المرجع القياسي</span>
+          <span class="rounded bg-blue-100 dark:bg-blue-950/60 px-2 py-0.5 text-xs font-bold text-blue-800 dark:text-blue-300">خدمة تصيير ويب</span>
         </div>
         <p class="text-sm leading-6 text-[var(--text-muted)] mb-3">
-          الخادم المرجعي المفتوح من مؤلفي الأداة، يضمن التوافق الكامل مع أحدث قواعد الصياغة ودعم جميع امتدادات OMG UML الرسمية.
+          خدمة ويب لتصيير صياغة PlantUML. نجاحها يؤكد أن النسخة الحالية قبلت المصدر ورسمته؛ ولا يثبت مطابقة كل عنصر لمعيار UML أو صحة قرارات المنتج.
         </p>
         <a href="https://www.plantuml.com/plantuml/uml/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline" dir="ltr">
           https://www.plantuml.com/plantuml/uml/ ↗
@@ -107,8 +108,8 @@ export const topic10Html = `
     <div class="callout mistake">
       <div class="callout-header">⚠️ خطأ شائع يجب الحذر منه</div>
       <p>
-        <strong>لا تلصق كود PlantUML داخل محرر Mermaid Live أو العكس!</strong>
-        تختلف اللغتان جذرياً في محرك التصيير وقواعد الصياغة النحوية. كود PlantUML يبدأ دائماً بالوسم <code>@startuml</code> وينتهي بـ <code>@enduml</code>، بينما يبدأ Mermaid بتعريف النوع مثل <code>flowchart TD</code> أو <code>stateDiagram-v2</code>.
+        <strong>محرر Mermaid Live لا يفسر صياغة PlantUML، ومصيّر PlantUML لا يفسر صياغة Mermaid.</strong>
+        تختلف اللغتان في قواعد الصياغة والمصيّر. ملف PlantUML يبدأ عادةً بالوسم <code>@startuml</code> وينتهي بـ <code>@enduml</code>، بينما يبدأ Mermaid بتعريف النوع مثل <code>flowchart TD</code> أو <code>stateDiagram-v2</code>.
       </p>
     </div>
   </div>
@@ -230,7 +231,8 @@ Staff --&gt; UC_Approve
  * Sequence Position: 11
  * ========================================================================= */
 export const topic11Html = `
-<section id="topic-11-use-case" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-11-use-case" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 11 · المحطة الأساسية</span>
     <span class="step-pill">صلاحيات الأدوار والحدود الهندسية</span>
@@ -293,7 +295,7 @@ export const topic11Html = `
             <td><strong>مجدول النظام الآلي (System Scheduler)</strong></td>
             <td>فاعل تقني مؤتمت (Automated System Actor)</td>
             <td>
-              • فحص مهلة الاستلام (48 ساعة - قاعدة 7) وإلغاء الطلبات غير المستلمة.<br/>
+              • فحص مهلة الاستلام (48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق - قاعدة 6) وإلغاء الطلبات غير المستلمة.<br/>
               • رصد الإعارات المتأخرة وتعديل حالة الطلب إلى متأخر (Overdue).
             </td>
           </tr>
@@ -409,7 +411,7 @@ System --&gt; UC_MarkOverdue
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. البرومبت المعتمد لتوليد حالات الاستخدام (PROMPT 07)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لتوجيه وكيل الذكاء الاصطناعي إلى استخراج حالات الاستخدام وضبط علاقات include وextend وفق PRD:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لتوجيه وكيل الذكاء الاصطناعي إلى استخراج حالات الاستخدام وضبط علاقات include وextend وفق PRD:
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -435,7 +437,8 @@ Flag conflicts and missing rules. Do not create other diagrams or code.</code></
  * Sequence Position: 12
  * ========================================================================= */
 export const topic12Html = `
-<section id="topic-12-activity" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-12-activity" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 12 · المحطة الأساسية</span>
     <span class="step-pill">مسارات وقرارات العمليات التشغيلية</span>
@@ -501,10 +504,10 @@ export const topic12Html = `
     <ol class="space-y-3 text-[var(--text-muted)] my-4 leading-7">
       <li><strong>بوابة فحص اعتماد الحساب (Account Verification):</strong> هل الطالب مسجل وحسابه معتمد؟ إذا لا، يتم رفض الطلب وتوجيهه للتفعيل.</li>
       <li><strong>بوابة سقف الإعارة النشطة (Active Loans Limit - Rule 3):</strong> هل يمتلك الطالب أقل من إعارتين نشطتين؟ إذا كان لديه جهازان، يُرفض الطلب فوراً.</li>
-      <li><strong>بوابة توفر الأصل في المستودع (Stock Check):</strong> هل المعدة متوفرة في المخزون الفعلي؟ إذا نفدت، يُعتذر للطالب ويُقترح إشعاره عند التوفر.</li>
-      <li><strong>بوابة مراجعة المسؤول (Staff Approval Decision):</strong> هل اعتمد المشرف الطلب؟ إن رفضه، يُسجل سبب الرفض ويُشعر الطالب؛ وإن اعتماده، ينتقل لمهلة التسليم.</li>
-      <li><strong>بوابة مهلة الاستلام (48-Hour Deadline - Rule 7):</strong> هل حضر الطالب للاستلام خلال 48 ساعة؟ إن لم يحضر، يلغي النظام الحجز آلياً ويُعاد المخزون.</li>
-      <li><strong>بوابة فحص السلامة عند الإرجاع (Return Inspection - Rule 8):</strong> هل المعدة سليمة؟ إن وُجد عطل أو تلف، يُفتح تقرير أضرار وتُفرض غرامة صيانة.</li>
+      <li><strong>بوابة توفر الأصل في المستودع (Stock Check):</strong> هل المعدة متوفرة في المخزون الفعلي؟ إذا نفدت، يُعتذر للطالب ويُرفض الطلب دون إضافة ميزات غير معتمدة.</li>
+      <li><strong>بوابة مراجعة وتأكيد المسؤول (Staff Confirmation - Rule 7):</strong> يؤكد مسؤول المعمل التسليم المادي والإرجاع بعد الإجراء الواقعي؛ ولا يُعتبر إجراء الطالب بديلاً عن تأكيد المسؤول.</li>
+      <li><strong>بوابة مهلة الاستلام (48-Hour Deadline - Rule 6):</strong> هل حضر الطالب للاستلام خلال 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق؟ قد تنتهي المهلة آليًا ويُحرر الحجز وفق PRD؛ لا نفترض بدءها عند الموافقة.</li>
+      <li><strong>بوابة فحص السلامة عند الإرجاع (Return Inspection - Rule 8):</strong> هل المعدة سليمة؟ يسجل المسؤول التلف ولا يعيد الوحدة التالفة إلى الكمية المتاحة. لا تفرض قواعد المصدر غرامة؛ توثق أي سياسة إضافية كسؤال PRD.</li>
     </ol>
   </div>
 
@@ -534,20 +537,18 @@ export const topic12Html = `
 
     SubmitReq --&gt; StaffReview{"قرار مسؤول المعمل"}
     StaffReview -- رفض --&gt; RecordRejection["تسجيل سبب الرفض وإشعار الطالب"] --&gt; EndRejected
-    StaffReview -- اعتماد --&gt; SetApproved["تغيير الحالة إلى Approved وبدء مهلة 48 ساعة"]
+    StaffReview -- اعتماد --&gt; SetApproved["Approved؛ المهلة 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق"]
 
-    SetApproved --&gt; PickupCheck{"هل حضر الطالب للاستلام خلال 48 ساعة؟"}
+    SetApproved --&gt; PickupCheck{"هل حضر الطالب ضمن المهلة الموثقة من تاريخ بداية الطلب؟"}
     PickupCheck -- لا --&gt; AutoCancel["إلغاء الحجز آلياً وإعادة المعدة للمخزون"] --&gt; EndCancelled(["نهاية: إلغاء لتجاوز المهلة"])
-    PickupCheck -- نعم --&gt; Handover["تسجيل التسليم المادي وتغيير الحالة إلى Active"]
+    PickupCheck -- نعم --&gt; Handover["تأكيد المسؤول التسليم المادي وتغيير الحالة إلى Active (Rule 7)"]
 
     Handover --&gt; ActiveUsage["استخدام الطالب للمعدة حتى تاريخ الاستحقاق"]
-    ActiveUsage --&gt; ReturnPhysically["حضور الطالب لإرجاع المعدة"]
+    ActiveUsage --&gt; ReturnPhysically["حضور الطالب لإرجاع المعدة وتأكيد المسؤول الاستلام (Rule 7)"]
 
     ReturnPhysically --&gt; InspectItem{"فحص المعدة: هل بها تلف أو كسر؟ (Rule 8)"}
-    InspectItem -- نعم --&gt; RecordDamage["تسجيل تقرير الأضرار وتحميل غرامة الإصلاح"] --&gt; CloseReturn["إغلاق الإعارة بحالة Returned"]
-    InspectItem -- لا --&gt; CloseReturn
-
-    CloseReturn --&gt; Restock["إعادة المعدة للمخزون المتاح وتحديث رصيد الطالب"] --&gt; EndSuccess(["نهاية: إتمام الإعارة بنجاح"])</code></pre>
+    InspectItem -- نعم --&gt; RecordDamage["تسجيل المسؤول التلف دون إعادة الوحدة إلى المتاح (Rule 8)"] --&gt; CloseDamaged["تأكيد المسؤول إغلاق الإعارة مع قيد التلف وتحديث رصيد الطالب دون إعادة للمخزون"] --&gt; EndDamaged(["نهاية: إتمام الإرجاع مع إثبات التلف"])
+    InspectItem -- لا --&gt; Restock["إعادة المعدة للمخزون المتاح وتحديث رصيد الطالب"] --&gt; CloseReturn["تأكيد المسؤول إغلاق الإعارة بحالة Returned"] --&gt; EndSuccess(["نهاية: إتمام الإعارة بنجاح"])</code></pre>
     </div>
   </div>
 
@@ -555,7 +556,7 @@ export const topic12Html = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. البرومبت المعتمد لتوليد مخطط النشاط (PROMPT 08)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لإنشاء مخطط النشاط وسير العمليات بصيغة Mermaid flowchart TD:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لإنشاء مخطط النشاط وسير العمليات بصيغة Mermaid flowchart TD:
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -580,7 +581,8 @@ Explain in Arabic. Do not invent steps or build code.</code></pre>
  * Sequence Position: 13
  * ========================================================================= */
 export const topic13Html = `
-<section id="topic-13-state" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-13-state" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 13 · المحطة الأساسية</span>
     <span class="step-pill">حالات الكائنات والانتقالات الموثقة</span>
@@ -608,7 +610,7 @@ export const topic13Html = `
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. القاعدة المعمارية الصارمة: عدم اختراع حالات وهمية</h3>
     <p class="leading-8 text-[var(--text-muted)]">
       واحدة من أخطر ثغرات التصميم هي أن يقوم المهندس أو وكيل الذكاء الاصطناعي <strong>باختراع حالات افتراضية</strong> لم يرد لها ذكر في وثيقة المتطلبات (PRD) أو قواعد العمل (مثل: <code>UnderInspectionByDean</code> أو <code>SentToThirdPartyCleaning</code>).
-      كل حالة تظهر في المخطط يجب أن تنعكس مباشرة في حقل <code>status</code> في جدول قاعدة البيانات؛ واختراع حالات خيالية يؤدي إلى:
+      يجب أن تستند كل حالة في المخطط إلى متطلب أو قاعدة عمل موثقة. لا يفرض مخطط المجال كيف ستُخزّن الحالة؛ تمثيلها في قاعدة البيانات قرار تصميم لاحق، وقد لا يقابل كل عنصر في آلة الحالات قيمة مستقلة في حقل <code>status</code>. اختراع حالات بلا سند يؤدي إلى:
     </p>
 
     <ul class="list-disc list-inside space-y-2 text-[var(--text-muted)] my-3 leading-7">
@@ -657,7 +659,7 @@ export const topic13Html = `
           </tr>
           <tr>
             <td><code>Approved</code></td>
-            <td>وافق المشرف على الطلب، وبدأت مهلة الـ 48 ساعة للاستلام المادي</td>
+            <td>وافق المشرف على الطلب؛ مهلة الاستلام 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق، لا من الموافقة</td>
             <td><code>Submitted</code></td>
             <td><code>Active</code>, <code>Cancelled</code> (انتهاء المهلة)</td>
           </tr>
@@ -727,7 +729,7 @@ export const topic13Html = `
             <td>قرار المسؤول: موافقة</td>
             <td>[المعدة متوفرة بالمخزون]</td>
             <td><code>Approved</code></td>
-            <td>حجز الأصل وبدء مؤقت مهلة 48 ساعة</td>
+            <td>حجز الأصل ومراجعة مهلة الاستلام من تاريخ بداية الطلب وفق التعريف الموثق</td>
           </tr>
           <tr>
             <td><code>Submitted</code></td>
@@ -798,13 +800,13 @@ export const topic13Html = `
     Submitted --&gt; Rejected : رفض المسؤول [مع ذكر السبب]
     Submitted --&gt; Cancelled : إلغاء الطالب قبل المعالجة
     
-    Approved --&gt; Active : حضور الطالب وتسليم المعدة [خلال 48 ساعة]
-    Approved --&gt; Cancelled : مضي 48 ساعة دون استلام [إلغاء آلي وتحرير الأصل]
+    Approved --&gt; Active : تأكيد المسؤول التسليم المادي [ضمن المهلة من تاريخ بداية الطلب]
+    Approved --&gt; Cancelled : انقضاء المهلة من تاريخ بداية الطلب [وفق تعريف PRD وتحرير الحجز]
     
-    Active --&gt; Returned : تسليم المعدة وإجراء الفحص المادي
+    Active --&gt; Returned : تأكيد المسؤول الإرجاع والفحص المادي وتسجيل التلف إن وجد
     Active --&gt; Overdue : تجاوز تاريخ الاستحقاق دون إرجاع
     
-    Overdue --&gt; Returned : تسليم متأخر وتسوية الغرامة والفحص
+    Overdue --&gt; Returned : تأكيد المسؤول الإرجاع المتأخر والفحص [متابعة يدوية دون حظر تلقائي]
     
     Rejected --&gt; [*]
     Cancelled --&gt; [*]
@@ -816,7 +818,7 @@ export const topic13Html = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">6. البرومبت المعتمد لتوليد مخطط الحالات (PROMPT 10)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      استخدم هذا البرومبت المعتمد من مكتبة سلاح العصر لتحليل دورة حياة الكيانات وتوليد كود Mermaid stateDiagram-v2 سليم:
+      استخدم هذا البرومبت المعتمد من مكتبة Ai_agents لتحليل دورة حياة الكيانات وتوليد كود Mermaid stateDiagram-v2 سليم:
     </p>
 
     <div class="code-container my-4" dir="ltr">
@@ -1007,7 +1009,7 @@ export const t05Entries: TopicItem[] = [
     prerequisites: [
       'مخطط النشاط docs/diagrams/activity-diagram.md',
       'وثيقة متطلبات المنتج docs/PRD.md',
-      'قواعد عمل BorrowHub'
+      'قواعد مشروع الطالب المعتمدة؛ BorrowHub مثال اختياري'
     ],
     steps: [
       '1. حدد الكيان الجوهري صاحب دورة الحياة المتقلبة في مشروعك (مثل LoanRequest أو Order).',

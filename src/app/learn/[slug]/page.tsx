@@ -1,11 +1,19 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, CheckCircle2, FileText, Wrench, Target, CheckSquare, ListOrdered } from 'lucide-react';
+import { ApplicationChecklist } from '@/src/components/ApplicationChecklist';
+import { TopicLearningActivities } from '@/src/components/TopicLearningActivities';
+import { TopicHtmlContent } from '@/src/components/TopicHtmlContent';
+import { TopicReaderTools } from '@/src/components/TopicReaderTools';
+import { MermaidViewer } from '@/src/components/MermaidViewer';
+import { notFound, redirect } from 'next/navigation';
+import { ArrowLeft, ArrowRight, FileText, Wrench, CheckSquare, ListOrdered, BarChart3 } from 'lucide-react';
 import {
   getTopicBySlug,
   getAllTopics,
   getAllTopicSlugs,
+  LEGACY_ROUTE_DESTINATIONS,
 } from '@/src/lib/topicRegistry';
+import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
+import { getTopicLearningContent } from '@/src/lib/learningContent';
 
 export function generateStaticParams() {
   return getAllTopicSlugs().map((slug) => ({ slug }));
@@ -13,12 +21,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (Object.hasOwn(LEGACY_ROUTE_DESTINATIONS, slug)) redirect(LEGACY_ROUTE_DESTINATIONS[slug]);
   const topic = getTopicBySlug(slug);
   return topic ? { title: `${topic.title} — ${topic.categoryName}`, description: topic.summary } : {};
 }
 
 export default async function LearningTopicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (Object.hasOwn(LEGACY_ROUTE_DESTINATIONS, slug)) redirect(LEGACY_ROUTE_DESTINATIONS[slug]);
   const topic = getTopicBySlug(slug);
   if (!topic) notFound();
 
@@ -26,10 +36,8 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
   const position = allTopics.findIndex((item) => item.slug === topic.slug || item.id === topic.id);
   const previous = position > 0 ? allTopics[position - 1] : undefined;
   const next = position >= 0 && position < allTopics.length - 1 ? allTopics[position + 1] : undefined;
-
-  const checklistItems = topic.checklist && topic.checklist.length > 0
-    ? topic.checklist
-    : ['اقرأ المفاهيم قبل التنفيذ', 'راجع الملفات المطلوبة', 'نفّذ خطوة صغيرة', 'تحقق من المخرج يدويًا'];
+  const status = getTopicImprovementStatus(topic.slug);
+  const learningContent = getTopicLearningContent(topic.slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
@@ -43,7 +51,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
       </nav>
 
       {/* Main Topic Header */}
-      <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm sm:p-10">
+      <header className="learning-reader-header rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm sm:p-10">
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-800 dark:border-blue-900 dark:bg-blue-950/40 dark:text-blue-300">
             {topic.categoryName} · موضوع {topic.number}
@@ -51,15 +59,15 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
             {topic.stageTag}
           </span>
-          {topic.publicationStatus === 'unified-complete' ? (
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
-              مسار موحد مكتمل ✓
-            </span>
-          ) : (
-            <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
-              بانتظار استكمال التوحيد
-            </span>
-          )}
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
+            حالة التوفر: {status.availabilityLabel}
+          </span>
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
+            حالة التحسين: {status.improvementLabel}
+          </span>
+          <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-800 dark:border-indigo-900 dark:bg-indigo-950/40 dark:text-indigo-300">
+            {status.groupProposalLabel}
+          </span>
         </div>
 
         <h1 className="text-3xl font-black tracking-tight text-[var(--text-main)] sm:text-5xl">{topic.title}</h1>
@@ -83,6 +91,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             ))}
           </div>
         )}
+        <TopicReaderTools key={topic.slug} topic={topic} />
       </header>
 
       {/* Main Layout Grid */}
@@ -111,7 +120,10 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
           {/* Prerequisites */}
           {topic.prerequisites && topic.prerequisites.length > 0 && (
             <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4 sm:p-5">
-              <h3 className="text-sm font-bold text-[var(--text-main)] mb-2">المتطلبات السابقة</h3>
+              <h3 className="text-sm font-bold text-[var(--text-main)] mb-1">المتطلبات السابقة (إرشادات استرشادية)</h3>
+              <p className="text-xs text-emerald-800 dark:text-emerald-300 font-medium mb-3">
+                إرشاد تعليمي: هذه المتطلبات للتوجيه والاسترشاد فقط؛ جميع المواضيع متاحة ويمكنك دراسة أي موضوع مباشرة دون اشتراط إكمال ما قبله.
+              </p>
               <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-[var(--text-muted)]">
                 {topic.prerequisites.map((req, idx) => (
                   <li key={idx}>{req}</li>
@@ -120,33 +132,38 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </section>
           )}
 
-          {/* Preserved HTML Content */}
-          <div
-            className="prose dark:prose-invert max-w-none text-right"
-            dangerouslySetInnerHTML={{ __html: topic.htmlContent }}
-          />
+          {/* Interactive Mermaid Diagram Section */}
+          {topic.diagramCount > 0 && (
+            <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 sm:p-6 shadow-xs space-y-3" aria-label="المخطط الهندسي التفاعلي">
+              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-color)] pb-3">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-[var(--brand-primary)]" />
+                  <h2 className="text-base sm:text-lg font-black text-[var(--text-main)]">
+                    المخطط الهندسي التفاعلي (Mermaid.js)
+                  </h2>
+                </div>
+                <span className="rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  تصيير محلي
+                </span>
+              </div>
+              <MermaidViewer topic={topic} />
+            </section>
+          )}
 
-          <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-100">
-            <strong>مراجعة المصدر:</strong> هذا المحتوى موحّد عبر بطاقات الفهرس ونافذة القراءة التفصيلية وصفحة المسار، مع هوية مستقرة غير متأثرة بإعادة الترتيب.
-          </div>
+          {/* Preserved HTML Content */}
+          <TopicHtmlContent key={topic.slug} html={topic.htmlContent} topic={topic} />
+          {learningContent && <TopicLearningActivities key={`${topic.slug}:${learningContent.contentVersion}`} topic={topic} content={learningContent} />}
         </article>
 
         {/* Aside Sidebar */}
         <aside className="space-y-4">
-          <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
+          {topic.checklist.length > 0 && <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <h2 className="mb-3 text-base font-black text-[var(--text-main)] flex items-center gap-2">
               <CheckSquare className="w-4 h-4 text-emerald-600" />
-              <span>قائمة الإنجاز والتحقق</span>
+              <span>قائمة تحقق التطبيق</span>
             </h2>
-            <div className="space-y-2.5">
-              {checklistItems.map((item, idx) => (
-                <label key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-muted)] cursor-pointer">
-                  <input type="checkbox" className="mt-0.5 accent-emerald-600 shrink-0" />
-                  <span className="leading-5">{item}</span>
-                </label>
-              ))}
-            </div>
-          </section>
+            <ApplicationChecklist topic={topic} items={topic.checklist} />
+          </section>}
 
           <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <h2 className="mb-3 text-base font-black text-[var(--text-main)]">روابط عملية</h2>
@@ -158,10 +175,9 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </Link>
           </section>
 
-          <div className="flex items-center gap-2 rounded-2xl bg-[var(--primary)] p-4 text-sm leading-6 text-white">
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-300" />
-            <span>لا تنتقل للخطوة التالية قبل اعتماد مخرج موضوعك والتأكد من تحقيقه.</span>
-          </div>
+          <p className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-sm leading-7 text-[var(--text-muted)]">
+            راجع مخرجاتك للتقييم الذاتي، ويمكنك تصفح الموضوع التالي في أي وقت.
+          </p>
         </aside>
       </div>
 
@@ -181,10 +197,10 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </strong>
           </Link>
         ) : (
-          <div aria-hidden="true" />
+          <p className="p-4 text-sm text-[var(--text-muted)]">هذا أول موضوع في المسار.</p>
         )}
 
-        {next && (
+        {next ? (
           <Link
             href={`/learn/${next.slug}`}
             className="group rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-left hover:border-emerald-400 transition-all shadow-xs"
@@ -196,8 +212,9 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             <strong className="mt-1 block text-[var(--text-main)] group-hover:text-emerald-600 transition-colors">
               {next.title}
             </strong>
+            {next.publicationStatus === 'legacy-pending-migration' && <span className="mt-2 block text-xs leading-6 text-amber-700 dark:text-amber-300">القراءة متاحة؛ خطوات التطبيق والمخرجات قيد الاستكمال</span>}
           </Link>
-        )}
+        ) : <p className="p-4 text-sm text-[var(--text-muted)]">وصلت إلى آخر موضوع متاح. <Link href="/" className="font-bold text-[var(--brand-primary)] hover:underline">العودة إلى الفهرس</Link></p>}
       </nav>
     </div>
   );

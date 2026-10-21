@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   ShieldAlert,
   ArrowUp,
-  Code2,
+  BookOpen,
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -17,21 +18,21 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      className="mt-auto border-t border-[var(--border-color)] bg-[#0f1d30] text-slate-300 transition-colors"
+      className="mt-auto border-t border-[var(--border-color)] bg-[#15231f] text-slate-300 transition-colors"
       dir="rtl"
       role="contentinfo"
     >
       {/* 1. Top Slogan & Engineering Workflow Ribbon */}
-      <div className="border-b border-slate-800/80 bg-[#16273e]/60 py-4 px-4 sm:px-6 lg:px-8">
+      <div className="border-b border-slate-800/80 bg-[#1e2f27]/70 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-right">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
+            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#c7f36b]" />
             <span className="text-xs sm:text-sm font-extrabold tracking-wide text-white font-mono">
-              Don&apos;t Just Prompt. Engineer.
+              فكّر بوضوح. ابنِ بثقة.
             </span>
           </div>
           <div className="text-[11px] sm:text-xs text-slate-300 font-medium">
-            <span className="text-[#10b981] font-bold">منهجية التطوير:</span>{' '}
+            <span className="text-[#c7f36b] font-bold">رحلة المشروع:</span>{' '}
             فهم <span className="text-slate-500">←</span> توثيق{' '}
             <span className="text-slate-500">←</span> تحليل{' '}
             <span className="text-slate-500">←</span> تصميم{' '}
@@ -48,34 +49,32 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand & Overview */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#1e3a5f] text-white flex items-center justify-center font-black text-sm ring-1 ring-[#10b981]/50 shadow-xs">
-                MET
-              </div>
+              <Image src="/ai-agents-mark.svg" alt="" width={36} height={36} className="h-9 w-9 rounded-xl" />
               <div>
-                <span className="text-base font-extrabold text-white block leading-tight">
-                  سلاح العصر
+                <span dir="ltr" className="font-brand text-base font-extrabold text-white block leading-tight">
+                  Ai_agents
                 </span>
                 <span className="text-[11px] text-slate-400 font-medium block">
-                  MET Academy
+                  تعلّم، ابنِ، وتحقق
                 </span>
               </div>
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              دورة تطبيقية متخصصة لنقل طلاب وهواة البرمجة من مجرد توجيه الأسئلة للذكاء الاصطناعي إلى قيادة عمليات هندسة البرمجيات وتحليل النظم وبناء واجهات احترافية قابلة للإنتاج.
+              مسار عملي لبناء منتجات Full-Stack قابلة للإنتاج والتسليم، من الفكرة إلى المتطلبات والتصميم والواجهات والخادم وقاعدة البيانات والاختبار والنشر، بمساعدة وكلاء الذكاء الاصطناعي.
             </p>
 
             <div className="pt-1">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800 text-[#10b981] border border-slate-700">
-                <Code2 className="w-3.5 h-3.5" />
-                <span>Next.js 15 App Router</span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-bold bg-slate-800 text-[#c7f36b] border border-slate-700">
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>58 موضوعًا · حفظ محلي</span>
               </span>
             </div>
           </div>
 
           {/* Column 2: المسار التعليمي */}
           <div className="space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#10b981] pr-2">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#c7f36b] pr-2">
               المسار التعليمي
             </h4>
             <ul className="space-y-2 text-xs">
@@ -97,10 +96,10 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/learn/git-github-user-flow"
+                  href="/learn/project-idea-mvp"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> Git وGitHub وUser Flow
+                  <span className="text-slate-600">›</span> مسار مواضيع التعلم
                 </Link>
               </li>
               <li>
@@ -116,7 +115,7 @@ export const Footer: React.FC = () => {
 
           {/* Column 3: المختبرات والمكتبات */}
           <div className="space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#10b981] pr-2">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#c7f36b] pr-2">
               المختبرات والمكتبات
             </h4>
             <ul className="space-y-2 text-xs">
@@ -125,7 +124,7 @@ export const Footer: React.FC = () => {
                   href="/prompts"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> مكتبة الـ31 برومبت
+                  <span className="text-slate-600">›</span> مكتبة البرومبتات الكاملة
                 </Link>
               </li>
               <li>
@@ -133,7 +132,7 @@ export const Footer: React.FC = () => {
                   href="/roadmap"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> خارطة 20 محاضرة للمشروع
+                  <span className="text-slate-600">›</span> مسار مواضيع المشروع
                 </Link>
               </li>
               <li>
@@ -181,7 +180,7 @@ export const Footer: React.FC = () => {
 
           {/* Column 4: المراجع والمعلومات */}
           <div className="space-y-3">
-            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#10b981] pr-2">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white border-r-2 border-[#c7f36b] pr-2">
               المراجع والمعلومات
             </h4>
             <ul className="space-y-2 text-xs">
@@ -203,6 +202,14 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link
+                  href="/dashboard"
+                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <span className="text-slate-600">›</span> لوحة التقدم المحلية
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
@@ -216,9 +223,9 @@ export const Footer: React.FC = () => {
                 type="button"
                 onClick={scrollToTop}
                 aria-label="العودة إلى أعلى الصفحة"
-                className="w-full py-2 px-3 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 hover:text-white text-xs font-bold text-slate-300 flex items-center justify-center gap-2 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#10b981]"
+                className="w-full py-2 px-3 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 hover:text-white text-xs font-bold text-slate-300 flex items-center justify-center gap-2 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c7f36b]"
               >
-                <ArrowUp className="w-3.5 h-3.5 text-[#10b981]" />
+                <ArrowUp className="w-3.5 h-3.5 text-[#c7f36b]" />
                 <span>العودة للأعلى</span>
               </button>
             </div>
@@ -231,7 +238,7 @@ export const Footer: React.FC = () => {
             <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold text-amber-300 ml-1">تنبيه تعليمي وأمني:</span>
-              جميع المواد المعروضة مخصصة للأغراض التعليمية في دورة سلاح العصر. الروابط والأدوات الخارجية (مثل Google Stitch, Mermaid, GitHub, Antigravity) مملوكة لأصحابها. يُحظر تمامًا تخزين أو نشر مفاتيح API الخاصة أو كلمات المرور أو أسرار الأنظمة داخل مستودعات Git العامة.
+              جميع المواد المعروضة مخصصة للتعلّم. الروابط والأدوات الخارجية (مثل Google Stitch وMermaid وGitHub) مملوكة لأصحابها. لا تضع مفاتيح API أو كلمات المرور أو أسرار الأنظمة في ملفات عامة.
             </div>
           </div>
         </div>
@@ -239,12 +246,10 @@ export const Footer: React.FC = () => {
         {/* 4. Bottom Copyright Bar */}
         <div className="mt-6 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right text-[11px] text-slate-400 font-medium">
           <div>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} MET Academy — دورة سلاح العصر (Weapon of the Era)
+            جميع الحقوق محفوظة © {new Date().getFullYear()} Ai_agents
           </div>
           <div className="flex items-center gap-3">
-            <span>نسخة التطوير المعتمدة 1.0</span>
-            <span className="text-slate-700">•</span>
-            <span className="text-[#10b981] font-mono">dir=&quot;rtl&quot;</span>
+            <span>تُحفظ أنشطتك في هذا المتصفح</span>
           </div>
         </div>
       </div>

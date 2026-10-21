@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API Architecture', () => {
+  test.beforeEach(async ({ context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
 
   // -------------------------------------------------------------------------
   // TOPIC 38: PYTHON BACKEND FOUNDATION
@@ -11,7 +14,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('Python: أساسيات الخادم وتهيئة البيئة لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('.env.example');
     await expect(header).toContainText('docs/BACKEND_SETUP.md');
 
@@ -19,7 +22,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Purpose and project level (no bloated academic course)
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('المستوى اللازم للمشروع: لماذا Python وما الذي نحتاجه فعلاً؟');
     await expect(content).toContainText('البيئة الافتراضية المعزولة وإدارة الاعتماديات');
     await expect(content).toContainText('إدارة الأسرار والمتغيرات البيئية');
@@ -49,7 +52,7 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
 
     // Steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds:
     // Prev -> Topic 37 (frontend-incremental-implementation)
@@ -72,11 +75,11 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('PostgreSQL: إعداد قاعدة البيانات والاتصال والأسرار');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/DATABASE_CONNECTION_SPEC.md');
     await expect(header).toContainText('docs/MIGRATION_STRATEGY.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Why PostgreSQL & 5 BorrowHub tables
     await expect(content).toContainText('لماذا PostgreSQL؟ ومطابقة نموذج بيانات المشروع (ERD)');
@@ -136,11 +139,11 @@ test.describe('Sequential Project Path - Ticket 13: Python, PostgreSQL, and API 
     // Title and headers
     await expect(page.locator('h1')).toContainText('معمارية Backend وعقود API لمشروع الطالب');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/API_CONTRACTS.md');
     await expect(header).toContainText('docs/PERMISSIONS_MATRIX.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Grounded in requirements, ERD, and frontend contracts
     await expect(content).toContainText('ارتكاز معمارية API على المتطلبات وERD وعقود الفرونت إند');

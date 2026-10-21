@@ -26,7 +26,7 @@ export const topic21StitchHtml = `
       الخطأ الفادح الأكثر شيوعاً عند استخدام أدوات التصميم بالذكاء الاصطناعي (مثل <strong>Google Stitch</strong>) هو كتابة برومبت ضخم يطلب توليد كامل شاشات التطبيق دفعة واحدة. هذه الممارسة تؤدي حتماً إلى <strong>الانجراف البصري (Visual Drift)</strong>: تباين أحجام الأزرار وهوامش الحقول من شاشة لأخرى، اختلال لوحة الألوان، وتناقض التايبوجرافي وتجربة المستخدم بين الصفحات.
     </p>
     <p class="leading-8 text-[var(--text-muted)] mt-2">
-      المنهج الهندسي المعتمد في مسارنا يفرض قاعدة حاسمة: <strong>ابدأ بشاشة مرجعية تمثيلية واحدة فقط (One Reference Screen First)</strong>. نختار شاشة محورية تجسد جوهر نطاق النسخة الأولى (MVP)، مثل شاشة تصفح واستعارة المعدات (Browse Equipment) في مشروع BorrowHub، ونركز كافة جهودنا على حسم هويتها، وتناسق ألوانها، وتوزيع مساحاتها، واتجاه RTL، قبل التفكير في توليد أي شاشة أخرى.
+      يقترح هذا التمرين البدء بشاشة مرجعية تمثيلية واحدة فقط (One Reference Screen First). اختر شاشة محورية من نطاق النسخة الأولى (MVP)، ثم وثّق قراراتها المرئية ومصدرها وحالتها قبل تطبيقها على شاشات أخرى؛ مثال BorrowHub اختياري ولا يثبت وجود تصميم مولد أو قرار معتمد.
     </p>
 
     <div class="callout tip my-6">
@@ -35,7 +35,7 @@ export const topic21StitchHtml = `
         <span>لماذا شاشة واحدة أولاً؟</span>
       </div>
       <p class="leading-7">
-        الشاشة المرجعية تُعد بمثابة «المختبر الحقيقي» لنظامك البصري. عند اعتمادها، تصبح قرارات الخطوط، والمسافات (8px Grid)، ونسب الألوان (60-30-10)، وأشكال البطاقات والأزرار، مرجعاً بصرياً ملزماً (Visual Anchor) يسهل نسخه وتعميمه بدقة متناهية على بقية شاشات جرد MVP في المواضيع اللاحقة.
+      الشاشة المرجعية دليل على القرارات المرئية التي يمكن فحصها في ذلك التصميم، وليست دليلاً على قاعدة عامة لكل مشروع. وثّق الخطوط والمسافات والألوان وأشكال المكونات التي تظهر فعلاً، وميّزها عن المقترحات. يمكن تجربة قاعدة 60-30-10 أو مقياس مسافات 8px كاتفاق اختياري للمشروع، لكن لا تعتبرهما متطلبين عالميين ولا تفرضهما إذا خالفا المرجع أو احتياج المستخدم.
       </p>
     </div>
   </div>
@@ -62,7 +62,7 @@ export const topic21StitchHtml = `
             <td><strong>Google Stitch</strong></td>
             <td>توليد الواجهات والشاشات وتجربتها بصرياً انطلاقاً من الوصف النصي</td>
             <td><a href="https://stitch.withgoogle.com/" target="_blank" rel="noreferrer" class="text-emerald-600 dark:text-emerald-400 font-bold underline">stitch.withgoogle.com</a></td>
-            <td><span class="badge-available">متاح رسميًا من Google</span> (يتطلب تسجيل الدخول بحساب Google؛ قد تخضع بعض الميزات التوليدية للتدرج الجغرافي)</td>
+            <td>قد يتطلب حساباً مؤهلاً؛ تحقق من الإتاحة والميزات الحالية. إذا تعذر الوصول فسجّل إنشاء الشاشة Not Run.</td>
           </tr>
           <tr>
             <td><strong>Google Codelab: Design to Code</strong></td>
@@ -123,7 +123,7 @@ Save docs/STITCH_MASTER_PROMPT.md.</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. دراسة حالة BorrowHub: تشريح الشاشة المرجعية (Browse Equipment)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      في مشروع BorrowHub، تم اختيار شاشة <strong>تصفح المعدات (Browse Equipment)</strong> كشاشة مرجعية؛ لأنها تجمع أهم مكونات المنصة وقواعد العمل الموثقة في وثيقة PRD:
+      في مشروع BorrowHub (وهو دراسة حالة استرشادية واختيارية توضح طريقة التحليل، ويمكنك استبدالها بشاشة تمثيلية في مشروعك الخاص دون أي قيود)، تم اختيار شاشة <strong>تصفح المعدات (Browse Equipment)</strong> كشاشة مرجعية؛ لأنها تجمع أهم مكونات المنصة وقواعد العمل الموثقة في وثيقة PRD:
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>الشريط العلوي (Navbar):</strong> يوضح هوية المنصة، ودور المستخدم (طالب معتمد)، ومؤشر الاستعارات النشطة الحالية (حد أقصى جهازين - PRD Rule 3).</li>
@@ -134,7 +134,7 @@ Save docs/STITCH_MASTER_PROMPT.md.</code></pre>
 
     <!-- Visual Structural Diagram / SVG Wireframe -->
     <div class="diagram-box my-6">
-      <h4 class="font-bold text-[var(--text-main)] mb-3">الشكل (11): المخطط الهيكلي للشاشة المرجعية المعتمدة لمشروع BorrowHub</h4>
+      <h4 class="font-bold text-[var(--text-main)] mb-3">الشكل (11): رسم توضيحي اختياري لشاشة BorrowHub المرجعية</h4>
       <div style="text-align: center; overflow-x: auto; padding: 1rem 0;">
         <svg viewBox="0 0 800 420" style="width: 100%; height: auto; max-width: 800px; background: #0f172a; border-radius: 8px; font-family: Cairo, system-ui, sans-serif;" role="img" aria-label="رسم تخطيطي للشاشة المرجعية تصفح المعدات">
           <!-- Top Navbar -->
@@ -189,7 +189,7 @@ Save docs/STITCH_MASTER_PROMPT.md.</code></pre>
         </svg>
       </div>
       <div class="diagram-caption text-xs text-[var(--text-muted)] mt-2 text-center">
-        الشكل يوضح كيف تعكس الشاشة المرجعية قواعد PRD (المخزون، الرصيد، والحد الأقصى) داخل تصميم بصري عربي RTL متسق.
+        الشكل نموذج توضيحي داخل دراسة BorrowHub الاختيارية، وليس نتيجة تشغيل Stitch أو اعتماداً بصرياً. قارنه بمصادر مشروعك ولا تنقل قيمه دون دليل.
       </div>
     </div>
   </div>
@@ -235,7 +235,7 @@ export const topic22DesignSystemHtml = `
   <div class="step-header">
     <div class="step-title-wrap">
       <h2 class="step-title">قواعد نظام التصميم وتوليد برومبتات الشاشات المنفصلة</h2>
-      <div class="step-subtitle">استخراج الرموز البصرية من الشاشة المرجعية وتطبيقها عبر برومبت مستقل لكل شاشة في جرد MVP دون كتابة كود</div>
+      <div class="step-subtitle">استخراج الرموز المرئية الموثقة أو تسجيلها UNKNOWN، ثم كتابة برومبت مستقل لكل شاشة دون كتابة كود</div>
     </div>
   </div>
 
@@ -243,7 +243,7 @@ export const topic22DesignSystemHtml = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. القواعد الهندسية لنظام التصميم (Design System Rules)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      نظام التصميم ليس مجرد لوحة ألوان زخرفية؛ إنه <strong>العقد البصري الملزم (Visual Contract)</strong> الذي يضمن توحيد تجربة المستخدم وسرعة التطوير. بعد اعتماد الشاشة المرجعية في الموضوع السابق، نستخرج منها القواعد السبع الإلزامية التي تحكم كافة واجهات المشروع:
+      نظام التصميم يوثق القرارات المرئية التي اختارها المشروع ومصادرها، ثم يساعد الفريق على تطبيقها باتساق. استخرج القواعد التي يدعمها دليل شاشة متاحة فعلاً؛ إذا لم تتوفر شاشة أو مراجعة، سجل القيمة <code>UNKNOWN</code> أو كمقترح يحتاج قراراً. الأمثلة التالية وسائل اختيارية للنقاش، وليست قواعد إلزامية لكل واجهة:
     </p>
 
     <div class="grid-3col my-6" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
@@ -251,7 +251,7 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #3b82f6; margin-bottom: 0.5rem; font-weight: bold;">🎨 قاعدة الألوان 60-30-10</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          <strong>60%</strong> لون محايد مهيمن للخلفيات والأسطح، <strong>30%</strong> لون هيكلي ثانوي للبطاقات والحدود والقوائم، و<strong>10%</strong> لون وظيفي بارز مخصص حصراً لأزرار الإجراء الرئيسي (CTA) ومؤشرات التفاعل.
+          قاعدة 60-30-10 اقتراح بصري اختياري لتجربة توزيع الألوان، وليست نسبة نجاح عامة. إذا جرّبها المشروع، راجعها مقابل الشاشة المرجعية واحتياجات القراءة والتباين؛ قد تحتاج الواجهات إلى توزيع آخر، ولا يقتصر اللون البارز بالضرورة على أزرار الإجراء.
         </p>
       </div>
 
@@ -259,7 +259,7 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #10b981; margin-bottom: 0.5rem; font-weight: bold;">📐 مقياس التايبوجرافي المتزن</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          اعتماد ثنائية خطوط واضحة (Cairo للعربية وInter للإنجليزية)، مع مقياس نسبي ثابت: H1 (32px), H2 (24px), H3 (20px), Body (16px), Small (14px)، مع ارتفاع سطر (line-height) لا يقل عن 1.6 للنصوص العربية.
+          يمكن أن تكون Cairo وInter أو أحجام H1/H2/Body أمثلة أولية فقط. اختر الخطوط والأحجام وارتفاع السطر من متطلبات المشروع ومراجعة القراءة الفعلية؛ لا توجد عائلة خط أو قيمة واحدة تناسب جميع اللغات والشاشات.
         </p>
       </div>
 
@@ -267,20 +267,20 @@ export const topic22DesignSystemHtml = `
       <div class="card-inner" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
         <h4 style="color: #a855f7; margin-bottom: 0.5rem; font-weight: bold;">📏 شبكة المسافات القياسية (8px Grid)</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
-          كافة الهوامش والمسافات البينية (Padding & Margin) وأبعاد المكونات تتبع مضاعفات شبكة الـ 8 بكسل (4px, 8px, 16px, 24px, 32px, 48px) لمنع الفوضى العشوائية في التنسيق.
+          يمكن تجربة شبكة 8px أو مقياس آخر لتنظيم المسافات، بشرط أن يتوافق مع المرجع واحتياجات التخطيط. سجل القيم التي اعتمدها المشروع فقط، واترك غير المقاس أو غير المحسوم كـ <code>UNKNOWN</code>.
         </p>
       </div>
     </div>
 
-    <!-- The 6 Mandatory UI States -->
+    <!-- Common UI states to consider -->
     <div class="table-container my-6">
-      <h4 class="font-bold text-[var(--text-main)] mb-3">الحالات التفاعلية الست الإلزامية لكل شاشة ومكون (The 6 UI States)</h4>
+      <h4 class="font-bold text-[var(--text-main)] mb-3">حالات واجهة شائعة تُراجع عند انطباقها (UI States to Consider)</h4>
       <table class="data-table">
         <thead>
           <tr>
             <th>الحالة التفاعلية</th>
             <th>الظهور السلوكي في الواجهة</th>
-            <th>القاعدة التصميمية الإلزامية</th>
+            <th>توجيه عند الحاجة</th>
           </tr>
         </thead>
         <tbody>
@@ -292,27 +292,27 @@ export const topic22DesignSystemHtml = `
           <tr>
             <td><strong>2. حالة التحميل (Loading / Skeleton)</strong></td>
             <td>انتظار جلب البيانات من الخادم</td>
-            <td>استخدام هياكل عظمية رمادية نابضة (Skeleton Placeholders) تطابق شكل البطاقات لمنع ارتعاش التخطيط (Layout Shift).</td>
+            <td>أظهر تقدماً مناسباً عند انتظار عملية؛ اختر Skeleton أو مؤشراً آخر بما يلائم السياق، ولا توحِ بأن البيانات جاهزة.</td>
           </tr>
           <tr>
             <td><strong>3. الحالة الفارغة (Empty State)</strong></td>
             <td>انعدام النتائج أو خلو السجل (مثل نتيجة بحث منعدمة)</td>
-            <td>عرض رسم توضيحي هادف، ورسالة لطيفة تشرح السبب، وزر إجراء بديل (مثلاً: "إعادة ضبط الفلاتر").</td>
+            <td>اشرح عدم وجود النتائج وأظهر خطوة تالية مفيدة إذا كان ذلك مدعوماً بالمهمة.</td>
           </tr>
           <tr>
             <td><strong>4. حالة الخطأ (Error State)</strong></td>
             <td>فشل الاتصال أو رفض العملية من قواعد العمل</td>
-            <td>رسالة واضحة بلون دلالي محذر (Muted Red/Amber)، توضح سبب الخطأ وإمكانية المحاولة مجدداً دون إرباك المستخدم.</td>
+            <td>اشرح المشكلة والخطوة التالية؛ لا تعتمد على اللون وحده ولا تعرض إعادة المحاولة إن لم تكن مناسبة.</td>
           </tr>
           <tr>
             <td><strong>5. الحالة المعطلة (Disabled State)</strong></td>
             <td>عنصر أو زر غير متاح حالياً</td>
-            <td>شفافية منخفضة ومؤشر حظر، مع توضيح سبب التعطيل عند التحويم (Tooltip) مثل: "تم الوصول للحد الأقصى".</td>
+            <td>بيّن أن الإجراء غير متاح ووفّر السبب بطريقة قابلة للإدراك بلوحة المفاتيح وقارئ الشاشة عند انطباقه؛ لا تعتمد على التحويم وحده.</td>
           </tr>
           <tr>
             <td><strong>6. حالة حظر الصلاحية (Permission Denied)</strong></td>
-            <td>محاولة وصول إلى شاشة أو إجراء غير مصرح للدور</td>
-            <td>شاشة واضحة تشرح الحاجة لاعتماد الحساب أو الترقية، وتوفر رابطاً للعودة للرئيسية.</td>
+            <td>محاولة وصول ممنوعة وفق قاعدة صلاحيات موثقة</td>
+            <td>أظهر رسالة أو مساراً مناسباً فقط إذا حددت المتطلبات قاعدة الصلاحية والسلوك.</td>
           </tr>
         </tbody>
       </table>
@@ -325,8 +325,8 @@ export const topic22DesignSystemHtml = `
         <span>إمكانية الوصول وتباين الألوان ودعم RTL</span>
       </div>
       <p class="leading-7">
-        - <strong>تباين الألوان (WCAG 2.1 AA):</strong> يجب ألا تقل نسبة تباين النصوص العادية مع الخلفية عن 4.5:1 (و3:1 للعناصر الكبيرة وأزرار CTA).<br/>
-        - <strong>مساحات اللمس (Touch Targets):</strong> لا يقل حجم أي عنصر قابل للنقر عن 44×44 بكسل للهواتف الذكية.<br/>
+        - <strong>تباين الألوان:</strong> افحص النص وفق حجمه ووزنه (4.5:1 للنص العادي، و3:1 للنص الكبير)، وافحص حدود وأجزاء التحكم غير النصية وفق معيارها المناسب. لا تدّعِ النجاح دون قياس.<br/>
+        - <strong>مساحات التفاعل:</strong> اختر مساحة الهدف وفق معيار الوصول والمنصة المستهدفين وافحصها؛ 44×44 CSS px قيمة إرشادية شائعة للراحة وليست شرطاً عاماً من WCAG AA لكل عنصر.<br/>
         - <strong>دعم الاتجاه (RTL First):</strong> تدفق القوائم، محاذاة العناوين، وسلاسل البطاقات تبدأ من اليمين، مع انعكاس اتجاه أيقونات الأسهم والتنقل.
       </p>
     </div>
@@ -336,7 +336,7 @@ export const topic22DesignSystemHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. برومبت استخراج نظام التصميم (PROMPT 17)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      نستخدم برومبت نظام التصميم (PROMPT 17) لتثبيت لغة التصميم وتفصيل الرموز (Tokens) استناداً إلى الشاشة المرجعية المعتمدة وهوية المنتج، دون ابتداع هوية متخيلة تخالف متطلبات PRD:
+      نستخدم برومبت نظام التصميم (PROMPT 17) لتوثيق لغة التصميم والرموز (Tokens) استناداً إلى الشاشة المرجعية المتاحة وهوية المنتج ذات المصدر، دون ابتداع هوية متخيلة تخالف متطلبات PRD:
     </p>
 
     <!-- Copyable PROMPT 17 Container -->
@@ -351,7 +351,12 @@ define colors, type scale, spacing, radii, shadows, grids, icons,
 buttons, inputs, cards, tables, dialogs, navigation, semantic states,
 breakpoints, keyboard/focus/contrast rules and RTL guidance if applicable.
 Do not invent a different brand. Preserve requirements.
-Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
+Use only values supported by the approved reference; write UNKNOWN when
+the reference does not establish a value. Treat 60-30-10 color allocation
+and an 8px spacing grid as optional proposals, not universal rules.
+Check contrast against the applicable WCAG criterion and do not claim a pass
+without a measurement. Do not invent a different brand. Preserve requirements.
+Apply the reviewed shared rules consistently to subsequent Stitch screens.</code></pre>
     </div>
   </div>
 
@@ -363,7 +368,7 @@ Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4">
       <li><strong>حماية ميزانية السياق (Context Window):</strong> تركيز نموذج الذكاء الاصطناعي على متطلبات وتفاعلات شاشة واحدة بكل حالاتها.</li>
-      <li><strong>دقة الحالات الست:</strong> إلزام البرومبت بتعريف حالات Loading وEmpty وError الخاصة بتلك الشاشة حصراً.</li>
+      <li><strong>حالات الواجهة:</strong> حدد الحالات الملائمة للمصدر مثل Default وLoading وEmpty وError وDisabled؛ اطلب Permission Denied فقط إذا كان PRD يحدد قاعدة صلاحية. الاستجابة وإمكانية الوصول فحوص عابرة للحالات.</li>
       <li><strong>تسهيل المراجعة والتعديل:</strong> إذا احتاجت نافذة تأكيد الحجز (Modal) إلى تحسين، نعدل برومبتها فقط دون التأثير على بقية الشاشات.</li>
     </ul>
 
@@ -377,8 +382,13 @@ Apply the shared rules consistently to subsequent Stitch screens.</code></pre>
 Read approved PRD, SCREEN_INVENTORY.md and the approved Design System.
 Create a COMPLETE, individually copyable Stitch prompt for EVERY MVP screen.
 For each include ID, title, role, purpose, hierarchy, content, data,
-components, CTA, validation, navigation, loading/empty/error/success states,
-responsive behavior and accessibility. Preserve shared visual rules.
+components, CTA, validation, navigation, default/loading/empty/error/disabled
+states as relevant. Include a permission-denied state only when the PRD defines
+the rule; otherwise preserve it as an open question. Add success feedback when
+a source requirement defines it. Check responsive behavior, keyboard/focus,
+contrast and RTL across states; these are review dimensions, not UI-state
+variants. Use source-backed values and write UNKNOWN for unobserved tokens.
+Preserve the reviewed shared visual rules.
 Sort screens in user-flow order. Do not omit any or add new MVP features.
 Save docs/STITCH_SCREEN_PROMPTS.md.
 Do not generate frontend code.</code></pre>
@@ -400,7 +410,7 @@ Do not generate frontend code.</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. تطبيق عملي: تفكيك برومبتات شاشات BorrowHub</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      في ملف <code>docs/STITCH_SCREEN_PROMPTS.md</code> لمشروع BorrowHub، تم ترتيب برومبتات الشاشات وفق تسلسل مسار تدفق المستخدم (User Flow Order):
+      في ملف <code>docs/STITCH_SCREEN_PROMPTS.md</code> لمشروع BorrowHub (كدراسة حالة تطبيقية استرشادية واختيارية؛ تطبق نفس الهيكلية المنفصلة على شاشات مشروعك الخاص دون التقيد ببيانات هذا المثال)، تم ترتيب برومبتات الشاشات وفق تسلسل مسار تدفق المستخدم (User Flow Order):
     </p>
 
     <div class="table-container my-4">
@@ -494,7 +504,7 @@ export const topic23PrototypeHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. مصفوفة فحص الرحلات والحالات التفاعلية (Journey Verification Matrix)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      لا يقتصر فحص النموذج على مسار النجاح السهل (Happy Path)؛ بل يجب إخضاع النموذج لاختبارات الحالات الحدية والاعتذار. يوضح الجدول التالي مصفوفة الفحص الشاملة المعتمدة لمشروع BorrowHub:
+      لا يقتصر فحص النموذج على مسار النجاح السهل (Happy Path)؛ بل يجب إخضاع النموذج لاختبارات الحالات الحدية والاعتذار. يوضح الجدول التالي مصفوفة الفحص الشاملة المعتمدة لمشروع BorrowHub (وهي دراسة حالة إيضاحية واختيارية توضح آلية تدقيق الانتقالات لتقيس عليها مسارات مشروعك الخاص):
     </p>
 
     <div class="table-container my-4">
@@ -526,7 +536,7 @@ export const topic23PrototypeHtml = `
           <tr>
             <td><strong>المعدة غير متوفرة (Out of Stock)</strong></td>
             <td>تصفح المعدات ← معدة رصيدها 0 وحدات</td>
-            <td>زر الإجراء الرئيسي معطل بصرياً مع خيار: «إشعاري عند التوفر»</td>
+            <td>زر طلب الاستعارة معطل مع رسالة نفاد المخزون؛ لا نضيف إشعارات خارج نطاق MVP المعتمد</td>
             <td>لا يوجد انتقال معطل، يظل الطالب في صفحة التصفح</td>
             <td>إدارة رصيد الوحدات المتاحة وحظر الطلب السلبي</td>
           </tr>
@@ -626,7 +636,7 @@ export const t08Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'تصميم الواجهات والشاشة المرجعية',
-    summary: 'استخدام Google Stitch لتصميم الشاشة المرجعية الأولى لنطاق MVP استناداً إلى PRD وUX Blueprint وجرد الشاشات. يركز الموضوع على منع خطأ توليد الشاشات دفعة واحدة، وصياغة البرومبت الرئيسي المخصص (PROMPT 16)، وتثبيت اتجاه RTL والتخطيط العام، وتنقيح الشاشة المختارة عبر (PROMPT 19) حتى اعتمادها كمرجع وحيد.',
+    summary: 'استخدام Google Stitch أو أداة بديلة متاحة لصياغة ومراجعة شاشة مرجعية واحدة لنطاق MVP استناداً إلى PRD وUX Blueprint وجرد الشاشات. يركز الموضوع على منع توليد الشاشات دفعة واحدة، وتوثيق البرومبت والنتيجة وحالة المراجعة الفعلية؛ تعذر الوصول إلى الأداة يسجل كـ Not Run.',
     tags: ['Google Stitch', 'Reference Screen', 'MVP', 'PROMPT 16', 'PROMPT 19', 'RTL', 'UI/UX', 'BorrowHub'],
     contentTypes: ['prompt', 'code', 'checklist'],
     diagramCount: 1,
@@ -636,22 +646,22 @@ export const t08Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic21StitchHtml),
     htmlContent: topic21StitchHtml,
 
-    goal: 'تصميم واعتماد شاشة تمثيلية مرجعية واحدة (Reference Screen) في Google Stitch تحسم الهوية البصرية والتخطيط وتوزيع العناصر واتجاه RTL لنطاق MVP، وتوثيق البرومبت الرئيسي في docs/STITCH_MASTER_PROMPT.md قبل الانتقال لأي شاشة أخرى.',
+    goal: 'إنشاء شاشة مرجعية فعلية في Google Stitch ثم توثيق البرومبت والرابط/المعرف ومصدر القرار في docs/STITCH_SCREEN_REFERENCES.md. أداة بديلة مسار احتياطي؛ لا توصف الشاشة بأنها معتمدة قبل قرار فعلي، وتعذر إنشاء الشاشة يسجل Not Run وغير مكتمل.',
     prerequisites: [
       'وثيقة متطلبات المنتج docs/PRD.md',
       'مخطط تجربة المستخدم docs/UX_BLUEPRINT.md',
       'جرد الشاشات المعتمد docs/SCREEN_INVENTORY.md',
-      'حساب Google Stitch على https://stitch.withgoogle.com/ (أو أداة تصميم بديلة عند عدم التوفر)'
+      'Google Stitch أو أداة تصميم بديلة إذا كانت متاحة؛ يمكن إكمال صياغة البرومبت والتوثيق محلياً وتسجيل إنشاء الشاشة Not Run'
     ],
     steps: [
-      '1. اختر الشاشة الأكثر تمثيلاً لجوهر المنتج ونطاق الـ MVP (مثل شاشة Browse Equipment في BorrowHub).',
-      '2. افتح منصة Google Stitch عبر الرابط المعتمد https://stitch.withgoogle.com/ وسجّل الدخول بحساب Google.',
+      '1. اختر الشاشة الأكثر تمثيلاً لجوهر المنتج ونطاق الـ MVP (مثل شاشة Browse Equipment في مشروع BorrowHub الاسترشادي الاختياري، أو شاشة مكافئة في مشروعك الخاص).',
+      '2. استخدم Google Stitch إذا كان متاحاً، أو أداة تصميم بديلة؛ إذا تعذر الوصول إلى أداة، أكمل مراجعة البرومبت وخطة الشاشة وسجل إنشاء النموذج الفعلي كـ Not Run.',
       '3. اقرأ وثائق PRD.md وUX_BLUEPRINT.md وSCREEN_INVENTORY.md لاستخراج سياق المشروع والأدوار والشاشة المرجعية فقط.',
       '4. استخدم برومبت مولّد البرومبت الرئيسي (PROMPT 16) لصياغة برومبت مخصص لمشروعك، واطلب توليد شاشة مرجعية واحدة أولاً، وامتنع صراحةً عن توليد جميع الشاشات معاً.',
       '5. احفظ البرومبت المخصص في مستودع مشروعك داخل docs/STITCH_MASTER_PROMPT.md.',
-      '6. الصق البرومبت في Google Stitch، وافحص الناتج الأولي: التخطيط، التسلسل الهرمي، قابلية القراءة، اتجاه RTL، وحجم العناصر التفاعلية.',
+      '6. إذا أنشأت الشاشة في أداة متاحة، افحص التخطيط والتسلسل الهرمي وقابلية القراءة واتجاه RTL وحجم العناصر؛ وإلا سجّل إنشاء الشاشة وفحصها Not Run.',
       '7. استخدم برومبت التنقيح الفردي (PROMPT 19) لمعالجة أي مشكلات بصرية محددة (مثل الهوامش، RTL، أو زر الإجراء الرئيسي) دون إضافة ميزات خارج MVP.',
-      '8. اعتمد الشاشة المرجعية المكتملة ووثق لقطاتها ومعرفاتها لتكون الأساس لنظام التصميم في الموضوع التالي.'
+      '8. سجل لقطات الشاشة ومعرفاتها ومصدر القرار وحالة المراجعة في docs/STITCH_SCREEN_REFERENCES.md؛ استخدم حالة مقترح حتى يصدر اعتماد فعلي.'
     ],
     promptRefs: [
       'prompt-16-project-specific-stitch-master-prompt-generator',
@@ -659,7 +669,7 @@ export const t08Entries: TopicItem[] = [
     ],
     outputs: [
       'docs/STITCH_MASTER_PROMPT.md',
-      'الشاشة المرجعية المعتمدة في Google Stitch'
+      'docs/STITCH_SCREEN_REFERENCES.md بحالة الشاشة ورابطها/معرفها أو سبب Not Run'
     ],
     checklist: [
       'البدء بشاشة تمثيلية واحدة فقط (مثل تصفح المعدات) وعدم توليد شاشات متعددة في وقت واحد.',
@@ -680,7 +690,7 @@ export const t08Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'النظم البصرية وتوليد الشاشات',
-    summary: 'صياغة وتوثيق قواعد نظام التصميم (Design System) المنبثق من الشاشة المرجعية: توزيع الألوان بقاعدة 60-30-10، تدرج التايبوجرافي، شبكة المسافات 8px، حالات المكونات الست (Default, Loading, Empty, Error, Disabled, Permission Denied)، وإرشادات إمكانية الوصول وRTL. ثم تطبيق هذه القواعد الصارمة عبر برومبتات منفصلة ومستقلة لكل شاشة في جرد الشاشات وتوثيقها في docs/STITCH_SCREEN_PROMPTS.md دون كتابة أي كود برمجي.',
+    summary: 'صياغة وتوثيق قواعد نظام التصميم من قيم الشاشة المرجعية التي يمكن فحصها في docs/DESIGN_SYSTEM_EVIDENCE.md، مع إبقاء 60-30-10 وشبكة 8px أمثلة اختيارية لا متطلبات عامة. يتضمن العمل حالات المكونات وإرشادات إمكانية الوصول وRTL، ثم يكتب برومبتاً مستقلاً لكل شاشة في docs/STITCH_SCREEN_PROMPTS.md دون كود.',
     tags: ['Design System', 'Color Tokens', 'Typography', '8px Grid', 'UI States', 'PROMPT 17', 'PROMPT 18', 'A11y'],
     contentTypes: ['prompt', 'code', 'checklist'],
     diagramCount: 0,
@@ -690,20 +700,20 @@ export const t08Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic22DesignSystemHtml),
     htmlContent: topic22DesignSystemHtml,
 
-    goal: 'استخراج قواعد نظام التصميم المعتمدة وتوثيقها استناداً للشاشة المرجعية وهوية المشروع، وتوليد برومبتات مستقلة ومنفصلة لكل شاشة من شاشات MVP وفق تسلسل رحلة المستخدم وتوثيقها في docs/STITCH_SCREEN_PROMPTS.md مع الحفاظ على وحدة النظام البصري وتجنب كتابة أي كود برمجي.',
+    goal: 'توثيق قواعد نظام التصميم من شاشة مرجعية ومصادر يمكن فحصها، أو تسجيل القيم المجهولة والمقترحة بوضوح، ثم إعداد برومبتات مستقلة لشاشات النطاق في docs/STITCH_SCREEN_PROMPTS.md دون كتابة كود.',
     prerequisites: [
-      'الشاشة المرجعية المعتمدة من Google Stitch (الموضوع 21)',
+      'مراجع الشاشة وحالة مراجعتها في docs/STITCH_SCREEN_REFERENCES.md (الموضوع 21)',
       'docs/STITCH_MASTER_PROMPT.md',
       'جرد الشاشات docs/SCREEN_INVENTORY.md',
       'وثيقة PRD.md'
     ],
     steps: [
-      '1. حلّل عناصر الشاشة المرجعية المعتمدة لاستخراج لغة التصميم المشتركة (الألوان، التايبوجرافي، المسافات، الحواف، والظلال).',
+      '1. حلّل عناصر الشاشة المرجعية المتاحة ومراجعها وحالة مراجعتها لاستخراج قيم يمكن فحصها؛ إذا لم تتوفر شاشة أو قيمة، سجل المصدر الناقص أو UNKNOWN في docs/DESIGN_SYSTEM_EVIDENCE.md.',
       '2. استخدم برومبت نظام التصميم (PROMPT 17: Stitch Design System) لتحديد قواعد النظام البصري دون اختراع هوية متخيلة أو تغيير متطلبات PRD.',
-      '3. وثّق توزيع الألوان بقاعدة (60% للسطوح والخلفيات، 30% للهياكل والبطاقات، 10% للتأكيد والـ CTA)، وحسابات التباين WCAG 2.1 AA، وشبكة الـ 8px للمسافات.',
+      '3. وثّق قيم الألوان ومصادرها، وافحص التباين مقابل معيار WCAG المناسب لحجم النص ووزنه؛ يمكن تجربة 60-30-10 أو شبكة 8px كاتفاق اختياري، ولا تسجلها كقاعدة للمشروع قبل قبولها.',
       '4. حدّد الحالات التفاعلية القياسية لكل مكون: (الحالة الافتراضية Default، التحميل Skeleton/Loading، الحالة الفارغة Empty State، وحالة الخطأ والرفض Error/Denied).',
       '5. استخدم برومبت توليد برومبت منفصل لكل شاشة (PROMPT 18: Generate One Prompt per Screen) لقراءة SCREEN_INVENTORY.md وصياغة برومبت مستقل كامل لكل شاشة من شاشات MVP.',
-      '6. تأكد أن كل برومبت شاشة يتضمن: المعرف الرقمي، العنوان، الدور المستهدف، التسلسل الهرمي، المكونات، الحالات الست، والالتزام الصارم بقواعد نظام التصميم المشتركة.',
+      '6. تأكد أن كل برومبت شاشة يتضمن: المعرف الرقمي، العنوان، الدور المستهدف، التسلسل الهرمي، المكونات، حالات الواجهة المطلوبة، والالتزام بالقواعد التي لها مصدر فقط؛ أبق القيم المجهولة واضحة.',
       '7. احفظ جميع برومبتات الشاشات مرتبة حسب تدفق المستخدم (User Flow Order) في ملف docs/STITCH_SCREEN_PROMPTS.md.',
       '8. قف هنا وتأكد من عدم توليد أي كود برمجي (Frontend/React/Next.js) في هذه المرحلة؛ العمل ينحصر في تجهيز الشاشات في أداة التصميم.'
     ],
@@ -713,13 +723,14 @@ export const t08Entries: TopicItem[] = [
     ],
     outputs: [
       'docs/STITCH_SCREEN_PROMPTS.md',
-      'شاشات MVP المصممة في Google Stitch'
+      'docs/DESIGN_SYSTEM_EVIDENCE.md',
+      'قائمة مراجع الشاشات وحالة كل مخرج؛ تسجل الشاشات أو الفحوص غير المنفذة Not Run'
     ],
     checklist: [
-      'استخراج وتوثيق رموز التصميم (الألوان، الخطوط، المسافات، الحواف) من الشاشة المرجعية المعتمدة.',
-      'تطبيق قاعدة الألوان 60-30-10 وتأكيد نسب التباين وفق WCAG 2.1 AA (4.5:1 للنصوص).',
+      'استخراج وتوثيق رموز التصميم التي يدعمها دليل الشاشة ومصدرها؛ اترك القيم غير القابلة للفحص UNKNOWN أو مقترحة.',
+      'مراجعة التباين وفق معيار WCAG المناسب؛ نسبة 4.5:1 تنطبق على النص العادي، وتحتاج الأحجام أو الأوزان الأخرى إلى معيارها المناسب. لا تسجل نجاحاً قبل القياس.',
       'صياغة برومبت مستقل ومنفصل لكل شاشة من شاشات جرد MVP دون تجميع عشوائي.',
-      'تضمين الحالات الست الإلزامية (Default, Loading, Empty, Error, Disabled, Permission Denied) في كل برومبت شاشة.',
+      'تحديد حالات الواجهة التي يقتضيها كل تدفق؛ لا تضف Permission Denied إلا إذا عرّفت المتطلبات صلاحية وسلوكاً لها، وسجّل الاستجابة وإمكانية الوصول كفحوص عابرة.',
       'حفظ جميع البرومبتات في docs/STITCH_SCREEN_PROMPTS.md مرتبة بمسار تدفق المستخدم.',
       'الالتزام التام بعدم كتابة أو توليد كود برمجي في هذه المرحلة.'
     ],
@@ -735,7 +746,7 @@ export const t08Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'فحص النماذج والتحقق التفاعلي',
-    summary: 'بناء النموذج التفاعلي (Interactive Prototype) بربط شاشات MVP المصممة في Google Stitch، واختبار الرحلات السلوكية الكاملة للمستخدمين. يركز الموضوع على منع وهم "زر التجربة الشكلي" (Fake Demo Button)، ويُخضع النموذج لفحص دقيق يشمل: تحديد المشغلات والوجهات، مسار النجاح، مسارات الفشل والاعتذار، حالات التراجع والإلغاء، وقيود الصلاحيات، مع إجراء فحص تدقيق بصري شامل (PROMPT 21) قبل البدء في مرحلة الكود.',
+    summary: 'إنشاء نموذج تفاعلي لشاشات MVP وفحص رحلات النجاح والفشل والتراجع والصلاحيات الموثقة. يمكن إعداد جدول انتقالات محلياً دون أداة، لكنه تحضير لا يحقق مخرج النموذج؛ سجّل التفاعل أو التدقيق الذي لم ينفذ Not Run وغير مكتمل.',
     tags: ['Prototype', 'User Journeys', 'Happy Path', 'Failure Path', 'No Fake Demo Button', 'PROMPT 20', 'PROMPT 21', 'UX Audit'],
     contentTypes: ['prompt', 'code', 'checklist'],
     diagramCount: 0,
@@ -745,29 +756,29 @@ export const t08Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic23PrototypeHtml),
     htmlContent: topic23PrototypeHtml,
 
-    goal: 'بناء نموذج تفاعلي متكامل يربط شاشات MVP في Google Stitch، وفحص جميع رحلات المستخدم (Happy & Failure Paths) وحالات النظام والتراجع وصلاحيات الأدوار بدقة، بدلاً من وضع أزرار تجربة شكلية وهمية، وتوثيق نتائج التدقيق البصري في docs/PROTOTYPE_JOURNEYS_AUDIT.md.',
+    goal: 'إنشاء نموذج تفاعلي فعلي لمسارات النجاح والفشل والتراجع والصلاحيات الموثقة، وتوثيق الأدلة وحدود الفحص في docs/PROTOTYPE_JOURNEYS_AUDIT.md. جدول الانتقالات تحضيري فقط؛ إذا لم يتوفر النموذج، سجّل مخرجه وفحوصه Not Run وغير مكتملة.',
     prerequisites: [
-      'شاشات MVP المصممة في Google Stitch (الموضوع 22)',
+      'مراجع الشاشات وحالتها كما وثقت في الموضوعين 21 و22؛ لا يشترط اعتمادها أو وجود أداة تصميم لإعداد جدول الانتقالات',
       'مسارات تدفق المستخدم docs/user-flow.md',
       'وثيقة متطلبات المنتج docs/PRD.md',
       'جرد الشاشات docs/SCREEN_INVENTORY.md'
     ],
     steps: [
-      '1. راجع شاشات MVP المصممة وتأكد من اكتمال الشاشات المطلوبة لمسار المستخدم من نقطة الدخول حتى نقطة الخروج.',
-      '2. افتح مشروع التصميم في Google Stitch وفعّل نمط النموذج التفاعلي (Prototype Mode) أو نمط الربط بين الشاشات.',
+      '1. راجع جرد الشاشات ومراجعها أو حالات UNKNOWN، وتأكد أن جدول الانتقالات يغطي نطاقاً ومصدراً محددين من نقطة الدخول إلى الخروج.',
+      '2. افتح مشروع التصميم في Google Stitch أو أداة بديلة متاحة وفعّل نمط النموذج التفاعلي؛ إذا لم يتوفر وصول، ارسم جدول انتقالات تحضيرياً وسجّل إنشاء النموذج Not Run وغير مكتمل.',
       '3. استخدم برومبت النموذج التفاعلي (PROMPT 20: Stitch Prototype) لتعريف انتقالات كل شاشة بدقة متناهية: الشاشة المصدر (Origin)، المشغل (Trigger: نقرة، إرسال، تبديل)، والشاشة الوجهة (Destination).',
       '4. امتنع تماماً عن الاكتفاء بـ "زر تجربة وهمي" (Fake Demo Button) أو روابط فارغة؛ يجب أن يؤدي كل زر إجراء (Action Button) إلى وجهة حقيقية أو استجابة واضحة لحالة النظام.',
-      '5. اربط واختبر سلوك التراجع والإلغاء (Back / Cancel / Close) في كل نافذة منبثقة أو شاشة فرعية لضمان عودة المستخدم إلى حالته السابقة دون ضياع بياناته.',
-      '6. اختبر مسار النجاح (Happy Path) كاملاً من تصفح الخدمة، وتعبئة النموذج، حتى شاشة التأكيد بنجاح.',
-      '7. اختبر مسارات الاعتذار والحالات الحدية (Failure & Boundary Paths): ماذا يحدث عند تجاوز الحد الأقصى (مثل حجز أكثر من جهازين)؟ ماذا يُعرض عند عدم توفر المعدة؟ وماذا يرى المستخدم غير المصرح له؟',
-      '8. أجرِ التدقيق البصري الشامل لتجربة الاستخدام (PROMPT 21: Visual UX Audit) لفحص التسلسل الهرمي، استجابة الشاشات (Responsive)، تباين الألوان، دعم RTL، وسهولة الوصول، ووثق التقرير في docs/PROTOTYPE_JOURNEYS_AUDIT.md.'
+      '5. وثّق سلوك الرجوع والإلغاء (Back / Cancel / Close) المتوقع في جدول الانتقالات، وسمِّ الاختبار التفاعلي Not Run إذا لم يتوفر نموذج.',
+      '6. تتبع مسار النجاح في الجدول أو النموذج المتاح؛ سجّل الأثر المرئي الفعلي، ولا تسمِ المسار المختطط اختباراً منفذاً.',
+      '7. أضف مسارات الاعتذار والحالات الحدية من مصدر موثق؛ سجّل اختبار الحدود والصلاحيات Not Run حتى يُفحص نموذج حقيقي.',
+      '8. افحص الترتيب والتباين وRTL والاستجابة وإمكانية الوصول من نموذج متاح، أو سجّل التدقيق البصري Not Run مع سبب واضح في docs/PROTOTYPE_JOURNEYS_AUDIT.md.'
     ],
     promptRefs: [
       'prompt-20-stitch-prototype',
       'prompt-21-visual-ux-audit'
     ],
     outputs: [
-      'نموذج تفاعلي متصل في Google Stitch',
+      'نموذج تفاعلي فعلي برابط/معرف ونتائج؛ أو `Not Run` وسبب تعذر الوصول مع بقاء المخرج غير مكتمل',
       'docs/PROTOTYPE_JOURNEYS_AUDIT.md'
     ],
     checklist: [

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
 import { TopicItem } from '@/src/types/topic.ts';
@@ -6,6 +8,7 @@ import {
   DIAGRAM_PERSPECTIVES,
   getTopicMermaidDiagram,
 } from '@/src/utils/diagramEngine.ts';
+import { getSavedTopicOfflinePayload } from '@/src/lib/offlineStorage';
 
 interface MermaidViewerProps {
   topic: TopicItem;
@@ -75,6 +78,19 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
     setRenderError(null);
 
     const renderDiagram = async () => {
+      // 1. If an offline snapshot is available, load it immediately
+      const offline = await getSavedTopicOfflinePayload(topic.slug);
+      if (isCancelled) return;
+      if (offline?.diagramSnapshots?.[perspective]) {
+        if (!isCancelled) {
+          setSvgContent(offline.diagramSnapshots[perspective]);
+          setIsRendering(false);
+        }
+        if (typeof navigator !== 'undefined' && !navigator.onLine) {
+          return;
+        }
+      }
+
       try {
         const renderId = `mermaid-${topic.id}-${perspective}-${Date.now()}`;
         const { svg } = await mermaid.render(renderId, currentDiagramCode);
@@ -83,6 +99,11 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
           setIsRendering(false);
         }
       } catch (err: unknown) {
+        if (offline?.diagramSnapshots?.[perspective] && !isCancelled) {
+          setSvgContent(offline.diagramSnapshots[perspective]);
+          setIsRendering(false);
+          return;
+        }
         console.error('Mermaid render error:', err);
         if (!isCancelled) {
           setRenderError(err instanceof Error ? err.message : 'فشل في تصيير المخطط');
@@ -160,7 +181,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
                 onClick={() => setPerspective(item.id)}
                 className={`min-h-[32px] px-2.5 sm:px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
                   isActive
-                    ? 'bg-[var(--brand-primary)] dark:bg-[#162c46] text-white border-[var(--brand-primary)] shadow-xs'
+                    ? 'bg-[var(--action-bg)] text-[var(--action-text)] border-[var(--action-bg)] shadow-xs'
                     : 'bg-[var(--bg-card-subtle)] text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-main)] hover:border-[var(--brand-primary)]/50'
                 }`}
                 title={item.description}

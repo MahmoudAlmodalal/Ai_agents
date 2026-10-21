@@ -8,7 +8,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Page metadata and headers
     await expect(page.locator('h1')).toContainText('تخطيط واجهة المستخدم وهندسة الفرونت إند (Frontend Planning)');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_PLAN.md');
     await expect(header).toContainText('docs/FRONTEND_TASKS.md');
     await expect(header).toContainText('docs/ROUTES_MAP.md');
@@ -19,12 +19,16 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
 
     // Content: Architecture before code & avoiding monolithic vibe coding
-    const content = page.locator('article');
+    const content = page.locator('article').first();
     await expect(content).toContainText('لماذا يسبق التخطيط المعماري أي كتابة للكود البرمجي؟');
     await expect(content).toContainText('البرمجة الاندفاعية');
     await expect(content).toContainText('docs/PRD.md');
     await expect(content).toContainText('docs/SCREEN_INVENTORY.md');
-    await expect(content).toContainText('docs/DESIGN.md');
+    const prereqSection = content.locator('section').filter({ hasText: 'المتطلبات السابقة' });
+    await expect(prereqSection).toContainText('نظام التصميم DESIGN.md ومراجع شاشات Stitch');
+    await expect(content.locator('code').filter({ hasText: /^DESIGN\.md$/ }).first()).toBeVisible();
+    await expect(content).toContainText('نظام التصميم (DESIGN.md ومراجع Stitch)');
+    await expect(content).not.toContainText('docs/DESIGN.md');
 
     // Content: Frontend-Only boundary
     await expect(content).toContainText('حدود النطاق الصارمة: الواجهة الأمامية فقط');
@@ -62,17 +66,17 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(svg).toBeVisible();
 
     // Zero broken anchor links in article
-    const brokenLinks = await page.locator('article a[href="#"]').count();
+    const brokenLinks = await page.locator('article').first().locator('a[href="#"]').count();
     expect(brokenLinks).toBe(0);
 
     // Practical steps and checklist
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Navigation bounds
     const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
     await expect(prevLink).toBeVisible();
-    await expect(prevLink).toHaveAttribute('href', '/learn/mcp-protocol');
+    await expect(prevLink).toHaveAttribute('href', '/learn/nextjs-app-router');
 
     const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
     await expect(nextLink).toBeVisible();
@@ -85,10 +89,10 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('مراجعة معايير التجربة والواجهة بـ UI/UX Pro Max');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/UI_UX_PRO_MAX_AUDIT.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Proper placement in workflow
     await expect(content).toContainText('التموضع الهندسي لأداة UI/UX Pro Max في مسار التطوير');
@@ -135,11 +139,11 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('تنظيم المواصفات وتطوير الميزات بـ Spec Kit');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/rules/frontend.md');
     await expect(header).toContainText('specs/001-equipment-browsing/spec.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Specification-Driven Development philosophy
     await expect(content).toContainText('فلسفة التطوير القائم على المواصفات');
@@ -187,10 +191,10 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     // Title and headers
     await expect(page.locator('h1')).toContainText('التنفيذ التدريجي للفرونت إند وحالات الواجهة');
     const header = page.locator('header.rounded-3xl');
-    await expect(header).toContainText('مسار موحد مكتمل ✓');
+    await expect(header).toContainText('حالة التوفر: محتوى متاح (منشور)');
     await expect(header).toContainText('docs/FRONTEND_EXECUTION_LOG.md');
 
-    const content = page.locator('article');
+    const content = page.locator('article').first();
 
     // Content: Stop & Verify
     await expect(content).toContainText('مبدأ التنفيذ التدريجي والتوقف الذكي (Stop & Verify)');
@@ -224,13 +228,13 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     const svg = page.locator('.diagram-box svg');
     await expect(svg).toBeVisible();
 
-    // Navigation bounds: Prev -> Topic 36, Next -> Topic-02 anchor
+    // Navigation bounds: Prev -> Topic 36, Next -> published Topic 38.
     const prevLink = page.getByRole('link', { name: /الموضوع السابق/ });
     await expect(prevLink).toHaveAttribute('href', '/learn/spec-kit-workflow');
 
     const nextLink = page.getByRole('link', { name: /الموضوع التالي/ });
     await expect(nextLink).toBeVisible();
-    await expect(nextLink).toHaveAttribute('href', '/learn/requirements-grill-me');
+    await expect(nextLink).toHaveAttribute('href', '/learn/python-backend-foundation');
   });
 
   test('Homepage displays topics 34, 35, 36, 37 with detail modal and Escape close', async ({ page }) => {
@@ -248,7 +252,7 @@ test.describe('Sequential Project Path - Ticket 12: Frontend Planning, UI/UX Pro
     await expect(topic37Card).toBeVisible();
 
     // Open detail modal for Topic 34
-    await topic34Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await topic34Card.getByRole('button', { name: 'معاينة سريعة' }).click();
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
     await expect(modal).toContainText('تخطيط واجهة المستخدم وهندسة الفرونت إند');

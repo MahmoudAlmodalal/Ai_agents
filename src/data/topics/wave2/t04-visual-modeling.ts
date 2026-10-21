@@ -6,7 +6,8 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 7
  * ========================================================================= */
 export const topic07Html = `
-<section id="topic-07-mermaid" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-07-mermaid" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 07 · المحطة الأساسية</span>
     <span class="step-pill">أدوات الرسم والنمذجة الهندسية</span>
@@ -181,7 +182,8 @@ export const topic07Html = `
  * Sequence Position: 8
  * ========================================================================= */
 export const topic08Html = `
-<section id="topic-08-user-flow" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-08-user-flow" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 08 · المحطة الأساسية</span>
     <span class="step-pill">رحلة المستخدم وهندسة السلوك</span>
@@ -240,7 +242,7 @@ export const topic08Html = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. دراسة حالة BorrowHub: مسار استعارة معدة معملية</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      المثال التالي يوضح مسار استعارة جهاز في دراسة حالة <strong>BorrowHub</strong>، مبيناً نقاط القرار المرتبطة بقواعد العمل الموثقة (مثل: الحد الأقصى 2 استعارة نشطة - القاعدة 3، والتسليم خلال 48 ساعة - القاعدة 7):
+      المثال التالي يوضح مسار استعارة جهاز في دراسة حالة <strong>BorrowHub</strong>، مبيناً نقاط القرار المرتبطة بقواعد العمل الموثقة (مثل: الحد الأقصى 2 استعارة نشطة - القاعدة 3، ومهلة الاستلام 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق - القاعدة 6):
     </p>
 
     <div class="code-container my-6" dir="ltr">
@@ -267,7 +269,7 @@ export const topic08Html = `
     PendingReview --&gt; AdminDecision{"قرار مسؤول المستودع"}
     AdminDecision -- رفض --&gt; NotifyRejection["إشعار الطالب بسبب الرفض وإغلاق الطلب"] --&gt; ExitReject(["نهاية: طلب مرفوض"])
     
-    AdminDecision -- موافقة --&gt; ApprovedReady["اعتماد الطلب وبدء مهلة الاستلام (48 ساعة)"]
+    AdminDecision -- موافقة --&gt; ApprovedReady["اعتماد الطلب؛ مهلة الاستلام 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق"]
     ApprovedReady --&gt; Handover["حضور الطالب ومسؤول المستودع وتأكيد التسليم"]
     Handover --&gt; ActiveLoan(["المعدة بحوزة الطالب: إعارة نشطة بنجاح ✓"])</code></pre>
     </div>
@@ -303,7 +305,8 @@ Do not generate other diagrams or code.</code></pre>
  * Sequence Position: 9
  * ========================================================================= */
 export const topic09Html = `
-<section id="topic-09-domain-model" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-09-domain-model" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 09 · المحطة الأساسية</span>
     <span class="step-pill">نمذجة مفاهيم الأعمال</span>

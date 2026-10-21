@@ -1,6 +1,7 @@
 import React from 'react';
 import { LayoutGrid, BarChart3, MessageSquare, Code2, CheckSquare, BookOpen, Heart } from 'lucide-react';
 import { TopicCategory, ContentType } from '@/src/types/topic.ts';
+import { CATEGORY_METADATA } from '@/src/data/topicsData.ts';
 
 interface FilterToolbarProps {
   selectedCategory: TopicCategory;
@@ -14,17 +15,8 @@ interface FilterToolbarProps {
   bookmarksCount: number;
   showFavoritesOnly: boolean;
   onToggleFavoritesOnly: () => void;
+  categoryCounts?: Record<TopicCategory, number>;
 }
-
-const CATEGORIES: { id: TopicCategory; label: string; count: number }[] = [
-  { id: 'all', label: 'كافة الأقسام', count: 12 },
-  { id: 'foundations', label: 'المرحلة التأسيسية', count: 3 },
-  { id: 'architecture', label: 'المعمارية والنمذجة', count: 3 },
-  { id: 'database', label: 'قواعد البيانات والأداء', count: 1 },
-  { id: 'frontend', label: 'الواجهات والفرونت إند', count: 3 },
-  { id: 'qa', label: 'الجودة والتحقق', count: 1 },
-  { id: 'reference', label: 'المراجع والقاموس', count: 1 },
-];
 
 const CONTENT_TYPE_ICONS: Record<ContentType, React.ReactNode> = {
   all: <LayoutGrid className="w-3.5 h-3.5" />,
@@ -56,6 +48,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
   bookmarksCount,
   showFavoritesOnly,
   onToggleFavoritesOnly,
+  categoryCounts,
 }) => {
   const isFiltered =
     selectedCategory !== 'all' ||
@@ -90,8 +83,9 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
 
           <span className="h-4 w-px bg-[var(--border-color)] mx-0.5 shrink-0" aria-hidden="true" />
 
-          {CATEGORIES.map((cat) => {
+          {CATEGORY_METADATA.map((cat) => {
             const active = !showFavoritesOnly && selectedCategory === cat.id;
+            const count = categoryCounts?.[cat.id] ?? 0;
             return (
               <button
                 key={cat.id}
@@ -111,7 +105,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
                     active ? 'bg-white/20 text-white' : 'text-[var(--text-faint)]'
                   }`}
                 >
-                  {cat.count}
+                  {count}
                 </span>
               </button>
             );

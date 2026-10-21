@@ -67,7 +67,7 @@ export default function DiagramLabPage() {
               <span>8 مخططات معمارية متكاملة</span>
             </span>
             <span className="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-300">
-              مسار سلاح العصر (Wave 2)
+              Ai_agents · الموضوعات 11–20
             </span>
           </div>
 

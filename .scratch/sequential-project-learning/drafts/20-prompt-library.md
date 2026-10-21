@@ -1,6 +1,8 @@
-# 20: مكتبة البرومبتات الـ33 المرتبطة بالمسار
+# 20: مكتبة البرومبتات الكاملة المرتبطة بالمسار
 
 **What to build:** يبحث الطالب في البرومبتات ويصفّيها ويفتح تفاصيلها وينسخ النص الكامل ويرى أين يستخدمه في مسار مشروعه.
+
+**Source inventory:** 41 complete records: 30 numbered prompts, one supplementary prompt, three reusable templates, and seven stage examples. Keep source groups distinct and derive displayed counts from the assembled records.
 
 **Blocked by:** [#5](https://github.com/MahmoudAlmodalal/Ai_agents/issues/5).
 

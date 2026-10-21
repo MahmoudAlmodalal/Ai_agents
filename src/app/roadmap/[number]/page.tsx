@@ -1,117 +1,21 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { ArrowRight, CheckCircle2, ClipboardCheck, GitBranch, Sparkles } from 'lucide-react';
+import { notFound, redirect } from 'next/navigation';
 import { COURSE_LECTURES } from '@/src/lib/courseRoadmap';
 
-type LessonPageProps = { params: Promise<{ number: string }> };
-
 export function generateStaticParams() {
-  return COURSE_LECTURES.map((lecture) => ({ number: String(lecture.number) }));
+  return COURSE_LECTURES.map(({ number }) => ({ number: String(number) }));
 }
 
-export function generateMetadata({ params }: LessonPageProps) {
-  return params.then(({ number }) => {
-    const lecture = COURSE_LECTURES.find((item) => String(item.number) === number);
-    return { title: lecture ? `المحاضرة ${number}: ${lecture.title} | MET Academy` : 'درس المشروع | MET Academy' };
-  });
-}
+// Audited by original lecture meaning, independent of current topic positions.
+// Composite lectures lead to the canonical index rather than selecting one part.
+const destinations: Record<string, string> = {
+  '4': '/learn/relational-erd-design', // Database Analysis / ERD
+  '11': '/learn/backend-architecture-api-contracts', // Architecture / REST API
+  '14': '/learn/auth-permissions', // Authentication / Authorization
+  '20': '/learn/project-demo-day', // Demo Day
+};
 
-export default async function RoadmapLessonPage({ params }: LessonPageProps) {
+export default async function HistoricalRoadmapRoute({ params }: { params: Promise<{ number: string }> }) {
   const { number } = await params;
-  const lecture = COURSE_LECTURES.find((item) => String(item.number) === number);
-  if (!lecture) notFound();
-
-  const previous = COURSE_LECTURES.find((item) => item.number === lecture.number - 1);
-  const next = COURSE_LECTURES.find((item) => item.number === lecture.number + 1);
-
-  return (
-    <main className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl">
-      <div className="mx-auto max-w-5xl">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <Link href="/roadmap" className="inline-flex items-center gap-2 text-sm font-bold text-[var(--primary)] hover:text-[var(--accent)]"><ArrowRight className="h-4 w-4" /> العودة إلى خارطة الدروس</Link>
-          <span className="rounded-full bg-[var(--primary)]/10 px-3 py-1 text-xs font-bold text-[var(--primary)]">المحاضرة {String(lecture.number).padStart(2, '0')} من 20</span>
-        </div>
-
-        <header className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm sm:p-10">
-          <p className="text-sm font-bold text-[var(--accent)]">{lecture.axis}</p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight text-[var(--text-main)] sm:text-5xl">{lecture.title}</h1>
-          <p className="mt-5 text-lg leading-9 text-[var(--text-muted)]"><strong className="text-[var(--text-main)]">هدف الدرس:</strong> {lecture.outcome}</p>
-          <div className="mt-6 flex flex-wrap gap-2"><span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">مشروعك أنت</span><span className="rounded-full bg-[var(--bg-card-subtle)] px-3 py-1 text-xs text-[var(--text-muted)]">تطبيق عملي</span><span className="rounded-full bg-[var(--bg-card-subtle)] px-3 py-1 text-xs text-[var(--text-muted)]">مخرج قابل للمراجعة</span></div>
-        </header>
-
-        <section className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-8">
-          <h2 className="flex items-center gap-2 text-xl font-black text-[var(--text-main)]"><ClipboardCheck className="h-5 w-5 text-[var(--primary)]" /> كيف تتابع الدرس؟</h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="font-mono text-xs font-bold text-[var(--accent)]">01</span><h3 className="mt-2 font-bold text-[var(--text-main)]">اقرأ المصدر</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">استخدم وثائق مشروعك الحالية، ولا تستبدلها بمثال عام.</p></div>
-            <div className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="font-mono text-xs font-bold text-[var(--accent)]">02</span><h3 className="mt-2 font-bold text-[var(--text-main)]">نفّذ مخرجًا</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">حوّل الخطوات إلى ملف أو قرار أو تغيير صغير قابل للمراجعة.</p></div>
-            <div className="rounded-2xl bg-[var(--bg-card-subtle)] p-4"><span className="font-mono text-xs font-bold text-[var(--accent)]">03</span><h3 className="mt-2 font-bold text-[var(--text-main)]">تحقق وسلّم</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">راجع النتيجة، شغّل الفحص المناسب، ثم احفظها في GitHub.</p></div>
-          </div>
-        </section>
-
-        <section className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-8">
-          <h2 className="text-xl font-black text-[var(--text-main)]">شرح الدرس وسلسلة التنفيذ</h2>
-          <p className="mt-3 leading-8 text-[var(--text-muted)]">في هذه المحاضرة تعمل على مشروعك الخاص، لذلك لا تنسخ أسماء الكيانات أو الشاشات من مشروع آخر. ابدأ بالمخرج المطلوب، اربطه بوثائقك، ثم نفّذ الخطوات بالترتيب. إذا ظهرت معلومة غير مؤكدة، سجّلها كسؤال مفتوح بدل أن تجعلها سلوكًا دائمًا في المنتج.</p>
-          <ol className="mt-6 space-y-4">
-            {lecture.steps.map((step, index) => <li key={step} className="flex gap-4 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] p-4"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] text-xs font-black text-white">{index + 1}</span><div><h3 className="font-bold text-[var(--text-main)]">الخطوة {index + 1}</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">{step}</p></div></li>)}
-          </ol>
-        </section>
-
-        <section className="mt-6 rounded-3xl border border-violet-200 bg-violet-50/60 p-6 dark:border-violet-900 dark:bg-violet-950/20 sm:p-8">
-          <h2 className="flex items-center gap-2 text-xl font-black text-violet-950 dark:text-violet-200"><Sparkles className="h-5 w-5" /> مختبر التطبيق على مشروع الطالب</h2>
-          <p className="mt-3 leading-8 text-violet-950/80 dark:text-violet-100/80">نفّذ المختبر على مشروعك أنت. قبل النسخ، استبدل الحقول التالية: <code>[PROJECT_NAME]</code> و<code>[DOMAIN]</code> و<code>[TARGET_USERS]</code>. أرسل إلى الأداة الوثائق المتاحة فقط، ولا ترسل أسرارًا أو مفاتيح API.</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">01</span><h3 className="mt-2 font-bold text-[var(--text-main)]">حضّر السياق</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">اكتب اسم المشروع والمجال والمستخدمين، واربط مخرجات الدروس السابقة.</p></div>
-            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">02</span><h3 className="mt-2 font-bold text-[var(--text-main)]">نفّذ المطلوب</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">استخدم Prompt الدرس، واسمح بتغيير واحد قابل للمراجعة فقط.</p></div>
-            <div className="rounded-2xl bg-white/70 p-4 dark:bg-slate-950/30"><span className="font-mono text-xs font-bold text-violet-700 dark:text-violet-300">03</span><h3 className="mt-2 font-bold text-[var(--text-main)]">راجع وسلّم</h3><p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">استخدم Prompt المراجعة، أصلح العيب الأول، ثم احفظ النتيجة في Git.</p></div>
-          </div>
-          <div className="mt-6 space-y-4">
-            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
-              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt A — تجهيز وتنفيذ مخرج المحاضرة</h3>
-              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`أعمل على مشروع [PROJECT_NAME] في مجال [DOMAIN] للمستخدمين [TARGET_USERS].
-هذه محاضرة: ${lecture.title}.
-اقرأ وثائق المشروع المتاحة، وحدد ما هو مؤكد وما هو ناقص قبل التنفيذ.
-نفّذ المخرج التالي فقط: ${lecture.deliverables[0] ?? lecture.outcome}.
-اربط كل قرار بمصدره، ولا تخترع سلوكًا أو تقنية أو بيانات غير موثقة.
-قبل التعديل اذكر الملفات التي ستتغير ومعايير القبول.
-بعد التعديل شغّل الفحص المناسب، ثم لخّص النتيجة وتوقف.`}</pre>
-            </div>
-            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
-              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt B — مراجعة المخرج</h3>
-              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`أنت Reviewer مستقل لمشروع [PROJECT_NAME].
-راجع مخرج محاضرة ${lecture.number}: ${lecture.title} مقابل PRD وSRS وأي تصميم أو عقد متاح.
-اكتب جدولًا من PASS وFAIL وOPEN QUESTION.
-افحص الاتساق، الحالات الحدية، قابلية التحقق، وعدم إضافة نطاق غير معتمد.
-لا تصلح كل شيء دفعة واحدة: اقترح أعلى عيب تأثيرًا، ثم توقف وانتظر الاعتماد.`}</pre>
-            </div>
-            <div className="rounded-2xl border border-violet-200 bg-white/80 p-4 dark:border-violet-900 dark:bg-slate-950/30">
-              <h3 className="font-black text-violet-900 dark:text-violet-200">Prompt C — تسليم وتوثيق</h3>
-              <pre className="mt-3 whitespace-pre-wrap text-left text-xs leading-7 text-[var(--text-main)]" dir="auto">{`لخّص إنجاز محاضرة ${lecture.number} لمشروع [PROJECT_NAME].
-اذكر: الملفات والمخرجات، القرارات المعتمدة، الأسئلة المفتوحة، الفحوصات ونتائجها، والمخاطر.
-اكتب ملاحظة Handoff قصيرة ليكمل طالب آخر من نفس المستودع دون تخمين.
-اقترح رسالة Commit واضحة، ولا تقل إن العمل مكتمل إذا بقيت فجوة أو فشل فحص.`}</pre>
-            </div>
-          </div>
-          <div className="mt-5 rounded-2xl border border-violet-300 bg-violet-100/70 p-4 text-sm leading-7 text-violet-950 dark:border-violet-800 dark:bg-violet-950/30 dark:text-violet-100">
-            <strong>شرط إنهاء المختبر:</strong> يوجد مخرج محفوظ، مراجعة PASS أو قائمة فجوات واضحة، فحص موثق، وCommit مرتبط بالمحاضرة. إذا لم يتحقق أحدها، تبقى المحاضرة In Progress ولا تنتقل إلى التالية.
-          </div>
-        </section>
-
-        <section className="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50/70 p-6 dark:border-emerald-900 dark:bg-emerald-950/20 sm:p-8">
-          <h2 className="flex items-center gap-2 text-xl font-black text-emerald-900 dark:text-emerald-200"><Sparkles className="h-5 w-5" /> البرومبت العملي للدرس</h2>
-          <p className="mt-2 text-sm leading-7 text-emerald-900/75 dark:text-emerald-100/75">استبدل الحقول بين الأقواس بمعلومات مشروعك. لا ترسل أسرارًا أو مفاتيح API داخل المحادثة.</p>
-          <pre className="mt-5 max-h-[32rem] overflow-auto whitespace-pre-wrap rounded-2xl bg-slate-950 p-5 text-left text-xs leading-7 text-emerald-300" dir="auto">{lecture.prompt}</pre>
-        </section>
-
-        <section className="mt-6 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6"><h2 className="flex items-center gap-2 text-lg font-black text-[var(--text-main)]"><CheckCircle2 className="h-5 w-5 text-emerald-600" /> مخرجات الدرس</h2><ul className="mt-4 space-y-3 text-sm leading-7 text-[var(--text-muted)]">{lecture.deliverables.map((item) => <li key={item} className="flex gap-2"><span className="text-emerald-600">✓</span>{item}</li>)}</ul></div>
-          <div className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6"><h2 className="flex items-center gap-2 text-lg font-black text-[var(--text-main)]"><GitBranch className="h-5 w-5 text-violet-600" /> نقطة التحقق والتسليم</h2><p className="mt-4 text-sm leading-7 text-[var(--text-muted)]">لا تنتقل قبل أن تراجع المخرج مع صاحب المشروع، تتأكد أنه يطابق المتطلبات المعتمدة، وتكتب ملاحظة قصيرة عن القرار أو القيد. بعدها احفظ التغيير في فرع واضح وأنشئ Commit قابلًا للرجوع.</p><code className="mt-4 block rounded-xl bg-[var(--bg-card-subtle)] p-3 text-left text-xs text-[var(--text-main)]" dir="ltr">git status && git add . && git commit -m &quot;docs: complete lecture {String(lecture.number).padStart(2, '0')}&quot;</code></div>
-        </section>
-
-        <nav className="mt-8 flex items-center justify-between gap-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 text-sm">
-          {previous ? <Link href={`/roadmap/${previous.number}`} className="font-bold text-[var(--primary)] hover:text-[var(--accent)]">← {previous.title}</Link> : <span />}
-          {next ? <Link href={`/roadmap/${next.number}`} className="font-bold text-[var(--primary)] hover:text-[var(--accent)]">{next.title} →</Link> : <Link href="/" className="font-bold text-[var(--primary)]">إنهاء المسار والعودة للرئيسية</Link>}
-        </nav>
-      </div>
-    </main>
-  );
+  if (!COURSE_LECTURES.some((lecture) => String(lecture.number) === number)) notFound();
+  redirect(destinations[number] ?? '/start#project-path');
 }

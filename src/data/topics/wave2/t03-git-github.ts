@@ -33,7 +33,7 @@ export const topic05GitHtml = `
 
         <h3>1. التحقق من البيئة وضبط هوية المطوّر</h3>
         <p>
-          قبل تهيئة المستودع، يجب التأكد من تثبيت Git على جهازك وضبط اسمك وبريدك الإلكتروني. تُسجل هذه البيانات في كل نقطة حفظ (Commit) لتوثيق هوية صاحب التعديل.
+          تحقق من تثبيت Git. بعد تهيئة المستودع، يمكنك ضبط اسمك وبريدك الإلكتروني لهذا المشروع فقط؛ هذه البيانات تُسجل في كل نقطة حفظ (Commit). لا تستخدم الإعداد العام إلا إذا أردت الهوية نفسها في كل مستودعاتك.
         </p>
 
         <div class="code-container" dir="ltr">
@@ -41,15 +41,8 @@ export const topic05GitHtml = `
             <span class="code-lang">BASH — التحقق والتهيئة [مرجع Git الرسمي: git-scm.com/docs/git-config]</span>
             <button class="copy-btn" type="button" aria-label="نسخ أوامر ضبط هوية Git">نسخ</button>
           </div>
-          <pre class="code-content"><code># 1. التحقق من وجود Git وإصداره (يتطلب الإصدار 2.23+ لدعم الأوامر الحديثة)
-git --version
-
-# 2. ضبط الاسم والبريد الإلكتروني عالمياً (يُستبدل ببياناتك الحقيقية)
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
-
-# 3. التحقق من صحة الإعدادات المسجلة
-git config --list</code></pre>
+          <pre class="code-content"><code># تحقق من وجود Git وإصداره (يتطلب الإصدار 2.23+ لدعم الأوامر الحديثة)
+git --version</code></pre>
         </div>
 
         <h3>2. تهيئة المستودع وتنظيم هيكل مجلد الوثائق</h3>
@@ -65,6 +58,12 @@ git config --list</code></pre>
           <pre class="code-content"><code># الدخول إلى مجلد المشروع وتهيئة مستودع Git محلي
 cd my-project
 git init
+
+# ضبط هوية هذا المستودع فقط بعد تهيئته
+git config --local user.name "Your Name"
+git config --local user.email "your.email@example.com"
+git config --local --get user.name
+git config --local --get user.email
 
 # التأكد من وجود مجلد docs/ ووضع وثائق المشروع الأولية داخله
 mkdir -p docs
@@ -314,10 +313,10 @@ git push -u origin main</code></pre>
             <span>فحص الأسرار قبل Push وميزة Push Protection</span>
           </div>
           <p>
-            توفّر GitHub ميزة <strong>Secret Scanning</strong> و<strong>Push Protection</strong> لاكتشاف مفاتيح الخدمات السحابية ومفاتيح الذكاء الاصطناعي (مثل OpenAI أو Google AI Studio keys) ومنع رفعها. إذا اكتشفت المنصة مفتاحاً مسرباً، فسيتم رفض الـ Push تلقائياً لحمايتك.
+            تتوفر ميزتا <strong>Secret Scanning</strong> و<strong>Push Protection</strong> لبعض المستودعات والحسابات بحسب إعدادات GitHub ونوع السر. وقد يحظر Push Protection بعض الأسرار المكتشفة عند تفعيله؛ لا يغطي كل الأسرار ولا يضمن خلو المستودع منها. استخدمهما كطبقة إضافية إذا كانتا متاحتين، وافحص تغييراتك محلياً دائماً.
           </p>
           <p>
-            <strong>الإجراء الوقائي:</strong> قبل كل أمر <code>git push</code>، شغل أمر <code>git log -p -1</code> لمعاينة التغييرات الفعلية في آخر Commit والتأكد من خلوها من أي رمز سري.
+            <strong>الإجراء الوقائي:</strong> قبل الدفع، راجع كل commit سيصل إلى الوجهة، لا آخر commit فقط. بعد ضبط upstream، استخدم <code>git log -p @{u}..HEAD</code>. في أول دفع بلا upstream، راجع سجل الفرع كاملاً عبر <code>git log --root -p HEAD</code>. لا تلصق مخرجات قد تحتوي سراً في محادثة أو تقرير عام. إذا دخل سر إلى أي commit، اعتبره مكشوفاً ودوّره؛ نجاح الدفع أو فحص المنصة لا يثبتان خلو التاريخ.
           </p>
         </div>
 
@@ -453,7 +452,7 @@ export const topic06GitHub: TopicItem = {
   htmlContent: topic06GitHubHtml,
 
   // Unified contract fields
-  goal: 'ربط المستودع المحلي بمستودع بعيد على GitHub، ونشر الوثائق بملف README احترافي، وتطبيق دورة المراجعة الهندسية عبر Pull Requests، وتفعيل فحص الأسرار ومنع تسريب المفاتيح.',
+  goal: 'ربط المستودع المحلي بمستودع بعيد على GitHub، ونشر الوثائق بملف README احترافي، وتطبيق دورة المراجعة الهندسية عبر Pull Requests، وفحص الأسرار قبل النشر مع استخدام ضوابط المنصة المتاحة كطبقة إضافية.',
   prerequisites: [
     'مستودع Git محلي مهيأ يحتوي على وثائق المشروع و.gitignore (الموضوع 05).',
     'حساب شخصي مفعّل ومجاني على منصة GitHub ووسيلة مصادقة آمنة (SSH Key أو Personal Access Token).',
@@ -464,7 +463,7 @@ export const topic06GitHub: TopicItem = {
     '3. اربط المستودع البعيد كمصدر رئيسي (origin) وتأكد من تسمية الفرع main ثم ادفع عبر git push -u origin main.',
     '4. أنشئ ملف README.md احترافي يعرّف بفكرة مشروعك، وأهدافه، وهيكل مجلد docs/، وروابط الوثائق المعتمدة.',
     '5. ارفع فرع وثائق جديد وافتح طلب دمج (Pull Request) لمراجعة وثائق المشروع نقدياً مع الزملاء أو المشرف.',
-    '6. تحقّق من عدم وجود أسرار أو مفاتيح مسربة عبر مراجعة Git diff وميزة Secret Scanning قبل اعتماد الدمج.',
+    '6. راجع كل التغييرات والـcommits الخارجة قبل الدفع أو الدمج، واستخدم Secret Scanning أو Push Protection إذا كانا متاحين كطبقة إضافية لا كضمان.',
   ],
   promptRefs: ['prompt-04-github-documentation-setup'],
   outputs: [
@@ -477,7 +476,7 @@ export const topic06GitHub: TopicItem = {
     'تم ربط origin بنجاح ودفع الفرع الرئيسي بأمان دون أخطاء مصادقة.',
     'تم توثيق README.md ليوضح فكرة المشروع وروابط وثائقه في docs/.',
     'تم رفع فرع توثيق وفتح Pull Request وإجراء مراجعة وثائق حقيقية.',
-    'تم التحقق من خلو السجل والتغييرات من أي مفاتيح API أو أسرار حساسة.',
+    'رُوجعت كل التغييرات والـcommits الخارجة قبل الدفع أو الدمج، واستُخدمت ضوابط Secret Scanning أو Push Protection إن كانت متاحة كطبقة إضافية لا كضمان.',
   ],
   publicationStatus: 'unified-complete',
   sequencePosition: 6,

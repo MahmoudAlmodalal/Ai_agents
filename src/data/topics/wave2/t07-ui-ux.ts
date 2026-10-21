@@ -6,7 +6,8 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 18
  * ========================================================================= */
 export const topic18UiUxHtml = `
-<section id="topic-18-ui-ux" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-18-ui-ux" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 18 · المحطة الأساسية</span>
     <span class="step-pill">هندسة تجربة المستخدم وتوزيع الأدوار</span>
@@ -127,10 +128,10 @@ export const topic18UiUxHtml = `
     </p>
 
     <ul class="list-disc list-inside space-y-3 leading-8 text-[var(--text-muted)] my-4">
-      <li><strong>الشريط العلوي العام (Global Header):</strong> يوضع الشعار في أقصى اليمين كنقطة ارتكاز بصرية أولى، تليه روابط التصفح الأساسية، بينما توضع أدوات المستخدم (الحساب الشخصي، التنبيهات، مبدل الثيم) في أقصى اليسار.</li>
-      <li><strong>القائمة الجانبية (Sidebar):</strong> تنبثق وتثبت على يمين الشاشة، مع مراعاة أن مؤشر الصفحة النشطة يكون على الحافة اليمنى للرابط.</li>
-      <li><strong>أيقونات التراجع والتقدم (Directional Icons):</strong> في واجهات RTL، أيقونة التراجع (Back) تشير إلى اليمين (<code>&rarr;</code>) لأنها عودة للمحطة السابقة في خط الزمن العربي، بينما تشير أيقونة التالي إلى اليسار (<code>&larr;</code>).</li>
-      <li><strong>التنقل في شاشات الجوال:</strong> استخدام شريط تنقل سفلي (Bottom Navigation) يضم 4 إلى 5 وجهات رئيسية للأدوار الميدانية (مثل الطالب والمشرف)، مع أزرار لمس واضحة لا تقل عن 44×44 بكسل.</li>
+      <li><strong>المحاذاة في RTL:</strong> ابدأ من تدفق المحتوى والمهام المعتمدة لتقرر موضع الشعار والروابط وأدوات المستخدم. استخدم خصائص الاتجاه المنطقية، ولا تحول مواضع عناصر بعينها إلى قاعدة ثابتة لكل منتج.</li>
+      <li><strong>القائمة الجانبية (Sidebar):</strong> يمكن وضعها عند بداية التدفق المنطقي في واجهة RTL، لكن تحقق من تسلسل الاستخدام وحالة العنصر النشط وملاءمة الجهاز بدلاً من افتراض مكوّن واحد لكل شاشة.</li>
+      <li><strong>أيقونات التراجع والتقدم (Directional Icons):</strong> لا تقلب رمزاً اعتماداً على RTL وحده؛ اتبع معنى الإجراء واتفاقات المنصة، وادعم الرمز باسم مفهوم واختبره في اتجاه العرض الفعلي.</li>
+      <li><strong>التنقل في شاشات الجوال:</strong> اختر شريطاً سفلياً أو قائمة أو رابطاً حسب عدد الوجهات وتكرارها ومهام الدور؛ لا تفرض عدداً ثابتاً من العناصر. راعِ معيار حجم الهدف المستهدف، ويمكن استخدام 44×44 بكسل كهدف مريح لا كحد WCAG عام.</li>
     </ul>
 
     <!-- Mermaid Diagram: Navigation Flow -->
@@ -236,11 +237,12 @@ Start with the first question only.</code></pre>
 `;
 
 /* =========================================================================
- * TOPIC 19: UX Blueprint, Complete Journeys & The 6 Essential States
+ * TOPIC 19: UX Blueprint, Complete Journeys & Cross-cutting Checks
  * Sequence Position: 19
  * ========================================================================= */
 export const topic19UxBlueprintHtml = `
-<section id="topic-19-ux-blueprint" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-19-ux-blueprint" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 19 · المحطة الأساسية</span>
     <span class="step-pill">مخطط التجربة وهندسة الحالات</span>
@@ -250,7 +252,7 @@ export const topic19UxBlueprintHtml = `
   <div class="step-header">
     <div class="step-title-wrap">
       <h2 class="step-title">مخطط تجربة المستخدم (UX Blueprint): الرحلات وحالات الواجهة الشاملة</h2>
-      <div class="step-subtitle">تخطيط رحلات المستخدم المكتملة، خريطة الموقع (Sitemap)، وهندسة حالات التحميل والفراغ والخطأ والنجاح والتجاوب والوصول</div>
+      <div class="step-subtitle">تخطيط رحلات المستخدم وخريطة الموقع (Sitemap)، وتوثيق حالات الواجهة مع مراجعة الاستجابة وإمكانية الوصول كفحوص عابرة</div>
     </div>
   </div>
 
@@ -258,7 +260,7 @@ export const topic19UxBlueprintHtml = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. ما هو مخطط تجربة المستخدم (UX Blueprint) ولماذا نحتاجه؟</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      الـ <strong>UX Blueprint</strong> هو المخطط المعماري الشامل الذي يربط بين خريطة الموقع (Sitemap)، ورحلات المستخدم المكتملة، والحالات التشغيلية الدقيقة لكل شاشة.
+      الـ <strong>UX Blueprint</strong> هو المخطط الذي يربط خريطة الموقع (Sitemap) برحلات المستخدم وحالات الواجهة المناسبة لكل شاشة، ثم يراجع الاستجابة وإمكانية الوصول عبر الرحلة.
       إذا كان الـ PRD يحدد <em>ماذا نريد أن نبني</em>، فإن الـ UX Blueprint يحدد <em>كيف تتصرف الواجهة في كافة الظروف الواقعية</em> قبل كتابة أي كود أو توليد تصميمات نهائية.
     </p>
 
@@ -303,21 +305,21 @@ export const topic19UxBlueprintHtml = `
     </div>
   </div>
 
-  <!-- 3. The 6 Essential UI States -->
+  <!-- 3. UI states and cross-cutting checks -->
   <div class="content-block mt-8">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. مصفوفة الحالات الست الإلزامية في تجربة المستخدم (The 6 Essential States)</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. حالات الواجهة وفحوص الجودة العابرة</h3>
     <p class="leading-8 text-[var(--text-muted)]">
       معظم التطبيقات الفاشلة تبدو رائعة في التصميم عندما تكون البيانات مكتملة والإنترنت سريعاً، لكنها تنهار عندما تواجه الواقع: بطء الشبكة، غياب البيانات، أو أخطاء المستخدم.
-      لذلك يلزم الـ UX Blueprint بتحديد <strong>الحالات الست التالية لكل شاشة دون استثناء</strong>:
+      وثّق حالات التحميل والفراغ والخطأ والنجاح ذات الصلة بكل تدفق. الاستجابة وإمكانية الوصول بُعدان للمراجعة عبر الحالات وليستا حالتين مرئيتين للواجهة؛ لا تضف حالة أو سلوكاً لا تدعمه متطلبات المشروع.
     </p>
 
     <div class="table-container my-6">
       <table class="data-table">
         <thead>
           <tr>
-            <th>الحالة الأساسية</th>
+            <th>الحالة أو بُعد المراجعة</th>
             <th>التحدي الإنساني والتقني</th>
-            <th>الحل الهندسي المعتمد في المسار</th>
+            <th>إرشاد قابل للتكييف</th>
             <th>تطبيق حي من واقع BorrowHub</th>
           </tr>
         </thead>
@@ -344,18 +346,18 @@ export const topic19UxBlueprintHtml = `
             <td><strong>4. النجاح (Success)</strong></td>
             <td>الحاجة للتأكيد التام على اكتمال الإجراء ومعرفة الخطوة التالية.</td>
             <td>إشعار تأكيد عائم (Toast)، شاشة تأكيد تحتوي رقم الطلب، مع خطوات الاستلام التالية بوضوح.</td>
-            <td>عند إرسال الطلب: "تم تسجيل طلبك بنجاح! رقم الطلب #1042. مهلة الاستلام من المعمل 48 ساعة من تاريخ الاعتماد".</td>
+            <td>عند إرسال الطلب: "تم تسجيل طلبك بنجاح! رقم الطلب #1042. مهلة الاستلام من المعمل 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق؛ لا يبدأ عدّها عند إرسال الطلب أو اعتماده".</td>
           </tr>
           <tr>
-            <td><strong>5. التجاوب (Responsive)</strong></td>
+            <td><strong>فحص عابر: الاستجابة (Responsive)</strong></td>
             <td>اختلاف أحجام الشاشات وتغير بيئة التصفح بين المكتب والميدان.</td>
-            <td>تصميم مرن يبدأ من شاشة الجوال (Mobile-First 390px) ويتوسع للمكتبي (1440px) مع مساحات لمس &ge; 44px.</td>
+            <td>افحص أحجام العرض المناسبة للجمهور والمنصة. 390px و1440px مثالان للاختبار، و44 CSS px قيمة راحة اختيارية وليست شرطاً عاماً لكل عنصر.</td>
             <td>تحول جدول طلبات المستودع في الديسكتوب إلى بطاقات عمودية قابلة للسحب على أجهزة المشرف اللوحية.</td>
           </tr>
           <tr>
-            <td><strong>6. إمكانية الوصول (Accessibility)</strong></td>
+            <td><strong>فحص عابر: إمكانية الوصول (Accessibility)</strong></td>
             <td>صعوبة القراءة لضعاف البصر أو عدم القدرة على استخدام الفأرة.</td>
-            <td>تحقيق معيار تباين الألوان 4.5:1 (WCAG AA)، دعم التنقل بلوحة المفاتيح (Tab Index)، وتسميات ARIA واضحة.</td>
+            <td>افحص التباين وفق المعيار المناسب (4.5:1 للنص العادي و3:1 للنص الكبير)، مع أسماء قابلة للإدراك وتركيز ولوحة مفاتيح؛ لا تدّعِ المطابقة قبل القياس.</td>
             <td>ظهور حلقة تركيز بارزة (Focus Ring) حول زر "تأكيد الاستعارة" عند التنقل عبر لوحة المفاتيح لتمكين ذوي الإعاقة.</td>
           </tr>
         </tbody>
@@ -379,7 +381,9 @@ export const topic19UxBlueprintHtml = `
 Read docs/PRD.md and docs/UI_UX_REQUIREMENTS.md.
 Create complete MVP user journeys, Mermaid flows, a Sitemap and Screen Inventory.
 For EACH screen specify ID, purpose, roles, route, components, data,
-actions, navigation, validation, states, accessibility and responsive behavior.
+actions, navigation, validation and relevant UI states (loading, empty, error,
+success). Review responsive behavior and accessibility across states; they are
+cross-cutting checks, not additional UI states. Keep unresolved behavior open.
 Prioritize core/supporting/future, without bringing future features into MVP.
 Save docs/UX_BLUEPRINT.md and docs/SCREEN_INVENTORY.md.
 Do not design screens yet or write code.</code></pre>
@@ -408,13 +412,14 @@ Do not design screens yet or write code.</code></pre>
 - رحلة تصفح وطلب استعارة معدة (الطالب)
 - رحلة مراجعة وتسليم العتاد وفحص المرتجع (مشرف المستودع)
 
-## 3. مواصفة الحالات الست الإلزامية (The 6 States Specification)
+## 3. حالات الواجهة وفحوص الجودة العابرة
 - حالات التحميل (Skeleton Patterns)
 - حالات الفراغ (Empty Messages & CTAs)
 - حالات الخطأ واستراتيجيات التعافي (Error Handling & Recovery)
 - حالات النجاح والإشعارات (Success Feedback)
-- سلوك التجاوب (Mobile 390px / Desktop 1440px)
-- معايير الوصول الرقمي (Accessibility WCAG AA)
+- مراجعة الاستجابة على أحجام مناسبة للجمهور والمنصة (تُذكر قيم الاختبار)
+- مراجعة إمكانية الوصول والتباين وفق المعيار المناسب ودليل القياس
+- الاستجابة وإمكانية الوصول فحوص عابرة، وليستا حالتين للواجهة
 
 ## 4. ضوابط اللغة والاتجاه (RTL Guidelines)
 - محاذاة العناوين والأيقونات التوجيهية
@@ -429,7 +434,8 @@ Do not design screens yet or write code.</code></pre>
  * Sequence Position: 20
  * ========================================================================= */
 export const topic20ScreenInventoryHtml = `
-<section id="topic-20-screen-inventory" class="topic-section">
+<aside class="callout note"><p><strong>مراجعة BorrowHub:</strong> هذا نموذج تعليمي، وتُراجع أسماء الحالات وتوقيت انتهاء المهلة وتحديث المخزون مقابل PRD المعتمد. المصدر يحدد المهلة من تاريخ بداية الطلب وفق التعريف الموثق، وتأكيد التسليم والإرجاع للمسؤول، وتسجيل التلف دون إعادة الوحدة للمتاح، ومتابعة التأخر يدويًا دون حظر تلقائي. أي تعارض يوثق كسؤال قرار ولا يُحسم بصمت.</p></aside>
+  <section id="topic-20-screen-inventory" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 20 · المحطة الأساسية</span>
     <span class="step-pill">جرد الشاشات وهندسة النطاق</span>
@@ -568,7 +574,7 @@ export const topic20ScreenInventoryHtml = `
             <td><code>/staff/inspections</code><br />مشرف المستودع</td>
             <td>توثيق حالة المعدة عند إرجاعها إلى المعمل، التأكد من سلامتها الفنية، أو تسجيل الأضرار والملاحظات.</td>
             <td>بيانات الإعارة المنتهية، قائمة فحص السلامة (Checklist)، حقل رصد الأضرار ونوع العطل وصور الإثبات.</td>
-            <td>تأكيد الإرجاع السليم وإخلاء طرف الطالب، أو تسجيل تلف وتجميد الحساب مؤقتاً (القاعدة 8).</td>
+            <td>تأكيد الإرجاع السليم وإخلاء طرف الطالب، أو تسجيل تلف دون إعادة الوحدة للمتاح كسؤال PRD مفتوح للسياسات الإضافية (القاعدة 8).</td>
             <td><strong>خطأ:</strong> حظر إغلاق الإعارة المتضررة دون كتابة تقرير فحص تفصيلي موثق.</td>
           </tr>
         </tbody>
@@ -601,7 +607,7 @@ export const topic20ScreenInventoryHtml = `
             <td>فحص عدد الأجهزة قبل فتح نموذج الطلب؛ عند وصول الحد يظهر تنبيه مانع ويتعطل زر الإرسال.</td>
           </tr>
           <tr>
-            <td><strong>القاعدة 7:</strong> استلام الجهاز خلال 48 ساعة من الاعتماد</td>
+            <td><strong>القاعدة 6:</strong> استلام الجهاز خلال 48 ساعة من تاريخ بداية الطلب وفق التعريف الموثق</td>
             <td>عقدة التسليم <code>ApprovedReady &rarr; Handover</code></td>
             <td><code>SCR-04</code> للوحة الطالب و <code>SCR-05</code> للمشرف</td>
             <td>عرض مؤقت عد تنازلي لمهلة الـ 48 ساعة؛ يتم إلغاء الحجز تلقائياً في حال عدم الحضور.</td>
@@ -646,7 +652,7 @@ export const topic20ScreenInventoryHtml = `
 | SCR-06 | فحص الاسترجاع وتوثيق الأضرار | /staff/inspections | المشرف | Supporting | Inspection Checklist, Damage |
 
 ## 3. المواصفة الفنية لكل شاشة
-(توثيق لكل شاشة: الهدف، البيانات، الإجراءات، التحقق، الحالات الست، والتجاوب)
+(توثيق الهدف والبيانات والإجراءات والتحقق والحالات ذات الصلة؛ راجع الاستجابة وإمكانية الوصول عبر الحالات)
 
 ## 4. مصفوفة تتبع التغطية مع PRD (Traceability Matrix)
 - ربط كل قاعدة عمل بالشاشة المعنية وضمان التغطية الكاملة</code></pre>
@@ -686,15 +692,15 @@ export const t07Entries: TopicItem[] = [
     ],
     steps: [
       '1. راجع وثيقة docs/PRD.md واستخرج كافة الأدوار المعتمدة (مثل: الطالب ومسؤول المعمل في BorrowHub) والصلاحيات الممنوحة لكل دور على الواجهة.',
-      '2. حدد خريطة التنقل العامة (Global Navigation) للمنتج: ما هي العناصر الثابتة في الترويسة (Header) أو القائمة الجانبية (Sidebar) لكل دور؟',
+      '2. أنشئ نموذج تنقل مرشحاً يربط كل وجهة بمهمة ودور ومتطلب مصدر، وسجل العناصر العامة أو الخاصة بكل دور كأسئلة مفتوحة عند غياب قرار.',
       '3. ابنِ هيكلية المعلومات (Information Architecture): صنف المحتوى إلى صفحات رئيسية وفرعية وشاشات منبثقة (Modals/Drawers) بحسب الأولوية البصرية.',
       '4. راعِ خصوصية اللغة العربية والتوجيه من اليمين لليسار (RTL): ترتيب العناصر من اليمين، اتجاه أيقونات التراجع، ومحاذاة النصوص ونقاط الجذب البصري.',
       '5. شغّل جلسة استكشاف الواجهة باستخدام برومبت UI/UX Grill Me المعتمد (PROMPT 14) للإجابة عن أسئلة تجربة المستخدم سؤالاً بسؤال.',
-      '6. احفظ مخرجات الجلسة واعتمدها داخل مستودع مشروعك في ملف docs/UI_UX_REQUIREMENTS.md كمرجع ملزم يسبق التصميم.'
+      '6. احفظ نموذج الأدوار والتنقل ومصادرهما والأسئلة المفتوحة في docs/UI_UX_REQUIREMENTS.md؛ اترك الاقتراحات مرشحة حتى يراجعها صاحب القرار.'
     ],
     promptRefs: ['prompt-14-ui-ux-grill-me'],
     outputs: [
-      'docs/UI_UX_REQUIREMENTS.md',
+      'docs/UI_UX_REQUIREMENTS.md مع نموذج التنقل المرتبط بالمهام والأدوار والمصادر',
       'مصفوفة صلاحيات الأدوار على الواجهة (Role-Based UI Matrix)'
     ],
     checklist: [
@@ -716,7 +722,7 @@ export const t07Entries: TopicItem[] = [
     category: 'frontend',
     categoryName: 'الواجهات وتطوير الفرونت إند',
     stageTag: 'مخطط التجربة وهندسة الحالات',
-    summary: 'بناء مخطط تجربة مستخدم متكامل (UX Blueprint) يضم خريطة مسارات الموقع (Sitemap)، وهندسة السلوك الدقيق للحالات الست الإلزامية: التحميل (Loading)، الفراغ (Empty)، الخطأ (Error)، النجاح (Success)، التجاوب (Responsive)، وإمكانية الوصول (Accessibility)، وتوثيقها في docs/UX_BLUEPRINT.md.',
+    summary: 'بناء مخطط تجربة مستخدم يضم خريطة الموقع ورحلات MVP، ويوثق حالات التحميل والفراغ والخطأ والنجاح ذات الصلة، مع مراجعة الاستجابة وإمكانية الوصول كفحوص عابرة للحالات في docs/UX_BLUEPRINT.md.',
     tags: ['UX Blueprint', 'Sitemap', 'User Journeys', 'Empty State', 'Loading State', 'Error Handling', 'Responsive', 'Accessibility'],
     contentTypes: ['diagram', 'prompt', 'code', 'checklist'],
     diagramCount: 1,
@@ -726,7 +732,7 @@ export const t07Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic19UxBlueprintHtml),
     htmlContent: topic19UxBlueprintHtml,
 
-    goal: 'تمكين الطالب من رسم مخطط تجربة مستخدم شامل (UX Blueprint) يضم خريطة الموقع (Sitemap) ومسارات رحلات MVP، وتوثيق السلوك الدقيق للحالات الست الإلزامية: التحميل (Loading)، الفراغ (Empty)، الخطأ (Error)، النجاح (Success)، التجاوب (Responsive)، وإمكانية الوصول (Accessibility)، وحفظ ذلك في docs/UX_BLUEPRINT.md.',
+    goal: 'تمكين الطالب من رسم مخطط تجربة المستخدم وخريطة الموقع ومسارات MVP، وتوثيق حالات الواجهة ذات الصلة ومراجعة الاستجابة وإمكانية الوصول كفحوص عابرة للحالات، وحفظ ذلك في docs/UX_BLUEPRINT.md.',
     prerequisites: [
       'وثيقة متطلبات الواجهة المعتمدة docs/UI_UX_REQUIREMENTS.md',
       'وثيقة متطلبات المنتج docs/PRD.md ومسارات التدفق docs/user-flow.md'
@@ -738,18 +744,18 @@ export const t07Entries: TopicItem[] = [
       '4. صمم حالات الفراغ (Empty States): حدد النصوص التوجيهية وأزرار الدعوة للإجراء (Actionable CTA) عند عدم وجود بيانات أو نتائج بحث.',
       '5. حدد حالات الخطأ والتعافي (Error & Recovery): أخطاء التحقق الميداني (Field Validation)، رسائل التنبيه العائمة (Toasts)، وأخطاء الاتصال والانقطاع.',
       '6. وثّق حالات النجاح (Success States): إشعارات التأكيد، التحديث الفوري، وتوجيه المستخدم للخطوة التالية بوضوح.',
-      '7. اضبط معايير التجاوب وإمكانية الوصول (Responsive & Accessibility): مساحات اللمس ≥ 44px، تباين الألوان 4.5:1، دعم التنقل بلوحة المفاتيح وقارئات الشاشة.',
+      '7. راجع الاستجابة وإمكانية الوصول (Responsive & Accessibility): اختر أحجام الأهداف وفق المنصة والمعيار المستهدف، وقس التباين وفق معيار WCAG المناسب؛ 4.5:1 للنص العادي و3:1 للنص الكبير.',
       '8. استخدم برومبت UX Blueprint المعتمد (PROMPT 15) لإنشاء وثيقة docs/UX_BLUEPRINT.md المتكاملة.'
     ],
     promptRefs: ['prompt-15-ux-blueprint-screen-inventory'],
     outputs: [
       'docs/UX_BLUEPRINT.md',
       'مخطط Sitemap وهيكل الرحلات بصيغة Mermaid',
-      'مصفوفة الحالات الست (The 6 States Matrix)'
+      'مصفوفة حالات الواجهة وفحوص الاستجابة وإمكانية الوصول العابرة'
     ],
     checklist: [
       'اكتمال خريطة الموقع (Sitemap) لجميع مسارات النسخة الأولى (MVP).',
-      'تغطية كل شاشة بحالاتها الست: تحميل، فراغ، خطأ، نجاح، تجاوب، ووصول.',
+      'توثيق حالات الواجهة ذات الصلة لكل شاشة، ثم مراجعة الاستجابة وإمكانية الوصول عبر هذه الحالات.',
       'تحديد نمط الهياكل العظمية (Skeleton Screens) لمنع القفزات البصرية (CLS).',
       'كتابة نصوص رسائل الفراغ والخطأ بلغة عربية واضحة تقترح حلاً أو إجراءً بديلاً.',
       'مراجعة معايير الوصول الرقمي (WCAG AA): التباين، التركيز، وتسميات ARIA.',

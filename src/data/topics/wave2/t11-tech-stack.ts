@@ -27,7 +27,7 @@ export const topic30TypeScriptHtml = `
     </p>
     <ul class="list-disc list-inside space-y-2 text-sm sm:text-base leading-7 text-[var(--text-muted)] pr-4 mt-3">
       <li><strong>توحيد لغة التخاطب بين المكونات:</strong> تمرير البيانات بين الواجهات والبطاقات دون تخمين أسماء الحقول (مثل هل الحقل هو <code>user_id</code> أم <code>userId</code>).</li>
-      <li><strong>إرشاد وكيل البرمجة (AI Coding Agent):</strong> عندما يمتلك الوكيل ملف أنواع دقيقاً، تنخفض احتمالية الهلوسة البرمجية وتوليد كود غير متسق بنسبة تزيد عن 80%.</li>
+      <li><strong>إرشاد وكيل البرمجة (AI Coding Agent):</strong> ملف الأنواع يوضح العقود ويساعد على كشف المخرجات غير المتسقة؛ لا يغني عن مراجعة الكود واختباره.</li>
       <li><strong>منع أخطاء زمن التشغيل (Runtime Errors):</strong> اصطياد الأخطاء الشائعة (مثل <code>Cannot read property of undefined</code>) أثناء الكتابة وفي وقت الترجمة قبل وصول الكود للمتصفح.</li>
       <li><strong>حظر نوع التخمين <code>any</code>:</strong> فرض الصرامة البرمجية وتفعيل فحص <code>noImplicitAny</code> لضمان عدم تسريب أي ثغرات برمجية غامضة.</li>
     </ul>
@@ -42,6 +42,8 @@ export const topic30TypeScriptHtml = `
       </p>
     </div>
   </div>
+
+  <div class="callout tip my-6"><p class="leading-7">المواضيع 30–32 تجهز عقود البيانات وأمثلة المكونات وخريطة التنسيق قبل إنشاء التطبيق. اكتب المسودات الآن؛ بعد تهيئة مشروع Next.js في الموضوع 33 انقلها إلى ملفات المشروع وشغّل فحص الأنواع والعرض. لا تفترض وجود npm scripts أو Tailwind مهيأ قبل ذلك.</p></div>
 
   <!-- 2. Converting ERD & Domain Model to TS Interfaces -->
   <div class="content-block mt-8">
@@ -62,7 +64,7 @@ export const topic30TypeScriptHtml = `
 // ============================================================================
 
 /** أدوار المستخدمين المعتمدة في النظام */
-export type UserRole = 'student' | 'faculty' | 'staff' | 'admin';
+ export type UserRole = 'student' | 'staff' | 'admin';
 
 /** الحالات الممكنة لطلب الاستعارة وفق قواعد العمل */
 export type LoanStatus = 'pending' | 'approved' | 'active' | 'returned' | 'rejected';
@@ -464,6 +466,12 @@ export const topic32TailwindHtml = `
     </div>
   </div>
 
+  <div class="callout tip my-6">
+    <p class="leading-7">في هذه المحطة جهّز خريطة رموز التصميم وأمثلة التنسيق؛ لا تحتاج مشروعًا مهيأ مسبقًا. طبّق الملفات وافحصها بعد إنشاء مشروع Next.js في الموضوع 33. إذا كان لديك مشروع قائم، افحص إصدار Tailwind فيه قبل أي تعديل.</p>
+    <p class="leading-7">المثال التالي لـ Tailwind v4: الإعداد في CSS باستخدام <code>@theme</code>، وليس اشتراط إنشاء <code>tailwind.config.ts</code>. في مشروع v3 قائم احتفظ بإعداده واتبع دليل إصداره؛ لا تستبدله تلقائيًا.</p>
+    <p class="leading-7">مراجع رسمية روجعت 19 أكتوبر 2026: <a href="https://tailwindcss.com/docs/theme" target="_blank" rel="noreferrer">متغيرات الثيم</a> و<a href="https://tailwindcss.com/docs/installation/using-postcss" target="_blank" rel="noreferrer">تكامل PostCSS</a> و<a href="https://tailwindcss.com/docs/upgrade-guide" target="_blank" rel="noreferrer">دليل اختلاف الإصدارات</a>. هذه مراجعة توثيق؛ لم ننشئ تطبيق الطالب.</p>
+  </div>
+
   <!-- 1. Design Token Mapping: No Invented Values -->
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. التنسيق المستند إلى نظام التصميم المعتمد لا إلى قيم عشوائية</h3>
@@ -476,7 +484,7 @@ export const topic32TailwindHtml = `
         <thead>
           <tr>
             <th>عنصر التصميم</th>
-            <th>القيمة المعتمدة في DESIGN.md</th>
+            <th>قيم توضيحية — استبدلها بقيم DESIGN.md لمشروعك</th>
             <th>فئة Tailwind CSS المطابقة</th>
             <th>الاستخدام في مشروع BorrowHub</th>
           </tr>
@@ -511,6 +519,21 @@ export const topic32TailwindHtml = `
     </div>
   </div>
 
+  <div class="code-container my-6" dir="ltr">
+    <div class="code-header"><span class="code-lang">CSS · Tailwind v4 · src/app/globals.css (apply after topic 33)</span></div>
+    <pre class="code-content"><code>@import "tailwindcss";
+
+/* Illustrative value only: replace from your approved DESIGN.md. */
+@theme {
+  --color-brand: #059669;
+  /* Tailwind's default 2xl is 96rem; map this lesson's 1440px checkpoint explicitly. */
+  --breakpoint-2xl: 90rem;
+}
+
+/* bg-brand / text-brand now use the reviewed project token. */</code></pre>
+  </div>
+  <p class="leading-7 text-[var(--text-muted)]">في الموضوع 33، افحص الملفات التي أنشأها خيار Tailwind في create-next-app قبل إضافة إعداد جديد. عند الإعداد اليدوي لـ v4 يستخدم PostCSS الإضافة <code>@tailwindcss/postcss</code> ويستورد CSS الحزمة كما في المثال؛ اتبع المرجع الرسمي المتوافق مع الإصدار المثبت.</p>
+
   <!-- 2. RTL First & Logical Properties -->
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">2. دعم العربية والاتجاه (RTL) باستخدام الخصائص المنطقية (Logical Properties)</h3>
@@ -529,7 +552,10 @@ export const topic32TailwindHtml = `
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">3. نقاط كسر التجاوب الرسمية للمسار (390، 768، 1024، 1366، 1440 بكسل)</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      تفرض مواصفة المسار التحقق من سلامة الواجهة عبر خمسة عروض شاشة محددة، مع ضمان صارم <strong>لعدم وجود أي تدفق أفقي (Zero Horizontal Overflow)</strong>:
+      افحص الواجهة عند خمسة عروض شاشة وسجّل النتيجة الفعلية لكل اتجاه. أصلح العنصر الذي يسبب التدفق الأفقي؛ إخفاء التدفق على الصفحة لا يثبت أن السبب عولج:
+    </p>
+    <p class="leading-7 text-[var(--text-muted)]">
+      يبدأ <code>2xl:</code> افتراضياً في Tailwind v4 عند <code>96rem</code> (1536px مع جذر 16px)، فلا ينطبق عند 1440px. يضبط مثال <code>@theme</code> أعلاه هذا الحد صراحةً إلى <code>90rem</code> (1440px مع الجذر الافتراضي). إذا لم تخصصه في مشروعك، استخدم <code>xl:</code> عند هذا العرض.
     </p>
 
     <div class="table-container my-4">
@@ -539,7 +565,7 @@ export const topic32TailwindHtml = `
             <th>عرض الشاشة المستهدف</th>
             <th>بادئة Tailwind</th>
             <th>السلوك التخطيطي لمشروع BorrowHub</th>
-            <th>ضوابط التجاوب ومنع التدفق</th>
+            <th>فحص التدفق وإصلاح سببه</th>
           </tr>
         </thead>
         <tbody>
@@ -547,7 +573,7 @@ export const topic32TailwindHtml = `
             <td><strong>390px (الهاتف الذكي)</strong></td>
             <td>النمط الأساسي (Default)</td>
             <td>عمود واحد للبطاقات، قائمة تنقل سفلية أو زر هامبرغر</td>
-            <td><code>w-full max-w-full overflow-x-hidden</code></td>
+            <td>افحص العنصر المسبب؛ جرّب <code>min-w-0</code> أو التفاف النص عند الحاجة، ثم أعد الفحص</td>
           </tr>
           <tr>
             <td><strong>768px (الأجهزة اللوحية)</strong></td>
@@ -782,6 +808,8 @@ export const topic33NextjsHtml = `
     <p class="leading-8 text-[var(--text-muted)]">
       لا يبتكر الطالب مسارات عشوائية من مخيلته؛ بل ينشئ مجلدات المشروع مطابقة تماماً للمسارات المعتمدة في <strong>وثيقة جرد الشاشات (docs/SCREEN_INVENTORY.md)</strong> التي أنجزها في الموضوع 20:
     </p>
+
+    <div class="callout tip my-6"><p class="leading-7">ابدأ هنا بتهيئة التطبيق إذا لم يكن لديك مشروع قائم؛ المواضيع 30–32 جهزت المسودات فقط. من مجلد أب جديد شغّل <code dir="ltr">npx create-next-app@latest my-project --ts --tailwind --eslint --app --src-dir --use-npm</code>، ثم ادخل <code>my-project</code> وافحص package.json وملفات PostCSS وCSS الناتجة قبل نقل مسوداتك. أمثلة الدورة معنونة Next.js 15؛ latest قد ينشئ إصدارًا أحدث، لذا طابق المثال مع توثيق الإصدار المثبت ولا تدّع اختباره تلقائيًا. لا تنشئ مشروعًا فوق مستودع قائم. <a href="https://nextjs.org/docs/app/api-reference/cli/create-next-app" target="_blank" rel="noreferrer">مرجع create-next-app الرسمي</a> (روجعت الخيارات 19 أكتوبر 2026).</p></div>
 
     <!-- Code Block: Folder Structure Tree -->
     <div class="code-container my-6" dir="ltr">
@@ -1089,15 +1117,15 @@ export const t11Entries: TopicItem[] = [
     prerequisites: [
       'ملف مرجع نظام التصميم المعتمد DESIGN.md (الموضوع 29)',
       'هيكل مكونات React القابلة للتنسيق (الموضوع 31)',
-      'تهيئة Tailwind CSS الأساسية في المشروع',
+      'لا يشترط مشروع مهيأ: جهز الخريطة الآن وطبق التنسيق بعد تهيئة Next.js في الموضوع 33',
       'فهم نقاط كسر التجاوب المعتمدة في المواصفة الرسمية'
     ],
     steps: [
-      '1. راجع رموز الألوان والخطوط والزوايا المعتمدة في DESIGN.md واربطها بملف tailwind.config.ts دون كتابة قيم عشوائية.',
+      '1. راجع رموز DESIGN.md ووثق ربطها؛ في Tailwind v4 جهز @theme في src/app/globals.css لتطبيقه بعد الموضوع 33، واحتفظ بإعداد v3 إن كان مشروعك قائمًا عليه.',
       '2. استخدم الخصائص المنطقية (Logical Properties مثل ms-, me-, ps-, pe-, text-start) بدلاً من الفئات الصلبة القديمة.',
       '3. نسق مكونات المشروع (مثل EquipmentCard) لتتجاوب بسلاسة عبر نقاط الكسر الخمس: 390 و768 و1024 و1366 و1440 بكسل.',
       '4. تأكد من تباين الألوان وإمكانية الوصول (Accessibility & WCAG AA) وتجهيز فئات الوضع الليلي (dark:).',
-      '5. افحص حواف الحاويات وتأكد من عدم وجود أي تدفق أفقي (Horizontal Overflow) باستخدام max-w-full وoverflow-x-hidden.',
+      '5. افحص العروض الخمسة واتجاهي RTL/LTR، وحدد العنصر الذي يسبب التدفق الأفقي وأصلح عرضه أو التفاف محتواه قبل إعادة الفحص. لا تخف التدفق على مستوى الصفحة؛ استخدم القص المحلي فقط عندما يكون مقصوداً ولا يحجب محتوى أو تحكماً.',
       '6. وثق مصفوفة ربط رموز التصميم بفئات Tailwind في docs/TAILWIND_DESIGN_MAPPING.md.'
     ],
     promptRefs: [
@@ -1105,7 +1133,7 @@ export const t11Entries: TopicItem[] = [
       'prompt-25-ui-ux-pro-max-review-before-coding'
     ],
     outputs: [
-      'tailwind.config.ts',
+      'src/app/globals.css (Tailwind v4؛ يطبق بعد تهيئة الموضوع 33)',
       'docs/TAILWIND_DESIGN_MAPPING.md'
     ],
     checklist: [

@@ -30,7 +30,7 @@ test.describe('Ticket 04: Mermaid, User Flow & Domain Model E2E Journey', () => 
 
     // Open Topic 07 in modal
     const t07Card = page.locator('article.topic-card').filter({ hasText: 'صيغة Mermaid ومحرك التصيير' }).first();
-    await t07Card.getByRole('button', { name: 'تصفح الموضوع بالتفصيل' }).click();
+    await t07Card.getByRole('button', { name: 'معاينة سريعة' }).click();
 
     const modal = page.locator('.modal-container-box');
     await expect(modal).toBeVisible();
@@ -83,13 +83,13 @@ test.describe('Ticket 04: Mermaid, User Flow & Domain Model E2E Journey', () => 
     await expect(page.locator('h1')).toContainText('نمذجة مسارات تدفق المستخدم (User Flow)');
     const topicHeader = page.locator('header.rounded-3xl').first();
     await expect(topicHeader).toContainText('موضوع 08');
-    await expect(topicHeader).toContainText('مسار موحد مكتمل ✓');
+    await expect(topicHeader).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Verify Contract fields: Goal, Outputs, Steps, Checklist
     await expect(page.locator('text=الهدف من الموضوع:')).toBeVisible();
     await expect(page.locator('code').filter({ hasText: 'docs/user-flow.md' }).first()).toBeVisible();
     await expect(page.locator('text=خطوات التطبيق على مشروعك')).toBeVisible();
-    await expect(page.locator('text=قائمة الإنجاز والتحقق')).toBeVisible();
+    await expect(page.locator('text=قائمة تحقق التطبيق')).toBeVisible();
 
     // Verify User Flow code block exists and contains decision gates & failure paths
     const flowCodeBlock = page.locator('pre.code-content').filter({ hasText: 'CheckActiveLoans' }).first();
@@ -120,7 +120,7 @@ test.describe('Ticket 04: Mermaid, User Flow & Domain Model E2E Journey', () => 
     await expect(page.locator('h1')).toContainText('النموذج المفاهيمي لمجال العمل (Conceptual Domain Model)');
     const topicHeader = page.locator('header.rounded-3xl').first();
     await expect(topicHeader).toContainText('موضوع 09');
-    await expect(topicHeader).toContainText('مسار موحد مكتمل ✓');
+    await expect(topicHeader).toContainText('حالة التوفر: محتوى متاح (منشور)');
 
     // Verify Strict Boundaries Callout (The 3 Negatives)
     const warningsCallout = page.locator('.rounded-2xl.border-2.border-amber-400');

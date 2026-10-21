@@ -1,13 +1,15 @@
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Clock, BarChart3, MessageSquare, Code2, CheckSquare, Headphones, Volume2, Printer } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, formatReadingTime } from '@/src/utils/searchUtils.ts';
+import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
 
 interface TopicCardProps {
   topic: TopicItem;
   searchQuery: string;
-  onOpenTopic: (topicId: string) => void;
+  onOpenTopic: (topicId: string, section?: 'diagram') => void;
   onListenTopic: (topic: TopicItem) => void;
   isCurrentlySpeaking: boolean;
   isBookmarked: boolean;
@@ -55,6 +57,8 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   isBookmarked,
   onToggleBookmark,
 }) => {
+  const status = getTopicImprovementStatus(topic.slug);
+
   return (
     <article className="topic-card group flex h-full min-w-0 flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
       {/* Top Header Row */}
@@ -136,19 +140,19 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             </button>
 
             {/* Quick Diagram Button */}
-            <button
+            {topic.diagramCount > 0 && <button
               onClick={(e) => {
                 e.stopPropagation();
-                onOpenTopic(topic.id);
+                onOpenTopic(topic.id, 'diagram');
               }}
               type="button"
               className="min-h-9 h-9 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors cursor-pointer flex items-center gap-1 no-print relative z-10"
-              title="عرض المخطط البياني التفاعلي (Mermaid.js)"
+              title="معاينة المخطط البياني التفاعلي (Mermaid.js)"
               aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
             >
               <BarChart3 className="w-3.5 h-3.5" />
               <span className="text-xs font-medium hidden xs:inline">مخطط</span>
-            </button>
+            </button>}
 
             {/* Quick Print PDF Button */}
             <button
@@ -169,7 +173,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
 
         {/* Title */}
         <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors leading-snug mb-1">
-          <HighlightedText text={topic.title} query={searchQuery} />
+          <Link href={`/learn/${topic.slug}`}><HighlightedText text={topic.title} query={searchQuery} /></Link>
         </h3>
 
         {/* Subtitle */}
@@ -177,10 +181,31 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           <HighlightedText text={topic.subtitle} query={searchQuery} />
         </p>
 
+        {/* Improvement & Content Availability Status */}
+        <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800" title="حالة توفر المحتوى">
+            {status.availabilityLabel}
+          </span>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800" title="حالة المراجعة التعليمية والاعتماد">
+            {status.improvementLabel}
+          </span>
+          {status.group && (
+            <span
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+              title={status.groupProposalLabel}
+            >
+              {status.isFirstGroupProposal
+                ? `المجموعة الأولى (${status.boundariesApproved ? 'حدود معتمدة' : 'مقترحة'})`
+                : `المجموعة ${status.group.number} (${status.boundariesApproved ? 'حدود معتمدة' : 'حدود مقترحة'})`}
+            </span>
+          )}
+        </div>
+
         {/* Summary */}
         <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-3">
           <HighlightedText text={topic.summary} query={searchQuery} />
         </p>
+        {topic.outputs.length > 0 && <p className="mb-3 text-xs leading-relaxed text-[var(--text-muted)]"><strong>المخرج: </strong>{topic.outputs[0]}</p>}
       </div>
 
       {/* Bottom Zone: Content Stats, Tags & Primary Action */}
@@ -191,13 +216,13 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             <Clock className="w-3 h-3" />
             <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
           </span>
-          <span
+          {topic.diagramCount > 0 && <span
             className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400 font-medium"
             title="مخططات Mermaid تفاعلية متوفرة بـ 3 زوايا هندسية (بنية النظام، مسار العمليات، تسلسل التفاعلات)"
           >
             <BarChart3 className="w-3 h-3" />
             <span>مخطط Mermaid</span>
-          </span>
+          </span>}
           {topic.promptCount > 0 && (
             <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
               <MessageSquare className="w-3 h-3" />
@@ -237,13 +262,15 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         </div>
 
         {/* Action Button: Touch Target >= 40px */}
-        <button
-          onClick={() => onOpenTopic(topic.id)}
-          type="button"
+        <Link
+          href={`/learn/${topic.slug}`}
           className="w-full min-h-10 h-10 px-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--brand-primary)] text-[var(--text-main)] hover:text-white border border-[var(--border-color)] hover:border-[var(--brand-primary)] text-xs font-bold transition-colors duration-150 cursor-pointer flex items-center justify-center gap-1.5 relative z-10"
         >
-          <span>تصفح الموضوع بالتفصيل</span>
+          <span>قراءة الموضوع كاملاً</span>
           <span className="text-xs transition-transform group-hover:-translate-x-1">←</span>
+        </Link>
+        <button onClick={() => onOpenTopic(topic.id)} type="button" className="w-full min-h-9 rounded-lg text-xs font-medium text-[var(--text-muted)] hover:text-[var(--brand-primary)] transition-colors">
+          معاينة سريعة
         </button>
       </div>
     </article>

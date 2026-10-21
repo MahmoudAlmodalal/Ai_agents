@@ -1,0 +1,18 @@
+<task>
+You are the independent Antigravity STANDARDS reviewer only, read-only. Repository /home/mahmoud/Desktop/كورس/Ai_agents. Starting fixed commit603a4ca9e3d13110f96a4d9be69a4260943b8540. Review final uncommitted product diff using git diff 603a4ca (HEAD equals starting commit until root commits) PLUS new untracked src/e2e/docs implementation files from git status. No commits since base; triple-dot HEAD would hide this work, so working-tree diff is deliberate. Exclude .verification task briefs/browser artifacts. Do not implement or write a report file; return findings in finalMessage. No tests/builds/installs required during read-only review. Read current code in full where needed, not just self-reports. Root will review every finding.
+Standards: user global AGENTS requires lean-ctx MCP/CLI for shell/read/search; ctx_compose first. No repository AGENTS.md/CONTRIBUTING/CODING_STANDARDS files were found. Respect TypeScript/current Next.js patterns, existing registry/readers/local storage; minimal complete changes, no extra backend/accounts/services/dependencies. Preserve validation/error recovery, Arabic RTL and technical direction, keyboard accessibility and original content. Historical identifiers by original meaning; retain ambiguous/unknown data. Tests at existing browser journey/public storage seams, no source-text existence masquerading as behavior. Do not claim unexecuted checks or owner approval.
+Always include Fowler smell baseline as judgement calls, repo standards override and skip tooling-enforced issues:
+- Mysterious Name: name fails to reveal purpose -> rename if honest name exists.
+- Duplicated Code: same logic shape multiple hunks -> share only when useful.
+- Feature Envy: method reaches another object's data more than own -> move to owner.
+- Data Clumps: same fields travel together -> small type if justified.
+- Primitive Obsession: primitive hides real domain concept -> type if justified.
+- Repeated Switches: same cascade repeated -> shared map/polymorphism if justified.
+- Shotgun Surgery: single logical change scattered -> gather changing concept.
+- Divergent Change: file changes for unrelated reasons -> split by reason.
+- Speculative Generality: unused flexibility/abstraction -> delete/inline.
+- Message Chains: deep navigation caller shouldn't know -> hide appropriately.
+- Middle Man: only forwards -> call real target directly.
+- Refused Bequest: ignores inherited contract -> compose instead.
+Report hard documented standard violations separately from heuristic smells. Cite file:line and rule, give concrete user impact/repro for blockers; avoid speculative nits. Under400words. If none say no actionable findings. Separate truly blocking bugs from optional design judgements; no broad refactors.
+</task>

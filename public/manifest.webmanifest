@@ -1,0 +1,19 @@
+{
+  "name": "Ai_agents — هندسة البرمجيات بالذكاء الاصطناعي",
+  "short_name": "Ai_agents",
+  "description": "منهاج هندسة برمجيات وكلاء الذكاء الاصطناعي وبناء المشاريع",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f0",
+  "theme_color": "#17231f",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/ai-agents-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

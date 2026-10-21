@@ -1,5 +1,5 @@
 import Link from 'next/link';
-export const metadata = { title: 'مختبر المخططات | سلاح العصر', description: 'المخططات الهندسية الثمانية: متى تستخدم كل مخطط وأدواته.' };
+export const metadata = { title: 'مختبر المخططات | Ai_agents', description: 'المخططات الهندسية الثمانية: متى تستخدم كل مخطط وأدواته.' };
 export default function DiagramsPage() {
   const diagrams = [['User Flow','مسار المستخدم خطوة بخطوة','M','/learn/git-github-user-flow'],['Use Case','التفاعل بين Actors والنظام','P','/learn/diagrams-lab'],['Activity','تدفق الأنشطة والقرارات','M','/learn/diagrams-lab'],['Sequence','التفاعل عبر الزمن','M','/learn/diagrams-lab'],['State','حالات الكيان والانتقالات','M','/learn/diagrams-lab'],['Class','هيكل الكلاسات والعلاقات','M','/learn/diagrams-lab'],['ERD','الجداول والمفاتيح والعلاقات','D','/learn/database-erd'],['Domain Model','المفاهيم وقواعد العمل','M','/learn/diagrams-lab']];
   return (<main className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">

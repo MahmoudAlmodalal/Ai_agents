@@ -120,7 +120,7 @@ Django وFastAPI موضوعان مستقلان يمثلان بديلين للخ�
 37. As a learner, I want cards, full topic pages and the modal reader to describe the same topic, so that I do not receive conflicting instructions.
 38. As a learner, I want accurate topic titles, summaries, tags, categories and prompt counts, so that search and filtering lead to the right content.
 39. As a learner, I want searchable prompts with their purpose, inputs, outputs and a working copy action, so that I can use the correct prompt for the current step.
-40. As a learner, I want the source-backed collection of 33 prompts accessible from relevant topics, so that the added Backend and deployment guidance is available.
+40. As a learner, I want all 41 source-backed prompt records—30 numbered prompts, one supplementary prompt, three reusable templates, and seven stage examples—accessible from relevant topics, so that the complete available collection is searchable and usable.
 41. As a learner, I want BorrowHub examples alongside each relevant step, so that I can compare the method with my own project.
 42. As a learner, I want BorrowHub's rules clearly distinguished from generic guidance, so that I do not accidentally copy requirements into my product.
 43. As a learner, I want tools, templates, glossary entries and FAQs available during the journey, so that I can resolve questions without waiting for a final reference lesson.

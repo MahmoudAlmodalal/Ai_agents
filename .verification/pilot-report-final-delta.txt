@@ -1,0 +1,10 @@
+<task>
+Final tiny DOC-ONLY correction docs/REMAINING_PILOT_20261019.md in /home/mahmoud/Desktop/كورس/Ai_agents. Modify only this report. Root reviewed prior c edit. No gates or other file edits, no commits/staging/push/deploy.
+</task>
+<required>
+1.Fix every component link currently (src/...) to (../src/...) since report lives in docs/.
+2.Table educational-course-topics01–58 row status must be 'Existing bounded evidence' (not Passed); preserve source38–40 full-file NotRun caveat. Do not assert new full-topic approval.
+3.Unpublished/incomplete-next-topic fallback table row falsely says application-checklist tests exercise boundary logic. Root read exact file: malformed-storage test checks next link enabled, all58 topics currently published. Split/replace with 'Free next navigation' Passed for enabled next link and separate 'Unpublished/incomplete-next-topic fallback' NotRun (no unpublished state available; topic-navigation not in focused29). Do not claim fallback tested.
+4.Record baseline: original product3242248, currentHEADdab3745 added docs/artifacts only. Production/full-suite still PendingRoot. Remove deployment gates as 'root responsibility' since no deployment authorized.
+Keep other correct counts/caveats. Final reply exact modified file and confirmation no gates rerun.
+</required>

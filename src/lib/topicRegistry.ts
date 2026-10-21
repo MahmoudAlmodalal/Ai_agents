@@ -1,15 +1,4 @@
 import { topic01Html } from '@/scripts/topics/topic01.ts';
-import { topic02Html } from '@/scripts/topics/topic02.ts';
-import { topic03Html } from '@/scripts/topics/topic03.ts';
-import { topic04Html } from '@/scripts/topics/topic04.ts';
-import { topic05Html } from '@/scripts/topics/topic05.ts';
-import { topic06Html } from '@/scripts/topics/topic06.ts';
-import { topic07Html } from '@/scripts/topics/topic07.ts';
-import { topic08Html } from '@/scripts/topics/topic08.ts';
-import { topic09Html } from '@/scripts/topics/topic09.ts';
-import { topic10Html } from '@/scripts/topics/topic10.ts';
-import { topic11Html } from '@/scripts/topics/topic11.ts';
-import { topic12Html } from '@/scripts/topics/topic12.ts';
 import { TopicItem } from '@/src/types/topic.ts';
 import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
 import { t02Entries } from '@/src/data/topics/wave2/t02-discovery-prd-srs.ts';
@@ -25,51 +14,87 @@ import { t12Entries } from '@/src/data/topics/wave2/t12-frontend-planning-spec-k
 import { t10Entries } from '@/src/data/topics/wave2/t10-stitch-mcp-design-md.ts';
 import { t13Entries } from '@/src/data/topics/wave2/t13-python-postgres-api.ts';
 import { t14Entries } from '@/src/data/topics/wave2/t14-backend-frameworks-services.ts';
+import { t15Entries } from '@/src/data/topics/wave3/t15-frontend-api-testing.ts';
+import { t16Entries } from '@/src/data/topics/wave3/t16-performance-redis-qa.ts';
+import { t17Entries } from '@/src/data/topics/wave3/t17-docker-linux.ts';
+import { t18Entries } from '@/src/data/topics/wave3/t18-cloud-deployment.ts';
+import { t19Entries } from '@/src/data/topics/wave3/t19-operations-delivery.ts';
 
-/**
- * Frozen mapping from legacy topic IDs (topic-01 .. topic-12) to canonical slugs.
- * Preserves user bookmarks and recently-viewed history without silent drift.
+/** Only unambiguous historical source identities become active topic saves.
+ * Composite source lessons remain preserved identifiers with explicit choices.
  */
 export const LEGACY_TOPIC_ID_MAP: Record<string, string> = {
   'topic-01': 'project-idea-mvp',
-  'topic-02': 'requirements-grill-me',
-  'topic-03': 'requirements-prd',
-  'topic-04': 'git-github-user-flow',
-  'topic-05': 'database-erd',
-  'topic-06': 'diagrams-lab',
-  'topic-07': 'lecture-04-pending',
-  'topic-08': 'ux-discovery-stitch',
-  'topic-09': 'stitch-mcp-design-md',
-  'topic-10': 'frontend-planning-spec-kit',
-  'topic-11': 'prompt-library',
-  'topic-12': 'borrowhub-reference',
+  'topic-03': 'user-flow-modeling',
+  'topic-07': 'git-project-docs',
 };
 
-/**
- * Route aliases for backward compatibility with legacy courseContent slugs.
- * Ensures existing URLs continue resolving to the correct topic.
- */
+export const HISTORICAL_TOPICS: Record<string, { title: string; choices: string[] }> = {
+  'topic-02': { title: 'Grill Me وصياغة PRD ومراجعتها', choices: ['discovery-grill-me', 'prd-specification'] },
+  'topic-04': { title: 'مخططات UML والنمذجة المعمارية', choices: ['conceptual-domain-model', 'use-case-diagram', 'activity-diagram', 'sequence-diagram-modeling', 'state-diagram', 'class-diagram-design'] },
+  'topic-05': { title: 'ERD وDBML وأداء قاعدة البيانات', choices: ['relational-erd-design', 'dbml-dbdiagram-io', 'database-performance-engineering'] },
+  'topic-06': { title: 'طبقات النظام وServices وSelectors وRedis', choices: ['backend-architecture-api-contracts', 'services-selectors', 'redis-optional-infrastructure'] },
+  'topic-08': { title: 'UI/UX وGoogle Stitch ونظام التصميم', choices: ['ui-ux-roles-navigation', 'stitch-reference-screen', 'design-system-rules'] },
+  'topic-09': { title: 'Stitch MCP وDESIGN.md', choices: ['stitch-mcp-integration', 'design-md-spec'] },
+  'topic-10': { title: 'Frontend وSpec Kit وUI/UX Pro Max', choices: ['frontend-architecture-planning', 'spec-kit-workflow', 'ui-ux-pro-max-review'] },
+  'topic-11': { title: 'مكتبة البرومبتات', choices: [] },
+  'topic-12': { title: 'الأسئلة الشائعة والقواعد والقاموس', choices: [] },
+};
+
+/** Intended route names keep their meaning; mismatched old card slugs follow source content. */
 export const TOPIC_SLUG_ALIASES: Record<string, string> = {
   'fundamentals-ai-agents': 'project-idea-mvp',
-  'requirements-discovery': 'requirements-grill-me',
-  'grill-me': 'requirements-grill-me',
-  'prd': 'requirements-prd',
-  'github': 'git-github-user-flow',
-  'user-flow': 'git-github-user-flow',
-  'database-analysis-erd': 'database-erd',
-  'diagrams': 'diagrams-lab',
-  'domain-model': 'diagrams-lab',
-  'ui-ux': 'ux-discovery-stitch',
-  'ui-ux-discovery': 'ux-discovery-stitch',
-  'google-stitch': 'ux-discovery-stitch',
-  'google-ai-studio-stitch-workflow': 'stitch-mcp-design-md',
-  'design-md': 'stitch-mcp-design-md',
-  'stitch-mcp': 'stitch-mcp-design-md',
-  'frontend-planning': 'frontend-planning-spec-kit',
-  'ui-ux-pro-max': 'frontend-planning-spec-kit',
-  'spec-kit': 'frontend-planning-spec-kit',
-  'incremental-implementation': 'frontend-planning-spec-kit',
-  'testing-qa': 'prompt-library',
+  'requirements-discovery': 'discovery-grill-me',
+  'grill-me': 'discovery-grill-me',
+  'prd': 'prd-specification',
+  'github': 'git-project-docs',
+  'user-flow': 'user-flow-modeling',
+  'requirements-prd': 'user-flow-modeling',
+  'database-analysis-erd': 'relational-erd-design',
+  'domain-model': 'conceptual-domain-model',
+  'ui-ux': 'ui-ux-roles-navigation',
+  'ui-ux-discovery': 'ui-ux-roles-navigation',
+  'google-stitch': 'stitch-reference-screen',
+  'google-ai-studio-stitch-workflow': 'google-ai-studio',
+  'design-md': 'design-md-spec',
+  'stitch-mcp': 'stitch-mcp-integration',
+  'frontend-planning': 'frontend-architecture-planning',
+  'ui-ux-pro-max': 'ui-ux-pro-max-review',
+  'spec-kit': 'spec-kit-workflow',
+  'incremental-implementation': 'frontend-incremental-implementation',
+};
+
+// Composite identifiers stay unresolved in storage, while their historical URLs
+// lead to the single active index or an appropriate reference page.
+export const LEGACY_ROUTE_DESTINATIONS: Record<string, string> = {
+  'requirements-grill-me': '/#topics',
+  'git-github-user-flow': '/diagrams',
+  'database-erd': '/#topics',
+  'diagrams-lab': '/#topics',
+  'lecture-04-pending': '/learn/git-project-docs',
+  'ux-discovery-stitch': '/#topics',
+  'stitch-mcp-design-md': '/#topics',
+  'frontend-planning-spec-kit': '/#topics',
+  'prompt-library': '/prompts',
+  'borrowhub-reference': '/faq',
+  'testing-qa': '/prompts',
+  'diagrams': '/diagrams',
+  ...Object.fromEntries(Object.keys(HISTORICAL_TOPICS).map((id) => [id, id === 'topic-11' ? '/prompts' : id === 'topic-12' ? '/faq' : '/#topics'])),
+};
+
+// Old slug saves carry the identity of the original HTML, even when the card title was wrong.
+const HISTORICAL_SAVED_IDENTITIES: Record<string, string> = {
+  'requirements-grill-me': 'topic-02',
+  'git-github-user-flow': 'topic-04',
+  'database-erd': 'topic-05',
+  'diagrams-lab': 'topic-06',
+  'lecture-04-pending': 'git-project-docs',
+  'ux-discovery-stitch': 'topic-08',
+  'stitch-mcp-design-md': 'topic-09',
+  'frontend-planning-spec-kit': 'topic-10',
+  'prompt-library': 'topic-11',
+  'borrowhub-reference': 'topic-12',
+  'testing-qa': 'topic-11',
 };
 
 const LEGACY_TOPICS: TopicItem[] = [
@@ -78,32 +103,32 @@ const LEGACY_TOPICS: TopicItem[] = [
     number: '01',
     slug: 'project-idea-mvp',
     title: 'اختيار فكرة المشروع وتحديد MVP',
-    subtitle: 'صياغة المشكلة وتحديد المستخدمين وحسم نطاق النسخة الأولى',
+    subtitle: 'مثال محلول وتمرين موجّه لكتابة سياق مشروعك ونطاق نسخته الأولى',
     category: 'foundations',
     categoryName: 'المرحلة التأسيسية',
-    stageTag: 'الأساسيات والمدخل الهندسي',
-    summary: 'معضلة البرمجة التخمينية (Vibe Coding) وكيفية إغلاق باب التخمين باستنطاق الفكرة، صياغة المشكلة والمستخدمين، وحسم نطاق MVP وتوثيق سياق المشروع في ملف PROJECT_CONTEXT.md.',
-    tags: ['Vibe Coding', 'AI Agents', 'MVP', 'PROJECT_CONTEXT.md', 'Problem Statement', 'Target Users', 'Non-Goals'],
-    contentTypes: ['prompt', 'checklist'],
+    stageTag: 'الفكرة ونطاق النسخة الأولى',
+    summary: 'تعلّم تحديد المشكلة والمستخدم والقيمة ورحلة MVP بمثال BorrowHub اختياري، ثم اكتب docs/PROJECT_CONTEXT.md لمشروعك وراجع القرارات والافتراضات والأسئلة قبل Grill Me.',
+    tags: ['MVP', 'PROJECT_CONTEXT.md', 'Problem Statement', 'Target Users', 'Non-Goals', 'BorrowHub'],
+    contentTypes: ['prompt', 'checklist', 'code'],
     diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 2,
+    promptCount: 1,
+    codeSnippetCount: 3,
     checklistCount: 5,
     readingTimeMinutes: calculateReadingTime(topic01Html),
     htmlContent: topic01Html,
 
     // Shared contract fields (Wave 1 foundational)
-    goal: 'صياغة المشكلة الأساسية وتحديد الفئات المستهدفة وحسم نطاق النسخة الأولى (MVP) وعزل الميزات المؤجلة (Non-Goals)، وتوثيق سياق المشروع في ملف PROJECT_CONTEXT.md قبل البدء بالمتطلبات التفصيلية أو البرمجة.',
-    prerequisites: ['لا توجد متطلبات برمجية مسبقة؛ يكفي وجود فكرة تطبيق أو مشكلة واقعية يراد حلها.'],
+    goal: 'كتابة docs/PROJECT_CONTEXT.md لمشروعك: مشكلة ومستخدمون وقيمة ورحلة MVP وميزات مؤجلة، مع فصل القرارات عن الافتراضات والأسئلة استعدادًا لمقابلة Grill Me.',
+    prerequisites: ['معرفة أساسيات البرمجة وفكرة أو مشكلة تريد فهمها؛ لا تحتاج خبرة في AI Agents.', 'محرر نصوص أو ورقة تنقلها لاحقًا إلى ملف؛ لا يلزم تثبيت وكيل أو Skills أو MCP.'],
     steps: [
-      '1. اختر فكرة المشروع وصغ بيان المشكلة (Problem Statement) بدقة: ما هي المشكلة الحقيقية ولمن تُحل؟',
-      '2. حدد فئات المستخدمين المستهدفين (Target Users) واحتياجاتهم الأساسية وصلاحياتهم الأولية.',
-      '3. عرّف نطاق النسخة التجريبية الأولى (MVP Scope) واعزل الميزات المؤجلة (Non-Goals / Future Features).',
-      '4. وثّق قرارات الفكرة ونطاقها في ملف سياق المشروع docs/PROJECT_CONTEXT.md.',
-      '5. راجع حدود المشروع وتأكد من اكتمال المعطيات قبل الانتقال لمرحلة استنطاق المتطلبات (Grill Me).'
+      '1. اقرأ مثال BorrowHub الاختياري ولاحظ مصدر كل حقيقة وسبب كل خطوة، ثم اختر مشكلة لمشروعك أنت.',
+      '2. اكتب المستخدم والموقف والمشكلة والقيمة وأفعال الأدوار، مع مصدر معرفتك وما لم تتحقق منه.',
+      '3. صف رحلة MVP من البداية إلى النتيجة وأجّل ميزتين على الأقل مع تفسير بقاء الرحلة مفيدة بدونهما.',
+      '4. املأ قالب docs/PROJECT_CONTEXT.md بنطاق MVP والقرارات ومصادرها وافتراض موسوم وسؤالين محددين ومعيار نجاح قابل للملاحظة.',
+      '5. راجع ملفك بمعايير المخرج، ثم استخدمه مدخلًا لجلسة Grill Me لحسم الأسئلة المتبقية.'
     ],
     promptRefs: ['prompt-01-grill-me-product-discovery'],
-    outputs: ['docs/PROJECT_CONTEXT.md', 'وثيقة نطاق MVP'],
+    outputs: ['docs/PROJECT_CONTEXT.md'],
     checklist: [
       'تمت صياغة بيان المشكلة والهدف الرئيسي من المنتج بوضوح دون غموض.',
       'تم تحديد المستخدمين المستهدفين واحتياجاتهم وفصل أدوارهم.',
@@ -114,303 +139,7 @@ const LEGACY_TOPICS: TopicItem[] = [
     publicationStatus: 'unified-complete',
     sequencePosition: 1,
   },
-  {
-    id: 'topic-02',
-    number: '02',
-    slug: 'requirements-grill-me',
-    title: 'Product Discovery وGrill Me: اكتشاف المتطلبات',
-    subtitle: 'اسأل سؤالًا واحدًا في كل مرة، وثبّت القرارات قبل الكتابة',
-    category: 'foundations',
-    categoryName: 'المرحلة التأسيسية',
-    stageTag: 'تحليل المتطلبات وهندسة المنتج',
-    summary: 'منهجية المقابلة الاستجوابية الحازمة للذكاء الاصطناعي، تحديد نطاق الـ MVP وحسم الحالات الحدية، وصياغة وثيقة متطلبات المنتج الكاملة ومراجعتها نقدياً لكشف الثغرات.',
-    tags: ['PRD', 'Grill Me', 'MVP', 'Scope', 'Given-When-Then', 'Acceptance Criteria', 'Product Spec'],
-    contentTypes: ['prompt', 'checklist'],
-    diagramCount: 0,
-    promptCount: 3,
-    codeSnippetCount: 2,
-    checklistCount: 6,
-    readingTimeMinutes: calculateReadingTime(topic02Html),
-    htmlContent: topic02Html,
 
-    goal: 'إجراء مقابلة استكشاف متطلبات المنتج لكشف الافتراضات وتثبيت القرارات.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-03',
-    number: '03',
-    slug: 'requirements-prd',
-    title: 'PRD: الوثيقة ذات الأقسام الـ27 ومراجعة المتطلبات',
-    subtitle: 'افصل المؤكد عن الافتراض، وراجع النطاق قبل التخطيط',
-    category: 'foundations',
-    categoryName: 'المرحلة التأسيسية',
-    stageTag: 'تجربة المستخدم ومسارات التدفق',
-    summary: 'الفرق الجوهري بين PRD و User Flow، نمذجة مسارات الاستعارة، حالات الخطأ والنجاح، ونقاط اتخاذ القرار (Decision Points) باستخدام صيغة Mermaid flowchart TD.',
-    tags: ['User Flow', 'Mermaid', 'Decision Points', 'Happy Path', 'Failure Path', 'Flowchart', 'UX'],
-    contentTypes: ['diagram', 'prompt'],
-    diagramCount: 1,
-    promptCount: 2,
-    codeSnippetCount: 2,
-    checklistCount: 3,
-    readingTimeMinutes: calculateReadingTime(topic03Html),
-    htmlContent: topic03Html,
-
-    goal: 'صياغة وثيقة متطلبات المنتج المكتملة بأقسامها الـ27 ومراجعتها نقدياً.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-04',
-    number: '04',
-    slug: 'git-github-user-flow',
-    title: 'Git وGitHub وUser Flow باستخدام Mermaid',
-    subtitle: 'وثّق المشروع وارسم رحلة النجاح والفشل دون إضافة سلوك غير معتمد',
-    category: 'architecture',
-    categoryName: 'المعمارية والنمذجة',
-    stageTag: 'نمذجة الأنظمة المعمارية (UML)',
-    summary: 'مخططات UML السبعة الأساسية: النموذج المفاهيمي، حالات الاستخدام PlantUML، سير العمليات ومسارات السباحة (Swimlanes)، التفاعل الزمني (Sequence)، دورة حياة الكيان (State Machine)، والتصميم البنيوي للكلاسات.',
-    tags: ['UML', 'Sequence Diagram', 'Domain Model', 'Use Case', 'Activity Diagram', 'State Machine', 'Class Diagram', 'PlantUML', 'Mermaid', 'Swimlanes'],
-    contentTypes: ['diagram', 'prompt', 'code'],
-    diagramCount: 6,
-    promptCount: 6,
-    codeSnippetCount: 7,
-    checklistCount: 5,
-    readingTimeMinutes: calculateReadingTime(topic04Html),
-    htmlContent: topic04Html,
-
-    goal: 'حفظ وثائق المشروع في مستودع Git ورسم مسارات تدفق المستخدم باستخدام Mermaid.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-05',
-    number: '05',
-    slug: 'database-erd',
-    title: 'Database Analysis وERD لمشروع BorrowHub',
-    subtitle: 'الجداول والعلاقات والقيود ومراجعة الاتساق مع PRD',
-    category: 'database',
-    categoryName: 'قواعد البيانات والأداء',
-    stageTag: 'هندسة قواعد البيانات والأداء',
-    summary: 'تصميم مخطط الكيانات والعلاقات (ERD) ومفاتيح PK/FK والقيود، كود DBML، التطبيع 3NF، وحل مشكلة استعلامات N+1 المتكررة عبر JOIN و Eager Loading، ودور فهارس B-Tree وتكلفتها.',
-    tags: ['ERD', 'DBML', 'PostgreSQL', 'Normalization', '3NF', 'N+1 Query', 'Indexing', 'B-Tree', 'Constraints', 'Eager Loading'],
-    contentTypes: ['diagram', 'code', 'prompt'],
-    diagramCount: 1,
-    promptCount: 2,
-    codeSnippetCount: 4,
-    checklistCount: 4,
-    readingTimeMinutes: calculateReadingTime(topic05Html),
-    htmlContent: topic05Html,
-
-    goal: 'تحليل وتصميم قاعدة بيانات المشروع ومخطط العلاقات والقيود وتطبيع 3NF.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-06',
-    number: '06',
-    slug: 'diagrams-lab',
-    title: 'مختبر المخططات: كل مخطط يجيب عن سؤال مختلف',
-    subtitle: 'Domain وUse Case وActivity وSequence وState وClass وERD',
-    category: 'architecture',
-    categoryName: 'المعمارية والنمذجة',
-    stageTag: 'المعمارية الكبرى وتوزيع المسؤوليات',
-    summary: 'الصورة المعمارية المتكاملة لطبقات العميل والخادم العكسي وتطبيقات الباك إند، فصل المسؤوليات الثلاثي (Views, Services, Selectors)، واستخدام Redis و Background Workers، ونماذج Multi-Tenancy.',
-    tags: ['System Architecture', 'Nginx', 'Views', 'Services', 'Selectors', 'Redis', 'Background Workers', 'Multi-Tenancy', 'Caching'],
-    contentTypes: ['diagram', 'prompt', 'code'],
-    diagramCount: 1,
-    promptCount: 2,
-    codeSnippetCount: 2,
-    checklistCount: 4,
-    readingTimeMinutes: calculateReadingTime(topic06Html),
-    htmlContent: topic06Html,
-
-    goal: 'اختيار المخطط المناسب لكل زاوية معمارية وتوليد المخططات الهندسية.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-07',
-    number: '07',
-    slug: 'lecture-04-pending',
-    title: 'المحاضرة الرابعة — بانتظار اعتماد المحتوى',
-    subtitle: 'لا تُنشر مادة تعليمية غير موثقة أو مخرجات متخيلة',
-    category: 'architecture',
-    categoryName: 'المعمارية والنمذجة',
-    stageTag: 'تنظيم الملفات وإدارة Git',
-    summary: 'الهيكل القياسي لمجلد التوثيق /docs، القواعد الست لضمان اتساق قواعد العمل عبر المخططات، حماية ملفات البيئة .env، ودورة العمل الآمنة على فروع Git ومراجعة الأكواد.',
-    tags: ['Git', 'GitHub', 'Branching', 'docs structure', 'PR', '.env', 'Code Review', 'Cross-Model Consistency'],
-    contentTypes: ['checklist', 'prompt', 'code'],
-    diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 3,
-    checklistCount: 6,
-    readingTimeMinutes: calculateReadingTime(topic07Html),
-    htmlContent: topic07Html,
-
-    goal: 'حفظ وتأكيد معايير المحتوى المعتمد وتوثيق الملفات قبل النشر.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-08',
-    number: '08',
-    slug: 'ux-discovery-stitch',
-    title: 'UX Discovery وGoogle Stitch',
-    subtitle: 'من احتياجات المستخدم إلى Screen Prompts وPrototype',
-    category: 'frontend',
-    categoryName: 'الواجهات وتطوير الفرونت إند',
-    stageTag: 'تصميم الواجهات والنظم البصرية',
-    summary: 'الانتقال من المخططات التجريدية إلى الشاشات التفاعلية، بناء الـ Design System، موازنة الألوان 60-30-10، التايبوجرافي المتزن، والحالات التفاعلية (Hover, Loading, Empty, Error).',
-    tags: ['UI/UX', 'Google Stitch', 'Design System', 'Typography', 'Color Tokens', 'Figma', 'Interactive States', 'Empty State'],
-    contentTypes: ['prompt', 'checklist'],
-    diagramCount: 0,
-    promptCount: 3,
-    codeSnippetCount: 2,
-    checklistCount: 5,
-    readingTimeMinutes: calculateReadingTime(topic08Html),
-    htmlContent: topic08Html,
-
-    goal: 'تحويل متطلبات المنتج إلى جرد شاشات وتصميم واجهة مرجعية ونظام تصميم في Stitch.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-09',
-    number: '09',
-    slug: 'stitch-mcp-design-md',
-    title: 'Stitch MCP وDESIGN.md',
-    subtitle: 'اربط التصميم بالكود بالقيم والمراجع المؤكدة فقط',
-    category: 'frontend',
-    categoryName: 'الواجهات وتطوير الفرونت إند',
-    stageTag: 'ربط التصميم بالكود (MCP)',
-    summary: 'بروتوكول سياق النموذج (Model Context Protocol - MCP) وربطه بمحررات الذكاء الاصطناعي، استخراج مواصفات الشاشات، وتشريح أقسام وثيقة DESIGN.md كعقد برمجي ملزم.',
-    tags: ['Stitch MCP', 'DESIGN.md', 'Model Context Protocol', 'Cursor', 'Antigravity', 'Design Tokens', 'Frontend Contract'],
-    contentTypes: ['code', 'prompt', 'checklist'],
-    diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 3,
-    checklistCount: 4,
-    readingTimeMinutes: calculateReadingTime(topic09Html),
-    htmlContent: topic09Html,
-
-    goal: 'ربط مراجع التصميم ببيئة كود الفرونت وتوثيق عقد التصميم DESIGN.md.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-10',
-    number: '10',
-    slug: 'frontend-planning-spec-kit',
-    title: 'Frontend Plan وSpec Kit وUI/UX Pro Max',
-    subtitle: 'خطط للواجهة فقط، نفّذ مهمة صغيرة، ثم تحقق',
-    category: 'frontend',
-    categoryName: 'الواجهات وتطوير الفرونت إند',
-    stageTag: 'تطوير الفرونت إند وSpec Kit',
-    summary: 'استراتيجية المهام الصغيرة القابلة للتحقق (Small Verifiable Tasks)، دستور وقواعد الفرونت إند الصارمة، ودورة أوامر Spec Kit الثمانية للمراجعة الدقيقة للجودة وتوافق التصميم.',
-    tags: ['Frontend Rules', 'Spec Kit', 'Small Tasks', 'UI/UX Pro Max', 'Review Commands', 'Tailwind', 'React', 'Zero-Pill'],
-    contentTypes: ['checklist', 'prompt', 'code'],
-    diagramCount: 0,
-    promptCount: 3,
-    codeSnippetCount: 3,
-    checklistCount: 5,
-    readingTimeMinutes: calculateReadingTime(topic10Html),
-    htmlContent: topic10Html,
-
-    goal: 'تخطيط وتنفيذ واجهات المشروع تدريجياً عبر مهام صغيرة محددة وقابلة للتحقق.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-11',
-    number: '11',
-    slug: 'prompt-library',
-    title: 'مكتبة البرومبتات — PROMPT 01–30',
-    subtitle: 'برومبتات حقيقية قابلة للبحث والنسخ من وثيقة الدورة',
-    category: 'qa',
-    categoryName: 'الجودة والتحقق الهندسي',
-    stageTag: 'مصفوفة الفحص وضمان الجودة',
-    summary: 'الفحوصات الهندسية الخمسة الشاملة: التجاوب عبر 5 نقاط توقف (Mobile, Tablet, Laptop, Desktop, 4K)، انعدام الطفحان الأفقي (Zero Overflow)، سهولة الوصول WCAG AA، التباين، والتحقق عبر أوامر الطرفية.',
-    tags: ['QA Matrix', 'Responsive', 'Breakpoints', 'Zero Overflow', 'A11y', 'Contrast', 'Automated Verification', 'Lighthouse'],
-    contentTypes: ['checklist', 'code'],
-    diagramCount: 0,
-    promptCount: 2,
-    codeSnippetCount: 4,
-    checklistCount: 7,
-    readingTimeMinutes: calculateReadingTime(topic11Html),
-    htmlContent: topic11Html,
-
-    goal: 'استعراض ونسخ برومبتات المسار الكاملة وفحص معايير الجودة والتحقق.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
-  {
-    id: 'topic-12',
-    number: '12',
-    slug: 'borrowhub-reference',
-    title: 'BorrowHub والمراجع: الأدوات والقوالب والقاموس وFAQ',
-    subtitle: 'حالة تطبيقية موثقة مع حدود واضحة ومواد مرجعية',
-    category: 'reference',
-    categoryName: 'المراجع والقاموس التقني',
-    stageTag: 'الأسئلة والقاموس الهندسي',
-    summary: 'أسئلة الفهم الجوهرية الخمسة وأجوبتها المعمارية، القواعد الذهبية الإلزامية للمهندس، جدول البرومبتات الكامل الجاهز للنسخ الفوري بنقرة واحدة، وقاموس المصطلحات البرمجية والمعمارية.',
-    tags: ['FAQ', 'Golden Rules', 'Prompt Table', 'Architecture Glossary', 'Terminology', 'Copyable Prompts', 'Quick Reference'],
-    contentTypes: ['glossary', 'prompt', 'code'],
-    diagramCount: 0,
-    promptCount: 8,
-    codeSnippetCount: 5,
-    checklistCount: 5,
-    readingTimeMinutes: calculateReadingTime(topic12Html),
-    htmlContent: topic12Html,
-
-    goal: 'مراجعة دراسة حالة BorrowHub والمواد المرجعية والأسئلة الشائعة والقاموس الهندسي.',
-    prerequisites: [],
-    steps: [],
-    promptRefs: [],
-    outputs: [],
-    checklist: [],
-    publicationStatus: 'legacy-pending-migration',
-  },
 ];
 
 /**
@@ -439,38 +168,51 @@ export const WAVE2_TOPIC_SOURCES: TopicItem[][] = [
 ];
 
 /**
+ * Wave-3 topic sources registry. Topics 45–58 continue the sequential project path.
+ */
+export const WAVE3_TOPIC_SOURCES: TopicItem[][] = [
+  t15Entries,
+  t16Entries,
+  t17Entries,
+  t18Entries,
+  t19Entries,
+];
+
+/**
  * Computes assembled topic sequence:
  * - Positioned topics (sequencePosition defined) come FIRST, sorted ascending by sequencePosition.
  * - Ties preserve insertion order.
- * - Unpositioned legacy anchors (02–12) keep their relative order AFTER the positioned block.
+ * - Historical composites are not active topics.
  * - Positioned topic-01 (sequencePosition: 1) stays at the front.
  */
 function assembleTopics(): TopicItem[] {
-  const all = [...LEGACY_TOPICS, ...WAVE2_TOPIC_SOURCES.flat()];
+  const all = [...LEGACY_TOPICS, ...WAVE2_TOPIC_SOURCES.flat(), ...WAVE3_TOPIC_SOURCES.flat()];
   const positioned = all
     .filter((t) => t.sequencePosition !== undefined)
     .sort((a, b) => a.sequencePosition! - b.sequencePosition!);
-  const unpositioned = all.filter((t) => t.sequencePosition === undefined);
-  return [...positioned, ...unpositioned];
+  return positioned;
 }
 
 export const UNIFIED_TOPICS: TopicItem[] = assembleTopics();
 export const TOPICS = UNIFIED_TOPICS;
 
 /**
- * Resolves any topic identifier (legacy ID like topic-05, legacy route slug, or canonical slug)
+ * Resolves any topic identifier (legacy ID, current topic ID, route alias, or canonical slug)
  * to its stable canonical slug.
  */
 export function resolveCanonicalSlug(identifier: string): string {
   if (!identifier) return '';
   const trimmed = identifier.trim();
-  if (LEGACY_TOPIC_ID_MAP[trimmed]) {
+  if (Object.hasOwn(LEGACY_TOPIC_ID_MAP, trimmed)) {
     return LEGACY_TOPIC_ID_MAP[trimmed];
   }
-  if (TOPIC_SLUG_ALIASES[trimmed]) {
+  if (Object.hasOwn(HISTORICAL_SAVED_IDENTITIES, trimmed)) {
+    return HISTORICAL_SAVED_IDENTITIES[trimmed];
+  }
+  if (Object.hasOwn(TOPIC_SLUG_ALIASES, trimmed)) {
     return TOPIC_SLUG_ALIASES[trimmed];
   }
-  return trimmed;
+  return UNIFIED_TOPICS.find((topic) => topic.id === trimmed)?.slug ?? trimmed;
 }
 
 /**
@@ -496,66 +238,59 @@ export function getAllTopicSlugs(): string[] {
   const canonicalSlugs = UNIFIED_TOPICS.map((t) => t.slug);
   const legacyIds = Object.keys(LEGACY_TOPIC_ID_MAP);
   const aliasSlugs = Object.keys(TOPIC_SLUG_ALIASES);
-  return Array.from(new Set([...canonicalSlugs, ...legacyIds, ...aliasSlugs]));
+  return Array.from(new Set([...canonicalSlugs, ...legacyIds, ...aliasSlugs, ...Object.keys(LEGACY_ROUTE_DESTINATIONS)]));
 }
 
 /* =========================================================================
  * Saved Data Adapter (localStorage: bookmarks & recently-viewed)
  * Writes newly in canonical slugs; reads and translates legacy IDs through
- * the frozen map from TODAY's 12 topics.
+ * the audited source identities, preserving ambiguous composites.
  * ========================================================================= */
 
-const BOOKMARKS_KEY = 'engineering_guide_bookmarks';
-const RECENTLY_VIEWED_KEY = 'engineering_guide_recently_viewed';
+import {
+  getBrowserTopicStorage,
+  type TopicStorageStatus,
+} from './topicStorage';
+
+export type { TopicStorageStatus };
 
 export function readSavedBookmarks(): string[] {
   if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(BOOKMARKS_KEY);
-    if (!raw) return [];
-    const list = JSON.parse(raw);
-    if (!Array.isArray(list)) return [];
-    return Array.from(new Set(list.map((id) => resolveCanonicalSlug(String(id))).filter(Boolean)));
-  } catch (err) {
-    console.warn('Failed reading bookmarks from localStorage:', err);
-    return [];
-  }
+  return getBrowserTopicStorage().readBookmarks();
 }
 
 export function writeSavedBookmarks(slugs: string[]): string[] {
-  const canonicalSlugs = Array.from(new Set(slugs.map((s) => resolveCanonicalSlug(s)).filter(Boolean)));
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(canonicalSlugs));
-    } catch (err) {
-      console.warn('Failed writing bookmarks to localStorage:', err);
-    }
+  if (typeof window === 'undefined') {
+    return Array.from(new Set(slugs.map((s) => resolveCanonicalSlug(s)).filter(Boolean)));
   }
-  return canonicalSlugs;
+  return getBrowserTopicStorage().writeBookmarks(slugs);
 }
 
 export function readSavedRecentlyViewed(): string[] {
   if (typeof window === 'undefined') return [];
-  try {
-    const raw = localStorage.getItem(RECENTLY_VIEWED_KEY);
-    if (!raw) return [];
-    const list = JSON.parse(raw);
-    if (!Array.isArray(list)) return [];
-    return Array.from(new Set(list.map((id) => resolveCanonicalSlug(String(id))).filter(Boolean))).slice(0, 5);
-  } catch (err) {
-    console.warn('Failed reading recently viewed from localStorage:', err);
-    return [];
-  }
+  return getBrowserTopicStorage().readRecentlyViewed();
 }
 
 export function writeSavedRecentlyViewed(slugs: string[]): string[] {
-  const canonicalSlugs = Array.from(new Set(slugs.map((s) => resolveCanonicalSlug(s)).filter(Boolean))).slice(0, 5);
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(canonicalSlugs));
-    } catch (err) {
-      console.warn('Failed writing recently viewed to localStorage:', err);
-    }
+  if (typeof window === 'undefined') {
+    const saved = Array.from(new Set(slugs.map(resolveCanonicalSlug).filter(Boolean)));
+    return [...saved.filter((slug) => getTopicBySlug(slug)).slice(0, 5), ...saved.filter((slug) => !getTopicBySlug(slug))];
   }
-  return canonicalSlugs;
+  return getBrowserTopicStorage().writeRecentlyViewed(slugs);
 }
+
+export function getSavedBookmarksStatus(): TopicStorageStatus {
+  if (typeof window === 'undefined') return 'available';
+  return getBrowserTopicStorage().getBookmarksStatus();
+}
+
+export function getSavedRecentlyViewedStatus(): TopicStorageStatus {
+  if (typeof window === 'undefined') return 'available';
+  return getBrowserTopicStorage().getRecentlyViewedStatus();
+}
+
+export function subscribeTopicStorage(listener: () => void): () => void {
+  if (typeof window === 'undefined') return () => {};
+  return getBrowserTopicStorage().subscribe(listener);
+}
+

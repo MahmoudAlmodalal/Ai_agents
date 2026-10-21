@@ -6,6 +6,7 @@ import { calculateReadingTime } from '@/src/utils/searchUtils.ts';
  * Sequence Position: 14
  * ========================================================================= */
 export const topic14Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-14-relational-erd" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 14 · المحطة الأساسية</span>
@@ -262,6 +263,7 @@ Do not silently change the schema. Save docs/database-review.md.</code></pre>
  * Sequence Position: 15
  * ========================================================================= */
 export const topic15Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-15-dbml-dbdiagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 15 · المحطة الأساسية</span>
@@ -271,7 +273,7 @@ export const topic15Html = `
   <div class="step-header">
     <div class="step-title-wrap">
       <h2 class="step-title">لغة DBML ومحرر dbdiagram.io</h2>
-      <div class="step-subtitle">كتابة مخططات قواعد البيانات بلغة DBML التفاعلية، تصدير SQL، وفهم الفروق الجوهرية عن Mermaid</div>
+      <div class="step-subtitle">كتابة DBML، والتحقق من تصييره وتصدير DDL فعلياً، وفهم الفرق عن Mermaid</div>
     </div>
   </div>
 
@@ -279,8 +281,8 @@ export const topic15Html = `
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. ما هي لغة DBML وما وظيفته في مسار هندسة البرمجيات؟</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      لغة <strong>DBML (Database Markup Language)</strong> هي لغة نصية مفتوحة المصدر وبسيطة ومقروءة بشرياً صُممت خصيصاً لتعريف وهيكلة قواعد البيانات العلائقية.
-      بدلاً من كتابة كود SQL DDL المعقد يدوياً أو استخدام برامج رسم ثقيلة ومعقدة، توفر DBML صياغة نصية رشيقة تمكن المطور والوكيل الذكي من كتابة الجداول والحقول والقيود والعلاقات بنقاء فائق، وحفظها كملف نصي خفيف <code>docs/database.dbml</code> داخل مستودع Git.
+      لغة <strong>DBML (Database Markup Language)</strong> صيغة نصية مفتوحة المصدر ومقروءة لتعريف بنية قواعد البيانات العلائقية.
+      يمكنك تأليف ملف <code>docs/database.dbml</code> ومراجعته محلياً داخل المستودع. يتطلب اكتمال هذا التمرين أيضاً تصيير DBML وتصدير DDL من أداة تدعمهما ثم مراجعة الناتج الفعلي؛ إذا تعذر الوصول، احفظ المسودة وسجّل الخطوتين <strong>Not Run</strong> وغير مكتملتين.
     </p>
   </div>
 
@@ -293,9 +295,8 @@ export const topic15Html = `
         <span>خطأ هندسي شائع: محاولة لصق DBML في محرر Mermaid</span>
       </div>
       <p class="leading-7">
-        <strong>DBML ليست صيغة رسم عامة ولا تتبع Mermaid.js إطلاقاً!</strong><br>
-        إذا حاولت لصق كود DBML داخل محرر Mermaid Live أو داخل كتلة <code>\`\`\`mermaid</code> فستفشل الصفحة فوراً وتظهر خطأ صياغة (Syntax Parse Error).
-        مكان تشغيل وعرض وتصدير كود DBML هو المحرر المخصص <strong><a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a></strong>.
+        <strong>DBML وMermaid صيغتان مختلفتان، وليست إحداهما بديلاً مطابقاً للأخرى.</strong><br>
+        لا تتوقع من Mermaid Live أو كتلة <code>\`\`\`mermaid</code> تفسير DBML. يمكن حفظ DBML ومراجعته كنص محلياً؛ وإذا احتجت تصييراً أو تصديراً فاختر أداة تدعم DBML وتحقق من إمكاناتها الحالية.
       </p>
     </div>
 
@@ -375,7 +376,10 @@ Ref: profile.user_id - users.id</code></pre>
   <div class="content-block mt-8">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. دراسة حالة BorrowHub: كود DBML الكامل والجاهز للنسخ</h3>
     <p class="leading-8 text-[var(--text-muted)]">
-      انسخ هذا الكود والصقه مباشرة في <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> لتوليد مخطط قاعدة بيانات تفاعلي واستخراج كود PostgreSQL DDL:
+      هذا مثال DBML تعليمي يمكنك حفظه ومراجعته محلياً. لا توجد شاشة أو نتيجة تصدير مرفقة؛ استخدم أداة تدعم DBML مثل <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> لإنتاج المخرج الفعلي، أو سجّل تعذر الخطوة كـ <strong>Not Run</strong> وغير مكتملة:
+    </p>
+    <p class="leading-7 text-sm text-[var(--text-muted)] mt-2">
+      وجود هذا المثال في الدرس لا يثبت أنه عُرض أو صُدّر من الخدمة. يجب أن يأتي رابط المخطط وملف SQL من تشغيل فعلي ومراجعة المخرجات؛ إذا لم يتوفر التشغيل، سجّلهما <strong>Not Run</strong> واعتبر حزمة التسليم غير مكتملة، ولا تسمِّ ترجمة يدوية أنها تصدير من dbdiagram.io.
     </p>
 
     <div class="code-container my-6" dir="ltr">
@@ -452,13 +456,13 @@ Ref: loan_action_logs.actor_id > users.id [delete: restrict]</code></pre>
 
   <!-- 5. Step-by-Step Guide for dbdiagram.io -->
   <div class="content-block mt-8">
-    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. خطوات العمل على محرر dbdiagram.io وتصدير SQL DDL</h3>
+    <h3 class="text-xl font-black text-[var(--text-main)] mb-3">5. خطوات إعداد DBML والتحقق والتصدير من أداة داعمة</h3>
     <ol class="space-y-3 pr-4 leading-7 text-[var(--text-muted)] list-decimal list-inside my-4">
-      <li><strong>فتح المحرر:</strong> توجّه إلى <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> وانقر على زر "Go to App".</li>
-      <li><strong>لصق الكود الخام:</strong> امسح النص التجريبي الافتراضي والصق كود DBML السابق. <em>تنبيه: لا تقم بتضمين علامات التنسيق <code>\`\`\`dbml</code></em>؛ الصق نص الكود مباشرة.</li>
-      <li><strong>التنظيم البصري:</strong> قم بسحب الصناديق وضبط أماكن الجداول بما يحقق وضوح الأسهم وتجنب تقاطع الخطوط.</li>
-      <li><strong>تصدير كود DDL:</strong> من القائمة العلوية اختر <strong>Export &gt; Export to PostgreSQL</strong> أو MySQL للحصول على أوامر <code>CREATE TABLE</code> المعتمدة، واحفظ الملف باسم <code>docs/database.sql</code>.</li>
-      <li><strong>المشاركة والتوثيق:</strong> انقر على زر <strong>Share</strong> وانسخ الرابط التفاعلي لتوثيقه في ملف <code>docs/README.md</code> بمستودع مشروعك.</li>
+      <li><strong>صياغة محلية:</strong> اكتب الجداول والحقول والمفاتيح والعلاقات في <code>docs/database.dbml</code> وفق ERD، ثم راجع الأسماء والقيود يدوياً. هذه مسودة تحضيرية وليست وحدها مخرج التمرين المكتمل.</li>
+      <li><strong>تصيير فعلي:</strong> افتح أداة تدعم DBML مثل <a href="https://dbdiagram.io" target="_blank" rel="noopener noreferrer" class="font-bold underline text-[var(--brand-primary)]">dbdiagram.io</a> والصق النص بلا علامات Markdown. سجّل اسم الأداة وأي أخطاء؛ إذا تعذر الوصول، سجّل هذه الخطوة <strong>Not Run</strong> وغير مكتملة.</li>
+      <li><strong>مراجعة مرئية:</strong> افحص المخطط المعروض مقابل DBML وERD، وسجّل الملاحظات ومصدرها. لا تستنتج صحة المخطط من نجاح اللصق وحده ولا تنسب نتيجة لخدمة لم تُشغّلها.</li>
+      <li><strong>تصدير DDL فعلي:</strong> صدّر DDL لمحرك قاعدة البيانات المقصود، واحفظ الناتج الفعلي باسم <code>docs/database.sql</code> ثم راجعه مقابل DBML. إذا تعذر التصدير، اكتب <strong>Not Run</strong> وغير مكتمل؛ لا تسمِّ DDL مكتوباً أو محولاً يدوياً تصديراً من الأداة.</li>
+      <li><strong>رابط المشاركة:</strong> إن أنشأت رابطاً، افتحه وتحقق من نطاق الوصول قبل توثيقه. إذا تعذرت المشاركة، سجّل الرابط <strong>Not Run</strong> وغير مكتمل.</li>
     </ol>
   </div>
 </section>
@@ -469,6 +473,7 @@ Ref: loan_action_logs.actor_id > users.id [delete: restrict]</code></pre>
  * Sequence Position: 16
  * ========================================================================= */
 export const topic16Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-16-sequence-diagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 16 · المحطة الأساسية</span>
@@ -605,7 +610,7 @@ export const topic16Html = `
             DB--&gt;&gt;LoanService: logConfirmed
 
             LoanService--&gt;&gt;WebApp: نجاح: تم تسجيل الطلب بنجاح وهو بانتظار اعتماد المعمل
-            WebApp--&gt;&gt;Student: عرض رقم الطلب وبطاقة المتابعة مع مهلة 48 ساعة للتسليم
+            WebApp--&gt;&gt;Student: عرض رقم الطلب وحالة انتظار مراجعة المسؤول؛ لا يبدأ مؤقت الاستلام عند إرسال الطلب
         end
     end</code></pre>
     </div>
@@ -650,6 +655,7 @@ Generate no application code.</code></pre>
  * Sequence Position: 17
  * ========================================================================= */
 export const topic17Html = `
+<aside class="callout note"><p><strong>حدود نموذج BorrowHub:</strong> هذه أمثلة جزئية لتعليم النمذجة وليست مخططًا تنفيذيًا معتمدًا أو بديلًا عن PRD. حالات ACTIVE/SUSPENDED وحدها لا توثق انتظار اعتماد الحساب، وحقول الأمثلة لا تستكمل بالضرورة سبب الاستعارة وتاريخ البداية وحد المدة (10 أيام). دوّن هذه الفجوات في database-review.md وراجع تمثيلها مع مالك PRD قبل التنفيذ. أسماء حالات الطلب وتعريف الحالات النشطة وتوقيت حجز المخزون تحتاج توحيدًا بين State وERD وSequence وClass؛ لا تنسخها كنموذج نهائي. مهلة 48 ساعة مرتبطة بتاريخ بداية الطلب وفق التعريف الموثق، والتسليم والإرجاع يؤكدهما المسؤول، والتلف لا يعود للمتاح، والتأخر متابعة يدوية دون حظر تلقائي.</p></aside>
 <section id="topic-17-class-diagram" class="topic-section">
   <div class="step-badge-group">
     <span class="stage-tag">الموضوع 17 · المحطة الأساسية</span>
@@ -1001,7 +1007,7 @@ export const t06Entries: TopicItem[] = [
     category: 'database',
     categoryName: 'قواعد البيانات والنمذجة',
     stageTag: 'أدوات نمذجة البيانات',
-    summary: 'إتقان لغة توصيف قواعد البيانات DBML (Database Markup Language) واستخدام محررها المخصص dbdiagram.io لرسم الجداول والعلاقات التفاعلية، وتصدير أكواد PostgreSQL DDL، مع توضيح الفروق الجوهرية بين DBML وMermaid وعدم خلطهما.',
+    summary: 'كتابة DBML محلياً ثم تصييره ومراجعة المخطط وتصدير DDL فعلي من أداة تدعم الصيغة؛ سجّل التصيير أو التصدير Not Run وغير مكتمل إذا تعذر الوصول.',
     tags: ['DBML', 'dbdiagram.io', 'Database DDL', 'SQL Schema', 'PostgreSQL', 'Diagram Tools', 'Mermaid vs DBML'],
     contentTypes: ['diagram', 'prompt', 'code', 'checklist'],
     diagramCount: 1,
@@ -1011,7 +1017,7 @@ export const t06Entries: TopicItem[] = [
     readingTimeMinutes: calculateReadingTime(topic15Html),
     htmlContent: topic15Html,
 
-    goal: 'كتابة مخطط قاعدة بيانات مشروع الطالب بلغة DBML القياسية، وعرضه وتعديله وتوليد الروابط التفاعلية وتصدير كود DDL على محرر dbdiagram.io، مع إدراك الفرق بينه وبين Mermaid.',
+    goal: 'كتابة DBML لمشروع الطالب، وتصويره وتصدير DDL فعلياً من أداة تدعم الصيغة ومراجعته مقابل ERD؛ عند تعذر الأداة يمكن متابعة بقية الدرس مع وسم المخرج غير المنفذ Not Run، ولا يعد التمرين مكتملاً.',
     prerequisites: [
       'مخطط ERD المعتمد من الموضوع السابق docs/ERD.md',
       'فهم بنية الجداول والحقول والعلاقات والقيود'
@@ -1019,26 +1025,26 @@ export const t06Entries: TopicItem[] = [
     steps: [
       '1. تعرّف على صياغة لغة DBML: كتل الجداول Table، الحقول وأنواعها، المفاتيح الأساسية [pk]، والقيود [not null, unique].',
       '2. صغ علاقات الجداول باستخدام صيغة الربط المباشر Ref: table_a.foreign_key > table_b.id.',
-      '3. افتح محرر dbdiagram.io الرسمي (https://dbdiagram.io) وأنشئ مخططاً جديداً.',
-      '4. الصق كود DBML مباشرة دون علامات التنصيص الخلفية الخاصة بـ Markdown (تجنب لصق ```dbml).',
-      '5. نظّم تخطيط المخطط بصرياً عبر السحب والإفلات (Drag and Drop) لضبط تموضع الجداول وحركيتها.',
-      '6. صدّر كود إنشاء الجداول (PostgreSQL DDL) واحتفظ بنسخة docs/database.sql، وشارك رابط المخطط التفاعلي.',
-      '7. احفظ ملف التوصيف كاملاً في مستودع مشروعك بالمسار docs/database.dbml.'
+      '3. احفظ نسخة DBML في docs/database.dbml وراجع أسماء الجداول والحقول والمراجع مقابل ERD؛ هذه مسودة أولية للخطوات التالية.',
+      '4. صير النص فعلياً بأداة تدعم DBML وسجّل الأداة ونتيجتها أو Not Run إذا تعذر الوصول؛ المسودة المحلية وحدها لا تحقق مخرج التصيير.',
+      '5. راجع المخطط المعروض بصرياً مقابل المصدر وسجّل الملاحظات؛ لا تدّعِ تشغيل الأداة إذا لم تتوفر.',
+      '6. صدّر DDL فعلياً وراجعه قبل حفظه في docs/database.sql؛ إذا تعذر التصدير فسجّل Not Run وغير مكتمل، ولا تستبدله بترجمة يدوية.',
+      '7. أنشئ رابط مشاركة إذا كانت الأداة تتيحه، ثم افتحه وتحقق من نطاق الوصول؛ وإلا سجّل الرابط Not Run وغير مكتمل.'
     ],
     promptRefs: [
       'prompt-12-erd-dbml-mermaid'
     ],
     outputs: [
       'docs/database.dbml',
-      'رابط تفاعلي على dbdiagram.io',
-      'docs/database.sql'
+      'رابط dbdiagram.io بعد إنشاء المخطط والتحقق من نطاق الوصول؛ وإلا Not Run / غير مكتمل',
+      'docs/database.sql كتصدير فعلي من الأداة؛ وإلا Not Run / غير مكتمل، ولا تستبدله بترجمة يدوية'
     ],
     checklist: [
-      'التفريق القاطع بين DBML وMermaid: DBML لا يعمل في Mermaid Live، وMermaid erDiagram ليس بديلاً عن dbdiagram.io.',
-      'صحة صياغة كود DBML وخلوه من أخطاء الكتابة عند لصقه في dbdiagram.io.',
+      'التمييز بين صياغة DBML وMermaid erDiagram واختيار أداة تدعم صيغة DBML عند التصيير أو التصدير.',
+      'مراجعة صياغة DBML كنص ومطابقة الجداول والمراجع مع ERD؛ إذا تعذر تشغيل أداة تحقق، سجّل ذلك كـ Not Run.',
       'اشتمال كود DBML على جميع جداول وحقول وعلاقات مشروع الطالب (BorrowHub كمثال مرجعي).',
       'استخدام التوجيهات المتقدمة في DBML: التوثيق بالـ Note، القيود الافتراضية default، والمفاتيح المركبة.',
-      'تصدير كود SQL DDL النظيف وتوثيق رابط المخطط السحابي في ملفات المشروع.'
+      'توثيق رابط المخطط وSQL DDL بعد تنفيذ التصدير ومراجعته فعلياً؛ إذا لم يحدث ذلك فاكتب Not Run / غير مكتمل ولا تدّعِ وجود تصدير.'
     ],
     publicationStatus: 'unified-complete',
     sequencePosition: 15,
