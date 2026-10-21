@@ -16,19 +16,19 @@ function getStatusBadge(status: ToolVerificationStatus) {
       return {
         icon: '✓',
         badgeClass:
-          'border-solid border-emerald-600/40 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-500/40',
+          'border-solid border-[var(--callout-tip-border)] bg-[var(--callout-tip-bg)] text-[var(--callout-tip-text)]',
       };
     case 'اختياري':
       return {
         icon: '◇',
         badgeClass:
-          'border-dashed border-sky-600/40 bg-sky-50 text-sky-800 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-500/40',
+          'border-dashed border-[var(--callout-note-border)] bg-[var(--callout-note-bg)] text-[var(--callout-note-text)]',
       };
     case 'لم يُختبر التثبيت':
       return {
         icon: '⚠',
         badgeClass:
-          'border-dotted border-amber-600/40 bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500/40',
+          'border-dotted border-[var(--callout-warning-border)] bg-[var(--callout-warning-bg)] text-[var(--callout-warning-text)]',
       };
   }
 }
@@ -392,13 +392,13 @@ export default function CourseToolsGuide({
                   </div>
                   <div>
                     <dt className="inline font-bold">أشهر عقبة عملية: </dt>
-                    <dd className="inline text-amber-900 dark:text-amber-200">
+                    <dd className="inline text-[var(--callout-warning-text)]">
                       {tool.commonPitfall}
                     </dd>
                   </div>
                   <div>
                     <dt className="inline font-bold">مثال تطبيقي: </dt>
-                    <dd className="inline">{tool.workedExample}</dd>
+                    <dd className="inline whitespace-pre-wrap" dir="auto">{tool.workedExample}</dd>
                   </div>
                 </dl>
 
