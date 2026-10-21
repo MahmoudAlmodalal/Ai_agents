@@ -65,7 +65,7 @@
 2. **Published lessons**: lecture 01, 02, 03, pending 04, lecture 05 with next/previous/progress.
 3. **Prompt Library**: parse all 30 approved prompts, search/filter/copy.
 4. **Diagrams + BorrowHub**: diagram matrix, Mermaid preview, official editor links, case study and file availability.
-5. **Tools + references**: tools/install, templates, glossary, FAQ, about.
+5. **Tools + references**: tools/install, templates, glossary, FAQ, about; يخضع تأليف المحتوى المرجعي للقرار المعماري والوثيقة المرجعية في `docs/TOOLS_AND_REFERENCES_SPEC.md`.
 6. **Verification**: links/routes, copy interactions, typecheck/build, responsive/accessibility review, QA report.
 
 ## حدود صريحة
@@ -75,3 +75,4 @@
 - لا ننشئ روابط تنزيل لملفات غير موجودة فعليًا.
 - لا نعرض Prototype أو Play أو Download وهميًا.
 - BorrowHub مثال تعليمي؛ لا تُعمّم قواعده على مشاريع الطلاب.
+- موضوعات المسار التعليمي الثمانية والخمسون مستثناة صراحةً من أي تغيير عبر دليل الأدوات والمراجع؛ وتخضع إضافات وتحديثات المحتوى المرجعي للأدوات والمراجع لشرط التحقق الموثق والقرار المعماري في [docs/TOOLS_AND_REFERENCES_SPEC.md](docs/TOOLS_AND_REFERENCES_SPEC.md). لا يُعتبر هذا القرار تفويضًا عامًا بتعديل المنهج أو تغيير موضوعات المسار المعتمدة.
