@@ -207,3 +207,102 @@ test('Tailwind lesson prepares versioned token mapping before Next project boots
   await expect(page.locator('article').first()).toContainText("'student' | 'staff' | 'admin'");
   await expect(page.locator('article').first()).not.toContainText("'faculty'");
 });
+
+test('ticket 84: unified search filters both tools and agents, normalizes Arabic, shows counters and empty states, and exposes agent details under editorial caveat', async ({ page }) => {
+  await page.goto('/tools');
+
+  // Verify exactly one search input on the page
+  const searchInputs = page.locator('input[type="search"]');
+  await expect(searchInputs).toHaveCount(1);
+  const searchInput = searchInputs.first();
+
+  const toolsSection = page.getByRole('region', { name: 'دليل أدوات المسار' });
+  const directorySection = page.getByRole('region', { name: 'دليل وكلاء البرمجة التكميلي' });
+
+  // Baseline counts before search
+  await expect(toolsSection.locator('article')).toHaveCount(16);
+  await expect(toolsSection.getByText('عدّاد الأدوات المعروضة: 16 من 16 أداة')).toBeVisible();
+  await expect(directorySection.locator('article')).toHaveCount(13);
+  await expect(directorySection.getByText(/عدّاد وكلاء البرمجة المعروضين: 13 من 13 وكيل/)).toBeVisible();
+
+  // 1. Unified search: Search "Stitch" - matches tools and agents mentioning Stitch
+  await searchInput.fill('Stitch');
+  await expect(toolsSection.locator('article')).toHaveCount(2); // Google Stitch, Stitch MCP
+  await expect(toolsSection.getByText('عدّاد الأدوات المعروضة: 2 من 16 أداة')).toBeVisible();
+  await expect(directorySection.locator('article')).toHaveCount(1); // Antigravity + Gemini CLI
+  await expect(directorySection.getByText(/عدّاد وكلاء البرمجة المعروضين: 1 من 13 وكيل/)).toBeVisible();
+  await expect(directorySection.getByRole('heading', { name: /أنتي جرافيتي/ })).toBeVisible();
+
+  // 2. Arabic normalization: tatweel, tashkeel, hamza
+  // Search with tatweel "كـلايـن" -> matches Cline
+  await searchInput.fill('كـلايـن');
+  await expect(toolsSection.locator('article')).toHaveCount(0);
+  const toolsEmptyState = toolsSection.getByRole('status').filter({ hasText: 'لا توجد أدوات تطابق البحث الحالي' });
+  await expect(toolsEmptyState).toContainText('لا توجد أدوات تطابق البحث الحالي');
+  await expect(toolsEmptyState).toContainText('اقتراح الخطوة التالية');
+  await expect(directorySection.locator('article')).toHaveCount(1);
+  await expect(directorySection.getByRole('heading', { name: /كلاين/ })).toBeVisible();
+
+  // Search with hamza variation "ادارة" -> matches every tool whose text normalises to it:
+  // the documentation stage pair (Git, GitHub) plus the two tools that mention package management.
+  await searchInput.fill('ادارة');
+  await expect(toolsSection.locator('article')).toHaveCount(4);
+  await expect(toolsSection.getByRole('heading', { name: 'Git', exact: true })).toBeVisible();
+  await expect(toolsSection.getByRole('heading', { name: 'GitHub', exact: true })).toBeVisible();
+  await expect(toolsSection.getByText('عدّاد الأدوات المعروضة: 4 من 16 أداة')).toBeVisible();
+
+  // Search with tashkeel "مُخَطَّط" -> matches diagram tools
+  await searchInput.fill('مُخَطَّط');
+  await expect(toolsSection.locator('article')).toHaveCount(3); // Mermaid, PlantUML, dbdiagram
+
+  // 3. Complete mismatch -> both sections show explicit empty state with suggested next step
+  await searchInput.fill('كلمةغيرموجودة123');
+  await expect(toolsSection.locator('article')).toHaveCount(0);
+  await expect(toolsSection.getByText('عدّاد الأدوات المعروضة: 0 من 16 أداة')).toBeVisible();
+  const toolsEmpty = toolsSection.getByRole('status').filter({ hasText: 'لا توجد أدوات تطابق البحث الحالي' });
+  await expect(toolsEmpty).toContainText('لا توجد أدوات تطابق البحث الحالي');
+  await expect(toolsEmpty).toContainText('اقتراح الخطوة التالية');
+  await expect(toolsEmpty.getByRole('button', { name: 'مسح كلمة البحث' })).toBeVisible();
+
+  await expect(directorySection.locator('article')).toHaveCount(0);
+  await expect(directorySection.getByText(/عدّاد وكلاء البرمجة المعروضين: 0 من 13 وكيل/)).toBeVisible();
+  const agentsEmpty = directorySection.getByRole('status').filter({ hasText: 'لا يوجد وكلاء يطابقون' });
+  await expect(agentsEmpty).toContainText('لا يوجد وكلاء يطابقون خيارات البحث والتصفية الحالية');
+  await expect(agentsEmpty).toContainText('اقتراح الخطوة التالية');
+  await expect(agentsEmpty.getByRole('button', { name: 'مسح كلمة البحث' })).toBeVisible();
+
+  // Clear search using the empty state button
+  await toolsEmpty.getByRole('button', { name: 'مسح كلمة البحث' }).click();
+  await expect(toolsSection.locator('article')).toHaveCount(16);
+  await expect(directorySection.locator('article')).toHaveCount(13);
+
+  // 4. Agent directory details, pricing, freeOffer, install, and review date
+  const clineCard = directorySection.getByRole('article').filter({ has: page.getByRole('heading', { name: /كلاين/ }) });
+  await expect(clineCard).toBeVisible();
+  const details = clineCard.locator('details');
+  await expect(details).toBeVisible();
+  await details.locator('summary').click();
+  await expect(details).toContainText('حذر تحريري');
+  await expect(details).toContainText('2026-10-18');
+  await expect(details).toContainText('السعر:');
+  await expect(details).toContainText('الإضافة مجانية — تدفع لمزود الـ API الذي تختاره');
+  await expect(details).toContainText('العرض المجاني:');
+  await expect(details).toContainText('مجانية كإضافة؛ اربطها بمزود له طبقة مجانية');
+  await expect(details).toContainText('التثبيت:');
+  await expect(details).toContainText('ext install saoudrizwan.claude-dev');
+
+  // Verify review date is displayed beside the agent counter
+  await expect(directorySection).toContainText('تاريخ آخر مراجعة تحريرية: 18 أكتوبر 2026 (2026-10-18)');
+
+  // 5. Category filtering combined with search
+  await directorySection.getByRole('button', { name: /إضافة VS Code/ }).click();
+  await searchInput.fill('كود');
+  const vscodeShown = directorySection.locator('article');
+  const count = await vscodeShown.count();
+  expect(count).toBeGreaterThan(0);
+  for (let i = 0; i < count; i++) {
+    await expect(vscodeShown.nth(i)).toContainText('إضافة VS Code');
+  }
+  await expect(directorySection.getByRole('heading', { name: /كلود كود/ })).toHaveCount(0);
+  await expect(directorySection.getByRole('heading', { name: /أوبن كود/ })).toHaveCount(0);
+});

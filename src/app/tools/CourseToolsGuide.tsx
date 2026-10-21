@@ -8,6 +8,7 @@ import {
   ToolUsageStage,
   ToolVerificationStatus,
 } from '@/src/data/course-tool-guide';
+import { normalizeArabic } from '@/src/utils/searchUtils';
 
 function getStatusBadge(status: ToolVerificationStatus) {
   switch (status) {
@@ -32,7 +33,15 @@ function getStatusBadge(status: ToolVerificationStatus) {
   }
 }
 
-export default function CourseToolsGuide() {
+interface CourseToolsGuideProps {
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
+}
+
+export default function CourseToolsGuide({
+  searchQuery = '',
+  onSearchChange = () => {},
+}: CourseToolsGuideProps) {
   const [status, setStatus] = useState('');
   const [selectedStage, setSelectedStage] = useState<'all' | ToolUsageStage>('all');
 
@@ -45,10 +54,34 @@ export default function CourseToolsGuide() {
     }
   }
 
-  const filteredTools =
-    selectedStage === 'all'
-      ? COURSE_TOOL_GUIDE
-      : COURSE_TOOL_GUIDE.filter((t) => t.stage === selectedStage);
+  const normQuery = normalizeArabic(searchQuery.trim());
+  const queryWords = normQuery ? normQuery.split(' ').filter(Boolean) : [];
+
+  const filteredTools = COURSE_TOOL_GUIDE.filter((tool) => {
+    const matchesStage = selectedStage === 'all' || tool.stage === selectedStage;
+    if (!matchesStage) return false;
+    if (queryWords.length === 0) return true;
+
+    const haystack = [
+      tool.name,
+      tool.stage,
+      tool.purpose,
+      tool.timing,
+      tool.input,
+      tool.output,
+      tool.lifecycle,
+      tool.commonPitfall,
+      tool.workedExample,
+      tool.topic,
+      tool.command ?? '',
+      tool.verification,
+      tool.verificationStatus,
+    ]
+      .map(normalizeArabic)
+      .join(' ');
+
+    return queryWords.every((word) => haystack.includes(word));
+  });
 
   return (
     <section aria-label="دليل أدوات المسار" className="mb-10">
@@ -68,6 +101,37 @@ export default function CourseToolsGuide() {
           القوالب المرجعية وحالة توفرها ←
         </Link>
       </header>
+
+      {/* حقل البحث الموحد للدليل */}
+      <div className="mt-8 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 shadow-sm">
+        <label htmlFor="unified-tools-search" className="block text-base font-black text-[var(--text-main)]">
+          ابحث في الأدوات ودليل الوكلاء
+        </label>
+        <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">
+          حقل بحث موحد يصفّي أدوات المسار ودليل الوكلاء التكميلي معًا بحسب الاسم، مرحلة الاستخدام، الغرض، أو أوامر التثبيت.
+        </p>
+        <div className="mt-3 relative flex items-center">
+          <input
+            id="unified-tools-search"
+            type="search"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="ابحث في الأدوات والوكلاء (مثال: Git، طرفية، Next، كود، كلاين)..."
+            className="w-full min-h-12 rounded-xl border border-[var(--border-color)] bg-[var(--bg-body)] px-4 py-3 pe-12 text-sm text-[var(--text-main)] focus-visible:outline-2 focus-visible:outline-[var(--primary)]"
+            aria-label="ابحث في الأدوات ودليل الوكلاء"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => onSearchChange('')}
+              className="absolute left-3 rounded-lg bg-[var(--bg-card-subtle)] px-2.5 py-1 text-xs font-bold text-[var(--text-muted)] hover:text-[var(--text-main)]"
+              aria-label="مسح كلمة البحث"
+            >
+              مسح
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* جدول قرار الأداة — أي أداة في أي مرحلة */}
       <section aria-label="جدول قرار الأداة — أي أداة في أي مرحلة" className="mt-8">
@@ -200,16 +264,32 @@ export default function CourseToolsGuide() {
                 (المرحلة المحددة: {selectedStage})
               </span>
             )}
+            {queryWords.length > 0 && (
+              <span className="mr-2 font-normal text-[var(--primary)]">
+                (المطابقة للبحث: «{searchQuery.trim()}»)
+              </span>
+            )}
           </span>
-          {selectedStage !== 'all' && (
-            <button
-              type="button"
-              onClick={() => setSelectedStage('all')}
-              className="text-xs font-bold text-[var(--primary)] hover:underline"
-            >
-              عرض كل المراحل ({COURSE_TOOL_GUIDE.length})
-            </button>
-          )}
+          <div className="flex flex-wrap items-center gap-3">
+            {queryWords.length > 0 && (
+              <button
+                type="button"
+                onClick={() => onSearchChange('')}
+                className="text-xs font-bold text-[var(--primary)] hover:underline"
+              >
+                مسح كلمة البحث
+              </button>
+            )}
+            {selectedStage !== 'all' && (
+              <button
+                type="button"
+                onClick={() => setSelectedStage('all')}
+                className="text-xs font-bold text-[var(--primary)] hover:underline"
+              >
+                عرض كل المراحل ({COURSE_TOOL_GUIDE.length})
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -217,108 +297,144 @@ export default function CourseToolsGuide() {
         {status}
       </p>
 
-      {/* قائمة بطاقات الأدوات */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {filteredTools.map((tool) => {
-          const badge = getStatusBadge(tool.verificationStatus);
-          return (
-            <article
-              key={tool.name}
-              className="min-w-0 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <div>
-                  <span className="inline-block rounded-md bg-[var(--bg-card-subtle)] px-2 py-0.5 text-xs font-bold text-[var(--text-muted)]">
-                    {tool.stage}
-                  </span>
-                  <h2 className="mt-1 text-xl font-black text-[var(--text-main)]" dir="auto">
-                    {tool.name}
-                  </h2>
-                </div>
-                <span
-                  data-verification-status={tool.verificationStatus}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold ${badge.badgeClass}`}
-                >
-                  <span aria-hidden="true" className="font-mono">
-                    {badge.icon}
-                  </span>
-                  <span>{tool.verificationStatus}</span>
-                </span>
-              </div>
-
-              <p className="mt-3 text-sm leading-7 text-[var(--text-main)]">{tool.purpose}</p>
-
-              <dl className="mt-3 space-y-2 text-sm leading-7">
-                <div>
-                  <dt className="inline font-bold">مرحلة الاستخدام: </dt>
-                  <dd className="inline">{tool.stage}</dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">تاريخ مراجعة المصدر: </dt>
-                  <dd className="inline" dir="ltr">
-                    {tool.reviewDate}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">متى تستخدمها: </dt>
-                  <dd className="inline">{tool.timing}</dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">المدخلات: </dt>
-                  <dd className="inline">{tool.input}</dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">المخرجات: </dt>
-                  <dd className="inline">{tool.output}</dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">دورة الحياة: </dt>
-                  <dd className="inline">{tool.lifecycle}</dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">أشهر عقبة عملية: </dt>
-                  <dd className="inline text-amber-900 dark:text-amber-200">
-                    {tool.commonPitfall}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="inline font-bold">مثال تطبيقي: </dt>
-                  <dd className="inline">{tool.workedExample}</dd>
-                </div>
-              </dl>
-
-              {tool.command && (
-                <div className="mt-4">
-                  <pre
-                    dir="ltr"
-                    className="overflow-x-auto rounded-xl bg-slate-950 p-3 text-left text-xs leading-6 text-emerald-300"
+      {/* قائمة بطاقات الأدوات أو رسالة الفراغ */}
+      {filteredTools.length === 0 ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="rounded-2xl border border-dashed border-[var(--border-color)] bg-[var(--bg-surface)] p-8 text-center"
+        >
+          <p className="text-base font-bold text-[var(--text-main)]">
+            لا توجد أدوات تطابق البحث الحالي{queryWords.length > 0 ? ` («${searchQuery.trim()}»)` : ''}.
+          </p>
+          <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">
+            اقتراح الخطوة التالية: جرب كلمة بحث بديلة مثل «Git» أو «Stitch» أو «طرفية»، أو امسح البحث لمشاهدة جميع أدوات المسار.
+            {selectedStage !== 'all' && ' أو اضغط على «عرض كل المراحل» لإلغاء تصفية المرحلة الحالية.'}
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            {queryWords.length > 0 && (
+              <button
+                type="button"
+                onClick={() => onSearchChange('')}
+                className="rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-bold text-white hover:opacity-90"
+              >
+                مسح كلمة البحث
+              </button>
+            )}
+            {selectedStage !== 'all' && (
+              <button
+                type="button"
+                onClick={() => setSelectedStage('all')}
+                className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] px-4 py-2 text-xs font-bold text-[var(--text-main)] hover:bg-[var(--bg-surface)]"
+              >
+                عرض كل المراحل ({COURSE_TOOL_GUIDE.length})
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2">
+          {filteredTools.map((tool) => {
+            const badge = getStatusBadge(tool.verificationStatus);
+            return (
+              <article
+                key={tool.name}
+                className="min-w-0 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <span className="inline-block rounded-md bg-[var(--bg-card-subtle)] px-2 py-0.5 text-xs font-bold text-[var(--text-muted)]">
+                      {tool.stage}
+                    </span>
+                    <h2 className="mt-1 text-xl font-black text-[var(--text-main)]" dir="auto">
+                      {tool.name}
+                    </h2>
+                  </div>
+                  <span
+                    data-verification-status={tool.verificationStatus}
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold ${badge.badgeClass}`}
                   >
-                    {tool.command}
-                  </pre>
-                  <button
-                    type="button"
-                    className="mt-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white hover:opacity-90"
-                    onClick={() => copyCommand(tool.command!)}
-                  >
-                    نسخ الأمر
-                  </button>
+                    <span aria-hidden="true" className="font-mono">
+                      {badge.icon}
+                    </span>
+                    <span>{tool.verificationStatus}</span>
+                  </span>
                 </div>
-              )}
 
-              <p className="mt-3 break-words text-xs leading-6 text-[var(--text-muted)]">
-                {tool.verification}
-              </p>
+                <p className="mt-3 text-sm leading-7 text-[var(--text-main)]">{tool.purpose}</p>
 
-              <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold text-[var(--primary)]">
-                <a href={tool.source} target="_blank" rel="noreferrer">
-                  المصدر الرسمي
-                </a>
-                <Link href={`/learn/${tool.topic}`}>موضوع الاستخدام</Link>
-              </div>
-            </article>
-          );
-        })}
-      </div>
+                <dl className="mt-3 space-y-2 text-sm leading-7">
+                  <div>
+                    <dt className="inline font-bold">مرحلة الاستخدام: </dt>
+                    <dd className="inline">{tool.stage}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">تاريخ مراجعة المصدر: </dt>
+                    <dd className="inline" dir="ltr">
+                      {tool.reviewDate}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">متى تستخدمها: </dt>
+                    <dd className="inline">{tool.timing}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">المدخلات: </dt>
+                    <dd className="inline">{tool.input}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">المخرجات: </dt>
+                    <dd className="inline">{tool.output}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">دورة الحياة: </dt>
+                    <dd className="inline">{tool.lifecycle}</dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">أشهر عقبة عملية: </dt>
+                    <dd className="inline text-amber-900 dark:text-amber-200">
+                      {tool.commonPitfall}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="inline font-bold">مثال تطبيقي: </dt>
+                    <dd className="inline">{tool.workedExample}</dd>
+                  </div>
+                </dl>
+
+                {tool.command && (
+                  <div className="mt-4">
+                    <pre
+                      dir="ltr"
+                      className="overflow-x-auto rounded-xl bg-slate-950 p-3 text-left text-xs leading-6 text-emerald-300"
+                    >
+                      {tool.command}
+                    </pre>
+                    <button
+                      type="button"
+                      className="mt-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white hover:opacity-90"
+                      onClick={() => copyCommand(tool.command!)}
+                    >
+                      نسخ الأمر
+                    </button>
+                  </div>
+                )}
+
+                <p className="mt-3 break-words text-xs leading-6 text-[var(--text-muted)]">
+                  {tool.verification}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-4 text-sm font-bold text-[var(--primary)]">
+                  <a href={tool.source} target="_blank" rel="noreferrer">
+                    المصدر الرسمي
+                  </a>
+                  <Link href={`/learn/${tool.topic}`}>موضوع الاستخدام</Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }

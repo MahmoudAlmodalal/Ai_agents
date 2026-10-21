@@ -1,12 +1,13 @@
 /**
- * Normalizes Arabic text by removing diacritics and unifying similar characters
+ * Normalizes Arabic text by removing diacritics, tatweel, and unifying similar characters
  */
 export function normalizeArabic(text: string): string {
   if (!text) return '';
   return text
+    .normalize('NFKD')
     .toLowerCase()
-    // Remove Arabic diacritics (tashkeel)
-    .replace(/[\u064B-\u065F\u0670]/g, '')
+    // Remove Arabic diacritics (tashkeel) and tatweel (\u0640)
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
     // Normalize Alef variations (أ, إ, آ, ٱ -> ا)
     .replace(/[أإآٱ]/g, 'ا')
     // Normalize Taa Marbuta (ة -> ه)
