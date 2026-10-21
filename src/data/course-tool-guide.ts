@@ -9,6 +9,69 @@ export type ToolUsageStage =
   | 'تنفيذ الفرونت إند'
   | 'وكيل التنفيذ';
 
+export interface StageDecisionEntry {
+  stage: ToolUsageStage;
+  whenNeeded: string;
+  tools: string[];
+  skipCondition: string;
+}
+
+export const TOOL_USAGE_STAGES: ToolUsageStage[] = [
+  'اكتشاف المتطلبات',
+  'التوثيق وإدارة الإصدارات',
+  'النمذجة والمخططات',
+  'التصميم',
+  'نقل التصميم إلى الكود',
+  'تنفيذ الفرونت إند',
+  'وكيل التنفيذ',
+];
+
+// Governed by docs/TOOLS_AND_REFERENCES_SPEC.md (Issue #80, Ticket #83)
+export const STAGE_DECISION_TABLE: StageDecisionEntry[] = [
+  {
+    stage: 'اكتشاف المتطلبات',
+    whenNeeded: 'عند بدء استكشاف فكرة المشروع وتحويلها إلى متطلبات ومسودة PRD وتحديد قرارات النطاق قبل أي كود.',
+    tools: ['Grill Me', 'Google AI Studio'],
+    skipCondition: 'إذا كانت متطلبات المشروع وقراراته موثقة ومحسومة مسبقًا في وثيقة PRD معتمدة، أو عند إجراء المقابلة واستخراج المتطلبات يدويًا دون أدوات.',
+  },
+  {
+    stage: 'التوثيق وإدارة الإصدارات',
+    whenNeeded: 'عند حفظ أول وثيقة في المشروع (PROJECT_CONTEXT.md أو PRD) لتتبع التعديلات محليًا وسحابيًا.',
+    tools: ['Git', 'GitHub'],
+    skipCondition: 'لا يُنصح بتخطي Git محليًا لحفظ تاريخ المشروع؛ ويمكن تأجيل المستودع البعيد (GitHub) إذا كان العمل فرديًا ومحليًا في البداية.',
+  },
+  {
+    stage: 'النمذجة والمخططات',
+    whenNeeded: 'بعد تحديد رحلة المستخدم وقواعد العمل، لرسم تدفق العمليات (User Flow) ونموذج البيانات (ERD) ومخططات التسلسل وحالات الاستخدام قبل كتابة الكود.',
+    tools: ['Mermaid Live', 'PlantUML / PlantText', 'dbdiagram.io'],
+    skipCondition: 'إذا كان تدفق العمليات وقواعد البيانات بسيطًا وبديهيًا وموثقًا نصيًا بوضوح كافٍ لا يحتاج تمثيلًا بصريًا، أو استُخدمت أداة رسم واحدة كافية.',
+  },
+  {
+    stage: 'التصميم',
+    whenNeeded: 'بعد إعداد UX Blueprint وجرد الشاشات، لإنشاء شاشة مرجعية ونموذج أولي تفاعلي (Prototype) يعتمد عليه كود الواجهة.',
+    tools: ['Google Stitch'],
+    skipCondition: 'إذا كان لديك تصميم معتمد ومكتمل مسبقًا بأداة أخرى، أو كان المشروع يعتمد مباشرة على مكتبة مكونات قياسية دون شاشات مخصصة.',
+  },
+  {
+    stage: 'نقل التصميم إلى الكود',
+    whenNeeded: 'بعد اعتماد التصميم وعند نقله إلى كود الفرونت لضمان ثبات الهوية البصرية والمتغيرات (tokens).',
+    tools: ['Stitch MCP', 'DESIGN.md'],
+    skipCondition: 'يمكن استخراج قيم التصميم وكتابة DESIGN.md يدويًا؛ ولا حاجة لـ Stitch MCP إذا كان النقل والتطابق يتمان يدويًا دون ربط آلي بالوكيل.',
+  },
+  {
+    stage: 'تنفيذ الفرونت إند',
+    whenNeeded: 'عند بدء بناء واجهة المستخدم وتثبيت إطار العمل وتنظيم خطة المكونات والمهام الذرية وفحص الجودة.',
+    tools: ['Node.js + npm', 'Next.js', 'UI/UX Pro Max', 'GitHub Spec Kit', 'Python 3.11 + uv'],
+    skipCondition: 'لا يمكن تخطي بيئة Node وNext.js لبناء الواجهة؛ ولكن يمكن تخطي الأدوات المساعدة الاختيارية (UI/UX Pro Max وSpec Kit وPython/uv) وتنظيم المهام يدويًا.',
+  },
+  {
+    stage: 'وكيل التنفيذ',
+    whenNeeded: 'عند بدء تنفيذ مهام كود الفرونت إند تدريجيًا بعد اعتماد النموذج الأولي؛ اختيار أداة واحدة يكفي.',
+    tools: ['Antigravity CLI / IDE'],
+    skipCondition: 'يمكن تخطي وكيل الذكاء الاصطناعي وكتابة كود المكونات والواجهات يدويًا بالكامل، أو استخدام أي محرر ومساعد بديل دون اشتراك مدفوع.',
+  },
+];
+
 export interface CourseToolGuideEntry {
   name: string;
   stage: ToolUsageStage;

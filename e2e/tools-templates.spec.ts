@@ -80,6 +80,92 @@ test('tools guide presents sixteen tools with usage stages, review dates, pitfal
   }
 });
 
+test('tools guide displays seven-stage decision table, filters cards by row or chip, and restores full count', async ({ page }) => {
+  await page.goto('/tools');
+
+  // Verify decision table is visible before the cards
+  const tableSection = page.getByRole('region', { name: 'جدول قرار الأداة — أي أداة في أي مرحلة' });
+  await expect(tableSection).toBeVisible();
+
+  const table = tableSection.getByRole('table');
+  await expect(table).toBeVisible();
+
+  // Verify headers with scope="col"
+  await expect(table.locator('th[scope="col"]')).toHaveText([
+    'مرحلة الاستخدام',
+    'متى تحتاجها',
+    'الأدوات',
+    'شرط تخطيها',
+  ]);
+
+  // Verify 7 rows with scope="row" in the required order
+  const stageRows = table.locator('tbody tr');
+  await expect(stageRows).toHaveCount(7);
+
+  const expectedStages = [
+    'اكتشاف المتطلبات',
+    'التوثيق وإدارة الإصدارات',
+    'النمذجة والمخططات',
+    'التصميم',
+    'نقل التصميم إلى الكود',
+    'تنفيذ الفرونت إند',
+    'وكيل التنفيذ',
+  ];
+
+  for (let i = 0; i < expectedStages.length; i++) {
+    const row = stageRows.nth(i);
+    await expect(row.locator('th[scope="row"]')).toContainText(expectedStages[i]);
+    const cells = row.locator('td');
+    await expect(cells).toHaveCount(3);
+    await expect(cells.nth(0)).not.toBeEmpty();
+    await expect(cells.nth(1)).not.toBeEmpty();
+    await expect(cells.nth(2)).not.toBeEmpty();
+  }
+
+  const toolsSection = page.getByRole('region', { name: 'دليل أدوات المسار' });
+  const articles = toolsSection.locator('article');
+  await expect(articles).toHaveCount(16);
+
+  // Filter by clicking a table row (النمذجة والمخططات -> 3 tools)
+  const modelingRow = stageRows.filter({ hasText: 'النمذجة والمخططات' });
+  await modelingRow.click();
+  await expect(articles).toHaveCount(3);
+  await expect(page.getByText('عدّاد الأدوات المعروضة: 3 من 16 أداة')).toBeVisible();
+
+  // Return to all stages via «كل المراحل» button
+  await page.getByRole('button', { name: /كل المراحل/ }).first().click();
+  await expect(articles).toHaveCount(16);
+  await expect(page.getByText('عدّاد الأدوات المعروضة: 16 من 16 أداة')).toBeVisible();
+
+  // Filter by stage chip (التصميم -> 1 tool: Google Stitch)
+  await page.getByRole('button', { name: /التصميم \(\d+\)/ }).click();
+  await expect(articles).toHaveCount(1);
+  await expect(articles.first().getByRole('heading', { level: 2 })).toHaveText('Google Stitch');
+  await expect(page.getByText('عدّاد الأدوات المعروضة: 1 من 16 أداة')).toBeVisible();
+
+  // Filter by another chip (وكيل التنفيذ -> 1 tool: Antigravity CLI / IDE)
+  await page.getByRole('button', { name: /وكيل التنفيذ \(\d+\)/ }).click();
+  await expect(articles).toHaveCount(1);
+  await expect(articles.first().getByRole('heading', { level: 2 })).toHaveText('Antigravity CLI / IDE');
+
+  // Filter by row button for اكتشاف المتطلبات -> 2 tools
+  const discoveryRow = stageRows.filter({ hasText: 'اكتشاف المتطلبات' });
+  await discoveryRow.getByRole('button', { name: 'اكتشاف المتطلبات' }).click();
+  await expect(articles).toHaveCount(2);
+
+  // Return to all stages via reset control
+  await page.getByRole('button', { name: /عرض كل المراحل/ }).click();
+  await expect(articles).toHaveCount(16);
+
+  // Responsive check for 390px viewport width: table stays in horizontally scrollable container without page overflow
+  await page.setViewportSize({ width: 390, height: 844 });
+  const container = tableSection.locator('.table-container');
+  await expect(container).toBeVisible();
+  const isContainerScrollable = await container.evaluate((el) => el.scrollWidth > el.clientWidth);
+  expect(isContainerScrollable).toBe(true);
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
 test('diagrams guide displays eight diagrams with core questions, decision rules, inputs, and editor links', async ({ page }) => {
   await page.goto('/diagrams');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('مختبر المخططات الثمانية');
