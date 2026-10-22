@@ -34,6 +34,34 @@ test.describe('Navigation and Category Consistency (#29/#30/#31)', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Stitch MCP');
   });
 
+  test('Navbar roadmap entry links directly to the project path section', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 900 });
+
+    for (const entry of ['/', '/about', '/start']) {
+      await page.goto(entry);
+
+      const roadmapLink = page.getByRole('banner').getByRole('link', { name: 'خارطة تنفيذ المشروع' });
+      await expect(roadmapLink).toHaveAttribute('href', '/start#project-path');
+      await roadmapLink.click();
+
+      await expect(page).toHaveURL(/\/start#project-path$/);
+      await expect(page.locator('#project-path')).toBeInViewport();
+    }
+  });
+
+  test('Mobile drawer roadmap entry links directly to the project path section', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    await page.getByRole('button', { name: 'فتح قائمة التنقل الرئيسية' }).click();
+    const roadmapLink = page.locator('#mobile-nav-drawer').getByRole('link', { name: 'خارطة تنفيذ المشروع' });
+    await expect(roadmapLink).toHaveAttribute('href', '/start#project-path');
+    await roadmapLink.click();
+
+    await expect(page).toHaveURL(/\/start#project-path$/);
+    await expect(page.locator('#project-path')).toBeInViewport();
+  });
+
   test('Filter chips derive counts dynamically from current registry and filtering semantics', async ({ page }) => {
     await page.goto('/');
 

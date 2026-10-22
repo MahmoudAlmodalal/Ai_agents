@@ -59,7 +59,7 @@ export default function StartPage() {
             <Link href="/learn/project-idea-mvp" className="rounded-xl bg-[var(--action-bg)] px-5 py-3 text-sm font-black text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]">
               ابدأ بالموضوع الأول
             </Link>
-            <Link href="/roadmap" className="rounded-xl border border-[var(--border-color)] px-5 py-3 text-sm font-black">
+            <Link href="/start#project-path" className="rounded-xl border border-[var(--border-color)] px-5 py-3 text-sm font-black">
               خارطة المشروع
             </Link>
           </div>

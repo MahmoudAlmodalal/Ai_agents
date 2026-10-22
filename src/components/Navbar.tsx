@@ -42,7 +42,7 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'مسار التعلم', href: '/learn/project-idea-mvp', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
   { title: 'المتطلبات', href: '/learn/discovery-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: false },
   { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: false },
-  { title: 'خارطة تنفيذ المشروع', href: '/roadmap', icon: Workflow, badge: 'مسار متسلسل', isPrimary: true },
+  { title: 'خارطة تنفيذ المشروع', href: '/start#project-path', icon: Workflow, badge: 'مسار متسلسل', isPrimary: true },
   { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: false },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
   { title: 'مختبر المخططات', href: '/diagrams', icon: Workflow, badge: '8 مخططات', isPrimary: false },
