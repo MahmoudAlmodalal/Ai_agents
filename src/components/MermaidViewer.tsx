@@ -292,7 +292,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({
       {/* Canvas Viewport */}
       <div
         ref={containerRef}
-        className="mermaid-viewport relative min-h-[300px] max-h-[550px] overflow-auto p-4 sm:p-6 flex items-center justify-center bg-[var(--bg-body)] select-none"
+        className="mermaid-viewport relative min-h-[300px] max-h-[550px] min-w-0 max-w-full overflow-auto p-4 sm:p-6 flex items-start justify-start bg-[var(--bg-body)] select-none"
         dir="ltr"
       >
         {isRendering ? (
