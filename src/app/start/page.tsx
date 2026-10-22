@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import { EntryQuestion } from '@/src/components/EntryQuestion';
 import { getTopicBySlug } from '@/src/lib/topicRegistry';
-import {
-  getAllProposedGroups,
-  getGroupStatusPresentation,
-  getTopicImprovementStatus,
-} from '@/src/lib/educationalRoadmap';
+import { getAllProposedGroups, getGroupStatusPresentation, getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
+import { getLearningSession } from '@/src/lib/learningSessions';
 
 export const metadata = {
   title: 'ابدأ هنا | Ai_agents',
@@ -41,6 +38,7 @@ const concepts = [
 
 export default function StartPage() {
   const groups = getAllProposedGroups();
+  const session = getLearningSession('stitch-to-frontend');
 
   return (
     <div className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl">
@@ -132,6 +130,24 @@ export default function StartPage() {
               </p>
             </div>
           </div>
+
+          {session && (
+            <Link
+              href={session.route}
+              className="mb-6 flex flex-col gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 transition-colors hover:border-emerald-400 dark:border-emerald-900 dark:bg-emerald-950/20 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <p className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  جلسة تطبيقية · {session.durationLabel} · تجمع المواضيع 18–37
+                </p>
+                <p className="mt-1 text-sm font-black text-[var(--text-main)]">{session.title}</p>
+                <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">{session.subtitle}</p>
+              </div>
+              <span className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-xl bg-[var(--action-bg)] px-4 py-2 text-xs font-black text-[var(--action-text)] sm:self-auto">
+                افتح الجلسة ←
+              </span>
+            </Link>
+          )}
 
           <div className="space-y-6">
             {groups.map((group) => {

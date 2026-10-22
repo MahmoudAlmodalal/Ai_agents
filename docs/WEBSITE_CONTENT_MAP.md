@@ -4,12 +4,15 @@
 
 The site is organized by learning topic, technical concept, tool, workflow phase, practical step, prompt, and expected deliverable. Lecture numbers are not navigation categories. Legacy lecture URLs may remain as compatibility aliases, but every visible learning entry points to a topic route.
 
+A **practice session** is a guided reading that composes related topics into one end-to-end exercise. It is not a topic, does not add to the 58-topic sequence, and does not replace the detailed topic pages it links to.
+
 ## Primary navigation
 
 | Group | Route | Arabic label | Core deliverables |
 |---|---|---|---|
 | Orientation | `/` | الرئيسية | workflow overview, course identity |
 | Orientation | `/start` | ابدأ هنا | prerequisites, first project checklist |
+| Orientation | `/learn/stitch-to-frontend` | جلسة تطبيقية: Stitch → Frontend | guided session across topics 18–37: audit, plan, Spec Kit, first task |
 | Foundations | `/fundamentals/ai-agents` | أساسيات AI Agents | Agent / Skill / MCP / Prompt |
 | Foundations | `/fundamentals/skills-and-mcp` | Skills وMCP | permissions, context, supervision |
 | Requirements | `/requirements` | اكتشاف المتطلبات | problem, users, MVP, rules |

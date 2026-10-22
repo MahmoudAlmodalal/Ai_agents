@@ -397,6 +397,35 @@ export default function HomePage() {
 
         {!showFavoritesOnly && <EntryQuestion />}
 
+        {/* Guided practice session: one page across design → frontend */}
+        {!showFavoritesOnly && (
+          <Link
+            href="/learn/stitch-to-frontend"
+            className="mb-4 flex flex-col gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 shadow-2xs transition-colors hover:border-emerald-400 dark:border-emerald-900 dark:bg-emerald-950/20 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white" aria-hidden="true">
+                <Route className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-xs font-bold text-emerald-800 dark:text-emerald-300">
+                  جلسة تطبيقية · 3 ساعات · تجمع المواضيع 18–37
+                </p>
+                <p className="mt-0.5 text-sm font-black text-[var(--text-main)]">
+                  من تصميم Stitch إلى Frontend احترافي
+                </p>
+                <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]">
+                  فحص المشروع، خطة Next.js، دورة Spec Kit، ومراجعة UI/UX Pro Max — ثم تنفيذ مهمة واحدة قابلة للمراجعة.
+                </p>
+              </div>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-1.5 self-start rounded-xl bg-[var(--action-bg)] px-4 py-2 text-xs font-black text-[var(--action-text)] sm:self-auto">
+              افتح الجلسة
+              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+          </Link>
+        )}
+
         {/* Persistence status notice */}
         <LearnerPersistenceNotice status={storageStatus} className="mb-4" />
 

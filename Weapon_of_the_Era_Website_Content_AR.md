@@ -385,7 +385,428 @@ User Flow يوضح كيف ينجز المستخدم هدفًا من نقطة ا�
 
 ---
 
-# 9. مكتبة البرومبتات `/prompts`
+# 9. المحاضرة السادسة `/learn/stitch-to-frontend`
+
+> **ملاحظة تنظيمية:** هذه المحاضرة تُعرض في الموقع كجلسة تطبيقية موحدة على المسار `/learn/stitch-to-frontend`، لأن الموقع ينظّم التعلم بالمواضيع لا بأرقام المحاضرات. المحاضرة تجمع المواضيع 18–37 في قراءة واحدة، وتبقي لكل موضوع صفحته التفصيلية.
+
+## العنوان
+
+**من تصميم Stitch إلى بناء Frontend احترافي باستخدام Next.js وAI Agents**
+
+## أهداف المحاضرة
+
+بنهاية المحاضرة، يفترض أن يكون المتدرب قادرًا على:
+
+- فهم البنية الأساسية لمشروع Next.js موجود بالفعل.
+- التمييز بين `App Router` و`Pages Router` وفهم دور `layout` و`page` و`components`.
+- فحص المشروع قبل تعديل أي ملف.
+- تحويل التصاميم المعتمدة في Stitch إلى خطة Frontend واضحة.
+- استخدام Spec Kit لتحويل كل مرحلة إلى مواصفات ومهام صغيرة.
+- الاستفادة من UI/UX Pro Max دون تغيير الهوية البصرية المعتمدة عشوائيًا.
+- تنفيذ كل مهمة بصورة مستقلة، ثم اختبارها وتوثيق نتيجتها.
+- اكتشاف المشكلات قبل أن تتراكم في بقية المشروع.
+
+## تقسيم وقت المحاضرة — 3 ساعات
+
+| المدة | المحور |
+| --- | --- |
+| 20 دقيقة | مراجعة مخرجات المحاضرة السابقة |
+| 30 دقيقة | شرح Next.js وبنية المشروع |
+| 25 دقيقة | تحليل المشروع وفحصه |
+| 25 دقيقة | سلسلة برومبتات Google Stitch |
+| 20 دقيقة | إنشاء خطة Frontend |
+| 35 دقيقة | Spec Kit وUI/UX Pro Max عمليًا |
+| 15 دقيقة | اختبارات الجودة والتكليف |
+| 10 دقائق | احتياطي وأسئلة |
+
+## Next.js من الصفر
+
+### ما هو Next.js؟
+
+Next.js هو إطار عمل مبني على React لتطوير تطبيقات الويب. يضيف إلى React نظامًا لتنظيم الصفحات والمسارات، وطرقًا مختلفة لعرض المحتوى، وإمكانات لبناء تطبيقات متكاملة.
+
+| الأداة | دورها |
+| --- | --- |
+| React | بناء الواجهات والمكونات التفاعلية |
+| Next.js | التوجيه والصفحات وLayouts والعرض والأدوات المساندة |
+| Tailwind CSS + TypeScript | تنسيق الواجهات وضبط أنواع البيانات |
+
+مثال: إذا كان مشروعك منصة تعليمية، فإن React يساعدك على بناء بطاقة الدورة وزر التسجيل، بينما يتيح Next.js تنظيم صفحات مثل `/courses` و`/courses/123` وتحديد التخطيطات المشتركة بينها.
+
+### App Router
+
+يوفر Next.js نظام توجيه يعتمد على الملفات والمجلدات داخل `app/` أو `src/app/`.
+
+```text
+my-project/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── globals.css
+│   │   ├── courses/page.tsx
+│   │   └── dashboard/
+│   │       ├── layout.tsx
+│   │       └── page.tsx
+│   ├── components/
+│   ├── features/
+│   ├── lib/
+│   └── types/
+├── package.json
+├── tsconfig.json
+└── next.config.ts
+```
+
+هذه بنية مثال وليست أمرًا بإعادة ترتيب مشروعك الحالي؛ نعتمد ما يكشفه الفحص الفعلي.
+
+| العنصر | الوظيفة |
+| --- | --- |
+| `app/page.tsx` | الصفحة الرئيسية للمسار `/` |
+| `app/layout.tsx` | التخطيط الجذري المشترك مثل الخطوط و`html` و`body` |
+| `courses/[id]/page.tsx` | صفحة ديناميكية مثل `/courses/123` |
+| `loading.tsx` | واجهة تحميل للمسار عند الحاجة |
+| `error.tsx` | واجهة لمعالجة أخطاء جزء من شجرة المسار |
+| `not-found.tsx` | واجهة لحالة عدم العثور على الصفحة |
+| `components/` | مكونات قابلة لإعادة الاستخدام |
+| `lib/` | وظائف مساعدة وتهيئة خدمات مشتركة |
+| `types/` | تعريفات TypeScript عند اعتماد هذا التنظيم |
+
+### الفرق بين App Router وPages Router
+
+- **App Router:** يعتمد على مجلد `app/`، ويدعم Server Components وClient Components وLayouts المتداخلة.
+- **Pages Router:** يعتمد على مجلد `pages/`، وهو نظام توجيه أقدم لا يزال مدعومًا.
+
+إذا وجدت مجلد `app`، فهذا مؤشر على App Router، لكن يجب فحص ملفات المشروع ومساراته للتأكد من النظام المستخدم فعليًا. بعض المستودعات تحتوي على النظامين معًا خلال انتقال تدريجي.
+
+### Server Components وClient Components
+
+في App Router، المكونات تكون Server Components افتراضيًا، ما لم تُحدَّد حدود عميل باستخدام `"use client"`.
+
+- **Server Component:** مناسب لعرض محتوى الصفحة وتجميع الواجهة والعمل الذي لا يحتاج إلى تفاعل مباشر داخل المتصفح.
+- **Client Component:** مناسب عندما تحتاج الواجهة إلى state أو أحداث المستخدم أو APIs خاصة بالمتصفح.
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount((value) => value + 1)}>
+      العدد: {count}
+    </button>
+  );
+}
+```
+
+لا نضيف `"use client"` إلى كل ملف تلقائيًا؛ نستخدمه عندما تتطلب المكونات ذلك. الإفراط فيه قد يزيد حجم JavaScript المرسل للمتصفح.
+
+### حدود Frontend فقط في هذه المرحلة
+
+| يمكن تنفيذه الآن | مؤجل إلى مرحلة Backend |
+| --- | --- |
+| الصفحات والتنقل | API حقيقي |
+| النماذج والتحقق من المدخلات | حفظ البيانات في قاعدة بيانات |
+| حالات التحميل والخطأ والنجاح | عمليات الخادم الفعلية |
+| بيانات تجريبية Typed Mock Data | استرجاع بيانات المستخدم الحقيقية |
+| واجهة تسجيل الدخول التجريبية | نظام مصادقة حقيقي وجلسات آمنة |
+
+تنبيه: واجهة تسجيل دخول شكلية لا تعني وجود مصادقة آمنة. لا نخزن كلمات مرور حقيقية ولا ندّعي أن تسجيل الدخول يعمل فعليًا قبل ربط النظام المناسب.
+
+## فحص المشروع قبل التعديل
+
+القاعدة الذهبية: لا تبدأ بتحسين الكود قبل أن تعرف ما الموجود بالفعل. افحص إصدارات الإطار والتوجيه ومدير الحزم والسكربتات والمسارات والمكونات والتوكنز وRTL والنماذج والبيانات والاختبارات وحالة Git والتنقل المعطّل والمكونات المكررة ومخاطر الوصول والتجاوب، وحالات التحميل والفراغ والخطأ والنجاح الناقصة.
+
+### برومبت 1 — فحص شامل للمستودع
+
+```text
+Act as a Senior Next.js Architect and Frontend Auditor.
+
+This repository already contains an existing Next.js project generated using Google AI Studio and connected to GitHub.
+
+Your task is to AUDIT the existing repository before any implementation.
+
+STRICT RULES:
+- Do not recreate the project.
+- Do not migrate frameworks.
+- Do not modify application code.
+- Do not install, remove, or upgrade packages.
+- Do not overwrite existing documentation.
+- Do not assume the project structure; inspect it.
+- Do not claim a command passed unless you executed it.
+
+Inspect and report:
+1. Framework, React, TypeScript, and styling versions from actual project files.
+2. App Router, Pages Router, or mixed routing.
+3. Package manager, lockfiles, scripts, and configuration.
+4. Existing routes, layouts, page components, shared components, and providers.
+5. Design tokens, fonts, icons, assets, and RTL configuration.
+6. Existing forms, interactions, mock data, and data flow.
+7. Tests, linting, type checking, and build setup.
+8. Git status and uncommitted changes, if terminal access is available.
+9. Broken navigation, obvious placeholders, duplicated components, accessibility risks, and responsive risks.
+10. Missing loading, empty, error, and success states.
+
+Use repository evidence for every finding. Separate confirmed facts from assumptions and items that could not be verified.
+
+Create docs/PROJECT_AUDIT.md only after checking whether it already exists. If it exists, do not overwrite it; propose a safe update or use a new dated report.
+
+Finish with:
+- Current architecture summary.
+- Critical findings.
+- Items that are already working.
+- The safest first improvement.
+- Commands actually executed and their real results.
+
+Do not implement fixes yet.
+```
+
+### برومبت 2 — فحص سلامة المشروع قبل العمل
+
+```text
+Act as a Senior Frontend QA Engineer.
+
+Read docs/PROJECT_AUDIT.md and inspect the current Git working tree.
+
+Do not change any files.
+
+Determine:
+1. Whether there are uncommitted user changes.
+2. Whether the project has the expected package manager and lockfile.
+3. Which scripts exist for development, linting, type checking, testing, and production build.
+4. Which checks can safely be run without installing packages or changing the lockfile.
+5. Whether dependencies are already available locally.
+6. Which checks are blocked and why.
+
+If safe and supported, run the relevant existing checks individually. Do not invent scripts. Do not run destructive Git commands. Do not reset, clean, checkout over, or discard user changes.
+
+Report every command and its actual exit status. Separate passed, failed, skipped, and blocked checks.
+
+Recommend the minimum safe verification sequence for this repository. Do not implement fixes.
+```
+
+وجود أمر `build` داخل `package.json` لا يعني أنه نجح. يجب تشغيله فعليًا، وكذلك التمييز بين فشل الكود ومشكلة نقص الحزم أو البيئة.
+
+## سلسلة برومبتات Google Stitch
+
+| # | الموضع | المخرج |
+| --- | --- | --- |
+| 01 | Project Analysis | فهم الفكرة والمستخدمين والوظائف |
+| 02 | UX Blueprint | رحلات المستخدم والتنقل |
+| 03 | Screen Inventory | قائمة الشاشات وحالاتها |
+| 04 | Design System | الهوية والمكونات وقواعد RTL |
+| 05 | Master Prompt | تثبيت السياق البصري في Stitch |
+| 06 | Screen Prompts | تصميم الشاشات تدريجيًا |
+| 07 | Prototype | ربط الشاشات واختبار الرحلات |
+| 08 | UX Audit | مراجعة التصميم وإصلاح العيوب |
+| 09 | DESIGN.md | تسليم مواصفات التصميم للمطور |
+
+إذا كان التصميم قد اكتمل في المحاضرة السابقة، لا تعِد توليده. استخدم السلسلة لمراجعة المخرجات الموجودة وسد النواقص فقط.
+
+### برومبت 3 — تحليل المشروع وتجهيز Design Brief
+
+```text
+Act as a Senior Product Designer and UX Strategist.
+
+Analyze my actual project using the existing PRD, SRS, requirements, repository documentation, and approved UI designs.
+
+Do not invent a different product. If a critical fact is missing, identify it explicitly.
+
+Produce a project-specific design brief covering:
+1. Product purpose and main problem.
+2. Target users and their primary goals.
+3. User roles and permissions only when supported by the requirements.
+4. MVP features and explicit exclusions.
+5. Main user journeys.
+6. Existing screens and missing screens.
+7. Navigation model.
+8. Arabic/English language requirements and RTL/LTR behavior.
+9. Accessibility and responsive requirements.
+10. Existing design decisions that must be preserved.
+
+Save the result as docs/PROJECT_CONTEXT.md if that file does not already exist. Do not overwrite existing files.
+
+Include a section named "Open Questions" for unresolved decisions. Do not design screens or modify application code yet.
+```
+
+### البرومبتات 4–11
+
+هذه البرومبتات محفوظة كاملة في مكتبة البرومبتات، ولكل واحد مدخلاته ومخرجاته وتحذيراته:
+
+| برومبت المحاضرة | البرومبت في المكتبة |
+| --- | --- |
+| 4. UX Blueprint | PROMPT 15 |
+| 5. Screen Inventory | PROMPT 15 |
+| 6. تصميم نظام التصميم | PROMPT 17 |
+| 7. Master Prompt | PROMPT 16 |
+| 8. برومبت لكل شاشة | PROMPT 18 |
+| 9. ربط Prototype | PROMPT 20 |
+| 10. فحص التصميم | PROMPT 21 |
+| 11. إعداد DESIGN.md | PROMPT 23 |
+
+طريقة الاستخدام: أنشئ الشاشة الأولى، راجعها، ثم استخدم القالب للشاشة التالية. لا تولّد عشرات الشاشات دفعة واحدة قبل اعتماد الهوية والمكونات الأساسية.
+
+## خطة Frontend
+
+اقرأ `docs/PROJECT_AUDIT.md` و`docs/PROJECT_CONTEXT.md` و`docs/UX_BLUEPRINT.md` و`docs/SCREEN_INVENTORY.md` و`DESIGN.md` وكود المشروع ومراجع Stitch.
+
+1. **اربط المشروع الحالي:** المسارات والتخطيطات والمكونات والتنسيق وإدارة الحالة والأصول والبيانات التجريبية.
+2. **اربط التصميم بالكود:** لكل شاشة: المسار ومكون الصفحة والمكونات المشتركة والبيانات والتفاعلات والحالات ومرجع Stitch.
+3. **صمّم المعمارية:** المسارات والتخطيطات وحدود الميزات والأنواع والتوكنز وحدود Server/Client والتجاوب والوصول.
+4. **قسّم مراحل التنفيذ:** لكل مرحلة هدف ونطاق واستثناءات وشاشات وملفات واعتماديات ومخرجات ومعايير قبول وطريقة تحقق.
+5. **اكتب المهام:** كل مهمة صغيرة وقابلة للتحقق ومتتبعة لمتطلب وتصميم معتمد.
+6. **حدّد الجودة:** البناء والأنواع وLint والتنقل والنماذج والتجاوب والوصول ومطابقة التصميم والانحدارات.
+
+المخرجات: `docs/FRONTEND_PLAN.md` و`docs/FRONTEND_TASKS.md` و`docs/ROUTES_MAP.md` و`docs/COMPONENT_ARCHITECTURE.md` و`docs/FRONTEND_DATA_CONTRACTS.md`.
+
+البرومبت الكامل: PROMPT 24، أو PROMPT 31 للخطة المرحلية.
+
+## Spec Kit
+
+المراحل: Constitution ← Specify ← Clarify ← Plan ← Tasks ← Analyze ← Implement ← Converge/QA. قد تختلف أسماء الأوامر أو طريقة استدعائها باختلاف نسخة Spec Kit؛ تأكد من الأوامر المثبتة في بيئتك قبل تنفيذها.
+
+### برومبت 13 — تعريف قواعد المشروع
+
+الدستور يثبت: الحفاظ على البنية الحالية، اتباع المتطلبات والنطاق، حماية نظام التصميم، TypeScript، إعادة استخدام المكونات، حدود Server/Client، التجاوب والوصول، HTML الدلالي، البيانات التجريبية، ومنع اختراع API أو قاعدة بيانات أو مصادقة حقيقية. البرومبت الكامل: PROMPT 27.
+
+### اختيار أول مرحلة
+
+لا نبدأ بكل مراحل الخطة معًا. نختار المرحلة التي أصبحت جاهزة، ونتأكد من أن اعتمادياتها مكتملة. البرومبت الكامل: PROMPT 26.
+
+### البرومبتات 15–21 — دورة الميزة الواحدة
+
+Specify ثم Clarify ثم Plan ثم Tasks ثم Analyze ثم Implement، مع تنفيذ مهمة واحدة فقط في كل دورة. البرومبت الكامل: PROMPT 28.
+
+### برومبت 21 — Converge وإغلاق المرحلة
+
+```text
+Review the completed current frontend feature against its approved specification, implementation plan, tasks, and DESIGN.md.
+
+Verify:
+- All acceptance criteria.
+- Navigation and interactive behavior.
+- Responsive behavior.
+- RTL/LTR behavior where applicable.
+- Accessibility basics.
+- Loading, empty, error, and success states.
+- No unintended regressions.
+- No unrelated files or features changed.
+- Relevant tests, lint, type checks, and build where available.
+
+Run only commands supported by the actual project. Report the exact results; do not claim a check passed if it was not run.
+
+Produce:
+- Completed tasks.
+- Uncompleted tasks and reasons.
+- Changed files.
+- Known limitations.
+- Verification results.
+- Remaining UX issues.
+- Next recommended phase.
+
+Do not expand scope. If acceptance criteria fail, identify the smallest corrective task rather than rewriting the feature.
+```
+
+## UI/UX Pro Max
+
+UI/UX Pro Max مهارة مساعدة لقرارات الواجهة وتجربة المستخدم، وليست بديلًا عن تصميم Stitch المعتمد. نستعملها لمراجعة المرحلة المحددة قبل التنفيذ وبعده، ثم ننفذ ضمن التصميم المعتمد.
+
+- **قبل التنفيذ:** التخطيط وهرمية المعلومات وفرص إعادة استخدام المكونات والخطوط والمسافات والتجاوب والوصول وأنماط النماذج والحالات وRTL/LTR والاتساق مع نظام التصميم.
+- **بعد التنفيذ:** الهرمية البصرية والمسافات والمكونات والتجاوب وRTL والوصول والتباين ووضوح التنقل وCTA وملاحظات النماذج والحالات.
+
+إذا تعارضت توصية من UI/UX Pro Max مع `DESIGN.md` المعتمد، نحتفظ بالتصميم المعتمد ونسجّل التعارض. البرومبت الكامل: PROMPT 25.
+
+## تنفيذ Task واحدة
+
+قبل التعديل: افحص Git، واقرأ المواصفة والخطة والمهام و`DESIGN.md`، ومراجعة UI/UX Pro Max، والمكونات الحالية، ثم اذكر معايير القبول.
+
+أثناء التنفيذ: حافظ على بنية Next.js، وأعد استخدام المكونات، وطابق التصميم، وابقَ داخل المهمة، واستخدم بيانات typed، وحافظ على التجاوب والوصول، ولا تبنِ Backend.
+
+بعد التنفيذ: شغّل الفحوصات الموجودة، وتحقق من كل معيار قبول، واسرد الملفات، وسجّل نتائج الأوامر الفعلية، وحدّد المشكلات والمهمة التالية.
+
+### برومبت مراجعة Git diff قبل Commit
+
+```text
+Review the current Git diff before committing this frontend task.
+
+Check:
+- Whether every change belongs to the selected task.
+- Whether unrelated user changes are present.
+- Whether generated files or secrets were added accidentally.
+- Whether lockfiles changed unexpectedly.
+- Whether DESIGN.md and the feature specification are respected.
+- Whether any implementation or test files are missing.
+
+Do not stage, commit, discard, reset, or clean anything automatically.
+
+Report the relevant changed files, suspicious changes, and recommended next action. Preserve all existing user work.
+```
+
+البرومبت 22 للفحص الشامل: PROMPT 29. والبرومبت 23 لمراجعة UI/UX بعد التنفيذ: PROMPT 25.
+
+## GitHub بأمان
+
+1. افحص حالة المستودع.
+2. راجع التعديلات غير المحفوظة.
+3. أنشئ فرع عمل مناسبًا بعد التأكد من عدم ضياع أي تعديل.
+4. نفّذ مهمة واحدة.
+5. راجع `git diff`.
+6. شغّل الفحوصات.
+7. سجّل التغييرات في Commit واضح عند اعتمادها.
+
+لا تستخدم `git reset --hard` أو `git clean -fd` لإزالة المشاكل دون فهمها؛ فقد تحذف تعديلات مهمة.
+
+## مثال تطبيقي مصغّر
+
+لنفترض أن مشروعك منصة تعليمية، ولدينا تصميم معتمد لقائمة الدورات:
+
+- **المهمة A:** افحص المسار الحالي وتأكد من وجود الصفحة ومكوناتها، وحدّد ما يمكن إعادة استخدامه.
+- **المهمة B:** طبّق المكونات المعتمدة: البطاقات والأزرار والألوان والخطوط من `DESIGN.md`.
+- **المهمة C:** نفّذ البحث والتصفية ببيانات تجريبية Typed Mock Data إذا كان ذلك ضمن المتطلبات.
+- **المهمة D:** أضف حالات الواجهة واختبر الجوال والتنقل.
+
+بعد كل مهمة، راجع النتيجة. إذا نجحت، انتقل إلى المهمة التالية. وإذا فشلت، أصلح المشكلة المحددة بدل إعادة بناء الصفحة كاملة.
+
+## قائمة فحص قبل اعتماد المشروع
+
+- [ ] تمت مراجعة المتطلبات والمواصفات.
+- [ ] التصميم يطابق `DESIGN.md` والمراجع المعتمدة.
+- [ ] كل المسارات والأزرار ضمن النطاق تعمل كما هو متوقع.
+- [ ] تمت مراجعة حالات التحميل والفراغ والخطأ والنجاح عند الحاجة.
+- [ ] الواجهة متجاوبة مع أحجام الشاشات المطلوبة.
+- [ ] تمت مراجعة RTL/LTR عند الحاجة.
+- [ ] لم تتم إضافة Backend أو ميزات خارج النطاق.
+- [ ] تمت مراجعة Git diff والتغييرات غير المقصودة.
+- [ ] تم تشغيل الفحوصات المتاحة وتوثيق نتائجها الفعلية.
+- [ ] تم تحديث حالة المهام وتحديد الخطوة التالية.
+
+## التكليف العملي
+
+1. تنفيذ فحص المشروع وإنتاج تقرير `PROJECT_AUDIT.md`.
+2. مراجعة الشاشات الموجودة في Stitch وإكمال النواقص دون إعادة التصميم بالكامل.
+3. التأكد من وجود `DESIGN.md` ومراجع الشاشات المعتمدة.
+4. إنشاء `FRONTEND_PLAN.md` و`FRONTEND_TASKS.md` حسب المشروع.
+5. اختيار مرحلة واحدة جاهزة.
+6. تنفيذ دورة Spec Kit كاملة لهذه المرحلة.
+7. استخدام UI/UX Pro Max للمراجعة قبل التنفيذ وبعده.
+8. تنفيذ أول مهمة فقط، وفحصها، ثم توثيق النتيجة.
+
+**معايير التسليم:** تقرير فحص مدعوم بأدلة من المشروع، وخطة Frontend مرتبطة بالشاشات والمتطلبات، ومواصفات ومهام للمرحلة المختارة، وتغيير برمجي محدود يمكن مراجعته، ونتائج فحوصات حقيقية مع توضيح أي اختبار تعذّر تشغيله.
+
+## الخلاصة
+
+الفكرة الأساسية ليست أن نطلب من الذكاء الاصطناعي كتابة أكبر كمية من الكود؛ بل أن نستخدمه ضمن دورة هندسية قابلة للمراجعة:
+
+`Analyze → Design → Plan → Specify → Clarify → Tasks → Implement → Test → Review`
+
+نحافظ على مشروع Next.js الموجود، ونستفيد من Stitch للتصميم، ومن Spec Kit لتنظيم التنفيذ، ومن UI/UX Pro Max لمراجعة جودة الواجهة، مع التحقق من كل نتيجة قبل الانتقال إلى الخطوة التالية.
+
+---
+
+# 10. مكتبة البرومبتات `/prompts`
 
 ## العنوان
 
@@ -841,7 +1262,7 @@ Do not expose keys. Request approval before pushing or opening a PR.
 
 ---
 
-# 10. مختبر المخططات `/diagrams`
+# 11. مختبر المخططات `/diagrams`
 
 ## العنوان
 
@@ -913,7 +1334,7 @@ Do not expose keys. Request approval before pushing or opening a PR.
 
 ---
 
-# 11. ورشة BorrowHub `/borrowhub`
+# 12. ورشة BorrowHub `/borrowhub`
 
 ## العنوان
 
@@ -975,7 +1396,7 @@ Do not expose keys. Request approval before pushing or opening a PR.
 
 ---
 
-# 12. الأدوات والتثبيت `/tools`
+# 13. الأدوات والتثبيت `/tools`
 
 ## العنوان
 
@@ -1279,7 +1700,7 @@ uv --version
 
 ---
 
-# 13. القوالب والملفات `/templates`
+# 14. القوالب والملفات `/templates`
 
 ## العنوان
 
@@ -1308,7 +1729,7 @@ uv --version
 
 ---
 
-# 14. القاموس `/glossary`
+# 15. القاموس `/glossary`
 
 | المصطلح | الشرح المبسط |
 |---|---|
@@ -1350,7 +1771,7 @@ uv --version
 
 ---
 
-# 15. الأسئلة الشائعة `/faq`
+# 16. الأسئلة الشائعة `/faq`
 
 **هل أبدأ بالبرمجة مباشرة؟**  
 لا؛ قبل التنفيذ حدد المشكلة والمتطلبات والمستخدم والشاشات، ثم اعتمد التصميم والخطة المناسبة.
@@ -1390,7 +1811,7 @@ Domain Model يشرح مفاهيم العمل؛ ERD يحدد تمثيلها في
 
 ---
 
-# 16. صفحة عن الدورة `/about`
+# 17. صفحة عن الدورة `/about`
 
 ## عن سلاح العصر
 
@@ -1406,7 +1827,7 @@ Domain Model يشرح مفاهيم العمل؛ ERD يحدد تمثيلها في
 
 ---
 
-# 17. متطلبات تجربة المستخدم بالموقع نفسه (مهم لفريق التطوير)
+# 18. متطلبات تجربة المستخدم بالموقع نفسه (مهم لفريق التطوير)
 
 هذه **متطلبات للموقع التعليمي**، وليست محتوى يراه الطالب كفقرة طويلة:
 
@@ -1430,7 +1851,7 @@ Domain Model يشرح مفاهيم العمل؛ ERD يحدد تمثيلها في
 
 ---
 
-# 18. ملفّات المشروع التعليمي المقترحة
+# 19. ملفّات المشروع التعليمي المقترحة
 
 ```text
 project/
@@ -1476,7 +1897,7 @@ project/
 
 ---
 
-# 19. إرشادات دمج المحتوى في الموقع الحالي
+# 20. إرشادات دمج المحتوى في الموقع الحالي
 
 ## ما يجب إزالته أو نقله إذا كان موجودًا في الموقع
 
@@ -1501,7 +1922,7 @@ project/
 
 ---
 
-# 20. مرجع روابط الأدوات المعتمدة
+# 21. مرجع روابط الأدوات المعتمدة
 
 - Grill Me: https://github.com/mattpocock/skills
 - Google AI Studio: https://aistudio.google.com/
