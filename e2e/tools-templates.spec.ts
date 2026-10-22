@@ -262,7 +262,7 @@ test('ticket 84: unified search filters both tools and agents, normalizes Arabic
   const toolsEmpty = toolsSection.getByRole('status').filter({ hasText: 'لا توجد أدوات تطابق البحث الحالي' });
   await expect(toolsEmpty).toContainText('لا توجد أدوات تطابق البحث الحالي');
   await expect(toolsEmpty).toContainText('اقتراح الخطوة التالية');
-  await expect(toolsEmpty.getByRole('button', { name: 'مسح كلمة البحث' })).toBeVisible();
+  await expect(toolsEmpty.getByRole('button', { name: 'عرض كل الأدوات' })).toBeVisible();
 
   await expect(directorySection.locator('article')).toHaveCount(0);
   await expect(directorySection.getByText(/عدّاد وكلاء البرمجة المعروضين: 0 من 13 وكيل/)).toBeVisible();
@@ -272,7 +272,7 @@ test('ticket 84: unified search filters both tools and agents, normalizes Arabic
   await expect(agentsEmpty.getByRole('button', { name: 'مسح كلمة البحث' })).toBeVisible();
 
   // Clear search using the empty state button
-  await toolsEmpty.getByRole('button', { name: 'مسح كلمة البحث' }).click();
+  await toolsEmpty.getByRole('button', { name: 'عرض كل الأدوات' }).click();
   await expect(toolsSection.locator('article')).toHaveCount(16);
   await expect(directorySection.locator('article')).toHaveCount(13);
 
@@ -305,4 +305,63 @@ test('ticket 84: unified search filters both tools and agents, normalizes Arabic
   }
   await expect(directorySection.getByRole('heading', { name: /كلود كود/ })).toHaveCount(0);
   await expect(directorySection.getByRole('heading', { name: /أوبن كود/ })).toHaveCount(0);
+});
+
+test('ticket 87: the guide is keyboard operable, keeps Arabic RTL with LTR code, and shows distinct badges in both themes', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/tools');
+  const toolsRegion = page.getByRole('region', { name: 'دليل أدوات المسار' });
+
+  // Arabic reading order for the page, Latin direction for code and technical links
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  const codeBlock = toolsRegion.locator('pre[dir="ltr"]').first();
+  await expect(codeBlock).toBeVisible();
+  const reviewDate = toolsRegion.locator('dd[dir="ltr"]').first();
+  await expect(reviewDate).toBeVisible();
+  await expect(reviewDate).toHaveText(/\d{4}-\d{2}-\d{2}/);
+
+  // Keyboard: the labelled search field drives the filter, the clear button works with Enter,
+  // and a stage chip is operable from the keyboard.
+  const search = page.getByRole('searchbox', { name: 'ابحث في الأدوات ودليل الوكلاء' });
+  await search.focus();
+  await page.keyboard.type('mermaid');
+  await expect(toolsRegion.getByRole('heading', { level: 2, name: 'Mermaid Live' })).toBeVisible();
+  await expect.poll(async () => await toolsRegion.locator('article').count()).toBeLessThan(16);
+
+  const clear = toolsRegion.getByRole('button', { name: 'مسح كلمة البحث' });
+  await clear.focus();
+  await page.keyboard.press('Enter');
+  await expect(toolsRegion.locator('article')).toHaveCount(16);
+
+  const stageChip = page.getByRole('button', { name: /التصميم \(\d+\)/ });
+  await stageChip.focus();
+  await page.keyboard.press('Enter');
+  await expect(toolsRegion.locator('article')).toHaveCount(1);
+  await expect(toolsRegion.getByRole('heading', { level: 2, name: 'Google Stitch' })).toBeVisible();
+
+  // Copying an install command from the guide reports its own confirmation.
+  await toolsRegion.getByRole('button', { name: /عرض كل المراحل/ }).click();
+  await expect(toolsRegion.locator('article')).toHaveCount(16);
+  const nextCard = toolsRegion.locator('article').filter({ has: page.getByRole('heading', { level: 2, name: 'Next.js' }) });
+  await nextCard.getByRole('button', { name: 'نسخ الأمر' }).click();
+  await expect(toolsRegion.getByRole('status').filter({ hasText: 'تم نسخ الأمر' })).toBeVisible();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('npx create-next-app@latest');
+
+  // The verification state is readable as text and stays distinct from the card in both themes.
+  for (const theme of ['light', 'dark']) {
+    await page.evaluate((value) => document.documentElement.setAttribute('data-theme', value), theme);
+    const badge = toolsRegion.locator('[data-verification-status]').first();
+    await expect(badge).toBeVisible();
+    const label = (await badge.innerText()).trim();
+    expect(['موثّق من مصدر رسمي', 'اختياري', 'لم يُختبر التثبيت'].some((state) => label.includes(state))).toBe(true);
+
+    const { badgeBackground, cardBackground } = await badge.evaluate((element) => {
+      const card = element.closest('article');
+      return {
+        badgeBackground: getComputedStyle(element).backgroundColor,
+        cardBackground: card ? getComputedStyle(card).backgroundColor : '',
+      };
+    });
+    expect(badgeBackground, `badge background in ${theme} theme`).not.toBe(cardBackground);
+  }
 });

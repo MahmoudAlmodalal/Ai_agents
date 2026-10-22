@@ -277,7 +277,7 @@ export default function CourseToolsGuide({
                 onClick={() => onSearchChange('')}
                 className="text-xs font-bold text-[var(--primary)] hover:underline"
               >
-                مسح كلمة البحث
+                إلغاء البحث
               </button>
             )}
             {selectedStage !== 'all' && (
@@ -315,10 +315,13 @@ export default function CourseToolsGuide({
             {queryWords.length > 0 && (
               <button
                 type="button"
-                onClick={() => onSearchChange('')}
+                onClick={() => {
+                  onSearchChange('');
+                  setSelectedStage('all');
+                }}
                 className="rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-bold text-white hover:opacity-90"
               >
-                مسح كلمة البحث
+                عرض كل الأدوات
               </button>
             )}
             {selectedStage !== 'all' && (
