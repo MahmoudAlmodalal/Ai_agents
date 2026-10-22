@@ -69,7 +69,7 @@ export interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="ar" dir="rtl" className="scroll-smooth">
+    <html lang="ar" dir="rtl" className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
         <meta charSet="utf-8" />
         <link rel="manifest" href="/manifest.webmanifest" />

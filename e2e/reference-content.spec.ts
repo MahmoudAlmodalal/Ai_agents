@@ -17,6 +17,26 @@ test('glossary restores source terms and supports normalized Arabic and English 
   await expect(entries).toHaveCount(35);
 });
 
+test('glossary terms display read-topic links pointing to published topics returning 200', async ({ page, request }) => {
+  await page.goto('/glossary');
+  const entries = page.locator('main article');
+  await expect(entries).toHaveCount(35);
+
+  const topicLinks = entries.getByRole('link', { name: 'اقرأ الموضوع' });
+  await expect(topicLinks).toHaveCount(35);
+
+  const hrefs = await topicLinks.evaluateAll((elements) =>
+    elements.map((el) => el.getAttribute('href'))
+  );
+  expect(hrefs).toHaveLength(35);
+
+  for (const href of hrefs) {
+    expect(href).toMatch(/^\/learn\/[a-z0-9-]+$/);
+    const res = await request.get(href!);
+    expect(res.status()).toBe(200);
+  }
+});
+
 test('BorrowHub explains source rules, staff handover, diagrams and honest case file availability', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/borrowhub');

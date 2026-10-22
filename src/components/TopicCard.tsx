@@ -60,10 +60,10 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   const status = getTopicImprovementStatus(topic.slug);
 
   return (
-    <article className="topic-card group flex h-full min-w-0 flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
+    <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
       {/* Top Header Row */}
       <div>
-        <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 mb-2.5">
+        <div className="flex items-center justify-between gap-2 mb-2.5">
           {/* Badge & Stage Info */}
           <div className="flex items-center gap-2.5 min-w-0">
             <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-blue-600 dark:bg-blue-800 text-white font-mono font-bold text-xs sm:text-sm flex items-center justify-center shrink-0 shadow-2xs select-none">
@@ -177,7 +177,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         </h3>
 
         {/* Subtitle */}
-        <p className="text-xs text-[var(--brand-primary)] font-medium mb-2 line-clamp-2 leading-relaxed">
+        <p className="text-xs text-[var(--brand-primary)] font-medium mb-2 truncate">
           <HighlightedText text={topic.subtitle} query={searchQuery} />
         </p>
 
@@ -202,7 +202,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
         </div>
 
         {/* Summary */}
-        <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-3">
+        <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-2">
           <HighlightedText text={topic.summary} query={searchQuery} />
         </p>
         {topic.outputs.length > 0 && <p className="mb-3 text-xs leading-relaxed text-[var(--text-muted)]"><strong>المخرج: </strong>{topic.outputs[0]}</p>}

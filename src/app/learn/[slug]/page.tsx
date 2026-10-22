@@ -14,6 +14,7 @@ import {
 } from '@/src/lib/topicRegistry';
 import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
 import { getTopicLearningContent } from '@/src/lib/learningContent';
+import { getSessionForTopic } from '@/src/lib/learningSessions';
 
 export function generateStaticParams() {
   return getAllTopicSlugs().map((slug) => ({ slug }));
@@ -38,6 +39,7 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
   const next = position >= 0 && position < allTopics.length - 1 ? allTopics[position + 1] : undefined;
   const status = getTopicImprovementStatus(topic.slug);
   const learningContent = getTopicLearningContent(topic.slug);
+  const relatedSession = getSessionForTopic(topic.slug);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
@@ -164,6 +166,23 @@ export default async function LearningTopicPage({ params }: { params: Promise<{ 
             </h2>
             <ApplicationChecklist topic={topic} items={topic.checklist} />
           </section>}
+
+          {relatedSession && (
+            <section className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-5 dark:border-emerald-900 dark:bg-emerald-950/20">
+              <h2 className="mb-2 text-base font-black text-[var(--text-main)]">هذا الموضوع جزء من جلسة تطبيقية</h2>
+              <p className="text-xs leading-6 text-[var(--text-muted)]">
+                {relatedSession.title} — {relatedSession.durationLabel}. تجمع الجلسة هذا الموضوع مع بقية مسار
+                التصميم والتنفيذ في قراءة واحدة، دون إلغاء التفصيل هنا.
+              </p>
+              <Link
+                href={relatedSession.route}
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-black text-[var(--primary)] hover:text-[var(--accent)]"
+              >
+                افتح الجلسة الكاملة
+                <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            </section>
+          )}
 
           <section className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <h2 className="mb-3 text-base font-black text-[var(--text-main)]">روابط عملية</h2>

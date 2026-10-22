@@ -19,8 +19,9 @@ test.describe('Cheatsheet Page E2E', () => {
     await expect(mainHeader).toContainText('58 موضوعًا');
     await expect(mainHeader).not.toContainText('20 درسًا');
 
-    // Navigation back link should lead to canonical project path, not retired roadmap reader
-    const backLink = page.locator('a[href="/start#project-path"]').first();
+    // Navigation back link should lead to canonical project path, not retired roadmap reader.
+    // Scoped to the page content so the global navigation item (its own label) cannot shadow it.
+    const backLink = page.locator('main a[href="/start#project-path"]').first();
     await expect(backLink).toBeVisible();
     await expect(backLink).toContainText('مسار المشروع');
 
