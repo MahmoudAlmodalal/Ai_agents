@@ -14,7 +14,11 @@ export interface PromptTopicReference {
 }
 
 export interface PromptLibraryRecord extends PromptEntry {
+  titleAr: string;
   purpose: string;
+  benefit: string;
+  buildOrder: number | null;
+  optional: boolean;
   warnings: string[];
   sourceGroup: PromptSourceGroup;
   sourceLabel: string;
@@ -59,6 +63,154 @@ const DETAILS: Record<string, PromptDetails> = {
   '30': { category: 'التسليم وإدارة النسخ', difficulty: 'متوسط', operation: 'توليد توثيق', purpose: 'إعداد خطة Commit وملخص Pull Request لتسليم مراجعة قابلة للفهم.', inputFiles: ['git status', 'الملفات المتغيرة', 'الأسرار', 'تقرير QA النهائي'], outputFiles: ['خطة Commit', 'ملخص Pull Request'], recommendedTool: 'مساعد تطوير يراجع المستودع', warnings: ['لا تكشف المفاتيح ولا تدفع التغييرات أو تفتح PR دون موافقة.'] },
   '31': { category: 'تخطيط وتنفيذ الواجهة', difficulty: 'متقدم', operation: 'توليد توثيق', purpose: 'تحويل المتطلبات والتصميم المعتمد إلى Phases وTasks ثم اختيار أول مهمة جاهزة فقط.', inputFiles: ['PROJECT_CONTEXT.md', 'PRD.md', 'DESIGN.md', 'STITCH_SCREEN_REFERENCES.md', 'ملفات FRONTEND الحالية إن وجدت'], outputFiles: ['docs/FRONTEND_DISCOVERY.md', 'docs/FRONTEND_PLAN.md', 'docs/FRONTEND_PHASES.md', 'docs/FRONTEND_TASKS.md', 'docs/ROUTES_MAP.md', 'docs/COMPONENT_ARCHITECTURE.md', 'docs/FRONTEND_DATA_CONTRACTS.md', 'تنفيذ أول Task فقط بعد اعتماد الخطة'], recommendedTool: 'Google AI Studio أو Coding Agent مع مراجعة بشرية وGitHub', warnings: ['حلّل وخطّط أولًا؛ اختر أول Task جاهزة فقط، ثم تحقق وتوقف. لا تنشئ Backend.'] },
 };
+
+const TITLES_AR: Record<string, string> = {
+  'prompt-01-grill-me-product-discovery': 'Grill Me: استكشاف المنتج',
+  'prompt-02-generate-prd-after-grill-me': 'توليد PRD بعد Grill Me',
+  'prompt-03-prd-review': 'مراجعة PRD',
+  'prompt-04-github-documentation-setup': 'إعداد توثيق GitHub',
+  'prompt-05-user-flow': 'مخطط تدفق المستخدم',
+  'prompt-06-conceptual-domain-model-not-uml': 'النموذج المفاهيمي للمجال',
+  'prompt-07-use-case-diagram': 'مخطط حالات الاستخدام',
+  'prompt-08-activity-diagram': 'مخطط النشاط',
+  'prompt-09-sequence-diagram': 'مخطط التتابع',
+  'prompt-10-state-diagram': 'مخطط الحالات',
+  'prompt-11-class-diagram': 'مخطط الكلاسات',
+  'prompt-12-erd-dbml-mermaid': 'ERD عبر DBML وMermaid',
+  'prompt-13-database-quality-review': 'مراجعة جودة قاعدة البيانات',
+  'prompt-14-ui-ux-grill-me': 'Grill Me لتجربة المستخدم',
+  'prompt-15-ux-blueprint-screen-inventory': 'UX Blueprint وجرد الشاشات',
+  'prompt-16-project-specific-stitch-master-prompt-generator': 'برومبت Stitch الرئيسي للمشروع',
+  'prompt-17-stitch-design-system': 'نظام تصميم Stitch',
+  'prompt-18-generate-one-prompt-per-screen': 'برومبت واحد لكل شاشة',
+  'prompt-19-single-screen-refinement-in-stitch': 'تحسين شاشة واحدة في Stitch',
+  'prompt-20-stitch-prototype': 'نموذج Stitch التفاعلي',
+  'prompt-21-visual-ux-audit': 'تدقيق UX البصري',
+  'prompt-22-stitch-mcp-connection-verification': 'التحقق من اتصال Stitch MCP',
+  'prompt-23-extract-design-md-from-stitch': 'استخراج DESIGN.md من Stitch',
+  'prompt-24-frontend-only-next-js-plan': 'خطة Next.js للواجهة فقط',
+  'prompt-25-ui-ux-pro-max-review-before-coding': 'مراجعة UI/UX Pro Max قبل البرمجة',
+  'prompt-26-select-next-implementation-phase': 'اختيار مرحلة التنفيذ التالية',
+  'prompt-27-spec-kit-constitution': 'دستور Spec Kit',
+  'prompt-28-spec-kit-per-feature': 'Spec Kit لميزة واحدة',
+  'prompt-29-final-frontend-qa': 'فحص الواجهة النهائي',
+  'prompt-30-github-handoff': 'تسليم GitHub',
+  'prompt-31-frontend-phased-implementation-plan': 'خطة تنفيذ الواجهة على مراحل',
+  'cheatsheet-a-prepare-and-execute': 'التحضير والتنفيذ',
+  'cheatsheet-b-review': 'المراجعة',
+  'cheatsheet-c-handoff': 'التسليم',
+  'stage-example-prd-planning': 'مثال مرحلي: التخطيط وPRD',
+  'stage-example-database': 'مثال مرحلي: قاعدة البيانات',
+  'stage-example-uiux': 'مثال مرحلي: تصميم الواجهة',
+  'stage-example-nextjs-frontend': 'مثال مرحلي: Next.js وFrontend',
+  'stage-example-backend-api': 'مثال مرحلي: Backend وAPI',
+  'stage-example-security': 'مثال مرحلي: الأمن',
+  'stage-example-deployment': 'مثال مرحلي: النشر',
+};
+
+const BENEFITS: Record<string, string> = {
+  'prompt-01-grill-me-product-discovery': 'تحسم فكرة مشروعك بسؤال واحد في كل مرة قبل أن تكتب سطر كود.',
+  'prompt-02-generate-prd-after-grill-me': 'تحوّل قرارات المقابلة إلى PRD واحد يكون مصدر الحقيقة لكل ما بعده.',
+  'prompt-03-prd-review': 'تكشف ثغرات الـPRD وتناقضاته قبل أن تبني عليها.',
+  'prompt-04-github-documentation-setup': 'تضبط README وdocs/ وتحمي نفسك من أوامر مدمّرة.',
+  'prompt-05-user-flow': 'ترسم رحلة المستخدم بنجاحها وأخطائها بدل تخيّلها.',
+  'prompt-06-conceptual-domain-model-not-uml': 'تفصل مفاهيم مجالك عن الجداول والكلاسات قبل أن تختلط.',
+  'prompt-07-use-case-diagram': 'تحدد الممثلين وحدود النظام والصلاحيات المطلوبة.',
+  'prompt-08-activity-diagram': 'توثّق القرارات والمسارات البديلة في سير العمل.',
+  'prompt-09-sequence-diagram': 'تُظهر الرسائل بين المستخدم والنظام لكل حالة استخدام.',
+  'prompt-10-state-diagram': 'توثّق حالات الكيان وانتقالاتها بدل اكتشافها وقت الكود.',
+  'prompt-11-class-diagram': 'تحوّل نماذجك إلى تصميم كلاسات متسق قبل التنفيذ.',
+  'prompt-12-erd-dbml-mermaid': 'تصمّم قاعدة بيانات قابلة للمراجعة قبل كتابة أي كود.',
+  'prompt-13-database-quality-review': 'تراجع المخطط مقابل الـPRD قبل أن تدفع ثمن خطئه.',
+  'prompt-14-ui-ux-grill-me': 'تحسم الأدوار والملاحة والشاشات وإمكانية الوصول.',
+  'prompt-15-ux-blueprint-screen-inventory': 'تجرد شاشاتك وتعرف هدف كل شاشة قبل رسمها.',
+  'prompt-16-project-specific-stitch-master-prompt-generator': 'تصوغ برومبت شاشة مرجعية واحدة بدل طلب كل الشاشات دفعة واحدة.',
+  'prompt-17-stitch-design-system': 'تثبّت قواعد تصميم قابلة لإعادة الاستخدام من الشاشة المعتمدة.',
+  'prompt-18-generate-one-prompt-per-screen': 'تولّد برومبت مستقلًا لكل شاشة بنفس الهوية.',
+  'prompt-19-single-screen-refinement-in-stitch': 'تحسّن شاشة واحدة دون كسر نظام التصميم.',
+  'prompt-20-stitch-prototype': 'تربط الشاشات وتختبر الانتقالات فعليًا.',
+  'prompt-21-visual-ux-audit': 'ترصد مشكلات UX قبل أن تصل إلى الكود.',
+  'prompt-22-stitch-mcp-connection-verification': 'تتأكد من اتصال MCP قبل الاعتماد عليه.',
+  'prompt-23-extract-design-md-from-stitch': 'تحوّل تصميمك إلى DESIGN.md يكون المصدر البصري الموثّق.',
+  'prompt-24-frontend-only-next-js-plan': 'تخطط المسارات والمكونات وعقود البيانات قبل أول مكوّن.',
+  'prompt-25-ui-ux-pro-max-review-before-coding': 'تراجع قرارات الواجهة قبل البرمجة لا بعدها.',
+  'prompt-26-select-next-implementation-phase': 'تختار المهمة التالية الجاهزة بدل الانجراف.',
+  'prompt-27-spec-kit-constitution': 'تثبّت قواعد تنفيذ مشروعك مرة واحدة وترجع إليها كل ميزة.',
+  'prompt-28-spec-kit-per-feature': 'تمشي على مواصفة ← خطة ← مهام ← تحقق لميزة واحدة.',
+  'prompt-29-final-frontend-qa': 'تفحص الواجهة فعليًا وتوثّق ما تحقق لا ما تتوقع.',
+  'prompt-30-github-handoff': 'تسلّم Commit وPR يفهمهما المراجع دون تخمين.',
+  'prompt-31-frontend-phased-implementation-plan': 'تقسم الواجهة إلى مراحل ومهام وتنفّذ مهمة واحدة فقط.',
+  'cheatsheet-a-prepare-and-execute': 'تحدد مخرج الخطوة ومصادره قبل تنفيذ تغيير واحد.',
+  'cheatsheet-b-review': 'تحصل على PASS وFAIL وOPEN QUESTION وأعلى عيب واحد.',
+  'cheatsheet-c-handoff': 'تسلّم ملاحظة Handoff ورسالة Commit دون تخمين.',
+  'stage-example-prd-planning': 'ترى المرحلة كاملة من الفكرة إلى PRD جاهز كقدوة تُقاس عليها.',
+  'stage-example-database': 'ترى كيف يُشتق ERD وDBML من PRD وSRS دون اختراع قواعد.',
+  'stage-example-uiux': 'ترى كيف يتحول User Flow إلى جرد شاشات وUX Blueprint.',
+  'stage-example-nextjs-frontend': 'ترى دورة تنفيذ Route ومهمة واحدة داخل Next.js بنهاية قابلة للمراجعة.',
+  'stage-example-backend-api': 'تحوّل User Story إلى عقد API قابل للمراجعة قبل كتابة الخادم.',
+  'stage-example-security': 'تراجع الأسرار والصلاحيات وملكية البيانات قبل النشر.',
+  'stage-example-deployment': 'تجهّز خطة نشر بمتغيرات وفحوصات ورجوع.',
+};
+
+const BUILD_ORDER: Record<string, number> = {
+  'prompt-01-grill-me-product-discovery': 1,
+  'prompt-02-generate-prd-after-grill-me': 2,
+  'prompt-03-prd-review': 3,
+  'prompt-04-github-documentation-setup': 4,
+  'prompt-05-user-flow': 5,
+  'prompt-06-conceptual-domain-model-not-uml': 6,
+  'prompt-07-use-case-diagram': 7,
+  'prompt-08-activity-diagram': 8,
+  'prompt-09-sequence-diagram': 9,
+  'prompt-10-state-diagram': 10,
+  'prompt-11-class-diagram': 11,
+  'prompt-12-erd-dbml-mermaid': 12,
+  'prompt-13-database-quality-review': 13,
+  'prompt-14-ui-ux-grill-me': 14,
+  'prompt-15-ux-blueprint-screen-inventory': 15,
+  'prompt-16-project-specific-stitch-master-prompt-generator': 16,
+  'prompt-17-stitch-design-system': 17,
+  'prompt-18-generate-one-prompt-per-screen': 18,
+  'prompt-19-single-screen-refinement-in-stitch': 19,
+  'prompt-20-stitch-prototype': 20,
+  'prompt-21-visual-ux-audit': 21,
+  'prompt-22-stitch-mcp-connection-verification': 22,
+  'prompt-23-extract-design-md-from-stitch': 23,
+  'prompt-24-frontend-only-next-js-plan': 24,
+  'prompt-25-ui-ux-pro-max-review-before-coding': 25,
+  'prompt-31-frontend-phased-implementation-plan': 26,
+  'prompt-26-select-next-implementation-phase': 27,
+  'prompt-27-spec-kit-constitution': 28,
+  'prompt-28-spec-kit-per-feature': 29,
+  'stage-example-backend-api': 30,
+  'stage-example-security': 31,
+  'prompt-29-final-frontend-qa': 32,
+  'stage-example-deployment': 33,
+  'prompt-30-github-handoff': 34,
+};
+
+const SUPPORTING_SLUGS = new Set([
+  'cheatsheet-a-prepare-and-execute',
+  'cheatsheet-b-review',
+  'cheatsheet-c-handoff',
+  'stage-example-prd-planning',
+  'stage-example-database',
+  'stage-example-uiux',
+  'stage-example-nextjs-frontend',
+]);
+
+const OPTIONAL_STEP_SLUGS = new Set(['prompt-22-stitch-mcp-connection-verification']);
+
+function promptEnrichment(slug: string) {
+  const titleAr = TITLES_AR[slug];
+  const benefit = BENEFITS[slug];
+  if (!titleAr || !benefit) throw new Error(`Missing Arabic title or benefit for prompt ${slug}`);
+  const buildOrder = BUILD_ORDER[slug] ?? null;
+  if (buildOrder === null && !SUPPORTING_SLUGS.has(slug)) {
+    throw new Error(`Prompt ${slug} has no build order and is not declared as a supporting prompt`);
+  }
+  return { titleAr, benefit, buildOrder, optional: OPTIONAL_STEP_SLUGS.has(slug) };
+}
 
 const TOPIC_SLUGS: Record<string, string[]> = {
   'cheatsheet-a-prepare-and-execute': ['frontend-incremental-implementation'],
@@ -106,7 +258,8 @@ function createCheatsheetPrompt(input: {
   const body = textBlockForHeading(input.heading);
   if (!body) throw new Error(`Missing source prompt block for heading: ${input.heading}`);
   return {
-    slug: input.slug, number: input.number, title: input.title, category: input.category, difficulty: 'مبتدئ',
+    slug: input.slug, number: input.number, title: input.title, ...promptEnrichment(input.slug),
+    category: input.category, difficulty: 'مبتدئ',
     operation: input.operation, inputFiles: input.inputFiles, outputFiles: input.outputFiles,
     recommendedTool: input.recommendedTool, body, purpose: input.purpose,
     warnings: input.warnings ?? ['احذف الحقول بين الأقواس وراجع المخرج مقابل وثائق مشروعك قبل اعتماده.'],
@@ -134,6 +287,7 @@ const CATALOG_PROMPTS: PromptLibraryRecord[] = PROMPTS.map((prompt) => {
   return {
     ...prompt,
     ...details,
+    ...promptEnrichment(prompt.slug),
     warnings: details.warnings ?? ['لا يحدد المصدر تحذيرًا منفصلًا؛ راجع قيود الاستخدام داخل النص الكامل.'],
     sourceGroup,
     sourceLabel: prompt.number === '31' ? 'المصدر الإضافي: خطة التنفيذ المرحلي في courseContent.ts' : `وثيقة محتوى الموقع · PROMPT ${prompt.number}`,
@@ -142,6 +296,22 @@ const CATALOG_PROMPTS: PromptLibraryRecord[] = PROMPTS.map((prompt) => {
 });
 
 export const PROMPT_LIBRARY: PromptLibraryRecord[] = [...CATALOG_PROMPTS, ...CHEATSHEET_PROMPTS];
+
+export const PROMPT_BUILD_STEPS: PromptLibraryRecord[] = PROMPT_LIBRARY
+  .filter((prompt) => prompt.buildOrder !== null)
+  .sort((a, b) => (a.buildOrder ?? 0) - (b.buildOrder ?? 0));
+
+export const PROMPT_SUPPORTING: PromptLibraryRecord[] = PROMPT_LIBRARY.filter((prompt) => prompt.buildOrder === null);
+
+export const PROMPT_BUILD_STEP_COUNT = PROMPT_BUILD_STEPS.length;
+
+const seenOrders = new Set<number>();
+for (const prompt of PROMPT_BUILD_STEPS) {
+  if (seenOrders.has(prompt.buildOrder!)) {
+    throw new Error(`Duplicate build order ${prompt.buildOrder} (${prompt.slug})`);
+  }
+  seenOrders.add(prompt.buildOrder!);
+}
 
 export function getPromptLibraryRecord(slug: string): PromptLibraryRecord | undefined {
   return PROMPT_LIBRARY.find((prompt) => prompt.slug === slug);
