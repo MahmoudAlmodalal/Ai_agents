@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { PromptCopyPanel } from '@/src/components/PromptCopyPanel';
-import { getPromptLibraryRecord, PROMPT_LIBRARY } from '@/src/lib/promptLibrary';
+import { getPromptLibraryRecord, PROMPT_BUILD_STEP_COUNT, PROMPT_LIBRARY } from '@/src/lib/promptLibrary';
 
 export function generateStaticParams() {
   return PROMPT_LIBRARY.map((prompt) => ({ slug: prompt.slug }));
@@ -32,7 +32,9 @@ export default async function PromptDetailPage({ params }: { params: Promise<{ s
   const prompt = getPromptLibraryRecord(slug);
   if (!prompt) notFound();
   const index = PROMPT_LIBRARY.findIndex((item) => item.slug === prompt.slug);
-  const next = PROMPT_LIBRARY[index + 1];
+  const next = prompt.buildOrder
+    ? PROMPT_LIBRARY.find((item) => item.buildOrder === prompt.buildOrder! + 1)
+    : PROMPT_LIBRARY[index + 1];
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8" dir="rtl">
@@ -41,13 +43,19 @@ export default async function PromptDetailPage({ params }: { params: Promise<{ s
       </Link>
       <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-9">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-lg bg-emerald-600 px-3 py-1 font-mono font-bold text-white" dir="ltr">{prompt.number}</span>
+          <span className="rounded-lg bg-emerald-600 px-3 py-1 font-mono font-bold text-white">
+            {prompt.buildOrder ? `الخطوة ${prompt.buildOrder} من ${PROMPT_BUILD_STEP_COUNT}` : 'برومبت مساند'}
+          </span>
+          <span className="rounded-md border border-[var(--border-color)] px-2 py-0.5 font-mono text-xs text-[var(--text-muted)]" dir="ltr">{prompt.number}</span>
           <span className="text-sm text-[var(--text-muted)]">{prompt.category}</span>
           <span className="text-sm text-[var(--text-muted)]">{prompt.difficulty}</span>
           <span className="text-sm text-[var(--text-muted)]">{prompt.operation}</span>
+          {prompt.optional && <span className="rounded-full border border-[var(--border-color)] px-2 py-0.5 text-xs text-[var(--text-muted)]">خطوة اختيارية</span>}
         </div>
-        <h1 className="mt-5 text-3xl font-black text-[var(--text-main)] sm:text-5xl">{prompt.title}</h1>
-        <p className="mt-4 max-w-4xl text-base leading-8 text-[var(--text-muted)]">{prompt.purpose}</p>
+        <h1 className="mt-5 text-3xl font-black text-[var(--text-main)] sm:text-5xl">{prompt.titleAr}</h1>
+        <p className="mt-2 font-mono text-sm text-[var(--text-muted)]" dir="ltr">{prompt.title}</p>
+        <p className="mt-4 max-w-4xl text-lg font-bold leading-8 text-[var(--text-main)]">{prompt.benefit}</p>
+        <p className="mt-2 max-w-4xl text-sm leading-8 text-[var(--text-muted)]">{prompt.purpose}</p>
         <div className="mt-6 rounded-2xl bg-[var(--bg-card-subtle)] p-4">
           <span className="block text-xs text-[var(--text-muted)]">الأداة المقترحة أو المذكورة</span>
           <strong className="mt-1 block text-sm leading-7 text-[var(--text-main)]">{prompt.recommendedTool}</strong>
@@ -81,8 +89,8 @@ export default async function PromptDetailPage({ params }: { params: Promise<{ s
       </section>
 
       {next && <Link href={`/prompts/${next.slug}`} className="mt-6 block rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 hover:border-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">
-        <span className="text-xs text-[var(--text-muted)]">النص التالي في المكتبة</span>
-        <strong className="mt-1 block text-[var(--text-main)]">{next.title}</strong>
+        <span className="text-xs text-[var(--text-muted)]">{prompt.buildOrder ? 'الخطوة التالية في المسار' : 'النص التالي في المكتبة'}</span>
+        <strong className="mt-1 block text-[var(--text-main)]">{next.titleAr}</strong>
       </Link>}
     </div>
   );
