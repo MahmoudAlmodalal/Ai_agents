@@ -52,7 +52,7 @@ test.describe('Prompt Track (Build from Scratch) Journey', () => {
     await expect(listSection).not.toBeVisible();
 
     // Verify grid cards exist
-    const gridCards = page.locator('section[aria-label="خطوات المسار التسلسلية"] a[href^="/prompts/"]');
+    const gridCards = page.locator('section[aria-labelledby="prompt-build-path"] a[href^="/prompts/"]');
     await expect(gridCards).toHaveCount(34);
 
     // Toggle back to List View

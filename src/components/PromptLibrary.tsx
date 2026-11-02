@@ -189,7 +189,7 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
                 <span className="text-xs text-[var(--text-muted)]">الخطوات المرقّمة: {visibleSteps.length} من {stepCount}</span>
               </div>
               {view === 'list' ? (
-                <ol className="space-y-2">
+                <ol className="space-y-2" aria-label="مسار البرومبتات لبناء المشروع خطوة بخطوة">
                   {visibleSteps.map((prompt) => (
                     <li key={prompt.slug}>
                       <Link href={`/prompts/${prompt.slug}`} className="group flex items-start gap-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-3.5 transition hover:border-emerald-400 hover:bg-[var(--bg-card-subtle)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 sm:items-center sm:gap-4">
