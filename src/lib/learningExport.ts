@@ -375,6 +375,8 @@ export function buildLearningExportFiles(
         difficulty: prompt.difficulty,
         operation: prompt.operation,
         purpose: prompt.purpose,
+        benefit: prompt.benefit,
+        buildOrder: prompt.buildOrder,
         sourceGroup: prompt.sourceGroup,
         sourceLabel: prompt.sourceLabel,
         topicRefs: prompt.topicRefs,
