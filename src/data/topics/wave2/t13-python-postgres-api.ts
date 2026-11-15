@@ -52,6 +52,20 @@ export const topic38PythonHtml = `
         لا تكتب كوداً خادماً يعتمد على التخمين. اجعل كل دالة مصحوبة بنوع مدخلاتها ومخرجاتها (Type Annotations)، واستخدم بيئة افتراضية معزولة لتضمن أن كود مشروعك يعمل بنفس الدقة على حاسوبك الشخصي وعلى خوادم الإنتاج السحابية.
       </p>
     </div>
+
+    <!-- AI Agent Phased Plan Callout -->
+    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+        <span>🤖</span>
+        <span>توجيه وكيل الذكاء الاصطناعي: صياغة خطة الفيزات لمشروعك</span>
+      </div>
+      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+        لا تطلب من الذكاء الاصطناعي كتابة كود الباك إند دفعة واحدة؛ وجه الوكيل بقراءة <code>PRD.md</code> وعقود الفرونت إند لإنتاج خطة عمل معمارية <code>backend_plan.md</code> مقسمة إلى فيزات واضحة قبل البرمجة.
+      </p>
+      <div class="text-xs text-[var(--accent)] font-semibold">
+        راجع البرومبت العام 8.1 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#81-برومبت-1-استكشاف-الباك-إند-وصياغة-خطة-الفيزات-لمشروعك-backend-phased-plan" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      </div>
+    </div>
   </div>
 
   <!-- 2. Virtual Environments & Dependency Management -->
@@ -487,6 +501,20 @@ class DatabaseConfig:
       </div>
     </div>
 
+    <!-- AI Agent & Supabase Integration Box -->
+    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+        <span>🐘</span>
+        <span>توجيه الوكيل: ربط Supabase كـ Managed PostgreSQL وتوليد الـ ERD بالذكاء الاصطناعي</span>
+      </div>
+      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+        نستخدم <strong>Supabase</strong> كمستودع بيانات سحابي مجاني لـ PostgreSQL ونربطه بالخادم عبر <code>DATABASE_URL</code> ومكتبة <code>dj-database-url</code> مع إبقاء التهجيرات عبر Django ORM حصراً.
+      </p>
+      <div class="text-xs text-[var(--accent)] font-semibold">
+        راجع البرومبت العام 8.2 لتوليد ERD وآلة الحالات في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#82-برومبت-2-حسم-نوع-قاعدة-البيانات-وتوليد-مخطط-العلاقات-erd--state-machine" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      </div>
+    </div>
+
     <!-- SVG Diagram: Schema Planning vs Schema Applying Workflow -->
     <div class="diagram-box my-8">
       <h4 class="font-bold text-[var(--text-main)] mb-3 text-center">الشكل (39): دورة حياة مخطط البيانات: من التحليل الورقي (ERD) إلى ملفات الترحيل والتطبيق في قاعدة البيانات</h4>
@@ -718,6 +746,20 @@ export const topic40ApiArchitectureHtml = `
   }
 }</code></pre>
         </div>
+      </div>
+    </div>
+
+    <!-- AI Agent API Contracts Callout -->
+    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+        <span>📜</span>
+        <span>توجيه الوكيل: صياغة عقود API.md وغلاف الاستجابة الموحد</span>
+      </div>
+      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+        لا تبدأ بكتابة الـ Views أو المسارات يدوياً؛ وجه وكيل الذكاء الاصطناعي لاشتقاق عقود <code>API.md</code> من الـ ERD والفرونت إند، وإلزامه بنمط <code>camelCase</code> وغلاف الاستجابة الموحد <code>{ success, data, error, meta }</code>.
+      </p>
+      <div class="text-xs text-[var(--accent)] font-semibold">
+        راجع البرومبت العام 8.3 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#83-برومبت-3-صياغة-وتوليد-عقود-الـ-api-ومطابقة-الفرونت-إند-apimd" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
       </div>
     </div>
   </div>

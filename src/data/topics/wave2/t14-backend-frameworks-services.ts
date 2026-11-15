@@ -33,6 +33,25 @@ export const topic41DjangoHtml = `
     </p>
   </div>
 
+  <!-- Deep Architecture Reference Callout -->
+  <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+    <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
+      <span>🚀</span>
+      <span>الدليل المرجعي لمعمارية Django الاحترافية وتوجيه وكلاء الذكاء الاصطناعي</span>
+    </div>
+    <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+      تم توثيق الدليل التفصيلي الشامل لبناء خادم مشروعك بالاعتماد على قاعدة بيانات <strong>Supabase (Managed PostgreSQL)</strong>، وبيئة <strong>Docker Compose</strong>، وتقسيم الطبقات الصارم لمنع الـ Fat Views:
+    </p>
+    <div class="p-3 bg-[var(--bg-card-subtle)] rounded-xl font-mono text-xs sm:text-sm text-[var(--accent)] text-center mb-3" dir="ltr">
+      Models → Policies → Permissions → Selectors → Services → Views → Serializers → URLs
+    </div>
+    <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)]">
+      للاطلاع على البرومبت العام 8.5 لتوجيه الوكيل لبناء تطبيقات مشروعك خطوة بخطوة بالطبقات الثمانية، راجع:
+      <br />
+      <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#85-برومبت-5-توجيه-الوكيل-لبناء-تطبيق-محدد-وفق-معمارية-django-الطبقية-الصارمة" class="underline font-bold text-[var(--accent)]">docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md (القسم 8.5)</a>
+    </p>
+  </div>
+
   <!-- 1. Why Django: Batteries-Included Philosophy -->
   <div class="content-block">
     <h3 class="text-xl font-black text-[var(--text-main)] mb-3">1. فلسفة Django المتكاملة (Batteries-Included): متى يكون الخيار الأمثل؟</h3>
@@ -731,12 +750,14 @@ export const topic44ServicesSelectorsHtml = `
     <div class="callout tip my-6">
       <div class="callout-header">
         <span class="callout-icon">💡</span>
-        <span>الحل المعماري القياسي: نمط Services & Selectors</span>
+        <span>الحل المعماري القياسي: نمط Services & Selectors والسياسات الصارمة</span>
       </div>
       <p class="leading-7">
-        نقوم بفصل المنطق إلى طبقتين صريحتين ونظيفين:
+        نقوم بفصل المنطق إلى طبقات صريحة ونظيفة:
         <strong>طبقة الخدمات (Services)</strong> مسؤولة حصرياً عن العمليات التغييرية (Writes / Mutations) والتحقق من الشروط وإدارة المعاملات الذرية؛
-        بينما <strong>طبقة المحددات (Selectors)</strong> مسؤولة حصرياً عن استعلامات القراءة النقية (Pure Reads) دون أي آثار جانبية (Side Effects).
+        بينما <strong>طبقة المحددات (Selectors)</strong> مسؤولة حصرياً عن استعلامات القراءة النقية (Pure Reads) دون أي آثار جانبية مع القضاء على استعلامات N+1؛
+        وتختص <strong>طبقة السياسات (Policies)</strong> بقواعد العمل النقية المستقلة عن هوية وصلاحيات الـ HTTP.
+        (راجع التطبيق العملي الكامل في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md" class="underline font-bold text-[var(--accent)]">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>).
       </p>
     </div>
   </div>

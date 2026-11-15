@@ -581,6 +581,48 @@ When generating or modifying frontend code:
         </svg>
       </div>
     </div>
+
+    <!-- 4. Parallel Agent Pipeline & Git Worktrees -->
+    <div class="content-block mt-8">
+      <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. مسار موازاة الوكلاء وعزل مساحات العمل بـ Git Worktrees</h3>
+      <p class="leading-8 text-[var(--text-muted)]">
+        لتشغيل عدة وكلاء ذكاء اصطناعي في نفس الوقت لبناء أجزاء مختلفة من المشروع دون تضارب أو تخريب متبادل للكود، نتبع دورة حياة <strong>Matt Pocock</strong> الهندسية المنضبطة:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3 my-4 text-center">
+        <div class="p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+          <div class="font-bold text-[var(--accent)] text-xs mb-1">1. Grill & PoC</div>
+          <div class="text-xs text-[var(--text-muted)]">استجواب المتطلبات وحسم القرارات المعمارية</div>
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+          <div class="font-bold text-[var(--accent)] text-xs mb-1">2. To-Spec</div>
+          <div class="text-xs text-[var(--text-muted)]">صياغة المواصفات الفنية وعقود الـ API والـ ERD</div>
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+          <div class="font-bold text-[var(--accent)] text-xs mb-1">3. To-Ticket</div>
+          <div class="text-xs text-[var(--text-muted)]">تفكيك المواصفة إلى تذاكر رأسية صغيرة ومستقلة</div>
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)]">
+          <div class="font-bold text-[var(--accent)] text-xs mb-1">4. Worktree Brief</div>
+          <div class="text-xs text-[var(--text-muted)]">إسناد كل تذكرة للوكيل في تفرع Git معزول</div>
+        </div>
+      </div>
+
+      <div class="p-4 my-4 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+        <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+          <span>🌿</span>
+          <span>سر التوازي: عزل مساحة العمل عبر Git Worktree</span>
+        </div>
+        <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+          بدلاً من فتح المحادثة للوكلاء على نفس المجلد وفرع العمل، افتح مسار عمل مستقل لكل تذكرة:
+          <code class="font-mono text-[var(--accent)]">git worktree add .worktrees/ticket-1 -b feat/ticket-1</code>.
+          ثم زوّد الوكيل بموجز مقيد <code>&lt;allowed_scope&gt;</code> يحدد الملفات المسموح بلمسها حصراً لمنع تعارضات الدمج.
+        </p>
+        <div class="text-xs text-[var(--accent)] font-semibold">
+          راجع البرومبت العام وقالب الـ Brief 8.6 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#86-برومبت-6-قالب-الـ-brief-المقيد-للتنفيذ-المتوازي-بالوكلاء-عبر-git-worktree" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 `;

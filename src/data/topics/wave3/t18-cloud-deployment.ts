@@ -204,6 +204,20 @@ SECRET_KEY=&lt;server-only-secret&gt;
 CORS_ALLOWED_ORIGINS=https://&lt;frontend-production-domain&gt;</code></pre>
     </div>
     <p class="leading-7 text-[var(--text-muted)]">أنشئ القيم الحقيقية من لوحة المزود وأداة الأسرار المناسبة، ولا تستخدم النصوص الموضوعة بين الأقواس كقيم تشغيل. لا تضع ملفاً حقيقياً مثل <code>.env</code> في Git؛ راجع أن نماذج البيئة أو السجلات لا تعرض أسراراً.</p>
+
+    <!-- AI Agent Cloud & Secrets Callout -->
+    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+        <span>☁️</span>
+        <span>توجيه الوكيل: ربط PostgreSQL المُدارة (مثل Supabase) وعزل الأسرار</span>
+      </div>
+      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+        استخدم متغيراً بيئياً موحداً <code>DATABASE_URL</code> لربط خادم Django بقاعدة بيانات Supabase المدارة، مع حظر رفع ملفات الأسرار نهائياً عبر <code>.gitignore</code> محكم.
+      </p>
+      <div class="text-xs text-[var(--accent)] font-semibold">
+        راجع البرومبت العام 8.4 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#84-برومبت-4-تجهيز-بيئة-التشغيل-السحابية-والمحلية-والأسرار-docker--supabase--env" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      </div>
+    </div>
   </div>
 
   <div class="content-block mt-8">

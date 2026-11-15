@@ -49,6 +49,20 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]</code></p
       <div class="callout-header"><span class="callout-icon">🔐</span><span>لا تضع أسرارًا في الصورة</span></div>
       <p class="leading-7">لا تستخدم <code>COPY .env</code> أو <code>ARG SECRET</code> أو <code>ENV SECRET</code> لتضمين سر في طبقة الصورة؛ قد يبقى في تاريخ الطبقات أو metadata. لأسرار البناء مثل اعتماد مستودع حزم، استخدم BuildKit secret mount. لأسرار تشغيل التطبيق، استخدم مدير أسرار منصة النشر.</p>
     </div>
+
+    <!-- AI Agent Docker & Supabase Environment Callout -->
+    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+        <span>🐳</span>
+        <span>توجيه الوكيل: توليد Docker Compose و .env.example للبيئة المحلية والمُدارة</span>
+      </div>
+      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
+        اطلب من وكيل الذكاء الاصطناعي إعداد ملف <code>docker-compose.yml</code> لتوحيد بيئة PostgreSQL و Redis محلياً، مع صياغة <code>.env.example</code> لربط Supabase السحابي وحظر تسريب الأسرار في <code>.gitignore</code>.
+      </p>
+      <div class="text-xs text-[var(--accent)] font-semibold">
+        راجع البرومبت العام 8.4 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#84-برومبت-4-تجهيز-بيئة-التشغيل-السحابية-والمحلية-والأسرار-docker--supabase--env" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      </div>
+    </div>
     <div class="code-container my-5" dir="ltr">
       <div class="code-header"><span class="code-lang">.dockerignore · backend/.dockerignore</span><button class="copy-btn" type="button" aria-label="نسخ مثال dockerignore">نسخ النص</button></div>
       <pre class="code-content"><code>.git
