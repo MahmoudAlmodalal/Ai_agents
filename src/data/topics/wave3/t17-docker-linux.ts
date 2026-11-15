@@ -50,18 +50,36 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]</code></p
       <p class="leading-7">لا تستخدم <code>COPY .env</code> أو <code>ARG SECRET</code> أو <code>ENV SECRET</code> لتضمين سر في طبقة الصورة؛ قد يبقى في تاريخ الطبقات أو metadata. لأسرار البناء مثل اعتماد مستودع حزم، استخدم BuildKit secret mount. لأسرار تشغيل التطبيق، استخدم مدير أسرار منصة النشر.</p>
     </div>
 
-    <!-- AI Agent Docker & Supabase Environment Callout -->
-    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
-      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+    <!-- AI Agent Docker, Supabase & Prompt 4 Deep Section -->
+    <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
         <span>🐳</span>
         <span>توجيه الوكيل: توليد Docker Compose و .env.example للبيئة المحلية والمُدارة</span>
       </div>
-      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
-        اطلب من وكيل الذكاء الاصطناعي إعداد ملف <code>docker-compose.yml</code> لتوحيد بيئة PostgreSQL و Redis محلياً، مع صياغة <code>.env.example</code> لربط Supabase السحابي وحظر تسريب الأسرار في <code>.gitignore</code>.
+      <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+        يحتاج فريق التطوير ووكلاء الذكاء الاصطناعي لبيئة تشغيل متطابقة لا تعتمد على ما هو مثبت على نظام التشغيل. نحقق ذلك بتوجيه الوكيل لإعداد بيئة Docker متكاملة مع Supabase وحماية الأسرار:
       </p>
-      <div class="text-xs text-[var(--accent)] font-semibold">
-        راجع البرومبت العام 8.4 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#84-برومبت-4-تجهيز-بيئة-التشغيل-السحابية-والمحلية-والأسرار-docker--supabase--env" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+
+      <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-[var(--text-muted)] leading-6 mb-3 pr-2">
+        <li><strong>حاوية PostgreSQL و Redis محلية:</strong> تشغيل الخدمات بضغطة زر عبر <code>docker compose up -d</code> لتوحيد بيئة الاختبارات.</li>
+        <li><strong>التوافق مع Supabase السحابي:</strong> كتابة كود الربط بحيث يقبل الاتصال بالحاوية المحلية أو قاعدة بيانات Supabase المدارة عبر متغير <code>DATABASE_URL</code> ومكتبة <code>dj-database-url</code>.</li>
+        <li><strong>حماية الأسرار و .gitignore:</strong> إبقاء <code>.env.example</code> كقالب نظيف وموثق داخل المستودع، وحظر رفع ملف <code>.env</code> الحقيقي أو مساحات العمل المؤقتة (<code>.worktrees/</code>).</li>
+      </ul>
+
+      <!-- Copyable Prompt 4 Box -->
+      <div class="code-container my-4" dir="ltr">
+        <div class="code-header">
+          <span class="code-lang">Prompt 4 · تجهيز بيئة التشغيل والأسرار (Docker & Supabase & .env)</span>
+          <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+        </div>
+        <pre class="code-content"><code>أنت DevOps Engineer لمشروع [اسم_مشروعك] المبني بـ Django و PostgreSQL:
+1. أنشئ ملف docker-compose.yml لتشغيل خادم PostgreSQL محلي ومخزن Redis لتوحيد بيئة عمل المطورين والوكلاء.
+2. أنشئ قالب .env.example نظيف وموثق يوضح متغيرات التشغيل الآمنة، وكيفية الاتصال بقاعدة بيانات Supabase المدارة سحابياً عبر متغير DATABASE_URL ومكتبة dj-database-url، مع إعدادات JWT ومفاتيح التطبيق دون وضع أي أسرار حقيقية.
+3. أنشئ ملف .gitignore صارم يحظر تماماً رفع .env، ملفات sqlite، مخلفات pycache، ومجلدات مساحات العمل المؤقتة (.worktrees/).</code></pre>
       </div>
+      <p class="text-xs text-[var(--text-muted)]">
+        💡 <strong>نصيحة للطالب:</strong> انسخ ملف <code>.env.example</code> إلى <code>.env</code> واملأ الرابط الحقيقي لـ Supabase ومفاتيحك محلياً فقط ولا ترفعه لـ GitHub أبداً.
+      </p>
     </div>
     <div class="code-container my-5" dir="ltr">
       <div class="code-header"><span class="code-lang">.dockerignore · backend/.dockerignore</span><button class="copy-btn" type="button" aria-label="نسخ مثال dockerignore">نسخ النص</button></div>

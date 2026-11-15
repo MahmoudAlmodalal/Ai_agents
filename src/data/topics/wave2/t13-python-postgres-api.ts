@@ -53,18 +53,52 @@ export const topic38PythonHtml = `
       </p>
     </div>
 
-    <!-- AI Agent Phased Plan Callout -->
-    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
-      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+    <!-- AI Agent Phased Plan Deep Section & Prompt 1 -->
+    <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
         <span>🤖</span>
-        <span>توجيه وكيل الذكاء الاصطناعي: صياغة خطة الفيزات لمشروعك</span>
+        <span>توجيه الوكيل: التخطيط المعماري وتقسيم فيزات الباك إند (Phased Plan)</span>
       </div>
-      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
-        لا تطلب من الذكاء الاصطناعي كتابة كود الباك إند دفعة واحدة؛ وجه الوكيل بقراءة <code>PRD.md</code> وعقود الفرونت إند لإنتاج خطة عمل معمارية <code>backend_plan.md</code> مقسمة إلى فيزات واضحة قبل البرمجة.
+      <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+        الخطأ الأكبر الذي يقع فيه المبتدئون هو قول: «ابنِ لي الواجهة الخلفية كاملاً». يؤدي ذلك لتوليد ملفات عملاقة متضاربة وانهيار نافذة السياق. نلزم الوكيل بقراءة <code>PRD.md</code> والفرونت إند وتقسيم العمل إلى <strong>7 مراحل تنفيذية مستقلة</strong>:
       </p>
-      <div class="text-xs text-[var(--accent)] font-semibold">
-        راجع البرومبت العام 8.1 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#81-برومبت-1-استكشاف-الباك-إند-وصياغة-خطة-الفيزات-لمشروعك-backend-phased-plan" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 text-xs font-semibold mb-4 text-center">
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">1. التأسيس والمشتركات (apps/common)</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">2. الحسابات والمصادقة (JWT)</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">3. الكتالوج والكيانات</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">4. المناطق والتوصيل</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">5. الطلبات وآلة الحالات</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">6. التغذية التجريبية (seed_data)</div>
+        <div class="p-2 rounded-lg bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">7. الاختبارات والتحقق الآلي</div>
+        <div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">التنفيذ المعزول لكل مرحلة</div>
       </div>
+
+      <!-- Copyable Prompt 1 Box -->
+      <div class="code-container my-4" dir="ltr">
+        <div class="code-header">
+          <span class="code-lang">Prompt 1 · برومبت استكشاف الباك إند وتقسيم الفيزات</span>
+          <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+        </div>
+        <pre class="code-content"><code>أنت مهندس معماري أول للواجهة الخلفية (Senior Backend Architect).
+أعمل على مشروع [اسم_مشروعك] في مجال [فكرة_المشروع] للمستخدمين [أدوار_المستخدمين].
+اقرأ وثائق مشروعي المتاحة في المستودع (خاصة PRD.md وعقود الواجهة الأمامية إن وُجدت).
+
+المطلوب:
+1. صياغة خطة تنفيذية شاملة للباك إند backend_plan.md مقسمة إلى مراحل متسلسلة (Phases):
+   - التأسيس والمشتركات (Common Infrastructure).
+   - المستخدمين والمصادقة والصلاحيات (Authentication & RBAC).
+   - الكيانات الأساسية للمشروع (Core Domain Entities).
+   - العمليات والمعاملات وآلة الحالات (Workflows & State Machines).
+   - التغذية التجريبية (Data Seeding).
+   - حزمة التحقق والاختبارات الآلية (Verification & QA).
+2. الالتزام الصارم بمعمارية Django الطبقية:
+   Models → Policies → Permissions → Selectors → Services → Views → Serializers → URLs
+3. حدد في كل مرحلة: مسؤوليات النماذج، السياسات، استعلامات القراءة (Selectors)، الخدمات الذرية (Services)، والمسارات.
+4. لا تكتب أي كود تنفيذي الآن؛ فقط وثق الخطة المعمارية وتوقف لانتظار مراجعتي واعتمادي.</code></pre>
+      </div>
+      <p class="text-xs text-[var(--text-muted)]">
+        💡 <strong>نصيحة للطالب:</strong> استبدل الكلمات بين الأقواس المربعة <code>[اسم_مشروعك]</code> ببيانات مشروعك، ولا تدع الوكيل يكتب كوداً حتى تعتمد ملف <code>backend_plan.md</code>.
+      </p>
     </div>
   </div>
 
@@ -501,18 +535,51 @@ class DatabaseConfig:
       </div>
     </div>
 
-    <!-- AI Agent & Supabase Integration Box -->
-    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
-      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+    <!-- Deep Data Architecture, Supabase & Prompt 2 Section -->
+    <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
         <span>🐘</span>
-        <span>توجيه الوكيل: ربط Supabase كـ Managed PostgreSQL وتوليد الـ ERD بالذكاء الاصطناعي</span>
+        <span>القرار الهندسي: حسم نوع قاعدة البيانات، استخدام Supabase، وتوليد ERD وآلة الحالات</span>
       </div>
-      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
-        نستخدم <strong>Supabase</strong> كمستودع بيانات سحابي مجاني لـ PostgreSQL ونربطه بالخادم عبر <code>DATABASE_URL</code> ومكتبة <code>dj-database-url</code> مع إبقاء التهجيرات عبر Django ORM حصراً.
+      <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+        قبل أن يبدأ الوكيل بكتابة أي نماذج (Models)، نحسم القرارات الهندسية لقاعدة البيانات وفق 3 ثوابت:
       </p>
-      <div class="text-xs text-[var(--accent)] font-semibold">
-        راجع البرومبت العام 8.2 لتوليد ERD وآلة الحالات في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#82-برومبت-2-حسم-نوع-قاعدة-البيانات-وتوليد-مخطط-العلاقات-erd--state-machine" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+      
+      <div class="space-y-3 mb-4 text-xs sm:text-sm text-[var(--text-muted)] leading-6">
+        <div class="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <strong class="text-[var(--text-main)]">1. لماذا PostgreSQL وليس NoSQL (مثل MongoDB)؟</strong>
+          <br />
+          الأنظمة التجارية والمالية وحجوزات المستخدمين تشترط خصائص <strong>ACID</strong> التامة، وقيود المفاتيح الأجنبية لمنع تيتّم السجلات (Orphaned Records)، والأقفال الذرية (Row-Level Locking عبر <code>select_for_update</code>) لمنع بيع نفس السلعة أو المقعد مرتين في نفس اللحظة.
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <strong class="text-[var(--text-main)]">2. استخدام Supabase كـ Managed PostgreSQL سحابي فقط:</strong>
+          <br />
+          نستفيد من Supabase كخادم Postgres سحابي مُدار بالكامل ومجاني، ونربطه بـ Django عبر المتغير البيئي <code>DATABASE_URL</code> ومكتبة <code>dj-database-url</code>. 
+          <span class="text-rose-400 font-bold">تحذير أمني:</span> لا تجعل الواجهة الأمامية تستدعي Supabase مباشرة كـ BaaS؛ بل خادم Django هو المالك الحصري لقاعدة البيانات والمسؤول عن التهجيرات وقواعد الصلاحيات.
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <strong class="text-[var(--text-main)]">3. المعرفات البادئة وآلة الحالات (State Machine):</strong>
+          <br />
+          نلزم الوكيل باستخدام معرفات واضحة ذات معنى (مثل <code>usr_*</code> للمستخدمين، <code>ord_*</code> للطلبات) بدلاً من الأرقام التسلسلية العشوائية، ونرسم آلة حالات الكيان الرئيسي وحالاته المغلقة نهائياً (مثل: <code>CANCELLED</code> أو <code>COMPLETED</code>).
+        </div>
       </div>
+
+      <!-- Copyable Prompt 2 Box -->
+      <div class="code-container my-4" dir="ltr">
+        <div class="code-header">
+          <span class="code-lang">Prompt 2 · حسم نوع قاعدة البيانات وتوليد ERD وآلة الحالات</span>
+          <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+        </div>
+        <pre class="code-content"><code>بصفتك مهندس بيانات أول (Senior Data Engineer) لمشروع [اسم_مشروعك]:
+1. حلل متطلبات البيانات لنظام [اسم_مشروعك]، وقارن باختصار بين قواعد البيانات العلائقية SQL (PostgreSQL) وقواعد المستندات NoSQL، واشرح سبب اختيار PostgreSQL لمشروعي من حيث المعاملات المالية/التشغيلية (ACID)، وسلامة العلاقات (Foreign Keys)، وقفل التزامن (select_for_update).
+2. أنشئ وثيقة ERD.md متضمنة مخطط Mermaid كامل لكافة الجداول والعلاقات [الكيانات_الأساسية].
+3. استخدم معرفات بادئة فريدة لكل جدول (مثل usr_*, item_*, req_*) لتسهيل التدقيق والربط.
+4. حدد قيود السلامة (Unique, Check, Not Null) وسياسات الحذف المالي/التشغيلي الصارمة (RESTRICT مقابل Soft Delete).
+5. ارسم مخطط آلة الحالات (State Machine) لدورة حياة الكيان الرئيسي [الكيان_صاحب_الحالات] موضحاً شروط كل انتقال والحالات المغلقة نهائياً.</code></pre>
+      </div>
+      <p class="text-xs text-[var(--text-muted)]">
+        💡 <strong>نصيحة للطالب:</strong> راجع ملف <code>ERD.md</code> الناتج وتأكد من أن الكيان الرئيسي له حالات واضحة (مثال: طلب قيد الانتظار -> مدفوع -> مكتمل) قبل البدء ببرمجة أي تطبيق.
+      </p>
     </div>
 
     <!-- SVG Diagram: Schema Planning vs Schema Applying Workflow -->
@@ -749,18 +816,47 @@ export const topic40ApiArchitectureHtml = `
       </div>
     </div>
 
-    <!-- AI Agent API Contracts Callout -->
-    <div class="p-4 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
-      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
+    <!-- Deep API Contracts, camelCase & Prompt 3 Section -->
+    <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+      <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
         <span>📜</span>
-        <span>توجيه الوكيل: صياغة عقود API.md وغلاف الاستجابة الموحد</span>
+        <span>صياغة عقود الـ API ومطابقة واجهة Next.js وغلاف الاستجابة الموحد</span>
       </div>
-      <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
-        لا تبدأ بكتابة الـ Views أو المسارات يدوياً؛ وجه وكيل الذكاء الاصطناعي لاشتقاق عقود <code>API.md</code> من الـ ERD والفرونت إند، وإلزامه بنمط <code>camelCase</code> وغلاف الاستجابة الموحد <code>{ success, data, error, meta }</code>.
+      <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+        عند ربط فرونت إند مبني بـ Next.js و TypeScript مع باك إند بايثون، تظهر مشكلتان شهيرتان تحلهما عقود <code>API.md</code> الصارمة:
       </p>
-      <div class="text-xs text-[var(--accent)] font-semibold">
-        راجع البرومبت العام 8.3 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#83-برومبت-3-صياغة-وتوليد-عقود-الـ-api-ومطابقة-الفرونت-إند-apimd" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs sm:text-sm text-[var(--text-muted)] leading-6">
+        <div class="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <strong class="text-[var(--text-main)]">1. أزمة تسمية الحقول (camelCase مقابل snake_case):</strong>
+          <br />
+          جافاسكريبت والفرونت تستخدم <code>camelCase</code> (مثل <code>totalPrice</code> و <code>createdAt</code>)، بينما بايثون تستخدم <code>snake_case</code>. بدلاً من التحويل اليدوي العقيم، نلزم الوكيل بتفعيل <code>CamelCaseJSONRenderer</code> و <code>CamelCaseJSONParser</code> ليتولى التحويل التلقائي في كافة المسارات.
+        </div>
+        <div class="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <strong class="text-[var(--text-main)]">2. غلاف الاستجابة الموحد (Unified Envelope):</strong>
+          <br />
+          لا تدع كل دالة تعيد شكلاً مختلفاً؛ في حالة النجاح نلتزم بـ <code>{ success: true, data: ..., meta: ... }</code> وفي الخطأ <code>{ success: false, error: { code, message, details } }</code> ليتعامل الفرونت إند مع الأخطاء بيسر.
+        </div>
       </div>
+
+      <!-- Copyable Prompt 3 Box -->
+      <div class="code-container my-4" dir="ltr">
+        <div class="code-header">
+          <span class="code-lang">Prompt 3 · صياغة وتوليد عقود الـ API ومطابقة الفرونت إند</span>
+          <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+        </div>
+        <pre class="code-content"><code>أنت Backend API Designer لمشروع [اسم_مشروعك].
+بناءً على وثيقة ERD.md ومتطلبات النظام:
+1. أنشئ ملف API.md يوثق مسارات RESTful لجميع المستخدمين [أدوار_المستخدمين].
+2. اعتمد غلاف الاستجابة الموحد (Unified Response Envelope):
+   - في حالة النجاح: { "success": true, "data": ..., "meta": ... }
+   - في حالة الخطأ: { "success": false, "error": { "code": "...", "message": "...", "details": [...] } }
+3. الزم جميع المدخلات والمخرجات بصيغة camelCase لمطابقة واجهة المستخدم مع الحفاظ على كود استجابة HTTP دقيق لكل عملية.
+4. وثق مصفوفة الصلاحيات (RBAC Matrix): من يملك حق استدعاء كل Endpoint بحسب أدواره.</code></pre>
+      </div>
+      <p class="text-xs text-[var(--text-muted)]">
+        💡 <strong>نصيحة للطالب:</strong> احفظ المخرجات في ملف <code>docs/API.md</code> واستخدمه كمرجع دائم للتحقق قبل كتابة أي كود في الفرونت أو الباك.
+      </p>
     </div>
   </div>
 

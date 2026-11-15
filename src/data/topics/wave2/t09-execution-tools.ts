@@ -582,11 +582,11 @@ When generating or modifying frontend code:
       </div>
     </div>
 
-    <!-- 4. Parallel Agent Pipeline & Git Worktrees -->
+    <!-- 4. Parallel Agent Pipeline, Skills Ecosystem & Git Worktrees -->
     <div class="content-block mt-8">
-      <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. مسار موازاة الوكلاء وعزل مساحات العمل بـ Git Worktrees</h3>
+      <h3 class="text-xl font-black text-[var(--text-main)] mb-3">4. مسار موازاة الوكلاء، حزم المهارات المعتمدة، وعزل مساحات العمل</h3>
       <p class="leading-8 text-[var(--text-muted)]">
-        لتشغيل عدة وكلاء ذكاء اصطناعي في نفس الوقت لبناء أجزاء مختلفة من المشروع دون تضارب أو تخريب متبادل للكود، نتبع دورة حياة <strong>Matt Pocock</strong> الهندسية المنضبطة:
+        لتشغيل عدة وكلاء ذكاء اصطناعي في نفس الوقت لبناء أجزاء مختلفة من المشروع دون تضارب أو تخريب متبادل للكود، نعتمد على منظومة متكاملة من حزمتي مهارات مفتوحتي المصدر وعزل مساحات العمل عبر <strong>Git Worktrees</strong>:
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-3 my-4 text-center">
@@ -608,18 +608,134 @@ When generating or modifying frontend code:
         </div>
       </div>
 
-      <div class="p-4 my-4 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
-        <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-sm sm:text-base">
-          <span>🌿</span>
-          <span>سر التوازي: عزل مساحة العمل عبر Git Worktree</span>
+      <!-- Skills Ecosystem: Matt Pocock & Amr Elnagdy -->
+      <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+        <h4 class="font-bold text-[var(--accent)] text-base mb-3 flex items-center gap-2">
+          <span>📦</span>
+          <span>حزم المهارات الأساسية: التثبيت والاستخدام المباشر</span>
+        </h4>
+
+        <!-- 1. Matt Pocock Skills -->
+        <div class="mb-5 p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <div class="font-bold text-sm text-[var(--text-main)] mb-1">
+            1. مهارات مات بوكوك (mattpocock/skills): دورة Idea-to-Ship
+          </div>
+          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-6 mb-2">
+            حزمة مهارات برمجية لفرض الانضباط الهندسي ونقل الفكرة إلى كود مشحون عبر أوامر: <code>/grill-me</code> (استجواب الفكرة وتوثيق ADRs)، ثم <code>/to-spec</code> (صياغة المواصفة الرسمية)، ثم <code>/to-tickets</code> (تفكيك المهام لتذاكر رأسية)، ثم <code>/implement</code> (التنفيذ بأسلوب TDD).
+          </p>
+          <div class="code-container my-2" dir="ltr">
+            <div class="code-header">
+              <span class="code-lang">Bash · أمر التثبيت الشامل لمهارات Matt Pocock</span>
+              <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ الأمر';},2000);})" aria-label="نسخ أمر تثبيت مهارات مات بوكوك">نسخ الأمر</button>
+            </div>
+            <pre class="code-content"><code># التثبيت عبر أداة المهارات العالمية:
+npx skills@latest add mattpocock/skills
+
+# أو استنساخ المستودع يدوياً لمشروعك:
+git clone https://github.com/mattpocock/skills.git /tmp/mattpocock-skills
+mkdir -p .agents/skills && cp -r /tmp/mattpocock-skills/.agents/skills/* .agents/skills/</code></pre>
+          </div>
         </div>
-        <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-2">
-          بدلاً من فتح المحادثة للوكلاء على نفس المجلد وفرع العمل، افتح مسار عمل مستقل لكل تذكرة:
-          <code class="font-mono text-[var(--accent)]">git worktree add .worktrees/ticket-1 -b feat/ticket-1</code>.
-          ثم زوّد الوكيل بموجز مقيد <code>&lt;allowed_scope&gt;</code> يحدد الملفات المسموح بلمسها حصراً لمنع تعارضات الدمج.
+
+        <!-- 2. Amr Elnagdy Delegate Skills -->
+        <div class="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)]">
+          <div class="font-bold text-sm text-[var(--text-main)] mb-1">
+            2. مهارات التفويض الموازي لعمرو النجدي (amElnagdy/delegate-skills)
+          </div>
+          <p class="text-xs sm:text-sm text-[var(--text-muted)] leading-6 mb-2">
+            تمكنك من لعب دور المنسق والمراجع (Orchestrator)، وتفويض كتابة الكود لأدوات الـ CLI (مثل <code>agy</code> أو <code>claude</code> أو <code>cursor-agent</code> أو <code>aider</code>) في الخلفية داخل مساحات عمل منعزلة دون لمس فرعك الرئيسي.
+          </p>
+          <div class="code-container my-2" dir="ltr">
+            <div class="code-header">
+              <span class="code-lang">Bash · أمر التثبيت والاكتشاف لمهارات Delegate</span>
+              <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ الأمر';},2000);})" aria-label="نسخ أمر تثبيت مهارات التفويض">نسخ الأمر</button>
+            </div>
+            <pre class="code-content"><code># التثبيت عبر أداة المهارات العالمية:
+npx skills@latest add amElnagdy/delegate-skills
+
+# أو التثبيت اليدوي في بيئة Antigravity المحلية:
+git clone https://github.com/amElnagdy/delegate-skills.git /tmp/delegate-skills
+mkdir -p ~/.gemini/config/skills && cp -r /tmp/delegate-skills/skills/* ~/.gemini/config/skills/
+
+# تشغيل فحص واكتشاف أدوات الـ CLI المثبتة وإعداد المسارات (Lanes):
+node ~/.gemini/config/skills/delegate-setup/scripts/discover.mjs</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Git Worktree Isolation & Brief Template -->
+      <div class="p-5 my-6 rounded-2xl border border-[var(--accent)] bg-[var(--bg-card)]">
+        <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
+          <span>🌿</span>
+          <span>سر التوازي: عزل مساحة العمل عبر Git Worktree وقالب الـ Brief المقيد</span>
+        </div>
+        <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)] mb-3">
+          بدلاً من فتح المحادثة للوكلاء على نفس المجلد وفرع العمل، افتح مسار عمل مستقل لكل تذكرة، ثم زوّد الوكيل بموجز مقيد <code>&lt;allowed_scope&gt;</code> يحدد الملفات المسموح بلمسها حصراً مع منعه من عمل Commit:
         </p>
-        <div class="text-xs text-[var(--accent)] font-semibold">
-          راجع البرومبت العام وقالب الـ Brief 8.6 في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#86-برومبت-6-قالب-الـ-brief-المقيد-للتنفيذ-المتوازي-بالوكلاء-عبر-git-worktree" class="underline font-bold">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>
+
+        <!-- Terminal Worktree Commands -->
+        <div class="code-container my-3" dir="ltr">
+          <div class="code-header">
+            <span class="code-lang">Bash · خطوات عزل وتفويض ودمج مسار العمل (Worktree Loop)</span>
+            <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ الأوامر';},2000);})" aria-label="نسخ أوامر مسار العمل">نسخ الأوامر</button>
+          </div>
+          <pre class="code-content"><code># 1. إنشاء مساحة عمل معزولة وتفرع جديد للتذكرة
+git worktree add .worktrees/ticket-1 -b feat/ticket-1
+
+# 2. تشغيل الوكيل في الخلفية عبر الـ Relay وتمرير الـ Brief المقيد
+node ~/.gemini/config/skills/agy-delegate/scripts/relay.mjs \
+  --brief .briefs/ticket-1.txt \
+  --cd .worktrees/ticket-1
+
+# 3. مراجعة الفروقات والتحقق والاختبارات
+git -C .worktrees/ticket-1 diff
+python manage.py test
+
+# 4. دمج التعديلات وحذف مساحة العمل المؤقتة بأمان
+git merge feat/ticket-1
+git worktree remove .worktrees/ticket-1</code></pre>
+        </div>
+
+        <!-- Copyable Brief Template -->
+        <div class="code-container my-4" dir="ltr">
+          <div class="code-header">
+            <span class="code-lang">XML · قالب موجز الوكيل المقيد (Bounded Brief Template)</span>
+            <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ قالب الـ Brief';},2000);})" aria-label="نسخ قالب الـ Brief">نسخ قالب الـ Brief</button>
+          </div>
+          <pre class="code-content"><code>نفّذ التذكرة البرمجية التالية بدقة داخل مسار Git Worktree المخصص لك:
+
+<goal>
+تنفيذ تذكرة [اسم_التذكرة] لتطبيق [اسم_التطبيق] في مشروع [اسم_مشروعك] طبقاً لـ API.md و ERD.md.
+</goal>
+
+<context>
+نلتزم بمعمارية Django الطبقية الصارمة مع CQS وعزل القراءة عن الكتابة والغلاف الموحد للاستجابات.
+</context>
+
+<allowed_scope>
+backend/apps/[اسم_التطبيق]/
+backend/apps/[اسم_التطبيق]/tests/
+</allowed_scope>
+
+<forbidden_scope>
+backend/config/
+backend/apps/common/
+أو أي مجلد خارج نطاق [اسم_التطبيق]
+</forbidden_scope>
+
+<instructions>
+1. راجع النماذج والمحددات والخدمات والسياسات والواجهات المطلوبة لهذه التذكرة فقط.
+2. نفذ الكود بدقة متناهية مع معالجة حالات الأخطاء وتوثيق الاستثناءات.
+3. اكتب اختبارات الوحدة السلوكية للتأكد من نجاح العمليات وصحة رموز HTTP.
+</instructions>
+
+<verification>
+python manage.py test apps.[اسم_التطبيق].tests
+</verification>
+
+<contract>
+ممنوع عمل Git Commit إطلاقاً؛ قدم ملخصاً بالتعديلات ونتائج الاختبارات والمنسق البشري هو من يراجع ويدمج الفرع.
+</contract></code></pre>
         </div>
       </div>
     </div>

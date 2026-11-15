@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { ArrowLeft, ListOrdered, LayoutGrid, Search, Sparkles } from 'lucide-react';
+import { ArrowLeft, ListOrdered, LayoutGrid, Search, Sparkles, Sliders } from 'lucide-react';
 import type { PromptLibraryRecord, PromptSourceGroup } from '@/src/lib/promptLibrary';
+import { PromptCustomizerWidget } from '@/src/components/PromptCustomizerWidget';
 
 type TopicFilter = 'all' | 'available' | 'pending';
 type ViewMode = 'list' | 'grid';
@@ -51,6 +52,7 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
   const [sourceGroup, setSourceGroup] = useState<PromptSourceGroup | 'all'>('all');
   const [topicFilter, setTopicFilter] = useState<TopicFilter>('all');
   const [view, setView] = useState<ViewMode>('list');
+  const [mainTab, setMainTab] = useState<'catalog' | 'scaffolding'>('catalog');
 
   const categories = useMemo(() => Array.from(new Set(prompts.map((prompt) => prompt.category))).sort(), [prompts]);
   const operations = useMemo(() => Array.from(new Set(prompts.map((prompt) => prompt.operation))).sort(), [prompts]);
@@ -111,7 +113,39 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
         </p>
       </header>
 
-      <section className="mb-7 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 sm:p-5" aria-label="البحث والتصفية">
+      {/* Main Mode Tabs */}
+      <div className="mb-6 flex border-b border-[var(--border-color)]">
+        <button
+          type="button"
+          onClick={() => setMainTab('catalog')}
+          className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition ${
+            mainTab === 'catalog'
+              ? 'border-emerald-500 text-emerald-400'
+              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]'
+          }`}
+        >
+          <Sparkles className="h-4 w-4" />
+          <span>كتالوج برومبتات المسار ({prompts.length})</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMainTab('scaffolding')}
+          className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition ${
+            mainTab === 'scaffolding'
+              ? 'border-emerald-500 text-emerald-400'
+              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-main)]'
+          }`}
+        >
+          <Sliders className="h-4 w-4" />
+          <span>السقالات التفاعلية ومولّد الباك إند (9)</span>
+        </button>
+      </div>
+
+      {mainTab === 'scaffolding' ? (
+        <PromptCustomizerWidget />
+      ) : (
+        <div className="space-y-6">
+          <section className="mb-7 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 sm:p-5" aria-label="البحث والتصفية">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <label className="relative sm:col-span-2 lg:col-span-2">
             <span className="sr-only">ابحث في البرومبتات</span>
@@ -273,6 +307,8 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
           <p className="mt-2 text-sm text-[var(--text-muted)]">غيّر كلمات البحث أو أعد ضبط خيارات التصفية.</p>
           <button type="button" onClick={resetFilters} className="mt-4 rounded-lg border border-[var(--border-color)] px-4 py-2 text-sm font-bold text-[var(--text-main)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">إعادة ضبط البحث والتصفية</button>
         </div>
+      )}
+      </div>
       )}
     </div>
   );

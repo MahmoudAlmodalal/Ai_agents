@@ -213,4 +213,42 @@ test.describe('Prompt Library Journey', () => {
     const raw = await page.evaluate(() => localStorage.getItem('ai-agents-prompt-customizations-v1'));
     expect(raw).toBe('{ broken json content');
   });
+
+  test('customizes prompt with interactive variables, previews live, syncs project profile, and copies', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/prompts/prompt-01-grill-me-product-discovery');
+
+    // Switch to variables tab
+    await page.getByRole('button', { name: 'تخصيص بالمتغيرات' }).click();
+    await expect(page.getByRole('heading', { level: 2, name: 'تخصيص البرومبت لمشروعك بالمتغيرات' })).toBeVisible();
+
+    // Fill in a custom project name
+    const projectNameInput = page.getByLabel('اسم المشروع');
+    await projectNameInput.fill('منصة طبيبي الذكي للعيادات');
+
+    // Verify live preview updates immediately
+    const livePreview = page.locator('pre').last();
+    await expect(livePreview).toContainText('منصة طبيبي الذكي للعيادات');
+    await expect(livePreview).toContainText('Act as a Senior Product Manager and Business Analyst.');
+
+    // Copy customized prompt
+    await page.getByRole('button', { name: 'نسخ البرومبت المخصص' }).click();
+    await expect(page.getByRole('status')).toContainText('تم نسخ البرومبت المخصص لمشروعك بنجاح.');
+    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+    expect(clipboardText).toContain('منصة طبيبي الذكي للعيادات');
+
+    // Navigate to Prompt 16 and verify global variable syncs automatically
+    await page.goto('/prompts/prompt-16-project-specific-stitch-master-prompt-generator');
+    await expect(page.getByRole('heading', { level: 1, name: 'برومبت Stitch الرئيسي للمشروع' })).toBeVisible();
+    await page.getByRole('button', { name: /تخصيص بالمتغيرات/ }).click();
+    const prompt16NameInput = page.getByLabel('اسم المشروع');
+    await expect(prompt16NameInput).toHaveValue('منصة طبيبي الذكي للعيادات');
+    await expect(page.locator('pre').last()).toContainText('منصة طبيبي الذكي للعيادات');
+
+    // Test transferring to manual free-form custom editor
+    await page.getByRole('button', { name: 'نقل إلى التخصيص الحر للتعديل اليدوي' }).click();
+    const customEditor = page.getByLabel('تخصيص منفصل؛ يمكنك الرجوع إلى النص الأصلي في أي وقت');
+    await expect(customEditor).toBeVisible();
+    await expect(customEditor).toContainText('منصة طبيبي الذكي للعيادات');
+  });
 });

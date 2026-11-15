@@ -605,4 +605,31 @@ python manage.py test apps.[APP_NAME].tests
 </contract>
 ```
 
+---
+
+## 9. كتيب الطوارئ واستعادة التوازن وحل المشكلات الشائعة (Troubleshooting Playbook)
+
+عندما ينحرف أحد الوكلاء عن المعمارية الطبقية أو يواجه بيئة التشغيل أخطاء اتصال أو CORS أو تضارب تهجيرات، لا تعيد بناء المشروع من الصفر؛ استخدم أدوات التدخل السريع المعتمدة:
+
+### 9.1 برومبت إعادة الضبط المعماري الصارم (Emergency Architecture Reset)
+إذا وضع الوكيل استعلامات داخل الـ Views أو كتب داخل الـ Selectors:
+```text
+توقف فوراً! (HALT IMMEDIATELY)
+لقد انحرفت عن المعمارية الطبقية الصارمة المعتمدة لمشروع [PROJECT_NAME].
+1. احذف أي استعلامات أو تعديلات من داخل views.py فوراً وانقل القراءة إلى selectors.py.
+2. انقل كافة عمليات التعديل والإنشاء إلى services.py داخل transaction.atomic().
+3. التزم بكون الـ View مقتصرة على الاستدعاء والتوجيه للغلاف الموحد بصيغة camelCase.
+```
+
+### 9.2 حل أشهر 5 أخطاء بيئة وتشغيل (Top 5 Runtime Fixes)
+راجع جدول الاستجابة السريعة والبرومبتات العلاجية في:
+[دليل برومبتات الباك إند الميسرة docs/STUDENT_BACKEND_PROMPTS_GUIDE.md#كتيب-الطوارئ-واستعادة-التوازن-عند-انحراف-الوكيل-emergency-reset--troubleshooting-playbook](file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/STUDENT_BACKEND_PROMPTS_GUIDE.md#كتيب-الطوارئ-واستعادة-التوازن-عند-انحراف-الوكيل-emergency-reset--troubleshooting-playbook)
+ويشمل الحلول الفورية لـ:
+1. فشل اتصال قاعدة البيانات (`OperationalError`).
+2. حظر طلبات المتصفح (`CORS Policy`).
+3. تضارب ملفات التهجير الموازية (`Migration Conflicts`).
+4. اختناق استعلامات N+1 وتكرار الاستعلامات.
+5. أخطاء رفض الصلاحيات والتوكن (`403 Forbidden`).
+
+
 

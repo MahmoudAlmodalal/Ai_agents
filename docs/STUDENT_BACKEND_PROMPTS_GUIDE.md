@@ -170,6 +170,42 @@ Models → Policies → Permissions → Selectors → Services → Views → Ser
 
 ---
 
+## كتيب الطوارئ واستعادة التوازن عند انحراف الوكيل (Emergency Reset & Troubleshooting Playbook)
+
+### 1. برومبت إعادة الضبط المعماري الصارم (Emergency Architecture Reset Prompt)
+* **الموقف:** عندما يبدأ الوكيل في حشو المنطق داخل الـ View، أو يضع استعلامات كتابة داخل الـ Selectors، أو يتجاوز النطاق المصرح له.
+* **الهدف:** إيقاف الوكيل فوراً، وإلزامه بحذف المنطق الشاذ وإعادة توزيعه على الطبقات المعتمدة (Models → Selectors → Services → Views).
+
+```text
+توقف فوراً! (HALT IMMEDIATELY)
+لقد انحرفت عن المعمارية الطبقية الصارمة المعتمدة لمشروع [PROJECT_NAME].
+المخالفات المرصودة في كودك:
+- تم اكتشاف منطق كتابة أو استعلامات ORM داخل ملفات غير مخصصة لها (Fat Views / Dirty Selectors).
+
+المطلوب منك الآن تصحيحه بدقة وحسم:
+1. احذف أي استعلامات أو عمليات تعديل قاعدة بيانات من داخل views.py أو serializers.py فوراً.
+2. انقل كافة استعلامات القراءة البحتة إلى selectors.py وتأكد من تفعيل select_related / prefetch_related للقضاء على استعلامات N+1.
+3. انقل كافة عمليات التعديل والإنشاء والحذف إلى services.py وغلفها بالكامل داخل transaction.atomic() مع تطبيق أقفال select_for_update للموارد المتزامنة.
+4. اجعل الـ Views مقتصرة حصرياً على استقبال الطلب، التحقق السطحي، استدعاء الـ Service أو الـ Selector، وتمرير الناتج في الغلاف الموحد بصيغة camelCase.
+5. لا تقم بتعديل أي ملفات خارج نطاق [APP_NAME]، وقدم تقرير تصحيح مختصر يؤكد خلو ملف الـ View من أي منطق تجاري.
+```
+
+---
+
+### 2. جدول حل أشهر 5 أخطاء بيئة وتشغيل (Top 5 Runtime & Environment Troubleshooting)
+
+عند مواجهة أي من هذه الأخطاء المتكررة، انسخ البرومبت العلاجي الفوري ومرره للوكيل في بيئة التطوير:
+
+| الخطأ / العَرَض | السبب الجذري | البرومبت العلاجي الفوري |
+| :--- | :--- | :--- |
+| **1. فشل الاتصال بقاعدة البيانات**<br>`django.db.utils.OperationalError: could not connect to server` | توقف حاوية PostgreSQL أو عدم تطابق المنفذ 5432 أو خطأ في متغير `DATABASE_URL` داخل `.env`. | `أواجه خطأ OperationalError: could not connect to server. افحص ملف docker-compose.yml للتأكد من حالة حاوية Postgres ومنفذها 5432، وافحص ملف .env وتأكد من قراءة DATABASE_URL عبر dj-database-url، وأعطني أمر تشغيل الحاوية والتحقق من جاهزيتها.` |
+| **2. حظر طلبات المتصفح بسبب CORS**<br>`Access to fetch at '...' blocked by CORS policy` | عدم تثبيت أو تفعيل `django-cors-headers` أو غياب رابط خادم Next.js (http://localhost:3000) من `CORS_ALLOWED_ORIGINS`. | `أواجه خطأ CORS Policy عند استدعاء الواجهة من Next.js (localhost:3000). راجع إعدادات settings.py في Django وتأكد من إضافة corsheaders إلى INSTALLED_APPS و CorsMiddleware في أعلى قائمة MIDDLEWARE، وأضف http://localhost:3000 و 127.0.0.1:3000 إلى CORS_ALLOWED_ORIGINS مع تفعيل CORS_ALLOW_CREDENTIALS = True.` |
+| **3. تضارب ملفات التهجير وتاريخها**<br>`InconsistentMigrationHistory` أو `Conflicting migrations` | إنشاء ملفات تهجير موازية من قبل وكلاء متعددين أو تعديل النماذج دون تسلسل زمني صحيح. | `أواجه تضارب في ملفات التهجير (Migration Conflict) في تطبيق [APP_NAME]. لا تحذف قاعدة البيانات! قم بفحص ملفات migrations داخل التطبيق، وحدد التفرعات المتضاربة، واصنع ملف دمج عبر python manage.py makemigrations --merge أو أعد ترقيم التبعيات (dependencies) لتصبح متسلسلة خطياً بأمان.` |
+| **4. اختناق استعلامات N+1 في السجلات**<br>`Duplicate queries on related tables` | استدعاء خصائص الجداول المرتبطة داخل حلقات تكرار (Loops) أو داخل Serializers دون تحميل مسبق. | `اكتشف تقرير المراجعة وجود استعلامات N+1 مكررة عند جلب كيانات [CORE_ENTITIES]. افحص دوال selectors.py الخاصة بالتطبيق، وأضف select_related للعلاقات الفردية (ForeignKey/OneToOne) و prefetch_related للعلاقات المتعددة (ManyToMany/Reverse FK)، وأكد انخفاض عدد الاستعلامات إلى استعلام واحد أو اثنين فقط.` |
+| **5. رفض الوصول بالصلاحيات (403 Forbidden)**<br>`Authentication credentials were not provided` | عدم إرسال رأس التفويض `Authorization: Bearer <token>` من الواجهة أو انتهاء صلاحية JWT أو عدم ملاءمة فئة الصلاحية `IsAuthenticated`. | `أحصل على استجابة 403 Forbidden عند اختبار مسار في [APP_NAME]. افحص ملف permissions.py والـ View المعنية، وتأكد من آلية استخراج وفحص توكن JWT، وكيفية إرسال رأس Authorization: Bearer من الفرونت إند، وصيغة رسالة الخطأ في الغلاف الموحد: { "success": false, "error": { "code": "PERMISSION_DENIED", ... } }.` |
+
+---
+
 ### ملحق: قالب الـ Brief المقيد لتشغيل الوكلاء المتوازيين عبر Git Worktrees
 عند توزيع المهام على وكلاء ذكاء اصطناعي متعددين في نفس الوقت، احفظ هذا الموجز في ملف نصي (مثلاً `.briefs/task.txt`) وشغّل الوكيل في مسار فرعي معزول (`git worktree add .worktrees/task-1 -b feat/task-1`):
 

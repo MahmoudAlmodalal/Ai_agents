@@ -63,7 +63,7 @@ export default async function PromptDetailPage({ params }: { params: Promise<{ s
         <p className="mt-4 text-xs leading-6 text-[var(--text-muted)]">المصدر: {prompt.sourceLabel}</p>
       </header>
 
-      <PromptCopyPanel promptSlug={prompt.slug} body={prompt.body} />
+      <PromptCopyPanel promptSlug={prompt.slug} body={prompt.body} titleAr={prompt.titleAr} />
 
       <section className="mt-6 grid gap-4 sm:grid-cols-2">
         <DetailList title="المدخلات" items={prompt.inputFiles} />

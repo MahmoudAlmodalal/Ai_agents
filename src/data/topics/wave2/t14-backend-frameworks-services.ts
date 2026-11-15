@@ -37,18 +37,128 @@ export const topic41DjangoHtml = `
   <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
     <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
       <span>🚀</span>
-      <span>الدليل المرجعي لمعمارية Django الاحترافية وتوجيه وكلاء الذكاء الاصطناعي</span>
+      <span>المعمارية النظيفة للباك إند: نمط الطبقات الثمانية (Django 8-Layer Architecture)</span>
     </div>
     <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
-      تم توثيق الدليل التفصيلي الشامل لبناء خادم مشروعك بالاعتماد على قاعدة بيانات <strong>Supabase (Managed PostgreSQL)</strong>، وبيئة <strong>Docker Compose</strong>، وتقسيم الطبقات الصارم لمنع الـ Fat Views:
+      في مشاريع هندسة البرمجيات بالذكاء الاصطناعي، يؤدي النمط التقليدي (وضع الاستعلامات وقواعد العمل داخل <code>views.py</code>) إلى فوضى عارمة تسمى <strong>الواجهات البدينة (Fat Views)</strong>، حيث ينهار الكود عند أي تعديل. لحماية مشروعك وضمان دقة الوكلاء بنسبة 100%، نعتمد نمط الطبقات الثمانية الصارم:
     </p>
-    <div class="p-3 bg-[var(--bg-card-subtle)] rounded-xl font-mono text-xs sm:text-sm text-[var(--accent)] text-center mb-3" dir="ltr">
+
+    <!-- Visual Layer Flow -->
+    <div class="p-3 bg-[var(--bg-card-subtle)] rounded-xl font-mono text-xs sm:text-sm text-[var(--accent)] text-center mb-4 overflow-x-auto" dir="ltr">
       Models → Policies → Permissions → Selectors → Services → Views → Serializers → URLs
     </div>
-    <p class="text-xs sm:text-sm leading-6 text-[var(--text-muted)]">
-      للاطلاع على البرومبت العام 8.5 لتوجيه الوكيل لبناء تطبيقات مشروعك خطوة بخطوة بالطبقات الثمانية، راجع:
-      <br />
-      <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md#85-برومبت-5-توجيه-الوكيل-لبناء-تطبيق-محدد-وفق-معمارية-django-الطبقية-الصارمة" class="underline font-bold text-[var(--accent)]">docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md (القسم 8.5)</a>
+
+    <!-- Analogy Box for Beginners -->
+    <div class="p-3 mb-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs sm:text-sm leading-6 text-[var(--text-muted)]">
+      <strong class="text-amber-300">💡 تشبيه المطعم لتبسيط الطبقات للمبتدئين:</strong>
+      <ul class="list-disc list-inside space-y-1 mt-1 pr-2">
+        <li><strong>Views (النحيفة):</strong> مثل كاشير الاستقبال؛ يستلم الطلب ويفحص الصلاحيات ويوجهه للجهة المختصة دون أن يتدخل في الطبخ.</li>
+        <li><strong>Selectors (المحددات):</strong> مثل قائمة الطعام (المنيو)؛ استعلامات قراءة فقط خالية من أي تعديل (CQS Read) لمنع استعلامات N+1.</li>
+        <li><strong>Services (الخدمات):</strong> مثل المطبخ الحقيقي؛ المسؤول الوحيد عن التعديل والكتابة الذرية (CQS Write) داخل <code>transaction.atomic()</code> مع أقفال التزامن.</li>
+        <li><strong>Policies (السياسات):</strong> مثل لوائح الإدارة؛ دوال بايثون نقية تجيب بـ نعم/لا على قواعد العمل (مثل: هل يحق للعميل الإلغاء؟).</li>
+      </ul>
+    </div>
+
+    <!-- Table of 8 Layers -->
+    <div class="table-container my-4">
+      <table class="data-table text-xs sm:text-sm">
+        <thead>
+          <tr>
+            <th>الطبقة</th>
+            <th>الملف</th>
+            <th>المسؤولية الإلزامية</th>
+            <th>ما يُمنع منعاً باتاً</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Models</strong></td>
+            <td><code>models.py</code></td>
+            <td>تعريف الجداول والحقول والقيود والمفاتيح الأجنبية</td>
+            <td>كتابة استعلامات معقدة أو منطق عمل تجاري</td>
+          </tr>
+          <tr>
+            <td><strong>Policies</strong></td>
+            <td><code>policies.py</code></td>
+            <td>دوال بايثون نقية تفصل في إمكانية الإجراء منطقياً</td>
+            <td>التعامل مع كائنات HTTP Request أو الجلسات</td>
+          </tr>
+          <tr>
+            <td><strong>Permissions</strong></td>
+            <td><code>permissions.py</code></td>
+            <td>فحص هوية المشغل وصلاحيات الـ HTTP وأدواره</td>
+            <td>استبدال سياسات الكيانات بقواعد عامة</td>
+          </tr>
+          <tr>
+            <td><strong>Selectors</strong></td>
+            <td><code>selectors.py</code></td>
+            <td>استعلامات القراءة فقط مع select/prefetch_related</td>
+            <td><strong>أي تعديل أو كتابة (Write) إطلاقاً</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Services</strong></td>
+            <td><code>services.py</code></td>
+            <td>كافة عمليات الكتابة والتعديل داخل transaction.atomic</td>
+            <td>إرجاع استجابات HTTP أو التعامل مع القوالب</td>
+          </tr>
+          <tr>
+            <td><strong>Views</strong></td>
+            <td><code>views.py</code></td>
+            <td>تنسيق نحيف (Thin Views) يستدعي Service أو Selector</td>
+            <td>كتابة استعلامات ORM أو منطق تحويل بيانات</td>
+          </tr>
+          <tr>
+            <td><strong>Serializers</strong></td>
+            <td><code>serializers.py</code></td>
+            <td>التحقق من صحة المدخلات وتمثيل البيانات للـ JSON</td>
+            <td>إجراء استعلامات ثقيلة أو تعديل قاعدة البيانات</td>
+          </tr>
+          <tr>
+            <td><strong>URLs</strong></td>
+            <td><code>urls.py</code></td>
+            <td>تسجيل المسارات وتوجيهها للـ Views النحيفة</td>
+            <td>احتواء أي منطق برمجي تنفيذي</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Copyable Prompt 5 Box (apps/common) -->
+    <div class="code-container my-4" dir="ltr">
+      <div class="code-header">
+        <span class="code-lang">Prompt 5 · بناء البنية المشتركة والمعالجة المركزية (apps/common)</span>
+        <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+      </div>
+      <pre class="code-content"><code>أنت Senior Django Developer لمشروع [اسم_مشروعك]:
+1. أنشئ تطبيق المشتركات apps/common ليكون الأساس لجميع تطبيقات المشروع اللاحقة.
+2. أنشئ معالج استثناءات مخصص custom_exception_handler يضمن إرجاع كافة الأخطاء (ValidationError, Http404, PermissionDenied, وغيرها) في الغلاف الموحد:
+   { "success": false, "error": { "code": "...", "message": "...", "details": [...] } }
+3. فعّل محول الأسماء التلقائي CamelCaseJSONRenderer و CamelCaseJSONParser لتحويل snake_case إلى camelCase والعكس تلقائياً.
+4. أنشئ فئة ترقيم قياسية StandardResultsSetPagination تعيد البيانات مع بيانات الصفحات (page, limit, totalItems, totalPages).
+5. لا تكتب أي منطق خاص بالميزات التجارية في هذا التطبيق.</code></pre>
+    </div>
+
+    <!-- Copyable Prompt 6 Box (apps/[APP_NAME]) -->
+    <div class="code-container my-4" dir="ltr">
+      <div class="code-header">
+        <span class="code-lang">Prompt 6 · بناء تطبيق محدد بالمعمارية الطبقية الصارمة</span>
+        <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+      </div>
+      <pre class="code-content"><code>أنت Senior Django Developer مكلف ببناء التطبيق [اسم_التطبيق] لمشروع [اسم_مشروعك].
+تلتزم إلزاماً صارماً بنمط المعمارية التالي:
+Models → Policies → Permissions → Selectors → Services → Views → Serializers → URLs
+
+المطلوب تنفيذه في [اسم_التطبيق]:
+1. النماذج في models.py: الحقول، القيود، والمفاتيح الأجنبية طبقاً لـ ERD.md.
+2. المحددات في selectors.py: استعلامات القراءة فقط (CQS Read) مع تفعيل select_related و prefetch_related للقضاء على استعلامات N+1 (يُمنع منعاً باتاً أي تعديل أو كتابة داخل الـ Selectors).
+3. الخدمات في services.py: كافة عمليات الإنشاء والتعديل والكتابة (CQS Write) داخل transaction.atomic() مع معالجة الاستثناءات وتطبيق أقفال select_for_update لمنع حالات السباق.
+4. السياسات في policies.py: دوال بايثون نقية تفصل في إمكانية الإجراء منطقياً (معزولة تماماً عن كائنات الـ HTTP).
+5. الصلاحيات في permissions.py: فحص هوية وأدوار المستخدمين عبر DRF.
+6. الـ Views نحيفة تماماً (Thin Views): دورها التنسيق فقط واستدعاء الخدمة أو المحدد وتمرير النتيجة للـ Serializer.
+7. تسجيل المسارات في urls.py وتفعيل المحول CamelCaseJSONRenderer.</code></pre>
+    </div>
+    <p class="text-xs text-[var(--text-muted)]">
+      💡 <strong>نصيحة للطالب:</strong> طبق البرومبت 5 مرة واحدة لمشروعك، ثم طبق البرومبت 6 لكل تطبيق مستقل (مثل تطبيق الكتالوج، وتطبيق الطلبات).
     </p>
   </div>
 
@@ -760,6 +870,59 @@ export const topic44ServicesSelectorsHtml = `
         (راجع التطبيق العملي الكامل في <a href="file:///home/mahmoud/Desktop/كورس/Ai_agents/docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md" class="underline font-bold text-[var(--accent)]">دليل مسار الباك إند docs/BACKEND_PARALLEL_EXECUTION_GUIDE.md</a>).
       </p>
     </div>
+
+    <!-- Visual Do and Don't Comparison Card for CQS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+      <div class="p-4 rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/5">
+        <div class="flex items-center gap-2 font-bold text-emerald-400 text-sm mb-2">
+          <span>✅</span>
+          <span>افعل (الممارسة المعمارية السليمة):</span>
+        </div>
+        <ul class="text-xs sm:text-sm space-y-2 text-[var(--text-main)] leading-6 list-disc list-inside">
+          <li>ضع جميع استعلامات القراءة فقط في <code>selectors.py</code> مع تفعيل <code>select_related</code> لمنع استعلامات N+1.</li>
+          <li>احصر كافة عمليات التعديل والإنشاء والحذف في <code>services.py</code> داخل <code>transaction.atomic()</code>.</li>
+          <li>حافظ على <code>views.py</code> نحيفة تماماً (Thin Views) مقتصرة على التوجيه واستدعاء الخدمة أو المحدد.</li>
+        </ul>
+      </div>
+
+      <div class="p-4 rounded-2xl border-2 border-rose-500/40 bg-rose-500/5">
+        <div class="flex items-center gap-2 font-bold text-rose-400 text-sm mb-2">
+          <span>❌</span>
+          <span>لا تفعل (الأنماط المضادة والانهيار):</span>
+        </div>
+        <ul class="text-xs sm:text-sm space-y-2 text-[var(--text-main)] leading-6 list-disc list-inside">
+          <li>لا تضع استعلامات ORM أو <code>Model.objects.filter()</code> داخل Views أو Serializers إطلاقاً (Fat Views).</li>
+          <li>لا تقم بأي تعديل أو كتابة لقاعدة البيانات داخل دوال <code>selectors.py</code> إطلاقاً (كسر مبدأ CQS).</li>
+          <li>لا تنفذ عمليات كتابة متعددة دون تغليفها بمعاملة ذرية، تجنباً لترك البيانات في حالة متناقضة عند أي خطأ.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pre-Approval Inspection Checklist -->
+    <div class="p-4 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card-subtle)] my-6">
+      <div class="flex items-center gap-2 font-bold text-sm text-[var(--accent)] mb-3">
+        <span>🔍</span>
+        <span>قائمة التحقق المسبق للاعتماد (Pre-Approval Checklist لمخرجات الوكيل في الباك إند):</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs leading-6 text-[var(--text-main)]">
+        <div class="flex items-start gap-2 p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+          <span class="text-emerald-400 font-bold">1.</span>
+          <span>هل دالة الـ View نحيفة (&lt; 15 سطراً) وتكتفي باستدعاء الـ Service أو الـ Selector؟</span>
+        </div>
+        <div class="flex items-start gap-2 p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+          <span class="text-emerald-400 font-bold">2.</span>
+          <span>هل تخلو دوال <code>selectors.py</code> من أي استدعاء لـ <code>save()</code> أو <code>create()</code> أو <code>delete()</code>؟</span>
+        </div>
+        <div class="flex items-start gap-2 p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+          <span class="text-emerald-400 font-bold">3.</span>
+          <span>هل السجلات الحرجة محمية بقفل <code>select_for_update()</code> داخل الـ Service لمنع السباق؟</span>
+        </div>
+        <div class="flex items-start gap-2 p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)]">
+          <span class="text-emerald-400 font-bold">4.</span>
+          <span>هل استجابات الخطأ والنجاح مطابقة للغلاف الموحد بصيغة <code>camelCase</code>؟</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 2. Atomic Transactions & Business Invariants -->
@@ -965,6 +1128,67 @@ async def list_active_loans_selector(*, session: AsyncSession, user_id: UUID):
       الشروط الواردة في الأكواد أعلاه (مثل: <strong>ألا تتجاوز الإعارة 10 أيام</strong>، و<strong>ألا تزيد الطلبات النشطة عن 2</strong>) هي <strong>قواعد خاصة بدراسة حالة نظام BorrowHub حصراً</strong> لتوضيح كيفية تطبيق القيود وحمايتها بالمعاملات.
       <strong>يُحظر نسخ هذه القواعد حرفياً لمشروع الطالب الشخصي ما لم تكن جزءاً أصيلاً وموثقاً في وثيقة المتطلبات (PRD وSRS) الخاصة به.</strong>
       عليك تحديد شروط العمل، والحدود القصوى، والتحققات الخاصة بفكرة تطبيقك الفريدة وكتابتها في دوال Services الخاصة بك.
+    </p>
+  </div>
+
+  <!-- Deep Section: Seeding, Automated Testing & Independent Code Review -->
+  <div class="p-5 my-6 rounded-2xl border-2 border-[var(--accent)] bg-[var(--bg-card)]">
+    <div class="flex items-center gap-2 mb-2 text-[var(--accent)] font-bold text-base">
+      <span>🧪</span>
+      <span>إتمام دورة الباك إند: التغذية التجريبية، الاختبارات الآلية، والمراجعة المستقلة</span>
+    </div>
+    <p class="text-sm leading-7 text-[var(--text-main)] mb-3">
+      بعد بناء الخدمات والمحددات، لا نختبر النظام بإدخال البيانات يدوياً من لوحة التحكم، بل نعتمد على 3 أدوات حاسمة لضمان جودة الكود قبل الدمج:
+    </p>
+
+    <!-- Copyable Prompt 7 Box (seed_data) -->
+    <div class="code-container my-4" dir="ltr">
+      <div class="code-header">
+        <span class="code-lang">Prompt 7 · التغذية التجريبية السريعة بالبيانات الواقعية (seed_data)</span>
+        <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+      </div>
+      <pre class="code-content"><code>أنت Django Engineer لمشروع [اسم_مشروعك]:
+1. أنشئ أمر إدارة مخصص في manage.py باسم seed_[اسم_التطبيق] أو seed_data داخل apps/[اسم_التطبيق]/management/commands/.
+2. أنشئ بيانات واقعية منطقية لكيانات [الكيانات_الأساسية] تشمل:
+   - مستخدمين تجريبيين لكافة الأدوار [أدوار_المستخدمين] بكلمة مرور موحدة واضحة للتطوير.
+   - سجلات واقعية تمثل الكيان الرئيسي [الكيان_صاحب_الحالات] في مختلف حالات آلة الحالات (مكتمل، ملغى، قيد الانتظار، نشط).
+3. اجعل الأمر قابلاً لإعادة التشغيل بأمان (Idempotent) باستخدام update_or_create بحيث لا يضاعف السجلات عند تكراره.
+4. اعرض ملخصاً مطبوعاً في الطرفية بما تم إنشاؤه من حسابات وبيانات.</code></pre>
+    </div>
+
+    <!-- Copyable Prompt 8 Box (Automated Tests) -->
+    <div class="code-container my-4" dir="ltr">
+      <div class="code-header">
+        <span class="code-lang">Prompt 8 · الاختبارات السلوكية الآلية للتحقق من سلامة المسارات والمعاملات</span>
+        <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+      </div>
+      <pre class="code-content"><code>أنت QA & Test Automation Engineer لمشروع [اسم_مشروعك]:
+1. اكتب حزمة اختبارات سلوكية لتطبيق [اسم_التطبيق] داخل apps/[اسم_التطبيق]/tests/.
+2. غطِّ السيناريوهات التالية:
+   - اختبار نجاح القراءة عبر الـ Selectors مع التأكد من عدم وجود استعلامات N+1.
+   - اختبار نجاح عملية الكتابة الذرية عبر الـ Service داخل transaction.atomic().
+   - اختبار رفض الانتقال غير القانوني في آلة الحالات لـ [الكيان_صاحب_الحالات] وإرجاع كود الخطأ المناسب في الغلاف الموحد.
+   - اختبار مصفوفة الصلاحيات: رفض وصول المستخدم غير المخول (403 Forbidden).
+3. اعطني أمر الطرفية الدقيق لتشغيل هذه الاختبارات والتأكد من خروج النتيجة الخضراء (PASS).</code></pre>
+    </div>
+
+    <!-- Copyable Prompt 9 Box (Code Reviewer Persona) -->
+    <div class="code-container my-4" dir="ltr">
+      <div class="code-header">
+        <span class="code-lang">Prompt 9 · المراجع الكودي المستقل لفحص الكفاءة والتزامن والثغرات</span>
+        <button class="copy-btn" type="button" onclick="navigator.clipboard.writeText(this.closest('.code-container').querySelector('code').innerText).then(()=>{this.classList.add('copied');this.innerText='✓ تم النسخ!';setTimeout(()=>{this.classList.remove('copied');this.innerText='نسخ البرومبت';},2000);})" aria-label="نسخ البرومبت">نسخ البرومبت</button>
+      </div>
+      <pre class="code-content"><code>أنت Principal Software Engineer تقوم بمراجعة كود الباك إند لمشروع [اسم_مشروعك] المبني بـ Django و PostgreSQL:
+راجع كود تطبيق [اسم_التطبيق] بدقة صارمة وركز على:
+1. هل تحترم كل طبقة مسؤوليتها؟ (هل توجد استعلامات ORM داخل Views أو Serializers؟ هل هناك عمليات كتابة داخل Selectors؟).
+2. هل كافة عمليات تعديل [الكيان_صاحب_الحالات] محمية بـ transaction.atomic() وأقفال select_for_update؟
+3. هل هناك أي استعلامات N+1 في استعلامات القراءة؟
+4. هل استجابات الخطأ والنجاح تطابق الغلاف الموحد بصيغة camelCase؟
+5. هل هناك أي أسرار أو كلمات مرور مكتوبة مباشرة داخل الكود؟
+قدّم تقرير مراجعة بجدول يحتوي على: (الملف، السطر، المشكلة المكتشفة، والتصحيح المقترح).</code></pre>
+    </div>
+    <p class="text-xs text-[var(--text-muted)]">
+      💡 <strong>نصيحة للطالب:</strong> شغّل البرومبت 9 في محادثة مستقلة جديدة (Fresh Context) ليعمل الوكيل كمدقق محايد لا ينحاز للكود الذي كتبه الوكيل السابق.
     </p>
   </div>
 </section>
