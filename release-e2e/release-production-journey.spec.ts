@@ -81,7 +81,7 @@ test.describe('Issue #70 production-build learner journey', () => {
     await page.getByRole('banner').getByRole('link', { name: 'خارطة تنفيذ المشروع', exact: true }).click();
     await expect(page).toHaveURL(/\/start#project-path$/);
     const roadmapTopicHrefs = await page.locator('a[href^="/learn/"]').evaluateAll((links) => Array.from(new Set(
-      links.map((link) => link.getAttribute('href')).filter((href): href is string => Boolean(href && /^\/learn\/[^/]+$/.test(href))),
+      links.map((link) => link.getAttribute('href')).filter((href): href is string => Boolean(href && /^\/learn\/[^/]+$/.test(href) && href !== '/learn/stitch-to-frontend' && href !== '/learn/diagram-lab')),
     )));
     expect(roadmapTopicHrefs).toHaveLength(58);
     const chosenTopicLink = page.locator(`a[href="${topicPath}"]`).filter({ hasText: /^38\./ }).first();
