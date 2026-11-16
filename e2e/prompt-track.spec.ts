@@ -35,10 +35,10 @@ test.describe('Prompt Track (Build from Scratch) Journey', () => {
     await expect(lastStep).toContainText('34');
     await expect(lastStep).toContainText('تسليم GitHub');
 
-    // Verify supporting templates section (A/B/C cheatsheet core)
+    // Verify supporting templates section (A/B/C/D cheatsheet core)
     await expect(page.getByRole('heading', { level: 2, name: 'قوالب مساعدة تتكرر مع كل خطوة' })).toBeVisible();
     const templateCards = page.locator('section[aria-labelledby="prompt-templates"] a[href^="/prompts/"]');
-    await expect(templateCards).toHaveCount(3);
+    await expect(templateCards).toHaveCount(4);
 
     // Verify supplementary examples section
     await expect(page.getByRole('heading', { level: 2, name: 'أمثلة مكمّلة — غير مرقّمة' })).toBeVisible();

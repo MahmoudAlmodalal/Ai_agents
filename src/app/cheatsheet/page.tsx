@@ -26,6 +26,17 @@ const handoffPrompt = `لخّص إنجاز موضوع [TOPIC_NUMBER] لمشرو�
 اذكر الملفات والمخرجات والقرارات والأسئلة المفتوحة والفحوصات والمخاطر.
 اكتب Handoff Note قصيرة ليكمل طالب آخر دون تخمين.
 اقترح رسالة Commit، ولا تقل إن العمل مكتمل إذا بقيت فجوة أو فشل فحص.`;
+const emergencyResetPrompt = `توقف فوراً! (HALT IMMEDIATELY)
+لقد انحرفت عن المعمارية الطبقية الصارمة المعتمدة لمشروع [PROJECT_NAME].
+المخالفات المرصودة في كودك:
+- تم اكتشاف منطق كتابة أو استعلامات ORM داخل ملفات غير مخصصة لها (Fat Views / Dirty Selectors).
+
+المطلوب منك الآن تصحيحه بدقة وحسم:
+1. احذف أي استعلامات أو عمليات تعديل قاعدة بيانات من داخل views.py أو serializers.py فوراً.
+2. انقل كافة استعلامات القراءة البحتة إلى selectors.py وتأكد من تفعيل select_related / prefetch_related للقضاء على استعلامات N+1.
+3. انقل كافة عمليات التعديل والإنشاء والحذف إلى services.py وغلفها بالكامل داخل transaction.atomic() مع تطبيق أقفال select_for_update للموارد المتزامنة.
+4. اجعل الـ Views مقتصرة حصرياً على استقبال الطلب، التحقق السطحي، استدعاء الـ Service أو الـ Selector، وتمرير الناتج في الغلاف الموحد بصيغة camelCase.
+5. لا تقم بتعديل أي ملفات خارج نطاق [APP_NAME]، وقدم تقرير تصحيح مختصر يؤكد خلو ملف الـ View من أي منطق تجاري.`;
 
 function PromptCard({ title, text }: { title: string; text: string }) {
   return (
@@ -83,6 +94,7 @@ export default function CheatsheetPage() {
             <PromptCard title="Prompt A — التحضير والتنفيذ" text={preparePrompt} />
             <PromptCard title="Prompt B — المراجعة" text={reviewPrompt} />
             <PromptCard title="Prompt C — التسليم والتوثيق" text={handoffPrompt} />
+            <PromptCard title="Prompt D — إعادة الضبط المعماري وتصحيح الانحراف" text={emergencyResetPrompt} />
           </div>
         </section>
 

@@ -7,9 +7,9 @@ import {
   PROMPT_SUPPORTING,
 } from './promptLibrary';
 
-test('the prompt library keeps all 41 copyable prompts', () => {
-  assert.equal(PROMPT_LIBRARY.length, 41);
-  assert.equal(new Set(PROMPT_LIBRARY.map((prompt) => prompt.slug)).size, 41);
+test('the prompt library keeps all 42 copyable prompts', () => {
+  assert.equal(PROMPT_LIBRARY.length, 42);
+  assert.equal(new Set(PROMPT_LIBRARY.map((prompt) => prompt.slug)).size, 42);
 });
 
 test('build order is a contiguous 1..N sequence with no duplicates', () => {
@@ -25,13 +25,14 @@ test('the path starts at discovery and ends at handoff', () => {
   assert.equal(PROMPT_BUILD_STEPS.at(-1)?.slug, 'prompt-30-github-handoff');
 });
 
-test('supporting prompts are the three reusable templates and four supplementary examples', () => {
+test('supporting prompts are the four reusable templates and four supplementary examples', () => {
   assert.deepEqual(
     PROMPT_SUPPORTING.map((prompt) => prompt.slug).sort(),
     [
       'cheatsheet-a-prepare-and-execute',
       'cheatsheet-b-review',
       'cheatsheet-c-handoff',
+      'cheatsheet-d-emergency-architecture-reset',
       'stage-example-database',
       'stage-example-nextjs-frontend',
       'stage-example-prd-planning',

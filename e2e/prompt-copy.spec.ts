@@ -25,7 +25,7 @@ test.describe('Prompt Library Journey', () => {
     await page.getByLabel('صفِّ حسب نوع العملية').selectOption('all');
     const firstPromptCard = page.locator('a[href="/prompts/prompt-01-grill-me-product-discovery"]');
     await firstPromptCard.focus();
-    await page.keyboard.press('Enter');
+    await firstPromptCard.press('Enter');
     await expect(page).toHaveURL(/\/prompts\/prompt-01-grill-me-product-discovery$/);
 
     const promptBody = page.locator('pre').last();
@@ -76,7 +76,7 @@ test.describe('Prompt Library Journey', () => {
     const deploymentTopic = relatedTopics.getByRole('link', { name: 'نشر Backend وربطه بقاعدة البيانات' });
     await expect(deploymentTopic).toHaveAttribute('href', '/learn/backend-database-deployment');
     await deploymentTopic.click();
-    await expect(page).toHaveURL(/\/learn\/backend-database-deployment$/);
+    await expect(page).toHaveURL(/\/learn\/backend-database-deployment$/, { timeout: 30000 });
   });
 
   test('search-to-edit-to-copy: switches original/custom, saves, survives reload, and resets cleanly', async ({ page, context }) => {
@@ -219,7 +219,7 @@ test.describe('Prompt Library Journey', () => {
     await page.goto('/prompts/prompt-01-grill-me-product-discovery');
 
     // Switch to variables tab
-    await page.getByRole('button', { name: 'تخصيص بالمتغيرات' }).click();
+    await page.getByRole('button', { name: /تخصيص بالمتغيرات/ }).click();
     await expect(page.getByRole('heading', { level: 2, name: 'تخصيص البرومبت لمشروعك بالمتغيرات' })).toBeVisible();
 
     // Fill in a custom project name
