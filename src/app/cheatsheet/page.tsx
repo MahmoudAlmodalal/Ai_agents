@@ -18,8 +18,8 @@ const preparePrompt = `أعمل على مشروع ${fields}.
 قبل التعديل اذكر الملفات التي ستتغير ومعايير القبول.
 بعد التعديل شغّل الفحص المناسب، ثم لخّص النتيجة وتوقف.`;
 const reviewPrompt = `أنت Reviewer مستقل لمشروع [PROJECT_NAME].
-راجع مخرج [TOPIC_NUMBER]: [TOPIC_TITLE] مقابل PRD وSRS وأي تصميم أو عقد متاح.
-اكتب جدولًا من PASS وFAIL وOPEN QUESTION.
+راجع مخرج [TOPIC_NUMBER]: [TOPIC_TITLE] مقابل PRD و SRS وأي تصميم أو عقد متاح.
+اكتب جدولًا من PASS و FAIL و OPEN QUESTION.
 افحص الاتساق، الحالات الحدية، قابلية التحقق، وعدم إضافة نطاق غير معتمد.
 اقترح أعلى عيب تأثيرًا فقط، ثم توقف وانتظر الاعتماد.`;
 const handoffPrompt = `لخّص إنجاز موضوع [TOPIC_NUMBER] لمشروع [PROJECT_NAME].
@@ -83,7 +83,7 @@ export default function CheatsheetPage() {
           <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5">
             <GitBranch className="h-5 w-5 text-violet-600" />
             <h2 className="mt-3 font-black text-[var(--text-main)]">3. سلّم</h2>
-            <p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">راجع، افحص، ثم اعمل Commit وPush.</p>
+            <p className="mt-1 text-sm leading-7 text-[var(--text-muted)]">راجع، افحص، ثم اعمل <bdi dir="ltr">Commit</bdi> و <bdi dir="ltr">Push</bdi>.</p>
           </div>
         </section>
 
@@ -166,7 +166,7 @@ git push origin feature/topic-output
               <li>لا ترسل ملفات `.env` أو API keys.</li>
               <li>لا تضع الأسرار في Client Components أو GitHub.</li>
               <li>لا تدّعِ أن Feature مكتملة إذا فشل الفحص.</li>
-              <li>لا تنتقل قبل وجود مخرج ومراجعة وCommit.</li>
+              <li>لا تنتقل قبل وجود مخرج ومراجعة و <bdi dir="ltr">Commit</bdi>.</li>
             </ul>
           </div>
         </section>

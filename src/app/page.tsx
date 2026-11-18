@@ -2,9 +2,18 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, HeartCrack, ArrowLeft, BookOpen, Eye, Route } from 'lucide-react';
-import { TOPICS, deriveCategoryCounts } from '@/src/data/topicsData.ts';
+import { Search, HeartCrack, ArrowLeft, BookOpen, Eye, Route, Compass, Layers, Sparkles, GraduationCap } from 'lucide-react';
+import { TOPICS, CATEGORY_METADATA, deriveCategoryCounts } from '@/src/data/topicsData.ts';
 import { TopicCategory, ContentType, TopicItem } from '@/src/types/topic.ts';
+
+const CONTENT_TYPE_LABELS: Record<ContentType, string> = {
+  all: 'الكل',
+  diagram: 'مخططات',
+  prompt: 'برومبتات',
+  code: 'أكواد',
+  checklist: 'قوائم فحص',
+  glossary: 'مصطلحات',
+};
 import { normalizeArabic, stripHtml } from '@/src/utils/searchUtils.ts';
 import { SearchHeader } from '@/src/components/SearchHeader.tsx';
 import { FilterToolbar } from '@/src/components/FilterToolbar.tsx';
@@ -28,6 +37,9 @@ import {
   type TopicStorageStatus,
 } from '@/src/lib/topicRegistry.ts';
 import { LearnerPersistenceNotice } from '@/src/components/LearnerPersistenceNotice';
+import { renderWithTechTerms } from '@/src/components/TechTermTooltip.tsx';
+import { InteractiveWorkflowExample } from '@/src/components/InteractiveWorkflowExample.tsx';
+import { LearnerProgressBar } from '@/src/components/LearnerProgressBar.tsx';
 import { getAllProposedGroups } from '@/src/lib/educationalRoadmap';
 
 const firstTopic = TOPICS[0];
@@ -39,6 +51,7 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = React.useState<TopicCategory>('all');
   const [selectedContentType, setSelectedContentType] = React.useState<ContentType>('all');
   const [isMobileSearchOpen, setIsMobileSearchOpen] = React.useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = React.useState<boolean>(false);
 
   // State: Bookmarks / Favorites (stored in localStorage via canonical slugs adapter)
   const [bookmarks, setBookmarks] = React.useState<string[]>([]);
@@ -188,6 +201,22 @@ export default function HomePage() {
     return candidateTopics.filter((topic) => topic.category === selectedCategory);
   }, [candidateTopics, selectedCategory]);
 
+  const isFiltered =
+    selectedCategory !== 'all' ||
+    selectedContentType !== 'all' ||
+    searchQuery.trim().length > 0 ||
+    showFavoritesOnly;
+
+  const INITIAL_TOPIC_COUNT = 9;
+
+  const visibleTopics = React.useMemo(() => {
+    if (isFiltered || isExpanded) {
+      return filteredTopics;
+    }
+    return filteredTopics.slice(0, INITIAL_TOPIC_COUNT);
+  }, [filteredTopics, isFiltered, isExpanded]);
+
+
   // Active topic object for modal
   const activeTopic = React.useMemo(() => {
     if (!activeTopicId) return null;
@@ -214,11 +243,47 @@ export default function HomePage() {
     }
   };
 
+  // Smooth scroll to results
+  const scrollToResults = React.useCallback(() => {
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        const target = document.getElementById('active-filter-bar') || document.getElementById('topics');
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }, []);
+
+  const handleSelectCategory = React.useCallback((category: TopicCategory) => {
+    setSelectedCategory(category);
+    scrollToResults();
+  }, [scrollToResults]);
+
+  const handleSelectContentType = React.useCallback((contentType: ContentType) => {
+    setSelectedContentType(contentType);
+    scrollToResults();
+  }, [scrollToResults]);
+
+  const handleSearchChange = React.useCallback((query: string) => {
+    setSearchQuery(query);
+    if (query.trim().length > 0) {
+      scrollToResults();
+    }
+  }, [scrollToResults]);
+
+  const handleToggleFavoritesOnly = React.useCallback(() => {
+    setShowFavoritesOnly((prev) => {
+      const next = !prev;
+      if (next) scrollToResults();
+      return next;
+    });
+  }, [scrollToResults]);
+
   const handleResetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('all');
     setSelectedContentType('all');
     setShowFavoritesOnly(false);
+    setIsExpanded(false);
   };
 
   // TTS Helper Functions
@@ -279,10 +344,189 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 1. Header: Compact navigation, search, and theme switcher */}
+      {/* 1. Onboarding Hero & Pathways directly under Navbar */}
+      {!showFavoritesOnly && (
+        <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+          {/* Hero Section */}
+          <section className="home-hero mb-6 sm:mb-8" aria-labelledby="home-hero-title">
+            <div className="home-hero-copy">
+              <span className="home-hero-kicker"><span dir="ltr" className="font-brand">Ai_agents</span> · التعلّم بالتطبيق</span>
+              <h1 id="home-hero-title" className="home-hero-title">
+                من فكرة أولية إلى منتج برمجي <em>تفهمه وتختبره</em>
+              </h1>
+              <p className="home-hero-description">
+                تعلّم كيف توجّه وكلاء الذكاء الاصطناعي عبر المتطلبات والتصميم والبناء والاختبار، مع بقاء القرارات الهندسية واضحة لك.
+              </p>
+              <div className="home-hero-actions">
+                <Link href={`/learn/${firstTopic.slug}`} className="home-hero-button home-hero-button-primary min-h-[44px]">
+                  <BookOpen className="h-4 w-4" aria-hidden="true" />
+                  <span>ابدأ بالموضوع الأول</span>
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <button
+                  type="button"
+                  className="home-hero-button home-hero-button-secondary min-h-[44px]"
+                  onClick={() => handleOpenTopic(firstTopic.id)}
+                  aria-haspopup="dialog"
+                >
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                  <span>معاينة سريعة</span>
+                </button>
+              </div>
+              <div className="home-hero-facts" aria-label="معلومات المسار">
+                <span className="home-hero-fact">المدة الرسمية للبرنامج: 40 ساعة.</span>
+                <span className="home-hero-fact"><strong dir="ltr">{TOPICS.length}</strong> موضوعًا متاحًا</span>
+                <span className="home-hero-fact"><strong dir="ltr">{proposedGroupCount}</strong> مراحل لبناء المشروع</span>
+                <span className="home-hero-fact"><Route className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" /> يمكنك فتح أي موضوع مباشرة</span>
+              </div>
+              <Link href="/start#project-path" className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-bold text-[var(--primary)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-md">
+                استكشف خارطة رحلة المشروع <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="home-lesson-card" aria-label="معاينة الموضوع الأول">
+              <div className="home-lesson-topline">
+                <span dir="ltr" className="home-lesson-label">TOPIC 01 · START HERE</span>
+                <span dir="ltr">Ai_agents / 01</span>
+              </div>
+              <h2>{renderWithTechTerms(firstTopic.title)}</h2>
+              <p className="home-lesson-subtitle">{renderWithTechTerms(firstTopic.subtitle)}</p>
+              <p className="home-lesson-goal">{renderWithTechTerms(firstTopic.goal)}</p>
+              {firstTopic.outputs[0] && (
+                <div className="home-lesson-output">
+                  <small>مخرجك الأول</small>
+                  <code dir="ltr">{firstTopic.outputs[0]}</code>
+                </div>
+              )}
+              <p className="home-lesson-footer">ابدأ بمشروعك أنت، وكل موضوع يبني على مخرج واضح.</p>
+            </div>
+          </section>
+
+          {/* Interactive Mini-Example */}
+          <InteractiveWorkflowExample className="mb-6 sm:mb-8" />
+
+          {/* New Section: كيف تبدأ حسب مستواك؟ */}
+          <section className="mb-6 sm:mb-8" aria-labelledby="start-by-level-title">
+            <div className="mb-4">
+              <span className="text-xs font-bold text-[var(--primary)] uppercase tracking-wider">
+                توجيه مخصص للمتعلم
+              </span>
+              <h2 id="start-by-level-title" className="text-xl sm:text-2xl font-black text-[var(--text-main)] mt-1">
+                كيف تبدأ حسب مستواك؟
+              </h2>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1">
+                اختر المسار الأنسب لخبرتك وهدفك الحالي للوصول إلى المحتوى العملي الأكثر فائدة لك مباشرة.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+              {/* بطاقة 1: مبتدئ تماماً (أول مشروع لي) */}
+              <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 flex flex-col justify-between hover:border-[var(--primary-border)] hover:shadow-sm transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+                      <Compass className="w-5 h-5" />
+                    </span>
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100/60 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300">
+                      المسار التأسيسي
+                    </span>
+                  </div>
+                  <h3 className="text-base font-black text-[var(--text-main)]">مبتدئ تمامًا (أول مشروع لي)</h3>
+                  <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">
+                    {renderWithTechTerms('نبدأ معك خطوة بخطوة من الصفر: صياغة فكرة مشروع حقيقية، تحديد نطاق النسخة الأولى (MVP)، وطرح أسئلة التحدي لبلورة الفكرة قبل كتابة الكود.')}
+                  </p>
+                </div>
+                <div className="mt-5 pt-4 border-t border-[var(--border-color)]/60 flex flex-col gap-2">
+                  <Link
+                    href="/learn/project-idea-mvp"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[var(--action-bg)] text-[var(--action-text)] text-xs font-bold hover:bg-[var(--action-bg-hover)] transition-colors"
+                  >
+                    <span>ابدأ بفكرة المشروع (Topic 01)</span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/start"
+                    className="w-full inline-flex items-center justify-center gap-1 py-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] font-semibold"
+                  >
+                    <span>دليل البداية وخطوات الطالب الأولى ←</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* بطاقة 2: لدي فكرة وأريد التخطيط والتصميم */}
+              <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 flex flex-col justify-between hover:border-[var(--primary-border)] hover:shadow-sm transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400">
+                      <Layers className="w-5 h-5" />
+                    </span>
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-100/60 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300">
+                      المعمارية والتصميم
+                    </span>
+                  </div>
+                  <h3 className="text-base font-black text-[var(--text-main)]">لدي فكرة وأريد التخطيط والتصميم</h3>
+                  <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">
+                    {renderWithTechTerms('فكرتك واضحة؟ انتقل مباشرة لتوثيق المتطلبات (PRD)، نمذجة مسارات النظام ومخططات UML وقواعد البيانات (ERD)، ثم تصميم الواجهات في Stitch.')}
+                  </p>
+                </div>
+                <div className="mt-5 pt-4 border-t border-[var(--border-color)]/60 flex flex-col gap-2">
+                  <Link
+                    href="/learn/stitch-to-frontend"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[var(--action-bg)] text-[var(--action-text)] text-xs font-bold hover:bg-[var(--action-bg-hover)] transition-colors"
+                  >
+                    <span>جلسة تصميم الواجهات و <bdi dir="ltr">Stitch</bdi></span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/diagrams"
+                    className="w-full inline-flex items-center justify-center gap-1 py-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] font-semibold"
+                  >
+                    <span>استكشف مخططات المعمارية والبيانات ←</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* بطاقة 3: أريد برومبتات ومخططات جاهزة */}
+              <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 sm:p-6 flex flex-col justify-between hover:border-[var(--primary-border)] hover:shadow-sm transition-all">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400">
+                      <Sparkles className="w-5 h-5" />
+                    </span>
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-100/60 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300">
+                      أدوات ومخرجات جاهزة
+                    </span>
+                  </div>
+                  <h3 className="text-base font-black text-[var(--text-main)]">أريد برومبتات ومخططات جاهزة</h3>
+                  <p className="mt-2 text-xs leading-6 text-[var(--text-muted)]">
+                    تبحث عن قوالب برومبتات مهندسة ومجربة لتوجيه وكلاء الذكاء الاصطناعي، أو مخططات تفاعلية جاهزة للنسخ والتعديل المباشر لمشروعك؟
+                  </p>
+                </div>
+                <div className="mt-5 pt-4 border-t border-[var(--border-color)]/60 flex flex-col gap-2">
+                  <Link
+                    href="/prompts"
+                    className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[var(--action-bg)] text-[var(--action-text)] text-xs font-bold hover:bg-[var(--action-bg-hover)] transition-colors"
+                  >
+                    <span>استكشف مكتبة البرومبتات</span>
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                  </Link>
+                  <Link
+                    href="/diagrams"
+                    className="w-full inline-flex items-center justify-center gap-1 py-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] font-semibold"
+                  >
+                    <span>مختبر المخططات التفاعلية (8 مخططات) ←</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+
+      {/* 2. Search Header and Filter Toolbar placed below Hero & Pathways */}
       <SearchHeader
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={handleSearchChange}
         isDark={isDark}
         onToggleTheme={toggleTheme}
         onToggleTTS={() => {
@@ -299,22 +543,21 @@ export default function HomePage() {
         onToggleMobileSearch={() => setIsMobileSearchOpen((prev) => !prev)}
         bookmarksCount={bookmarks.length}
         showFavoritesOnly={showFavoritesOnly}
-        onToggleFavoritesOnly={() => setShowFavoritesOnly((prev) => !prev)}
+        onToggleFavoritesOnly={handleToggleFavoritesOnly}
       />
 
-      {/* 2. Filter Toolbar (Categories, Content Types, and Favorites Chip) */}
       <FilterToolbar
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleSelectCategory}
         selectedContentType={selectedContentType}
-        onSelectContentType={setSelectedContentType}
+        onSelectContentType={handleSelectContentType}
         totalTopicsCount={TOPICS.length}
         filteredCount={filteredTopics.length}
         searchQuery={searchQuery}
         onResetFilters={handleResetFilters}
         bookmarksCount={bookmarks.length}
         showFavoritesOnly={showFavoritesOnly}
-        onToggleFavoritesOnly={() => setShowFavoritesOnly((prev) => !prev)}
+        onToggleFavoritesOnly={handleToggleFavoritesOnly}
         categoryCounts={categoryCounts}
       />
 
@@ -336,63 +579,6 @@ export default function HomePage() {
               عرض كافة المواضيع ←
             </button>
           </div>
-        )}
-
-        {/* Ai_agents entry journey */}
-        {!showFavoritesOnly && (
-          <section className="home-hero mb-4 sm:mb-6" aria-labelledby="home-hero-title">
-            <div className="home-hero-copy">
-              <span className="home-hero-kicker"><span dir="ltr" className="font-brand">Ai_agents</span> · التعلّم بالتطبيق</span>
-              <h1 id="home-hero-title" className="home-hero-title">
-                من فكرة أولية إلى منتج برمجي <em>تفهمه وتختبره</em>
-              </h1>
-              <p className="home-hero-description">
-                تعلّم كيف توجّه وكلاء الذكاء الاصطناعي عبر المتطلبات والتصميم والبناء والاختبار، مع بقاء القرارات الهندسية واضحة لك.
-              </p>
-              <div className="home-hero-actions">
-                <Link href={`/learn/${firstTopic.slug}`} className="home-hero-button home-hero-button-primary">
-                  <BookOpen className="h-4 w-4" aria-hidden="true" />
-                  <span>ابدأ بالموضوع الأول</span>
-                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <button
-                  type="button"
-                  className="home-hero-button home-hero-button-secondary"
-                  onClick={() => handleOpenTopic(firstTopic.id)}
-                  aria-haspopup="dialog"
-                >
-                  <Eye className="h-4 w-4" aria-hidden="true" />
-                  <span>معاينة سريعة</span>
-                </button>
-              </div>
-              <div className="home-hero-facts" aria-label="معلومات المسار">
-                <span className="home-hero-fact">المدة الرسمية للبرنامج: 40 ساعة.</span>
-                <span className="home-hero-fact"><strong dir="ltr">{TOPICS.length}</strong> موضوعًا متاحًا</span>
-                <span className="home-hero-fact"><strong dir="ltr">{proposedGroupCount}</strong> مجموعة مقترحة</span>
-                <span className="home-hero-fact"><Route className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" /> يمكنك فتح أي موضوع مباشرة</span>
-              </div>
-              <Link href="/start#project-path" className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-bold text-[var(--primary)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] rounded-md">
-                استكشف خارطة رحلة المشروع <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-
-            <div className="home-lesson-card" aria-label="معاينة الموضوع الأول">
-              <div className="home-lesson-topline">
-                <span dir="ltr" className="home-lesson-label">TOPIC 01 · START HERE</span>
-                <span dir="ltr">Ai_agents / 01</span>
-              </div>
-              <h2>{firstTopic.title}</h2>
-              <p className="home-lesson-subtitle">{firstTopic.subtitle}</p>
-              <p className="home-lesson-goal">{firstTopic.goal}</p>
-              {firstTopic.outputs[0] && (
-                <div className="home-lesson-output">
-                  <small>مخرجك الأول</small>
-                  <code dir="ltr">{firstTopic.outputs[0]}</code>
-                </div>
-              )}
-              <p className="home-lesson-footer">ابدأ بمشروعك أنت، وكل موضوع يبني على مخرج واضح.</p>
-            </div>
-          </section>
         )}
 
         {!showFavoritesOnly && <EntryQuestion />}
@@ -440,32 +626,124 @@ export default function HomePage() {
         )}
 
         <HistoricalSavedItems bookmarks={bookmarks} recentlyViewed={recentlyViewed} />
-        {/* Dynamic Topic Grid */}
-        {filteredTopics.length > 0 ? (
-          <div id="topics" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            {filteredTopics.map((topic, index) => (
-              <motion.div
-                key={topic.id}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{
-                  duration: 0.25,
-                  delay: Math.min(index * 0.02, 0.2),
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-              >
-                <TopicCard
-                  topic={topic}
-                  searchQuery={searchQuery}
-                  onOpenTopic={handleOpenTopic}
-                  onListenTopic={(t) => playTTSForTopic(t)}
-                  isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
-                  isBookmarked={bookmarks.includes(topic.slug) || bookmarks.includes(topic.id)}
-                  onToggleBookmark={handleToggleBookmark}
-                />
-              </motion.div>
-            ))}
+
+        {/* Active Filter Indicator Bar */}
+        {isFiltered && (
+          <div
+            id="active-filter-bar"
+            className="mb-4 flex flex-wrap items-center justify-between gap-2.5 p-3 sm:px-4 rounded-xl border border-[var(--primary-border,var(--border-color))] bg-[var(--primary-light)]/40 text-xs shadow-2xs scroll-mt-36"
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-bold text-[var(--text-main)] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" aria-hidden="true" />
+                الفلتر النشط:
+              </span>
+              {selectedCategory !== 'all' && (
+                <span className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-color)] font-semibold text-[var(--text-main)]">
+                  قسم: {CATEGORY_METADATA.find((c) => c.id === selectedCategory)?.label ?? selectedCategory}
+                </span>
+              )}
+              {selectedContentType !== 'all' && (
+                <span className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-color)] font-semibold text-[var(--text-main)]">
+                  نوع: {CONTENT_TYPE_LABELS[selectedContentType] ?? selectedContentType}
+                </span>
+              )}
+              {searchQuery.trim().length > 0 && (
+                <span className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-color)] font-semibold text-[var(--text-main)]">
+                  بحث: &quot;{searchQuery}&quot;
+                </span>
+              )}
+              {showFavoritesOnly && (
+                <span className="px-2.5 py-1 rounded-lg bg-rose-100 dark:bg-rose-950/60 border border-rose-300 dark:border-rose-900 font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-1">
+                  ❤️ المفضلة
+                </span>
+              )}
+              <span className="text-[11px] text-[var(--text-muted)] font-mono">
+                ({filteredTopics.length} من أصل {TOPICS.length} موضوعاً)
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="px-3.5 py-1.5 rounded-lg bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] text-[var(--action-text)] text-xs font-bold transition-all shadow-2xs cursor-pointer flex items-center gap-1 shrink-0"
+            >
+              إعادة ضبط الفلاتر
+            </button>
           </div>
+        )}
+
+        {/* Learner Progress Bar at top of topics index */}
+        <LearnerProgressBar
+          topics={TOPICS}
+          selectedCategory={selectedCategory}
+          className="mb-6"
+        />
+
+        {/* Dynamic Topic Grid */}
+        {visibleTopics.length > 0 ? (
+          <>
+            <div id="topics" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 scroll-mt-36">
+              {visibleTopics.map((topic, index) => (
+                <motion.div
+                  key={topic.id}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.25,
+                    delay: Math.min(index * 0.02, 0.2),
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                >
+                  <TopicCard
+                    topic={topic}
+                    searchQuery={searchQuery}
+                    onOpenTopic={handleOpenTopic}
+                    onListenTopic={(t) => playTTSForTopic(t)}
+                    isCurrentlySpeaking={isTTSPlaying && ttsCurrentTopic?.id === topic.id}
+                    isBookmarked={bookmarks.includes(topic.slug) || bookmarks.includes(topic.id)}
+                    onToggleBookmark={handleToggleBookmark}
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Expand / Collapse Actions for Topics Grid */}
+            {!isFiltered && filteredTopics.length > INITIAL_TOPIC_COUNT && (
+              <div className="mt-8 flex flex-col items-center justify-center gap-3">
+                {!isExpanded ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setIsExpanded(true)}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-[var(--action-bg)] hover:bg-[var(--action-bg-hover)] text-[var(--action-text)] text-sm font-bold shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                    >
+                      <span>عرض باقي المواضيع ({filteredTopics.length - INITIAL_TOPIC_COUNT} موضوعاً متبقياً)</span>
+                      <ArrowLeft className="w-4 h-4 rotate-[-90deg]" aria-hidden="true" />
+                    </button>
+                    <p className="text-xs text-[var(--text-muted)] text-center">
+                      نعرض افتراضياً أول {INITIAL_TOPIC_COUNT} مواضيع لتسهيل البداية بدون تشتت. يمكنك أيضاً استعراض كافة المراحل من صفحة{' '}
+                      <Link href="/learn" className="text-[var(--primary)] font-bold hover:underline">
+                        مسار التعلم الشامل
+                      </Link>.
+                    </p>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsExpanded(false);
+                      document.getElementById('topics')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--border-color)] text-[var(--text-main)] text-sm font-bold transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]"
+                  >
+                    <span>طي القائمة والعودة للمواضيع التأسيسية الأولى</span>
+                    <ArrowLeft className="w-4 h-4 rotate-[90deg]" aria-hidden="true" />
+                  </button>
+                )}
+              </div>
+            )}
+          </>
         ) : showFavoritesOnly ? (
           /* Empty Favorites State */
           <div className="text-center py-12 px-4 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xs">

@@ -159,11 +159,11 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm modal-backdrop-root"
+      transition={{ duration: 0.15 }}
+      className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center sm:p-4 md:p-6 bg-slate-950/80 backdrop-blur-md modal-backdrop-root"
     >
       {/* Click outside backdrop for desktop */}
       <div
@@ -174,10 +174,10 @@ export const TopicDetailModal: React.FC<TopicDetailModalProps> = ({
 
       {/* Main Modal Container: Fullscreen on mobile, rounded card on tablet/desktop */}
       <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.97 }}
+        initial={{ opacity: 1, y: 20, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 20, scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        exit={{ opacity: 0, y: 20, scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
         role="dialog"
         aria-modal="true"
         aria-label={topic.title}

@@ -1,3 +1,5 @@
+import type { TopicCategory, TopicItem } from '@/src/types/topic.ts';
+
 export const APPLICATION_CHECKLIST_STORAGE_KEY = 'application-checklists-v1';
 
 type SavedState = Record<string, string[]>;
@@ -47,6 +49,7 @@ interface Entry {
 /** Shared memory retains every local choice when persistence is unavailable. */
 export function createApplicationChecklistStore(getStorage: () => ChecklistStorage) {
   const entries = new Map<string, Entry>();
+  const globalListeners = new Set<() => void>();
 
   function getEntry(slug: string) {
     let entry = entries.get(slug);
@@ -66,6 +69,7 @@ export function createApplicationChecklistStore(getStorage: () => ChecklistStora
       && sessionOnlyChanges.every((change) => previous.sessionOnlyChanges.some((previousChange) => previousChange.itemKey === change.itemKey && previousChange.checked === change.checked))) return;
     entry.snapshot = { selected, storageStatus, sessionOnlyChanges };
     entry.listeners.forEach((listener) => listener());
+    globalListeners.forEach((listener) => listener());
   }
 
   function read(): { storage: ChecklistStorage; saved: SavedState } | { error: 'read-error' | 'invalid' } {
@@ -138,6 +142,11 @@ export function createApplicationChecklistStore(getStorage: () => ChecklistStora
       refresh();
       return () => { entry.listeners.delete(listener); };
     },
+    subscribeAll(listener: () => void) {
+      globalListeners.add(listener);
+      refresh();
+      return () => { globalListeners.delete(listener); };
+    },
     toggle(slug: string, item: string, checked: boolean) {
       const entry = getEntry(slug);
       const key = applicationChecklistItemKey(item);
@@ -185,3 +194,78 @@ export const getApplicationChecklistSnapshot = store.getSnapshot;
 /** Read dashboard snapshots in one storage pass, including in-memory selections after a write failure. */
 export const listApplicationChecklistSnapshots = store.listSnapshots;
 export const toggleApplicationChecklistItem = store.toggle;
+
+export function subscribeAllApplicationChecklists(listener: () => void) {
+  const unsubscribe = store.subscribeAll(listener);
+  if (subscriptions++ === 0) {
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('focus', store.refresh);
+    document.addEventListener('visibilitychange', onVisible);
+  }
+  return () => {
+    unsubscribe();
+    if (--subscriptions === 0) {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('focus', store.refresh);
+      document.removeEventListener('visibilitychange', onVisible);
+    }
+  };
+}
+
+export interface ChecklistProgressSummary {
+  readonly totalTopics: number;
+  readonly completedTopics: number;
+  readonly totalChecklistItems: number;
+  readonly completedChecklistItems: number;
+  readonly percentage: number;
+}
+
+export function calculateChecklistProgress(
+  topics: TopicItem[],
+  category?: TopicCategory
+): ChecklistProgressSummary {
+  const filteredTopics = category && category !== 'all'
+    ? topics.filter((t) => t.category === category)
+    : topics;
+
+  const slugs = filteredTopics.map((t) => t.slug);
+  const snapshots = listApplicationChecklistSnapshots(slugs);
+
+  const totalTopics = filteredTopics.length;
+  let completedTopics = 0;
+  let totalChecklistItems = 0;
+  let completedChecklistItems = 0;
+
+  for (const topic of filteredTopics) {
+    const checklist = topic.checklist || [];
+    const itemCount = checklist.length;
+    totalChecklistItems += itemCount;
+
+    const snapshot = snapshots[topic.slug];
+    if (snapshot && itemCount > 0) {
+      let topicCompletedCount = 0;
+      for (const item of checklist) {
+        const key = applicationChecklistItemKey(item);
+        if (snapshot.selected.has(key)) {
+          topicCompletedCount++;
+          completedChecklistItems++;
+        }
+      }
+      if (topicCompletedCount === itemCount) {
+        completedTopics++;
+      }
+    }
+  }
+
+  const percentage = totalChecklistItems > 0
+    ? Math.round((completedChecklistItems / totalChecklistItems) * 100)
+    : 0;
+
+  return {
+    totalTopics,
+    completedTopics,
+    totalChecklistItems,
+    completedChecklistItems,
+    percentage,
+  };
+}

@@ -11,6 +11,10 @@ test('historical User Flow save keeps its content meaning, not its mislabeled PR
   await page.locator('article.topic-card').first().getByRole('button', { name: 'حفظ في المفضلة', exact: true }).click();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('engineering_guide_bookmarks') || '[]')))
     .toEqual(['user-flow-modeling', 'topic-05', 'unknown-historical-topic', 'project-idea-mvp']);
+  const expandBtn = page.getByRole('button', { name: /عرض باقي المواضيع/ });
+  if (await expandBtn.isVisible()) {
+    await expandBtn.click();
+  }
   await expect(page.locator('article.topic-card')).toHaveCount(58);
   await expect(page.getByText('المحاضرة الرابعة — بانتظار اعتماد المحتوى', { exact: true })).toHaveCount(0);
 });
@@ -90,6 +94,10 @@ test('prototype-like unknown persisted strings in bookmarks and history do not c
 
   // Homepage remains usable
   await expect(page.locator('article.topic-card').first()).toBeVisible();
+  const expandBtn = page.getByRole('button', { name: /عرض باقي المواضيع/ });
+  if (await expandBtn.isVisible()) {
+    await expandBtn.click();
+  }
   await expect(page.locator('article.topic-card')).toHaveCount(58);
 
   // Explicit unresolved state for prototype-like unknown IDs

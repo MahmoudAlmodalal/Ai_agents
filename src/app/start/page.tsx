@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { EntryQuestion } from '@/src/components/EntryQuestion';
+import { InteractiveWorkflowExample } from '@/src/components/InteractiveWorkflowExample.tsx';
+import { BidiText } from '@/src/components/BidiText';
 import { getTopicBySlug } from '@/src/lib/topicRegistry';
 import { getAllProposedGroups, getGroupStatusPresentation, getTopicImprovementStatus } from '@/src/lib/educationalRoadmap';
 import { getLearningSession } from '@/src/lib/learningSessions';
@@ -12,9 +14,9 @@ export const metadata = {
 const steps = [
   'ابدأ بالمشكلة والمستخدم والقيمة ونطاق MVP واكتب سياق مشروعك.',
   'استخدم Grill Me لحسم الأسئلة ثم اكتب PRD وراجع المتطلبات.',
-  'وثّق العمل في Git وGitHub وارسم مسارات المستخدم والمخططات عند الحاجة.',
-  'حلّل UX وصمّم شاشة مرجعية ونظام تصميم وPrototype.',
-  'عند بدء كود الفرونت جهّز وكيل البرمجة وSkills وMCP ثم خطط ونفذ تدريجيًا.',
+  'وثّق العمل في Git و GitHub وارسم مسارات المستخدم والمخططات عند الحاجة.',
+  'حلّل UX وصمّم شاشة مرجعية ونظام تصميم و Prototype.',
+  'عند بدء كود الفرونت جهّز وكيل البرمجة و Skills و MCP ثم خطط ونفذ تدريجيًا.',
   'ابنِ الخادم وقاعدة البيانات وفق عقد API والصلاحيات واربط الواجهة بهما.',
   'اختبر رحلة Full-Stack والبيانات والأخطاء ثم جهّز النشر والتشغيل.',
   'سلّم المشروع ووثائقه واعرض النتيجة وما تحقق فعليًا.',
@@ -24,8 +26,8 @@ const prereqs = [
   'معرفة أساسيات البرمجة؛ لا تحتاج خبرة سابقة في AI Agents.',
   'فكرة أو مشكلة تريد فهمها، ومحرر نصوص أو ورقة لكتابة سياقها.',
   'يمكن استخدام محادثة في الاستكشاف؛ لا يلزم تثبيت وكيل أو Skills أو MCP للبدء.',
-  'جهّز Git وGitHub عند حفظ الوثائق، وأدوات الرسم وStitch عند الوصول إلى موضوعها.',
-  'يأتي Node.js وnpm وأدوات كود الفرونت عند بدء التنفيذ بعد اعتماد التصميم.',
+  'جهّز Git و GitHub عند حفظ الوثائق، وأدوات الرسم و Stitch عند الوصول إلى موضوعها.',
+  'يأتي Node.js و npm وأدوات كود الفرونت عند بدء التنفيذ بعد اعتماد التصميم.',
 ];
 
 const concepts = [
@@ -51,7 +53,7 @@ export default function StartPage() {
             ابدأ مشروعك من الصفر — بدون تخطي المراحل
           </h1>
           <p className="mt-4 max-w-4xl leading-8 text-[var(--text-muted)]">
-            Ai_agents مسار عملي مدته الرسمية 40 ساعة. ابنِ مشروعًا تختاره ضمن رحلة متدرجة من الفكرة إلى الواجهات والخادم وقاعدة البيانات والاختبار والنشر والتسليم. ابدأ بمشروع واحد وسر معه على مراحل. احتفظ بمخرجاتك في وثائق مشروعك ولا تعتمد قرار AI قبل فهمه.
+            <bdi dir="ltr">Ai_agents</bdi> مسار عملي مدته الرسمية 40 ساعة. ابنِ مشروعًا تختاره ضمن رحلة متدرجة من الفكرة إلى الواجهات والخادم وقاعدة البيانات والاختبار والنشر والتسليم. ابدأ بمشروع واحد وسر معه على مراحل. احتفظ بمخرجاتك في وثائق مشروعك ولا تعتمد قرار <bdi dir="ltr">AI</bdi> قبل فهمه.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/learn/project-idea-mvp" className="rounded-xl bg-[var(--action-bg)] px-5 py-3 text-sm font-black text-[var(--action-text)] hover:bg-[var(--action-bg-hover)] focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)]">
@@ -64,6 +66,8 @@ export default function StartPage() {
           <EntryQuestion />
         </header>
 
+        <InteractiveWorkflowExample className="mt-6" />
+
         <section className="mt-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6">
           <h2 className="text-xl font-black">خطوات الطالب الأولى</h2>
           <ol className="mt-4 grid gap-3 md:grid-cols-2">
@@ -72,7 +76,9 @@ export default function StartPage() {
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--action-bg)] font-mono text-sm font-black text-[var(--action-text)]">
                   {i + 1}
                 </span>
-                <span className="text-sm leading-7">{s}</span>
+                <span className="text-sm leading-7">
+                  <BidiText text={s} />
+                </span>
               </li>
             ))}
           </ol>
@@ -83,24 +89,31 @@ export default function StartPage() {
             <h2 className="font-black">ما الذي تحتاجه الآن، وما الذي يأتي لاحقًا؟</h2>
             <ul className="mt-3 space-y-2 text-sm text-[var(--text-muted)]">
               {prereqs.map((p) => (
-                <li key={p}>✓ {p}</li>
+                <li key={p}>
+                  ✓ <BidiText text={p} />
+                </li>
               ))}
             </ul>
           </section>
           <section className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6">
-            <h2 className="font-black">Agent وSkill وMCP وPRD</h2>
+            <h2 className="font-black">
+              <BidiText text="Agent و Skill و MCP و PRD" />
+            </h2>
             <div className="mt-3 space-y-2">
               {concepts.map((c) => (
                 <div key={c[0]} className="rounded-xl bg-[var(--bg-card-subtle)] p-3">
                   <strong className="font-mono text-sm text-[var(--primary)]" dir="ltr">
                     {c[0]}
                   </strong>
-                  <p className="text-xs text-[var(--text-muted)]">{c[1]}</p>
+                  <p className="text-xs text-[var(--text-muted)]">
+                    <BidiText text={c[1]} />
+                  </p>
                 </div>
               ))}
             </div>
             <p className="mt-3 rounded-xl bg-emerald-50 p-3 text-xs dark:bg-emerald-950/20">
-              <strong>القاعدة الذهبية:</strong> Agent ينفذ، Skill يرشده، MCP يوصله، وPRD يحدد المطلوب.
+              <strong>القاعدة الذهبية:</strong>{' '}
+              <BidiText text="Agent ينفذ، Skill يرشده، MCP يوصله، و PRD يحدد المطلوب." />
             </p>
           </section>
         </div>
@@ -116,17 +129,13 @@ export default function StartPage() {
               مسار مشروعك — حسب ترتيب الاعتماديات
             </h2>
             <p className="mt-2 text-sm leading-7 text-[var(--text-muted)]">
-              خارطة الطريق التعليمية مقسمة إلى 19 مجموعة تغطي جميع المواضيع الـ 58 دون تكرار أو حذف.
-              حدود المجموعات وقالب الدروس معتمدان بقرار مالك المساق بتاريخ 2026-10-20.
-              تبدأ الخارطة بمجموعة &quot;الفكرة ونطاق النسخة الأولى (Idea and MVP)&quot;؛ إصدار أي مجموعة كمحتوى محسّن يتطلب اكتمال أدلتها وقبولها التعليمي بشكل منفصل.
+              خارطة الطريق التعليمية مقسمة إلى 19 مرحلة مترابطة تغطي جميع المواضيع الـ 58 خطوة بخطوة.
+              تبدأ الخارطة بمرحلة &quot;الفكرة ونطاق النسخة الأولى (<bdi dir="ltr">Idea and MVP</bdi>)&quot; وتنتهي بتسليم المشروع وتشغيله بالكامل.
             </p>
             <div className="mt-3 p-3.5 rounded-2xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 text-xs sm:text-sm text-blue-950 dark:text-blue-200 space-y-1">
               <p className="font-bold">💡 إرشادات استرشادية لرحلة التعلم:</p>
               <p>
-                المتطلبات السابقة ومخرجات خطوات التطبيق العملية المذكورة أدناه هي إرشادات توجيهية استرشادية؛ جميع روابط المواضيع تظل مفعّلة ومتاحة للدخول المباشر فورًا دون اشتراط إكمال قراءة أو قوائم تحقق سابقة.
-              </p>
-              <p>
-                حالة توفر المحتوى الحالي (جميع المواضيع متاحة ومنشورة) منفصلة تمامًا عن حالة التحسين؛ فجميع المجموعات تخضع حاليًا للمراجعة التعليمية الجديدة وتنتظر اعتمادها.
+                المتطلبات السابقة ومخرجات خطوات التطبيق العملية المذكورة أدناه هي إرشادات توجيهية لمساعدتك؛ جميع روابط المواضيع مفعّلة ومتاحة للدخول المباشر في أي وقت دون قيود.
               </p>
             </div>
           </div>
@@ -164,7 +173,7 @@ export default function StartPage() {
                           المجموعة {group.number}
                         </span>
                         <h3 className="text-base sm:text-lg font-black text-[var(--text-main)]">
-                          {group.titleAr}
+                          <BidiText text={group.titleAr} />
                         </h3>
                       </div>
                       <div className="flex flex-wrap items-center gap-1.5 text-xs">
@@ -191,7 +200,7 @@ export default function StartPage() {
                       </div>
                     </div>
                     <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-                      {group.descriptionAr}
+                      <BidiText text={group.descriptionAr} />
                     </p>
                   </header>
 
@@ -211,7 +220,7 @@ export default function StartPage() {
                                 href={`/learn/${topic.slug}`}
                                 className="font-bold text-sm sm:text-base text-[var(--primary)] hover:underline"
                               >
-                                {topic.number}. {topic.title}
+                                {topic.number}. <BidiText text={topic.title} />
                               </Link>
                             </div>
                             <div className="flex flex-wrap items-center gap-1.5 mb-2">
@@ -225,7 +234,7 @@ export default function StartPage() {
                             {topic.prerequisites.length > 0 && (
                               <p className="text-xs text-[var(--text-muted)] mb-1 leading-relaxed">
                                 <strong>إرشاد تمهيدي: </strong>
-                                <span>{topic.prerequisites[0]}</span>
+                                <span><BidiText text={topic.prerequisites[0]} /></span>
                               </p>
                             )}
                             {topic.outputs.length > 0 && (
@@ -249,7 +258,7 @@ export default function StartPage() {
                               <span aria-hidden="true">←</span>
                             </Link>
                             <span className="text-[10px] text-[var(--text-muted)] font-mono">
-                              {topic.stageTag}
+                              <BidiText text={topic.stageTag} />
                             </span>
                           </div>
                         </li>

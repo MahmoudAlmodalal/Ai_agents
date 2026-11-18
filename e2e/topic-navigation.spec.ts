@@ -84,6 +84,10 @@ test.describe('Topic Navigation Journey', () => {
   test('retired composite routes reach the active index without a conflicting reader', async ({ page }) => {
     await page.goto('/learn/requirements-grill-me');
     await expect(page).toHaveURL(/\/#topics$/);
+    const expandBtn = page.getByRole('button', { name: /عرض باقي المواضيع/ });
+    if (await expandBtn.isVisible()) {
+      await expandBtn.click();
+    }
     await expect(page.locator('article.topic-card')).toHaveCount(58);
     await expect(page.getByText('المحتوى متاح؛ خطوات التطبيق والمخرجات قيد الاستكمال', { exact: true })).toHaveCount(0);
   });

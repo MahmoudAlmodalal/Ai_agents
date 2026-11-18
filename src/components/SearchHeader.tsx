@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Headphones, Sun, Moon, Printer, Heart, BookOpen } from 'lucide-react';
@@ -5,8 +6,8 @@ import { Search, Headphones, Sun, Moon, Printer, Heart, BookOpen } from 'lucide-
 interface SearchHeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  isDark: boolean;
-  onToggleTheme: () => void;
+  isDark?: boolean;
+  onToggleTheme?: () => void;
   onToggleTTS: () => void;
   isTTSActive: boolean;
   isMobileSearchOpen: boolean;
@@ -19,7 +20,7 @@ interface SearchHeaderProps {
 export const SearchHeader: React.FC<SearchHeaderProps> = ({
   searchQuery,
   onSearchChange,
-  isDark,
+  isDark = false,
   onToggleTheme,
   onToggleTTS,
   isTTSActive,
@@ -74,8 +75,8 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
           </div>
 
           {/* Center Search on Desktop (Hidden on mobile) */}
-          <div className="hidden md:flex flex-1 max-w-md lg:max-w-lg mx-4">
-            <div className="relative w-full flex items-center">
+          <div className="hidden md:flex flex-1 max-w-md lg:max-w-xl mx-4 items-center gap-2">
+            <div className="relative flex-1 flex items-center">
               <Search className="absolute right-3 text-slate-400 pointer-events-none w-3.5 h-3.5" aria-hidden="true" />
               <input
                 type="text"
@@ -97,6 +98,14 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
                 </span>
               )}
             </div>
+            <Link
+              href="/glossary"
+              className="h-9 px-3 rounded-lg border border-emerald-300 dark:border-emerald-700/60 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-xs font-bold transition-colors shrink-0 flex items-center gap-1.5"
+              title="قاموس المصطلحات البرمجية والهندسية"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>قاموس المصطلحات</span>
+            </Link>
           </div>
 
           {/* Action Utility Controls (Left in RTL) */}
@@ -174,25 +183,27 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
             </button>
 
             {/* Theme Toggle */}
-            <motion.button
-              onClick={onToggleTheme}
-              whileTap={{ scale: 0.9 }}
-              className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center text-sm cursor-pointer overflow-hidden"
-              title="تبديل النمط النهاري / الليلي"
-              aria-label="تبديل النمط"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isDark ? 'sun' : 'moon'}
-                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
-                </motion.div>
-              </AnimatePresence>
-            </motion.button>
+            {onToggleTheme && (
+              <motion.button
+                onClick={onToggleTheme}
+                whileTap={{ scale: 0.9 }}
+                className="w-9 h-9 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-main)] hover:bg-[var(--border-color)] transition-colors flex items-center justify-center text-sm cursor-pointer overflow-hidden"
+                title="تبديل النمط النهاري / الليلي"
+                aria-label="تبديل النمط"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={isDark ? 'sun' : 'moon'}
+                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+                  </motion.div>
+                </AnimatePresence>
+              </motion.button>
+            )}
           </div>
         </div>
 
@@ -225,6 +236,15 @@ export const SearchHeader: React.FC<SearchHeaderProps> = ({
                     مسح
                   </button>
                 )}
+              </div>
+              <div className="mt-2 flex justify-end">
+                <Link
+                  href="/glossary"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-emerald-300 dark:border-emerald-700/60 bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold"
+                >
+                  <BookOpen className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                  <span>قاموس المصطلحات</span>
+                </Link>
               </div>
             </div>
           </motion.div>

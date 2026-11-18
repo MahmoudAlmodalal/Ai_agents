@@ -4,7 +4,8 @@ import { motion } from 'motion/react';
 import { Clock, BarChart3, MessageSquare, Code2, CheckSquare, Headphones, Volume2, Printer } from 'lucide-react';
 import { TopicItem } from '@/src/types/topic.ts';
 import { normalizeArabic, formatReadingTime } from '@/src/utils/searchUtils.ts';
-import { getTopicImprovementStatus } from '@/src/lib/educationalRoadmap.ts';
+import { renderBidiWithTechTerms } from '@/src/components/TechTermTooltip.tsx';
+import { BidiText } from '@/src/components/BidiText.tsx';
 
 interface TopicCardProps {
   topic: TopicItem;
@@ -16,38 +17,6 @@ interface TopicCardProps {
   onToggleBookmark: (topicId: string) => void;
 }
 
-/**
- * Highlights matches of query within a text string safely
- */
-function HighlightedText({ text, query }: { text: string; query: string }) {
-  if (!query || !query.trim()) {
-    return <>{text}</>;
-  }
-
-  const normQuery = normalizeArabic(query.trim());
-  const words = text.split(/(\s+)/);
-
-  return (
-    <>
-      {words.map((word, idx) => {
-        const normWord = normalizeArabic(word);
-        const matches = normWord.includes(normQuery);
-
-        return matches ? (
-          <mark
-            key={idx}
-            className="bg-yellow-200 dark:bg-yellow-900/60 text-slate-900 dark:text-yellow-100 rounded-xs px-0.5 font-bold"
-          >
-            {word}
-          </mark>
-        ) : (
-          <React.Fragment key={idx}>{word}</React.Fragment>
-        );
-      })}
-    </>
-  );
-}
-
 export const TopicCard: React.FC<TopicCardProps> = ({
   topic,
   searchQuery,
@@ -57,8 +26,6 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   isBookmarked,
   onToggleBookmark,
 }) => {
-  const status = getTopicImprovementStatus(topic.slug);
-
   return (
     <article className="topic-card group flex flex-col justify-between bg-[var(--bg-surface)] border border-[var(--border-color)] hover:border-[var(--brand-primary)] rounded-2xl p-4 sm:p-5 transition-[border-color,box-shadow] duration-200 ease-out shadow-xs hover:shadow-lg relative">
       {/* Top Header Row */}
@@ -71,10 +38,10 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             </span>
             <div className="min-w-0">
               <span className="text-xs font-bold text-[var(--brand-primary)] block truncate">
-                {topic.stageTag}
+                <BidiText text={topic.stageTag} />
               </span>
               <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] truncate">
-                <span className="truncate">{topic.categoryName}</span>
+                <span className="truncate"><BidiText text={topic.categoryName} /></span>
                 <span aria-hidden="true" className="opacity-40 shrink-0">·</span>
                 <span className="inline-flex items-center gap-0.5 text-slate-700 dark:text-slate-300 font-medium shrink-0" title={`وقت القراءة التقديري: ${formatReadingTime(topic.readingTimeMinutes)}`}>
                   <Clock className="w-3 h-3" />
@@ -140,19 +107,21 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             </button>
 
             {/* Quick Diagram Button */}
-            {topic.diagramCount > 0 && <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenTopic(topic.id, 'diagram');
-              }}
-              type="button"
-              className="min-h-9 h-9 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors cursor-pointer flex items-center gap-1 no-print relative z-10"
-              title="معاينة المخطط البياني التفاعلي (Mermaid.js)"
-              aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
-            >
-              <BarChart3 className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium hidden xs:inline">مخطط</span>
-            </button>}
+            {topic.diagramCount > 0 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenTopic(topic.id, 'diagram');
+                }}
+                type="button"
+                className="min-h-9 h-9 px-2 rounded-lg border border-[var(--border-color)] bg-[var(--bg-card-subtle)] text-[var(--text-muted)] hover:text-[var(--brand-primary)] hover:border-[var(--brand-primary)] transition-colors cursor-pointer flex items-center gap-1 no-print relative z-10"
+                title="معاينة المخطط البياني التفاعلي (Mermaid.js)"
+                aria-label={`عرض المخطط البياني للموضوع ${topic.number}`}
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span className="text-xs font-medium hidden xs:inline">مخطط</span>
+              </button>
+            )}
 
             {/* Quick Print PDF Button */}
             <button
@@ -171,44 +140,39 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           </div>
         </div>
 
-        {/* Title */}
-        <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors leading-snug mb-1">
-          <Link href={`/learn/${topic.slug}`}><HighlightedText text={topic.title} query={searchQuery} /></Link>
+        {/* 1. Element 1 & 2: Topic Number & Title with Tech Term Tooltips */}
+        <h3 className="text-sm sm:text-base font-bold text-[var(--text-main)] group-hover:text-[var(--brand-primary)] transition-colors leading-snug mb-1 [word-break:normal] break-words">
+          <Link href={`/learn/${topic.slug}`}>
+            {renderBidiWithTechTerms(topic.title, searchQuery)}
+          </Link>
         </h3>
 
         {/* Subtitle */}
         <p className="text-xs text-[var(--brand-primary)] font-medium mb-2 truncate">
-          <HighlightedText text={topic.subtitle} query={searchQuery} />
+          {renderBidiWithTechTerms(topic.subtitle, searchQuery)}
         </p>
 
-        {/* Improvement & Content Availability Status */}
+        {/* Student-facing Badges (Replacing internal editorial state) */}
         <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800" title="حالة توفر المحتوى">
-            {status.availabilityLabel}
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+            مستوى: مبتدئ
           </span>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800" title="حالة المراجعة التعليمية والاعتماد">
-            {status.improvementLabel}
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+            <Clock className="w-3 h-3 text-slate-500" />
+            <span>وقت القراءة: {formatReadingTime(topic.readingTimeMinutes)}</span>
           </span>
-          {status.group && (
-            <span
-              className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
-              title={status.groupProposalLabel}
-            >
-              {status.isFirstGroupProposal
-                ? `المجموعة الأولى (${status.boundariesApproved ? 'حدود معتمدة' : 'مقترحة'})`
-                : `المجموعة ${status.group.number} (${status.boundariesApproved ? 'حدود معتمدة' : 'حدود مقترحة'})`}
-            </span>
-          )}
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+            خطوة عملية
+          </span>
         </div>
 
-        {/* Summary */}
-        <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-2">
-          <HighlightedText text={topic.summary} query={searchQuery} />
+        {/* 3. Element 3: Simplified 2-line summary of what learner will build */}
+        <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-3 line-clamp-2 [word-break:normal] break-words">
+          {renderBidiWithTechTerms(topic.summary, searchQuery)}
         </p>
-        {topic.outputs.length > 0 && <p className="mb-3 text-xs leading-relaxed text-[var(--text-muted)]"><strong>المخرج: </strong>{topic.outputs[0]}</p>}
       </div>
 
-      {/* Bottom Zone: Content Stats, Tags & Primary Action */}
+      {/* Bottom Zone: Content Stats & Primary Actions */}
       <div className="pt-2.5 border-t border-[var(--border-color)]/70 mt-auto space-y-2.5">
         {/* Content Indicators */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-muted)] font-medium">
@@ -216,13 +180,15 @@ export const TopicCard: React.FC<TopicCardProps> = ({
             <Clock className="w-3 h-3" />
             <span>{formatReadingTime(topic.readingTimeMinutes)}</span>
           </span>
-          {topic.diagramCount > 0 && <span
-            className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400 font-medium"
-            title="مخططات Mermaid تفاعلية متوفرة بـ 3 زوايا هندسية (بنية النظام، مسار العمليات، تسلسل التفاعلات)"
-          >
-            <BarChart3 className="w-3 h-3" />
-            <span>مخطط Mermaid</span>
-          </span>}
+          {topic.diagramCount > 0 && (
+            <span
+              className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-400 font-medium"
+              title="مخططات Mermaid تفاعلية متوفرة بـ 3 زوايا هندسية"
+            >
+              <BarChart3 className="w-3 h-3" />
+              <span>مخطط Mermaid</span>
+            </span>
+          )}
           {topic.promptCount > 0 && (
             <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
               <MessageSquare className="w-3 h-3" />
@@ -243,25 +209,7 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           )}
         </div>
 
-        {/* Tags Rail */}
-        <div className="flex flex-wrap items-center gap-1">
-          {topic.tags.slice(0, 3).map((tag, idx) => (
-            <span
-              key={idx}
-              dir="auto"
-              className="px-2 py-0.5 rounded text-[10px] font-mono text-[var(--text-muted)] bg-[var(--bg-card-subtle)] border border-[var(--border-color)]"
-            >
-              {tag}
-            </span>
-          ))}
-          {topic.tags.length > 3 && (
-            <span className="text-[10px] text-[var(--text-faint)] font-mono px-1">
-              +{topic.tags.length - 3}
-            </span>
-          )}
-        </div>
-
-        {/* Action Button: Touch Target >= 40px */}
+        {/* Action Buttons: Touch Target >= 40px */}
         <Link
           href={`/learn/${topic.slug}`}
           className="w-full min-h-10 h-10 px-3 rounded-xl bg-[var(--bg-card-subtle)] hover:bg-[var(--brand-primary)] text-[var(--text-main)] hover:text-white border border-[var(--border-color)] hover:border-[var(--brand-primary)] text-xs font-bold transition-colors duration-150 cursor-pointer flex items-center justify-center gap-1.5 relative z-10"
@@ -269,7 +217,11 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           <span>قراءة الموضوع كاملاً</span>
           <span className="text-xs transition-transform group-hover:-translate-x-1">←</span>
         </Link>
-        <button onClick={() => onOpenTopic(topic.id)} type="button" className="w-full min-h-9 rounded-lg text-xs font-medium text-[var(--text-muted)] hover:text-[var(--brand-primary)] transition-colors">
+        <button
+          onClick={() => onOpenTopic(topic.id)}
+          type="button"
+          className="w-full min-h-9 rounded-lg text-xs font-medium text-[var(--text-muted)] hover:text-[var(--brand-primary)] transition-colors cursor-pointer"
+        >
           معاينة سريعة
         </button>
       </div>

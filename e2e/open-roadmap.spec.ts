@@ -66,11 +66,11 @@ test.describe('Open Educational Roadmap Journey (Issue #41)', () => {
   test('honest statuses match across catalog card, preview modal, full reader, and roadmap', async ({ page }) => {
     await page.goto('/');
 
-    // Catalog card for topic 1
+    // Catalog card for topic 1 (Learner badges)
     const firstCard = page.locator('article.topic-card').first();
-    await expect(firstCard.getByText('محتوى متاح (منشور)', { exact: true })).toBeVisible();
-    await expect(firstCard.getByText('بانتظار المراجعة التعليمية الجديدة', { exact: true })).toBeVisible();
-    await expect(firstCard.getByText('المجموعة الأولى (حدود معتمدة)', { exact: true })).toBeVisible();
+    await expect(firstCard.getByText('مستوى: مبتدئ', { exact: true })).toBeVisible();
+    await expect(firstCard.getByText(/وقت القراءة:/)).toBeVisible();
+    await expect(firstCard.getByText('خطوة عملية', { exact: true })).toBeVisible();
 
     // Preview modal
     await firstCard.getByRole('button', { name: 'معاينة سريعة' }).click();

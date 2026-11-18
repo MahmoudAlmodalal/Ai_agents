@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BidiText } from '@/src/components/BidiText';
 export const metadata = { title: 'الأسئلة الشائعة | Ai_agents', description: 'إجابات أثناء مسار مشروع Full-Stack: الوثائق والمخططات والأدوات والتنفيذ.' };
 const faqs = [
   { question: 'هل BorrowHub مشروع إلزامي؟', answer: 'لا. BorrowHub مثال مرافق له قواعده الخاصة. طبّق المنهج على مشروعك وسجّل قراراته في PRD؛ لا تنقل شروط استعارة المعدات تلقائيًا.', href: '/borrowhub', label: 'دراسة BorrowHub' },
@@ -17,7 +18,7 @@ const faqs = [
 export default function FaqPage() {
   return <div className="min-h-screen bg-[var(--bg-body)] px-4 py-10 sm:px-6 lg:px-8" dir="rtl"><div className="mx-auto max-w-6xl">
     <Link href="/" className="mb-6 inline-flex text-sm font-bold text-[var(--primary)]">→ الرئيسية</Link>
-    <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10"><h1 className="text-3xl font-black sm:text-5xl">الأسئلة الشائعة</h1><p className="mt-4 leading-8 text-[var(--text-muted)]">إجابات أثناء التعلم: مشروعك ووثائقه ومخططاته، ثم التصميم وFrontend وBackend حتى التحقق والتسليم.</p><Link href="/glossary" className="mt-3 inline-block font-bold text-[var(--primary)]">ابحث في القاموس التقني</Link></header>
-    <div className="mt-6 space-y-3">{faqs.map(f => <details key={f.question} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4"><summary className="min-h-8 cursor-pointer font-bold text-[var(--text-main)]">{f.question}</summary><p className="mt-3 border-t border-[var(--border-color)] pt-3 text-sm leading-7 text-[var(--text-muted)]">{f.answer}</p><Link href={f.href} className="mt-3 inline-block font-bold text-[var(--primary)]">{f.label} ←</Link></details>)}</div>
+    <header className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-10"><h1 className="text-3xl font-black sm:text-5xl">الأسئلة الشائعة</h1><p className="mt-4 leading-8 text-[var(--text-muted)]"><BidiText text="إجابات أثناء التعلم: مشروعك ووثائقه ومخططاته، ثم التصميم وFrontend وBackend حتى التحقق والتسليم." /></p><Link href="/glossary" className="mt-3 inline-block font-bold text-[var(--primary)]">ابحث في القاموس التقني</Link></header>
+    <div className="mt-6 space-y-3">{faqs.map(f => <details key={f.question} className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-surface)] p-4"><summary className="min-h-8 cursor-pointer font-bold text-[var(--text-main)]"><BidiText text={f.question} /></summary><p className="mt-3 border-t border-[var(--border-color)] pt-3 text-sm leading-7 text-[var(--text-muted)]"><BidiText text={f.answer} /></p><Link href={f.href} className="mt-3 inline-block font-bold text-[var(--primary)]"><BidiText text={f.label} /> ←</Link></details>)}</div>
   </div></div>;
 }

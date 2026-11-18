@@ -100,16 +100,16 @@ export function PromptLibrary({ prompts }: { prompts: PromptLibraryRecord[] }) {
         <div className="mb-3 flex flex-wrap items-center gap-2 opacity-80">
           <Sparkles className="h-5 w-5" aria-hidden="true" />
           <span className="text-sm font-bold" data-testid="prompt-library-count">
-            {prompts.length} نصًا قابلًا للنسخ · {counts.catalog} أساسية · {counts.supplementary + counts['cheatsheet-core']} إضافية · {counts['cheatsheet-stage']} أمثلة مرحلية
+            {prompts.length} نصًا قابلًا للنسخ · {buildSteps.length} خطوة لبناء المشروع · {supporting.length} قوالب وأمثلة مساندة
           </span>
         </div>
         <h1 className="text-3xl font-black sm:text-5xl">مكتبة البرومبتات</h1>
         <p className="mt-4 max-w-3xl leading-8 opacity-90">
-          ابدأ من الخطوة 1 وامشِ بالترتيب لبناء مشروع جديد: {stepCount} خطوة مرقّمة، كل خطوة بفائدتها في سطر واحد.
-          القوالب العامة والأمثلة المكمّلة خارج الترقيم لأنها تتكرر مع أي خطوة. النصوص تبقى كما وردت في مصادرها؛ راجع قواعد مشروعك قبل اعتماد أي نتيجة.
+          ابدأ من الخطوة 1 وامشِ بالترتيب لبناء مشروع جديد: {buildSteps.length} خطوة مرقّمة، كل خطوة بفائدتها في سطر واحد.
+          القوالب العامة والأمثلة المكمّلة ({supporting.length} قالب ومثال مساند) خارج الترقيم لأنها تتكرر مع أي خطوة. النصوص تبقى كما وردت في مصادرها؛ راجع قواعد مشروعك قبل اعتماد أي نتيجة.
         </p>
         <p className="mt-2 max-w-3xl text-sm leading-7 opacity-80">
-          العدد مشتق من السجلات: {counts.catalog} برومبتًا مرقمًا، و{counts.supplementary} برومبت إضافي، و{counts['cheatsheet-core']} قوالب عامة، و{counts['cheatsheet-stage']} أمثلة مرحلية.
+          إجمالي النصوص المتوفرة: {prompts.length} نصًا محسوبًا آليًا ({buildSteps.length} خطوة بناء أساسية + {supporting.length} قوالب وأمثلة مساندة).
         </p>
       </header>
 

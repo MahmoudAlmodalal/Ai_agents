@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              مسار عملي لبناء منتجات Full-Stack قابلة للإنتاج والتسليم، من الفكرة إلى المتطلبات والتصميم والواجهات والخادم وقاعدة البيانات والاختبار والنشر، بمساعدة وكلاء الذكاء الاصطناعي.
+              مسار عملي لبناء منتجات <bdi dir="ltr">Full-Stack</bdi> قابلة للإنتاج والتسليم، من الفكرة إلى المتطلبات والتصميم والواجهات والخادم وقاعدة البيانات والاختبار والنشر، بمساعدة وكلاء الذكاء الاصطناعي.
             </p>
 
             <div className="pt-1">
@@ -91,7 +91,7 @@ export const Footer: React.FC = () => {
                   href="/start"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> ابدأ هنا (Start Here)
+                  <span className="text-slate-600">›</span> ابدأ هنا (<bdi dir="ltr">Start Here</bdi>)
                 </Link>
               </li>
               <li>
@@ -107,7 +107,7 @@ export const Footer: React.FC = () => {
                   href="/borrowhub"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> ورشة مشروع BorrowHub
+                  <span className="text-slate-600">›</span> ورشة مشروع <bdi dir="ltr">BorrowHub</bdi>
                 </Link>
               </li>
             </ul>
@@ -140,7 +140,7 @@ export const Footer: React.FC = () => {
                   href="/cheatsheet"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> Cheatsheet البرومبتات
+                  <span className="text-slate-600">›</span> <bdi dir="ltr">Cheatsheet</bdi> البرومبتات
                 </Link>
               </li>
               <li>
@@ -148,7 +148,7 @@ export const Footer: React.FC = () => {
                   href="/diagrams"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> مختبر الـ8 مخططات (Mermaid)
+                  <span className="text-slate-600">›</span> مختبر الـ8 مخططات (<bdi dir="ltr">Mermaid</bdi>)
                 </Link>
               </li>
               <li>
@@ -197,7 +197,7 @@ export const Footer: React.FC = () => {
                   href="/faq"
                   className="text-slate-400 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  <span className="text-slate-600">›</span> الأسئلة الشائعة (FAQ)
+                  <span className="text-slate-600">›</span> الأسئلة الشائعة (<bdi dir="ltr">FAQ</bdi>)
                 </Link>
               </li>
               <li>
@@ -238,7 +238,7 @@ export const Footer: React.FC = () => {
             <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold text-amber-300 ml-1">تنبيه تعليمي وأمني:</span>
-              جميع المواد المعروضة مخصصة للتعلّم. الروابط والأدوات الخارجية (مثل Google Stitch وMermaid وGitHub) مملوكة لأصحابها. لا تضع مفاتيح API أو كلمات المرور أو أسرار الأنظمة في ملفات عامة.
+              جميع المواد المعروضة مخصصة للتعلّم. الروابط والأدوات الخارجية (مثل <bdi dir="ltr">Google Stitch</bdi> و <bdi dir="ltr">Mermaid</bdi> و <bdi dir="ltr">GitHub</bdi>) مملوكة لأصحابها. لا تضع مفاتيح <bdi dir="ltr">API</bdi> أو كلمات المرور أو أسرار الأنظمة في ملفات عامة.
             </div>
           </div>
         </div>
@@ -246,7 +246,7 @@ export const Footer: React.FC = () => {
         {/* 4. Bottom Copyright Bar */}
         <div className="mt-6 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right text-[11px] text-slate-400 font-medium">
           <div>
-            جميع الحقوق محفوظة © {new Date().getFullYear()} Ai_agents
+            جميع الحقوق محفوظة © {new Date().getFullYear()} <bdi dir="ltr">Ai_agents</bdi>
           </div>
           <div className="flex items-center gap-3">
             <span>تُحفظ أنشطتك في هذا المتصفح</span>

@@ -43,15 +43,15 @@ const PRESET_COMPARISONS: PresetComparison[] = [
     diagramAId: 'domain-model',
     diagramBId: 'erd',
     keyTakeaway:
-      'Domain Model مفاهيمي خالص بمصطلحات الأعمال دون حقول أجنبية أو أنواع بيانات؛ بينما ERD تصميم تقني لجداول قواعد البيانات يحدد PK وFK والتطبيع 3NF وسلامة المراجع.',
+      'Domain Model مفاهيمي خالص بمصطلحات الأعمال دون حقول أجنبية أو أنواع بيانات؛ بينما ERD تصميم تقني لجداول قواعد البيانات يحدد PK و FK والتطبيع 3NF وسلامة المراجع.',
   },
   {
     id: 'erd-seq-vs-class',
-    title: 'ERD وSequence كمدخلات لـ Class Diagram',
+    title: 'ERD و Sequence كمدخلات لـ Class Diagram',
     diagramAId: 'erd',
     diagramBId: 'class',
     keyTakeaway:
-      'يسبق ERD وSequence مخطط الكلاسات (Class Diagram)؛ حيث يوفر ERD هيكلية البيانات ويوفر Sequence استدعاءات العمليات التي تصبح دوالاً ومناهج برمجية داخل الكلاسات.',
+      'يسبق ERD و Sequence مخطط الكلاسات (Class Diagram)؛ حيث يوفر ERD هيكلية البيانات ويوفر Sequence استدعاءات العمليات التي تصبح دوالاً ومناهج برمجية داخل الكلاسات.',
   },
   {
     id: 'usecase-vs-activity',

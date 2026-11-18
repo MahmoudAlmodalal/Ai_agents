@@ -39,10 +39,10 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   { title: 'الرئيسية', href: '/', icon: Home, isPrimary: true },
   { title: 'ابدأ هنا', href: '/start', icon: Compass, isPrimary: true },
-  { title: 'مسار التعلم', href: '/learn/project-idea-mvp', icon: GraduationCap, badge: 'موضوعات', isPrimary: true },
+  { title: 'مسار التعلم', href: '/learn', icon: GraduationCap, badge: '6 مراحل', isPrimary: true },
   { title: 'جلسة Stitch → Frontend', href: '/learn/stitch-to-frontend', icon: Sparkles, badge: '3 ساعات', isPrimary: false },
   { title: 'المتطلبات', href: '/learn/discovery-grill-me', icon: Workflow, badge: 'Idea → PRD', isPrimary: false },
-  { title: 'Stitch MCP وDESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: false },
+  { title: 'Stitch MCP و DESIGN.md', href: '/learn/stitch-mcp-integration', icon: Sparkles, badge: 'Design → Code', isPrimary: false },
   { title: 'خارطة تنفيذ المشروع', href: '/start#project-path', icon: Workflow, badge: 'مسار متسلسل', isPrimary: true },
   { title: 'Cheatsheet البرومبتات', href: '/cheatsheet', icon: Sparkles, badge: 'نسخ مباشر', isPrimary: false },
   { title: 'مكتبة البرومبتات', href: '/prompts', icon: Sparkles, badge: 'بحث ونسخ', isPrimary: true },
@@ -53,7 +53,7 @@ export const NAV_ITEMS: NavItem[] = [
   { title: 'مؤشر الموديلات', href: '/models', icon: Sparkles, badge: 'الأفضل الآن', isPrimary: false },
   { title: 'لوحة التقدم', href: '/dashboard', icon: Gauge, badge: 'محلي', isPrimary: false, description: 'راجع نشاطك المحفوظ على هذا الجهاز' },
   { title: 'الملفات والقوالب', href: '/templates', icon: Files, badge: '14 قالب', isPrimary: false, description: 'قوالب PRD و DESIGN.md ومخططات جاهزة' },
-  { title: 'القاموس التقني', href: '/glossary', icon: BookOpen, badge: '35 مصطلح', isPrimary: false, description: 'دليل المصطلحات الإنجليزية والعربية' },
+  { title: 'قاموس المصطلحات', href: '/glossary', icon: BookOpen, badge: '35 مصطلح', isPrimary: true, description: 'دليل المصطلحات الإنجليزية والعربية' },
   { title: 'الأسئلة الشائعة', href: '/faq', icon: HelpCircle, badge: '12 سؤال', isPrimary: false, description: 'إجابات هندسية على استفسارات الطلاب' },
   { title: 'عن Ai_agents', href: '/about', icon: Info, isPrimary: false, description: 'مسار هندسة البرمجيات ووكلاء الذكاء الاصطناعي' },
 ];
@@ -172,7 +172,8 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header
-        className="site-header-main sticky top-0 z-[var(--z-header)] w-full bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors"
+        className={`site-header-main sticky top-0 ${isMoreDropdownOpen ? 'z-[calc(var(--z-dropdown)+20)]' : 'z-[var(--z-header)]'} w-full bg-[var(--bg-surface)]/95 border-b border-[var(--border-color)] backdrop-blur-md transition-colors`}
+        style={isMoreDropdownOpen ? { zIndex: 70 } : undefined}
         dir="rtl"
         role="banner"
       >
@@ -201,7 +202,7 @@ export const Navbar: React.FC = () => {
 
             {/* 2. Desktop Primary Navigation Links (Hidden on < lg) */}
             <nav
-              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-start max-w-4xl min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 justify-start max-w-4xl min-w-0 overflow-visible"
               aria-label="شريط التنقل الرئيسي"
             >
               {primaryItems.map((item) => {
@@ -254,7 +255,7 @@ export const Navbar: React.FC = () => {
 
                 {/* Dropdown Content */}
                 {isMoreDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-xl p-2 z-[var(--z-dropdown)]">
+                  <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-color)] shadow-2xl p-2 z-[calc(var(--z-dropdown)+30)] max-h-[calc(100vh-5rem)] overflow-y-auto">
                     <div className="text-xs font-extrabold text-[var(--text-muted)] px-3 py-1 border-b border-[var(--border-color)] mb-1">
                       أقسام ومراجع إضافية
                     </div>
